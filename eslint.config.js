@@ -39,6 +39,7 @@ export default defineConfig(
     files: [
       'packages/makruk/src/**/*.ts',
       'packages/sittuyin/src/**/*.ts',
+      'packages/xiangqi/src/**/*.ts',
       'packages/rules-core/src/**/*.ts',
       'packages/ai-core/src/**/*.ts',
       'packages/sittuyin-ai/src/**/*.ts',

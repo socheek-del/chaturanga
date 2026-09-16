@@ -1,6 +1,6 @@
 {
   "project": "Chaturanga — family of traditional chess games (Makruk live, Sittuyin in progress)",
-  "last_updated": "2026-09-15",
+  "last_updated": "2026-09-16",
   "rules": {
     "single_active_feature": true,
     "passing_requires_evidence": true,
@@ -1312,15 +1312,25 @@
       "milestone": "M12",
       "title": "Xiangqi board, FEN and move generation",
       "user_visible_behavior": "packages/xiangqi models the 9x10 board and generates legal moves for all seven piece types, verified against Fairy-Stockfish.",
-      "status": "not_started",
+      "status": "passing",
       "verification": [
         "fen.test.ts: FEN round-trip on 10+ ffish-generated positions; 10+ invalid FENs rejected.",
         "movegen.test.ts: one test per piece rule incl. horse-leg and elephant-eye blocking, cannon screen capture, soldier before/after the river, the flying general, and a pin by facing generals.",
         "perft.test.ts against a ffish-generated reference; fast depths in verify, all depths with PERFT_DEEP=1.",
         "reference.test.ts: lock-step random games vs ffish comparing sorted legal moves, SAN and FEN on every ply (60 games in verify, 400 with PERFT_DEEP=1)."
       ],
-      "evidence": [],
-      "notes": "Game status is only ongoing/checkmate at this step; full game end (stalemate loss, perpetual, chase, counting) is xq-002."
+      "evidence": [
+        "2026-09-16: packages/xiangqi (@chaturanga/xiangqi) scaffolded on the Sittuyin package's pattern, but with its own board module (9x10, no shared code with the 8x8 Makruk-family board): piece codes, FEN/SAN letter tables (SAN spells Horse 'H' and Elephant 'E', different from their FEN letters 'N'/'B' — confirmed against ffish), and precomputed move tables (general/advisor palace targets, elephant eye targets, horse leg targets + their inverse for attack detection, soldier forward/sideways targets + inverse, and chariot/cannon rays). No promotion, no hands (hasHands: false), so no PROMOTED bit and no drop encoding — moves are just from|to<<7. Engine-purity lint rule extended to packages/xiangqi/src.",
+        "2026-09-16: src/attacks.ts — isAttacked/inCheck cover soldier, horse (leg-checked), chariot and cannon (screen-checked) directly; the flying-general rule (the two generals may never face on a clear file) is folded in as the enemy general attacking the defending general's own square through a clear file, the same check-filtering path as every other attack. Advisor and elephant are proven to never give check (both are permanently confined to their own half, which never overlaps the enemy general's territory) so they are omitted from attack detection.",
+        "2026-09-16: src/fen.test.ts — 14 round-trip positions from real Fairy-Stockfish (ffish 0.7.10) games (opening, 6 midgame, 6 endgame, the checkmate fixture below) + missing trailing fields; 15 invalid-FEN cases throw FenError (wrong rank/square counts, unknown piece letter, missing/duplicate general, castling or en-passant field present, non-numeric halfmove/fullmove, and the two generals facing on an open file — which the engine treats as an invalid position, matching the sittuyin/makruk 'opponent not in check' FEN-validity precedent, since no legal move sequence can ever create that position).",
+        "2026-09-16: src/movegen.test.ts — 20 tests, one per piece rule (general/advisor palace confinement, elephant river+eye, horse leg, chariot slide+capture, cannon screen slide/capture/no-direct-capture, soldier before/after the river and capture-by-moving-in), the flying-general rule (a general may not step onto a file with a clear line to the enemy general) and the resulting pin (a piece that is the only blocker on that file may not move off it), a rook pin, check-evasion-only legality, and the checkmate fixture below. Every fixture was probed against ffish 0.7.10 first; the opening position's 44 legal moves were diffed byte-for-byte against ffish's own list before any test was written.",
+        "2026-09-16: src/variant.test.ts — describeVariantConformance(xiangqi, ...) passes: FEN round-trip, invalid-FEN rejection, illegal-move rejection, pieces()/pieceAt() agreement, 5 seeded 120-ply random playouts (every move recorded, replayed from the move list, and undone back to the start), and the checkmate fixture.",
+        "2026-09-16: checkmate fixture 'r2a2r2/3k4n/3aP4/9/n1b6/8p/P5p2/4R3B/3KA4/2B6 w - - 8 29', move e8d8 — reached by seeded random self-play against ffish 0.7.10, which independently agrees: SAN 'Pxd8#', result '1-0'.",
+        "2026-09-16: src/perft.test.ts and src/reference.test.ts against scripts/perft-reference.cjs output (ffish 0.7.10): 14 reference positions (opening, a general blocked by a soldier on the shared file, a cannon with two screens on a rank, the checkmate fixture, 8 random-seed positions) to depth 3-4; `npm test` runs the fast subset, `PERFT_DEEP=1 npm test` (packages/xiangqi test:deep) runs every depth plus 400 lock-step random games comparing sorted legal moves, SAN and FEN on every ply — full run: 101/101 passed (1 skipped only under the fast profile), 34s.",
+        "2026-09-16: one real bug found and fixed by the reference test: game.ts's SAN disambiguation imported fileOf/rankOf from @chaturanga/rules-core (the Makruk-family's fixed 8x8 board8.ts helpers, sq&7/sq>>3) instead of Xiangqi's own 9-wide board.ts helpers (sq%9/floor(sq/9)) — this silently miscomputed file/rank for disambiguation on any square past file g, producing e.g. 'C6f6' instead of ffish's 'Cff6' for two cannons sharing no file. Fixed by importing from ./board; full deep run green afterward.",
+        "2026-09-16: npm run verify (whole repo) exit 0 — makruk-web 109 unchanged, xiangqi 100 new (1 skipped under the fast profile), every other workspace unchanged and green; no Makruk or Sittuyin file was touched."
+      ],
+      "notes": "Game status is only ongoing/checkmate at this step (plus a placeholder 'stalemate' kind reused from the shared GameStatus union for the rare no-legal-moves-not-in-check case, documented in game.ts as not yet semantically correct for Xiangqi); full game end (stalemate loss, perpetual check/chase, the 60-move rule, counting) is xq-002, which depends on plat-008 (also not started)."
     },
     {
       "id": "plat-008",

@@ -390,3 +390,52 @@ handoff; no agent updates it automatically.
   `plat-007` no longer blocks it. `plat-008/009/010` (decisive stalemate+perpetual results, intersection board
   + non-square fitting, family tests independent of game count) are still `not_started` and are on the same
   critical path before Xiangqi's board/UI work, per the plan's dependency order.
+
+### Session 010
+
+- Date: 2026-09-16.
+- Goal: resume from session 009's next step and implement `xq-001` (Xiangqi board, FEN and move
+  generation), per `apps/xiangqi/docs/PLAN.md` step 2.
+- New environment pitfall: this sandbox had no Node.js or `nvm` installed at all (not just the wrong
+  default Node version) — `node`/`npx` were not on `PATH` and `~/.nvm` did not exist, so `./init.sh`
+  failed immediately at `node -v`. Fixed by installing nvm from the standard install script
+  (`https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh`) into `~/.nvm`, then
+  `nvm install 22.23.1` (the `.nvmrc` version). A stale local checkout also meant `git fetch` found three
+  commits already on `origin/main` (`plat-007` finished, plus `fe9674a` planning Xiangqi as the third
+  product) that this session did not have locally; synced with `git reset --hard origin/main` before
+  starting (the only local commit at that point was a docs-only note based on the stale state, safely
+  discarded). If a future session hits `node: command not found`, install nvm the same way first, and
+  always `git fetch`/compare against `origin/main` before concluding there is no work left.
+- `xq-001` is now `passing`.
+  - `packages/xiangqi` (`@chaturanga/xiangqi`), modelled on `packages/sittuyin`'s file layout but with its
+    own board module: a 9x10 point-index board (`board.ts`), attack detection including the flying-general
+    rule (`attacks.ts`), FEN (`fen.ts`), move generation (`movegen.ts`), the `Game` class (`game.ts`),
+    `perft.ts`, and `variant.ts` exporting `xiangqi satisfies Variant<Game>`. No promotion and no hands
+    (`hasHands: false`), so the package is simpler than Sittuyin's in those two respects.
+  - Every rule (palace confinement, the river, the horse leg, the elephant eye, the cannon screen, the
+    flying general, SAN letters and disambiguation) was probed against Fairy-Stockfish (ffish 0.7.10)
+    directly before being coded, not guessed from memory. The opening position's 44 legal moves were
+    diffed byte-for-byte against ffish's own list. SAN uses different letters for Horse (H) and Elephant
+    (E) than their FEN letters (N, B) — confirmed by probe, not assumed.
+  - One real bug, found by the lock-step reference test and not by any hand-written test: `game.ts`'s SAN
+    disambiguation imported `fileOf`/`rankOf` from `@chaturanga/rules-core`, which resolves to the
+    Makruk-family's fixed 8x8 `board8.ts` helpers (`sq & 7`, `sq >> 3`) — silently wrong for a 9-wide
+    board past file g. Fixed by importing Xiangqi's own 9-wide versions from `./board` instead.
+  - Verification (all bullets in `feature_list.json`'s `xq-001` entry): `fen.test.ts` 14 round-trip + 15
+    invalid-FEN cases; `movegen.test.ts` 20 tests covering every piece rule, the flying general, and the
+    pin it creates on its own blocker; `variant.test.ts` runs the shared `describeVariantConformance`;
+    `perft.test.ts` and `reference.test.ts` against `scripts/perft-reference.cjs`'s ffish-generated
+    reference — full deep run (`PERFT_DEEP=1`, every perft depth plus 400 lock-step random games
+    comparing legal moves/SAN/FEN every ply) 101/101 passed in 34s. `npm run verify` (whole repo) exit 0;
+    no Makruk or Sittuyin file was touched.
+  - Scope boundary, matching the plan: `status()` only distinguishes `ongoing`/`checkmate` at this step
+    (using the existing shared `GameStatus` union, no new kind added); a no-legal-moves-and-not-in-check
+    position returns the generic `stalemate` kind as a documented placeholder, since Xiangqi's real rule
+    (stalemate is a loss, not a draw) is `xq-002`, which depends on `plat-008` (also not started). For the
+    same reason `reference.test.ts` stops each game on ffish's own `isGameOver()` signal and does not
+    compare this engine's status/game-over state against ffish, only legal moves, SAN and FEN.
+- Next best step: `xq-002` (Xiangqi game end: stalemate loss, perpetual check/chase — ported from the
+  Fairy-Stockfish chasing algorithm, not invented — 50-move rule, insufficient material) is next per the
+  plan, but it depends on `plat-008` (decisive stalemate/perpetual `GameStatus` kinds, shared
+  `resultFromStatus` and protocol `ResultReason`) landing first, exactly as `xq-001` depended on
+  `plat-007`. Do `plat-008` first.

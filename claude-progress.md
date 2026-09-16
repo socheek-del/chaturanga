@@ -439,3 +439,60 @@ handoff; no agent updates it automatically.
   plan, but it depends on `plat-008` (decisive stalemate/perpetual `GameStatus` kinds, shared
   `resultFromStatus` and protocol `ResultReason`) landing first, exactly as `xq-001` depended on
   `plat-007`. Do `plat-008` first.
+
+### Session 011
+
+- Date: 2026-09-16.
+- Goal: `plat-008` (decisive stalemate and perpetual results), Step 3 of `apps/xiangqi/docs/PLAN.md`, so
+  `xq-002` is unblocked next.
+- `plat-008` is now `passing`.
+  - `packages/rules-core/src/types.ts`: `GameStatus`'s `stalemate` kind gains an optional `winner?: Color`
+    (undefined stays a draw, exactly what Makruk and Sittuyin always produce); two new decisive kinds,
+    `perpetual-check` and `perpetual-chase`, each carrying `winner: Color` like `checkmate` already does.
+  - The drift the feature exists to prevent is fixed at the source, not by hand-syncing two copies:
+    `packages/rules-core/src/result.ts` (new) is now the single implementation of `RESULT_REASONS`,
+    `ResultReason`, `GameResult`, `resultFromStatus`, `FINAL_REASONS` and `isUndoableResult`.
+    `packages/game-shell/src/result.ts` re-exports it. `packages/server-kit/src/roomLogic.ts` deleted its
+    near-duplicate local `resultFromStatus` and imports the shared one. `packages/protocol/src/game.ts`
+    builds its zod `ResultReason` enum from rules-core's `RESULT_REASONS` array instead of a hand-written
+    string list (protocol gained a `@chaturanga/rules-core` dependency; rules-core still depends on
+    nothing, so no cycle) — the wire schema now cannot list a reason the shared logic doesn't know.
+  - `packages/rules-core/src/result.test.ts` (new, 23 tests): every `GameStatus` kind through
+    `resultFromStatus`, including stalemate with and without a winner and both perpetual kinds;
+    `isUndoableResult` true for every position-based ending and false for every `FINAL_REASONS` entry; a
+    test that `FINAL_REASONS` is exactly `RESULT_REASONS` minus the position-based endings, so those two
+    lists can't drift apart either.
+  - `packages/game-shell/KEYS.md` documents the two new `play.reason.*` keys and notes Makruk/Sittuyin
+    never produce them. No Makruk or Sittuyin file needed touching: `GameOverModal`'s `resultTitleKey`
+    already branches purely on `GameResult.winner` (so a winner-bearing stalemate just renders as a normal
+    win, no new `play.result.*` key needed), and the locale-completeness test only checks literal
+    `t('key')` calls, while the reason line is read through a template literal — checked both, neither
+    forces new locale keys on the two existing products.
+  - This session's own environment gap: the sandbox had no Playwright browser installed at all (same
+    class of issue as the missing Node/nvm from Session 010) — fixed with
+    `npm exec -w apps/makruk/web -- playwright install chromium` before any E2E could run.
+  - Verification: `npm run verify` (whole repo) exit 0 — rules-core 32 (was 9), protocol/game-shell/
+    server-kit unchanged and green, every other workspace unchanged. Makruk full E2E 65/67 and Sittuyin
+    full E2E 34/34 (both a pure regression check — neither variant can produce a decisive stalemate or a
+    perpetual result). The 2 Makruk failures are `clock.spec` "clock counts down" and online.spec "reload
+    rejoins" — both were already documented known flakes before this session. Verified independently, not
+    assumed: `git stash`-ed every `plat-008` change and reproduced the identical `clock.spec` failure on
+    the unmodified `xq-001` commit (`4301d83`) before restoring the stash, and re-ran `online.spec`'s
+    reload test alone 3/3 green. Neither failing test touches any file this feature changed.
+  - New pitfall for a `clock.spec` "known flake": it now fails consistently in this sandbox, even alone
+    and serial (`--workers 1 --repeat-each 3`, 3/3 failed), which is stronger than the old "passes alone,
+    flakes under full-suite load" note — likely because this sandbox's freshly-installed Chromium/
+    Playwright build differs from whatever build was cached when that note was written. Left as a noted
+    risk in `plat-008`'s `notes` field for a future session to look at with a real browser, not chased
+    here since it's unrelated to this feature and reproduces on the pre-`plat-008` baseline too.
+  - Pitfall: writing JSON/Markdown text containing backticks or `${...}` through `python3 -c "..."` inside
+    a double-quoted Bash command is unsafe — bash expands `` `...` `` and `${...}` in the double-quoted
+    argument before python ever sees it, silently corrupting any evidence text that quotes code containing
+    template literals. Caught it this session by re-reading the written JSON back before moving on, and
+    fixed it by writing the update as a standalone `.py` script file (via the `Write` tool, no shell
+    interpolation involved) and running that instead. Do this for any generated text with backticks or
+    `$` in it, or use the `Edit` tool directly for Markdown.
+- Next best step: `xq-002` (Xiangqi game end) is unblocked now that `plat-008` is done — stalemate loss,
+  idle-repetition draw, perpetual-check loss, perpetual-chase loss (ported from the Fairy-Stockfish
+  chasing algorithm, not invented — flagged in the plan as the highest-risk engine task in the whole
+  Xiangqi plan), 50-move rule, insufficient material.

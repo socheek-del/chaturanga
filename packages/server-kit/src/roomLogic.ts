@@ -9,9 +9,9 @@ import {
   createClock,
   flaggedSide,
   flagTime,
-  type GameStatus,
   IllegalMoveError,
   pressClock,
+  resultFromStatus,
   runFor,
   stopClock,
   timesAt,
@@ -115,12 +115,6 @@ function finish(room: RoomState, result: GameResult, now: number): RoomState {
     drawOfferBy: null,
     disconnect: null,
   };
-}
-
-function resultFromStatus(status: GameStatus): GameResult | null {
-  if (status.kind === 'ongoing') return null;
-  if (status.kind === 'checkmate') return { winner: status.winner, reason: 'checkmate' };
-  return { winner: null, reason: status.kind };
 }
 
 /** Joins or rejoins a room. Returns the user's seat (null = spectator). */

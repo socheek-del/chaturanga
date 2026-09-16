@@ -15,10 +15,15 @@ export interface Piece<T extends string = string> {
 export type GameStatus =
   | { kind: 'ongoing' }
   | { kind: 'checkmate'; winner: Color }
-  | { kind: 'stalemate' }
+  /** A draw for Makruk and Sittuyin; a win for the side left with moves in a variant like Xiangqi. */
+  | { kind: 'stalemate'; winner?: Color }
   | { kind: 'repetition' }
   /** A counting rule's limit ran out before mate. */
   | { kind: 'counting' }
   | { kind: 'fifty-move' }
   /** Neither side can force mate (Fairy-Stockfish insufficient-material rule). */
-  | { kind: 'insufficient-material' };
+  | { kind: 'insufficient-material' }
+  /** A repeated position where the same side repeats check indefinitely; that side loses (Xiangqi). */
+  | { kind: 'perpetual-check'; winner: Color }
+  /** A repeated position where the same side repeats an illegal chase indefinitely; that side loses (Xiangqi). */
+  | { kind: 'perpetual-chase'; winner: Color };

@@ -8,5 +8,6 @@ export * from './board8';
 export * from './clock';
 export * from './coords';
 export * from './errors';
+export * from './result';
 export type * from './types';
 export type * from './variant';

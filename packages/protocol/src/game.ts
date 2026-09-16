@@ -2,6 +2,7 @@
  * Online game protocol. The server is authoritative: clients send intents, the server replies
  * with full `state` snapshots. There is intentionally no chat message of any kind.
  */
+import { RESULT_REASONS } from '@chaturanga/rules-core';
 import { z } from 'zod';
 
 export const Color = z.enum(['w', 'b']);
@@ -13,18 +14,9 @@ export const TimeControl = z.object({
 });
 export type TimeControl = z.infer<typeof TimeControl>;
 
-export const ResultReason = z.enum([
-  'checkmate',
-  'stalemate',
-  'repetition',
-  'counting',
-  'fifty-move',
-  'insufficient-material',
-  'timeout',
-  'resign',
-  'agreement',
-  'abandon',
-]);
+/** Built from rules-core's `RESULT_REASONS` so the wire schema cannot drift from `GameStatus`. */
+export const ResultReason = z.enum(RESULT_REASONS);
+export type ResultReason = z.infer<typeof ResultReason>;
 
 export const GameResult = z.object({ winner: Color.nullable(), reason: ResultReason });
 export type GameResult = z.infer<typeof GameResult>;

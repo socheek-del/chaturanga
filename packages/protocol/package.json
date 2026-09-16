@@ -12,6 +12,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@chaturanga/rules-core": "*",
     "zod": "^4.6.4"
   }
 }

@@ -1,40 +1,16 @@
-import type { Color, GameStatus } from '@chaturanga/rules-core';
+import type { Color } from '@chaturanga/rules-core';
 
-export type ResultReason =
-  | 'checkmate'
-  | 'stalemate'
-  | 'repetition'
-  | 'counting'
-  | 'fifty-move'
-  | 'insufficient-material'
-  | 'timeout'
-  | 'resign'
-  | 'agreement'
-  | 'abandon';
-
-export interface GameResult {
-  /** null for a draw */
-  winner: Color | null;
-  reason: ResultReason;
-}
-
-export function resultFromStatus(status: GameStatus): GameResult | null {
-  switch (status.kind) {
-    case 'ongoing':
-      return null;
-    case 'checkmate':
-      return { winner: status.winner, reason: 'checkmate' };
-    default:
-      return { winner: null, reason: status.kind };
-  }
-}
-
-/** Endings a takeback cannot reverse: they are decisions or events outside the position. */
-export const FINAL_REASONS: readonly ResultReason[] = ['timeout', 'resign', 'agreement', 'abandon'];
-
-export function isUndoableResult(result: GameResult | null): boolean {
-  return !result || !FINAL_REASONS.includes(result.reason);
-}
+/**
+ * `ResultReason`, `GameResult`, `resultFromStatus`, `FINAL_REASONS` and `isUndoableResult` live in
+ * `@chaturanga/rules-core` (the single implementation `server-kit` also uses, so the two cannot drift).
+ */
+export {
+  FINAL_REASONS,
+  type GameResult,
+  isUndoableResult,
+  resultFromStatus,
+  type ResultReason,
+} from '@chaturanga/rules-core';
 
 /** Pieces captured by `color`, in capture order. */
 export function capturedBy<P>(records: ReadonlyArray<{ color: Color; captured: P | null }>, color: Color): P[] {

@@ -25,8 +25,15 @@ declares.
 | `play.reason.<reason>` | One per `ResultReason` the variant can produce |
 
 `play.reason.*` covers `checkmate`, `stalemate`, `repetition`, `counting`, `fifty-move`,
-`insufficient-material`, `timeout`, `resign`, `agreement` and `abandon`. A product only needs the
-reasons its own rules can reach — Makruk has no fifty-move rule, so it omits that one.
+`insufficient-material`, `perpetual-check`, `perpetual-chase`, `timeout`, `resign`, `agreement` and
+`abandon`. A product only needs the reasons its own rules can reach — Makruk has no fifty-move rule, so
+it omits that one; Makruk and Sittuyin never produce `perpetual-check` or `perpetual-chase` (only a
+variant that can lose to a repeated check or chase, e.g. Xiangqi, needs those two).
+
+`play.result.whiteWins`/`blackWins`/`draw` already cover a decisive stalemate: it renders as a normal win
+for whichever side the engine names `winner`, with `play.reason.stalemate` as the reason — no new result
+key, since the winner/draw distinction lives entirely in `GameStatus.stalemate.winner` and `GameResult`,
+not in a separate reason string.
 
 ## Required only for some variants
 

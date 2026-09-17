@@ -1393,14 +1393,20 @@
       "milestone": "M12",
       "title": "Xiangqi computer opponent and bot ladder",
       "user_visible_behavior": "A user plays against six named Xiangqi bots of increasing strength, each beating the level below in a majority of 20 games.",
-      "status": "not_started",
+      "status": "in_progress",
       "verification": [
         "packages/xiangqi-ai: SearchAdapter, material+PST evaluation tuned via the ladder, repetition-loss handling for chases/perpetual check, six bot personas.",
         "ai.test.ts: mate in one, hanging chariot, avoids a flying-general blunder, avoids losing by perpetual check when a winning alternative exists, deterministic with seeded rng.",
         "Strength ladder run on GitHub Actions (packages/xiangqi-ai added to strength.yml); every level beats the level below in a majority of 20 games, scores recorded."
       ],
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "2026-09-17 (3314ce2): packages/xiangqi-ai: XiangqiSearch adapter on @chaturanga/xiangqi/core (new raw API), evaluation (material 100/400/200/200/450/900 with crossed-soldier bonus and phase-dependent horse/cannon values, chariot mobility, central cannon, advisor/elephant cover scaled by enemy attackers, endgame mop-up and trade-down), six bots named after the pieces per D10 (soldier, advisor, elephant, horse, cannon, chariot; budgets 3k/6k/30k/120k/400k/1M nodes), conversion mode, bestMove for hints.",
+        "2026-09-17: repetition-loss handling. ai-core SearchAdapter gains an optional repetitionScore() hook (Makruk's own search and Sittuyin's adapter don't implement it, so their behaviour is unchanged). XiangqiSearch implements it by replaying the search path on the real Game and reading Game.status(): a perpetual check or chase scores as +/-(MATE-100). For adapters with the hook, a root move that repeats a position but is not yet decided is still searched and capped at the contempt draw, so a reply that completes a losing perpetual shows through (found by the ai.test below; without it the root shortcut hid the loss). ai-core tests 15 (4 new).",
+        "2026-09-17: ai.test.ts 16 tests: mate in one; hanging chariot; flying-general blunder (the lone cannon screen between the generals can't take the chariot, bot picks the legal free cannon instead); a losing perpetual check is scored -PERPETUAL with the game history but -contempt without it, and bestMove avoids it; a repetition that completes the opponent's perpetual scores +PERPETUAL; position intact after search; null on stalemate; rejects a game on another position; six levels with increasing budgets; levels 1-4 play legal moves; conversion mode; level 2 mates a lone general with a chariot; seeded reproducibility.",
+        "2026-09-17: speed. Profiling showed isAttacked scanning all 90 points for the flying general; findGeneral now looks in the palace first (full-board fallback): bundled search 114k -> ~140-159k nodes/s. Under vitest the same search runs ~32k nodes/s (module transform), so the ladder is a bundled Node script (scripts/strength.mjs, esbuild) with the same log/shard/verdict contract; strength.yml now runs npm run test:strength for every package and lists packages/xiangqi-ai.",
+        "2026-09-17: ladder, 20 games per pair, 4-ply seeded opening, max 400 plies, run LOCALLY in 3 shards (deterministic node budgets, so GitHub Actions would replay the same games): L2 advisor > L1 soldier +20-0=0; L3 elephant > L2 advisor +18-2=0; L4 horse > L3 elephant +18-2=0; L5 cannon > L4 horse +19-0=1 (fifty-move); L6 chariot > L5 cannon +14-2=4 (3 fifty-move, 1 max-plies). Top pair took 86 CPU-minutes. Endings include stalemate wins (1 in L5-L4, 1 in L6-L5)."
+      ],
+      "notes": "Not passing yet only because the verification names a GitHub Actions ladder run: this machine's GitHub credentials expired, so nothing could be pushed or dispatched. Next: push, then gh workflow run strength.yml -f package=packages/xiangqi-ai -f pair=n -f games=20 for n=1..5 and record run ids. In-browser L6 is capped at 3 s, well below its 1M-node ladder budget."
     },
     {
       "id": "plat-009",

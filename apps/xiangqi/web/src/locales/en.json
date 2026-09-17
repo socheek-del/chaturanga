@@ -9,7 +9,8 @@
     "back": "Back",
     "play": "Play",
     "settings": "Settings",
-    "learn": "Learn"
+    "learn": "Learn",
+    "about": "About"
   },
   "colors": {
     "w": "Red",
@@ -208,5 +209,17 @@
     "opponentDisconnected": "Your opponent disconnected — you win if they are not back in {{seconds}}s",
     "rematchOffered": "Waiting for your opponent to accept the rematch…",
     "rematchReceived": "Your opponent wants a rematch. Press \"Play again\" to accept."
+  },
+  "about": {
+    "what": "This is a free site for playing Xiangqi, Chinese chess. No account, no ads.",
+    "free": "Play the computer, play a friend online or on one device, and learn the rules with lessons.",
+    "whatTitle": "What is Xiangqi?",
+    "whatBody": "Xiangqi is the traditional chess of China, played for more than a thousand years. The pieces stand on the points where lines cross. A river divides the board: Elephants may not cross it, and Soldiers only step sideways once they have. Each General stays inside its palace, and the two Generals may never face each other on an open file. Unlike international chess, a player with no legal move loses, and giving check or chasing a piece without end loses too.",
+    "openSource": "Open source",
+    "licence": "The code is public under the GPL-3.0 licence. Anyone can help: report bugs, improve lessons, review the Chinese text or write code.",
+    "source": "View the source",
+    "contribute": "How to contribute",
+    "reportBug": "Report a bug or suggest an idea",
+    "madeBy": "Made by {{name}}"
   }
 }

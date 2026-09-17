@@ -9,7 +9,7 @@ Chaturanga is a family of traditional chess games. Each game is its own web PWA 
 - Shogi and others may follow.
 
 Owner decisions, target layout and order of work are in `docs/PLATFORM.md`. Facts about a single game live next
-to that game: `apps/makruk/AGENTS.md` for the Makruk product, `apps/sittuyin/AGENTS.md` for the Sittuyin product, and `packages/<game>/RULES.md` for the rules
+to that game: `apps/makruk/AGENTS.md` for the Makruk product, `apps/sittuyin/AGENTS.md` for the Sittuyin product, `apps/xiangqi/AGENTS.md` for the Xiangqi product, and `packages/<game>/RULES.md` for the rules
 as implemented.
 
 This repository is designed for long-running coding-agent work. The goal is not to maximize raw code output.

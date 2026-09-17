@@ -1,14 +1,14 @@
 import { useFocusModeProvider } from '@chaturanga/game-shell/ui';
 import { cn } from '@chaturanga/ui';
-import { ArrowLeft, GraduationCap, type LucideIcon, Settings, Swords } from 'lucide-react';
+import { ArrowLeft, GraduationCap, Info, type LucideIcon, Settings, Swords } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link, NavLink, Outlet } from 'react-router';
 import { ThemeController } from './ThemeController';
 
-// About (xq-010) joins the nav when that page exists.
 const NAV: ReadonlyArray<{ to: string; key: string; icon: LucideIcon; end?: boolean }> = [
   { to: '/', key: 'nav.play', icon: Swords, end: true },
   { to: '/learn', key: 'nav.learn', icon: GraduationCap },
+  { to: '/about', key: 'nav.about', icon: Info },
   { to: '/settings', key: 'nav.settings', icon: Settings },
 ];
 

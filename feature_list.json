@@ -1586,15 +1586,17 @@
       "milestone": "M13",
       "title": "Xiangqi SEO, About page and README",
       "user_visible_behavior": "Xiangqi has per-page SEO tags, an About page with GitHub contribution links, and a showcase README in Chinese and English with media captured from production, with no domain visible.",
-      "status": "not_started",
+      "status": "in_progress",
       "verification": [
         "Per-language titles/descriptions, hreflang, canonical, JSON-LD, sitemap+robots generated from SITE_URL, and an Open Graph image.",
         "About page with GitHub contribution links.",
         "apps/xiangqi/README.md plus README.zh-Hans.md, media captured via capture:readme; no domain visible in the media.",
         "apps/xiangqi/AGENTS.md completed; root AGENTS.md, README.md and docs/PLATFORM.md list Xiangqi as live."
       ],
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "2026-09-17 (partial): About page at /about (nav entry) in zh-Hans and en, explaining Xiangqi and linking to the repository, CONTRIBUTING.md and new issues (all target _blank); e2e/about.spec.ts 1/1 in both languages. apps/xiangqi/AGENTS.md written (code map, languages, rules reference, points board and glyphs, dev/test commands, fixture pitfalls) and linked from the root AGENTS.md."
+      ],
+      "notes": "Remaining, all blocked on the site address (owner decision D8, chosen in xq-008): SEO tags, hreflang, canonical, JSON-LD, sitemap/robots from SITE_URL and the Open Graph image; README.md + README.zh-Hans.md with media captured from production; root README.md and docs/PLATFORM.md listing Xiangqi as live. The About page's 'review the Chinese text' link waits for xq-011's review sheet."
     },
     {
       "id": "xq-011",

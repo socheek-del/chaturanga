@@ -1,6 +1,7 @@
 import { createBrowserRouter, Navigate } from 'react-router';
 import { AppShell } from './components/AppShell';
 import { DesignPage } from './DesignPage';
+import { AboutPage } from './pages/AboutPage';
 import { ComputerGamePage } from './pages/ComputerGamePage';
 import { HomePage } from './pages/HomePage';
 import { LearnPage } from './pages/LearnPage';
@@ -21,6 +22,7 @@ export const router = createBrowserRouter([
       { path: 'play/online/:code', element: <OnlineGameRoute /> },
       { path: 'learn', element: <LearnPage /> },
       { path: 'learn/:lessonId', element: <LessonPage /> },
+      { path: 'about', element: <AboutPage /> },
       { path: 'settings', element: <SettingsPage /> },
       { path: 'design', element: <DesignPage /> },
       { path: '*', element: <Navigate to="/" replace /> },

@@ -21,6 +21,23 @@
 - **Sittuyin app** (`apps/sittuyin/web` + `apps/sittuyin/worker`): setup phase, pass-and-play, computer (6 bots), 12 lessons, online rooms and quick match on its own Worker and D1, PWA, SEO tags, sitemap, OG image, About page.
 - **Last full run (session 006):** `npm run verify` exit 0; Sittuyin e2e 29/29 and PWA 2/2; Makruk e2e 66/66 and PWA 2/2; `npm run build` and `npm run build:sittuyin` OK.
 
+## Changed Sessions 012–013 (2026-09-17)
+
+- **Xiangqi, built but not deployed:**
+  - engine with Fairy-Stockfish game-end rules (xq-001, xq-002);
+  - bots with a local ladder (xq-003; the Actions run is pending);
+  - "Mo" design proposal (xq-004, awaiting owner);
+  - web app with pass-and-play, computer, PWA and zh-Hans/en (xq-005, in_progress until the design is
+    approved);
+  - 13 lessons (xq-006);
+  - online play on its own Worker (xq-007).
+- **Platform:** intersection boards and aspect-aware fitting (plat-009); family tests independent of game count
+  (plat-010); ai-core `repetitionScore` hook.
+- **Not pushed:** GitHub credentials expired on this machine. Run `gh auth login` then `git push origin main`.
+- **Owner decisions pending:**
+  - the Xiangqi design (`apps/xiangqi/docs/design.md`, `apps/xiangqi/docs/evidence/design-light-1280.png`);
+  - the Xiangqi subdomain (D8).
+
 ## Changed This Session (006)
 
 - sit-007 lessons, sit-008 online play, plat-006 links between games, sit-009 deploy, sit-010 SEO/About/README: `passing`.

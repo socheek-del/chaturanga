@@ -535,3 +535,58 @@ handoff; no agent updates it automatically.
     guessing any ffish ruling.
 - Next best step: `xq-003` (Xiangqi bots and ladder), or `plat-009` (intersection boards) if bots should wait
   for a playable UI. `xq-003` is next by priority.
+
+### Session 013
+
+- Date: 2026-09-17 (same day as session 012, continued at the owner's request: "continue for next 4 hours and
+  finish as many as u can").
+- Push: blocked all session. The machine's GitHub credentials expired (`gh auth status`: failed to log in;
+  the HTTPS remote has no credentials), so every commit below is local on `main`. The owner needs to run
+  `gh auth login` and `git push origin main`.
+- `xq-003` in_progress (only the GitHub Actions run is missing).
+  - `packages/xiangqi-ai` is done: adapter, evaluation, six bots per D10, conversion mode and hints.
+  - ai-core has an optional `SearchAdapter.repetitionScore` hook; Makruk and Sittuyin don't implement it, so
+    they are unchanged.
+  - An ai test exposed that a root move repeating a position was never searched further. For hooked adapters
+    it is now searched and capped at the contempt draw.
+  - Palace-first `findGeneral` made search about 40% faster.
+  - The ladder runs locally as a bundled Node script: vitest's module transform makes the search about 4x
+    slower. All five pairs pass over 20 games each: +20-0=0, +18-2=0, +18-2=0, +19-0=1, +14-2=4.
+  - `strength.yml` now runs `npm run test:strength` for every package and lists `packages/xiangqi-ai`.
+- `plat-009` passing.
+  - board-ui gained `grid: 'points'` and `underlay`; `useFittedBoard` and the desktop width cap take an aspect ratio.
+  - Visual check: Makruk and Sittuyin board screenshots are byte-identical before and after (captured twice
+    each, with the change stashed and restored). Sittuyin full-page shots aren't stable run to run even with no
+    change.
+  - Makruk E2E 65/67: `clock.spec` is the known baseline failure; `computer.spec` "keeps animating" passed
+    2/2 when re-run alone. Sittuyin E2E 34/34; both PWA suites 2/2.
+- `plat-010` passing: family.test.ts and both apps' family.spec.ts loop over `familyLinks()` and name no
+  sibling.
+- `xq-004` in_progress, waiting for the owner.
+  - Proposal "Mo" (ink + seal vermilion, maple board): `apps/xiangqi/docs/design.md`, screenshots in
+    `apps/xiangqi/docs/evidence/`.
+  - Piece characters are SVG outlines generated from Noto Serif TC Black (OFL, `npm run glyphs`), per D4.
+- `xq-005` in_progress. Every verification step passes, but the site is styled on the unapproved design.
+  - Covers pass-and-play, computer, PWA and zh-Hans/en.
+  - E2E 16/16 at the time, PWA 2/2.
+  - The AI worker rebuilds the whole game, so bots avoid losing perpetuals.
+- `xq-006` passing: 13 lessons, every claim checked against the engine; learn.spec completes one lesson in each
+  language.
+- `xq-007` passing.
+  - `apps/xiangqi/worker`: GameRoom/Matchmaker on xiangqi, D1 migration, placeholder database_id, no route.
+  - workerd tests 10/10, including a 12-ply line from the start that the server scores as a perpetual chase
+    and stores in D1.
+  - Two-browser online E2E passes.
+- Final checks this session: `npm run verify` exit 0; Xiangqi E2E 22/22 with Worker; Xiangqi e2e:pwa 2/2;
+  `npm run build:xiangqi` OK.
+- Pitfalls:
+  - Hand-made Xiangqi FENs are easy to get wrong: generals facing on an open file, or the side not to move in
+    check. Parse them with `new Game(fen)` before using them in a test. Four fixtures this session failed for
+    that reason.
+  - `pkill -f <pattern>` kills the shell running it when the pattern appears in its own command line. Kill by
+    PID from `pgrep` instead.
+  - vitest hides console output from passing tests: write probe results to a file.
+- Next best step:
+  - **Owner:** push; approve or redirect the Mo design (xq-004); choose the Xiangqi subdomain (D8).
+  - **Agent, after the push:** dispatch the Xiangqi ladder on Actions (xq-003); xq-010 parts that need no
+    production (About page, SEO tags, sitemap). xq-008 and xq-009 wait for the subdomain.

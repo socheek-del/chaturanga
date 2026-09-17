@@ -4,7 +4,8 @@ Chaturanga is a family of traditional chess games. Each game is its own web PWA 
 
 - **Makruk** (Thai chess): live.
 - **Sittuyin** (Burmese chess): live.
-- **Xiangqi** (Chinese chess): planned (`apps/xiangqi/docs/PLAN.md`).
+- **Xiangqi** (Chinese chess): built, not deployed yet (`apps/xiangqi/docs/PLAN.md`). Its design ("Mo") awaits owner
+  approval (`apps/xiangqi/docs/design.md`).
 - Shogi and others may follow.
 
 Owner decisions, target layout and order of work are in `docs/PLATFORM.md`. Facts about a single game live next
@@ -83,7 +84,13 @@ broken starting state.
   - `packages/sittuyin` (`@chaturanga/sittuyin`): pure Sittuyin rules (`RULES.md`). The single source of
     truth for the Sittuyin web app, AI and worker.
   - `packages/xiangqi` (`@chaturanga/xiangqi`): pure Xiangqi rules (`RULES.md`), including the chasing and
-    perpetual-check rules ported from Fairy-Stockfish. No app uses it yet.
+    perpetual-check rules ported from Fairy-Stockfish. `/core` is the raw API for search code.
+  - `packages/xiangqi-ai` (`@chaturanga/xiangqi-ai`): Xiangqi bots on ai-core. Repetitions are judged by the real
+    rules through ai-core's optional `SearchAdapter.repetitionScore` hook. The ladder is a bundled Node script
+    (`npm run test:strength -w packages/xiangqi-ai`), about 4x faster than under vitest.
+  - `apps/xiangqi/web`, `apps/xiangqi/worker`: the Xiangqi product. It has pass-and-play, computer, 13 lessons,
+    online rooms, PWA and zh-Hans/en, on board-ui's `grid="points"`. The Worker runs on :8789. It has no site
+    address, family link, SEO or deploy yet (xq-008..010).
   - `packages/ai-core` (`@chaturanga/ai-core`): game-independent alpha-beta search over a `SearchAdapter`,
     bot personas and root-move picking.
   - `packages/ai` (`@chaturanga/makruk-ai`): Makruk computer opponents, run in a Web Worker. It keeps its own

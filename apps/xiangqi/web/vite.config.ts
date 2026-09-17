@@ -18,8 +18,8 @@ function productHtml(): Plugin {
 }
 
 /**
- * xq-005: local play and the computer, offline. The site address, SEO (xq-010), family links (xq-009) and
- * online play (xq-007) come later.
+ * Local play, the computer and lessons work offline; online play (xq-007) needs the Worker. The site address,
+ * SEO (xq-010) and family links (xq-009) come later.
  */
 export default defineConfig({
   plugins: [
@@ -51,11 +51,19 @@ export default defineConfig({
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,woff,woff2}'],
         navigateFallback: '/index.html',
+        navigateFallbackDenylist: [/^\/api\//, /^\/ws\//],
         maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
       },
     }),
   ],
-  server: { port: 5176 },
-  preview: { port: 4176 },
+  // Online play needs the Xiangqi Worker (wrangler dev on :8789; Makruk uses :8787, Sittuyin :8788).
+  server: {
+    port: 5176,
+    proxy: { '/api': 'http://127.0.0.1:8789', '/ws': { target: 'ws://127.0.0.1:8789', ws: true } },
+  },
+  preview: {
+    port: 4176,
+    proxy: { '/api': 'http://127.0.0.1:8789', '/ws': { target: 'ws://127.0.0.1:8789', ws: true } },
+  },
   test: { include: ['src/**/*.test.{ts,tsx}'] },
 });

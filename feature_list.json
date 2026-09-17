@@ -1507,14 +1507,19 @@
       "milestone": "M13",
       "title": "Xiangqi online play",
       "user_visible_behavior": "Two users play a Xiangqi game online by room code, validated by the server, with no chat.",
-      "status": "not_started",
+      "status": "passing",
       "verification": [
         "apps/xiangqi/worker: GameRoom on the xiangqi variant, D1 xiangqi, registerPlayRoutes.",
         "workerd tests: illegal move rejected, out-of-turn rejected, a legal move is broadcast, the clock runs from the first move (no setup phase), a stalemate/perpetual finish stores the right winner and reason, resign stores variant 'xiangqi', chat is rejected, quick match pairs players, health reports xiangqi.",
         "apps/xiangqi/web/e2e/online.spec.ts: two browser contexts create/join by code, play 4 moves, boards and move lists match, no textbox anywhere.",
         "npm run verify (workerd tests included); the online E2E."
       ],
-      "evidence": [],
+      "evidence": [
+        "2026-09-17: apps/xiangqi/worker, adapted from apps/sittuyin/worker: Worker 'xiangqi' with static assets, registerPlayRoutes(service 'xiangqi'), GameRoom = GameRoomBase on the xiangqi variant (every move replayed through the engine, so the server also decides stalemate and perpetual check/chase), Matchmaker, D1 binding 'xiangqi' with the games migration. The D1 database_id is a placeholder and there is no route: the real database and the subdomain belong to xq-008 (D8). Local port 8789; the web dev and preview servers proxy /api and /ws there.",
+        "2026-09-17: workerd tests (vitest in workerd with real Durable Objects, hibernation and D1) 10/10: health names xiangqi; unknown API 404; rooms start from the Xiangqi start FEN; b1d2 (hobbled horse), a1a5 (chariot jumping its soldier) and b3b9 (cannon through a piece) rejected as illegal_move; Black moving first rejected as not_your_turn; h3e3 broadcast to both; the clock runs from the first move with no setup phase (running b after Red's move, w after Black's); a 12-ply line from the start (h3c3 h8h3 a1a2 b8f8 a2h2 h3i3 h2a2 i3h3 a2h2 h3i3 h2a2 i3h3, found with the engine) ends on the server as perpetual-chase won by Black and is stored in D1 with that winner and reason; a game survives Durable Object hibernation; a chat message is rejected as bad_message; a resigned game is stored with variant xiangqi; quick match pairs two players into a Xiangqi room.",
+        "2026-09-17: web: /play/online lobby and /play/online/:code room (shared OnlineLobby/OnlineRoom, anonymous seat token under xiangqi.identity), home card, online settings, zh-Hans/en online.* keys and the agreement/abandon reasons. e2e/online.spec.ts 3/3 with vite + wrangler dev: two browser contexts create and join by code (lower-case accepted), Red/Black orientation, 4 moves h3e3 h10g8 h1g3 i10h10, both move lists and both boards identical (32 pieces), no textbox on either page; an unknown code shows '找不到这个房间'; the English lobby works and only xiangqi.* storage keys exist.",
+        "2026-09-17: full Xiangqi E2E 22/22 (with the Worker), e2e:pwa 2/2, npm run build:xiangqi (web + Worker dry run) OK, npm run verify (whole repo, including the new workerd tests) exit 0. Root dev:xiangqi now starts Worker + web."
+      ],
       "notes": ""
     },
     {

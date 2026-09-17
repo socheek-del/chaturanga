@@ -1,0 +1,35 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // The Xiangqi product's own Worker: static assets, /api/*, /ws/*, its Durable Objects and its own D1.
+  // It shares no binding, database or domain with Makruk or Sittuyin (docs/PLATFORM.md).
+  "name": "xiangqi",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-01",
+  "assets": {
+    "directory": "../web/dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*", "/ws/*"]
+  },
+  "durable_objects": {
+    "bindings": [
+      { "name": "GAME_ROOM", "class_name": "GameRoom" },
+      { "name": "MATCHMAKER", "class_name": "Matchmaker" }
+    ]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["GameRoom", "Matchmaker"] }],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "xiangqi",
+      // Placeholder until xq-008 creates the production database; local dev and tests use a local database.
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "vars": {
+    "RECONNECT_GRACE_MS": "60000"
+  },
+  // No route yet: the owner chooses the subdomain at deploy time (D8, xq-008).
+  "observability": { "enabled": true }
+}

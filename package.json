@@ -14,7 +14,7 @@
     "dev": "npm run dev:makruk",
     "dev:makruk": "concurrently -n worker,web -c yellow,green \"npm run dev -w apps/makruk/worker\" \"npm run dev -w apps/makruk/web\"",
     "dev:sittuyin": "concurrently -n worker,web -c yellow,green \"npm run dev -w apps/sittuyin/worker\" \"npm run dev -w apps/sittuyin/web\"",
-    "dev:xiangqi": "npm run dev -w apps/xiangqi/web",
+    "dev:xiangqi": "concurrently -n worker,web -c yellow,green \"npm run dev -w apps/xiangqi/worker\" \"npm run dev -w apps/xiangqi/web\"",
     "lint": "eslint .",
     "format": "prettier --write .",
     "typecheck": "npm run typecheck --workspaces --if-present",
@@ -24,7 +24,7 @@
     "build": "npm run build:makruk",
     "build:makruk": "npm run build -w apps/makruk/web && npm run build -w apps/makruk/worker",
     "build:sittuyin": "npm run build -w apps/sittuyin/web && npm run build -w apps/sittuyin/worker",
-    "build:xiangqi": "npm run build -w apps/xiangqi/web",
+    "build:xiangqi": "npm run build -w apps/xiangqi/web && npm run build -w apps/xiangqi/worker",
     "deploy": "npm run deploy:makruk",
     "deploy:makruk": "npm run build -w apps/makruk/web && npm run deploy -w apps/makruk/worker",
     "deploy:sittuyin": "npm run build -w apps/sittuyin/web && npm run deploy -w apps/sittuyin/worker"

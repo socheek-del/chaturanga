@@ -32,7 +32,8 @@
   },
   "modes": {
     "single": "人机对战",
-    "local": "双人同屏"
+    "local": "双人同屏",
+    "online": "在线对战"
   },
   "home": {
     "tagline": "随时随地免费下象棋。",
@@ -42,7 +43,8 @@
     "traditional": "传统",
     "intro": "象棋是中国的传统棋类。棋子走在线的交叉点上，河界把棋盘分成两半，将帅不能离开九宫。困毙判负，长将、长捉也判负。",
     "learn": "学象棋",
-    "learnDesc": "十三节小课：棋盘、每种棋子、特殊规则和基本杀法。"
+    "learnDesc": "十三节小课：棋盘、每种棋子、特殊规则和基本杀法。",
+    "onlineDesc": "用房间号邀请朋友，或快速匹配。"
   },
   "play": {
     "start": "开始",
@@ -90,7 +92,9 @@
       "perpetual-check": "长将判负",
       "perpetual-chase": "长捉判负",
       "timeout": "超时",
-      "resign": "认输"
+      "resign": "认输",
+      "agreement": "双方同意和棋",
+      "abandon": "对手离开"
     }
   },
   "computer": {
@@ -172,5 +176,37 @@
     "unit": "第 {{number}} 单元",
     "start": "开始",
     "xpLabel": "经验值"
+  },
+  "online": {
+    "opponent": "对手",
+    "quickTitle": "快速匹配",
+    "quickHint": "选择用时，我们为你找对手。",
+    "searching": "正在寻找对手（{{pool}}）…",
+    "createTitle": "创建私人房间",
+    "color": "执子",
+    "create": "创建房间",
+    "joinTitle": "输入房间号加入",
+    "codeLabel": "房间号",
+    "join": "加入",
+    "invalidCode": "房间号是 6 个字符",
+    "notFound": "找不到这个房间",
+    "serverError": "无法连接服务器，请重试。",
+    "connecting": "正在连接…",
+    "reconnecting": "连接断开，正在重连…",
+    "waitingTitle": "房间已创建",
+    "shareHint": "把房间号或链接发给朋友就可以开始。",
+    "copyLink": "复制链接",
+    "copied": "已复制",
+    "qrAlt": "加入房间的二维码",
+    "waitingFor": "等待朋友加入…",
+    "spectating": "你正在观战",
+    "offerDraw": "提和",
+    "drawOffered": "已提和",
+    "drawOfferReceived": "对手提出和棋",
+    "accept": "接受",
+    "decline": "拒绝",
+    "opponentDisconnected": "对手已断线，{{seconds}} 秒内不回来你就获胜",
+    "rematchOffered": "等待对手接受再来一局…",
+    "rematchReceived": "对手想再来一局。点“再来一局”接受。"
   }
 }

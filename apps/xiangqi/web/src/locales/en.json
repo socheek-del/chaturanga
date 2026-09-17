@@ -1,12 +1,141 @@
 {
   "brand": "Xiangqi",
-  "colors": { "w": "Red", "b": "Black" },
-  "pieces": { "k": "General", "a": "Advisor", "b": "Elephant", "n": "Horse", "r": "Chariot", "c": "Cannon", "p": "Soldier" },
+  "app": {
+    "name": "Xiangqi",
+    "seal": "象"
+  },
+  "nav": {
+    "label": "Main",
+    "back": "Back",
+    "play": "Play",
+    "settings": "Settings"
+  },
+  "colors": {
+    "w": "Red",
+    "b": "Black"
+  },
+  "pieces": {
+    "k": "General",
+    "a": "Advisor",
+    "b": "Elephant",
+    "n": "Horse",
+    "r": "Chariot",
+    "c": "Cannon",
+    "p": "Soldier"
+  },
   "board": {
     "label": "Xiangqi board",
     "pieceName": "{{color}} {{piece}}",
     "pointWithPiece": "{{point}}, {{piece}}",
     "emptyPoint": "{{point}}, empty"
+  },
+  "modes": {
+    "single": "Play the computer",
+    "local": "Two players, one device"
+  },
+  "home": {
+    "tagline": "Play Xiangqi, Chinese chess, free on any device.",
+    "singleDesc": "Six opponents named after the pieces, from beginner to strong.",
+    "localDesc": "Pass the device back and forth.",
+    "aboutGame": "About Xiangqi",
+    "traditional": "Traditional",
+    "intro": "Xiangqi is the chess of China. Pieces stand on the points where lines cross, a river divides the board, and each general must stay inside its palace. Stalemate loses, and so does checking or chasing without end."
+  },
+  "play": {
+    "start": "Start",
+    "turn": "{{color}} to move",
+    "check": "Check",
+    "captured": "Captured pieces",
+    "clockOf": "{{color}}'s clock",
+    "moves": "Moves",
+    "noMoves": "No moves yet",
+    "first": "First move",
+    "back": "Previous move",
+    "forward": "Next move",
+    "last": "Latest move",
+    "flip": "Flip the board",
+    "undo": "Take back",
+    "resign": "Resign",
+    "backToLive": "Back to the game",
+    "newGame": "New game",
+    "rematch": "Play again",
+    "review": "Look at the board",
+    "cancel": "Cancel",
+    "resignConfirm": "Resign for {{color}}?",
+    "timeControl": "Time",
+    "noClock": "No clock",
+    "custom": "Custom",
+    "minutes": "Minutes",
+    "increment": "Increment (s)",
+    "categories": {
+      "bullet": "Bullet",
+      "blitz": "Blitz",
+      "rapid": "Rapid",
+      "classical": "Classical"
+    },
+    "result": {
+      "whiteWins": "Red wins",
+      "blackWins": "Black wins",
+      "draw": "Draw"
+    },
+    "reason": {
+      "checkmate": "Checkmate",
+      "stalemate": "Stalemate: no legal move loses",
+      "repetition": "Threefold repetition",
+      "fifty-move": "Fifty moves without a capture",
+      "insufficient-material": "Neither side can checkmate",
+      "perpetual-check": "Perpetual check loses",
+      "perpetual-chase": "Perpetual chase loses",
+      "timeout": "Out of time",
+      "resign": "Resigned"
+    }
+  },
+  "computer": {
+    "chooseBot": "Choose an opponent",
+    "level": "Level {{level}}",
+    "side": "Your side",
+    "sideWhite": "Red",
+    "sideBlack": "Black",
+    "sideRandom": "Random",
+    "you": "You",
+    "thinking": "{{name}} is thinking",
+    "hint": "Hint"
+  },
+  "bots": {
+    "soldier": {
+      "name": "Soldier",
+      "desc": "Just learning. Plays quickly and loosely."
+    },
+    "advisor": {
+      "name": "Advisor",
+      "desc": "Sees captures one move ahead."
+    },
+    "elephant": {
+      "name": "Elephant",
+      "desc": "Steady and careful."
+    },
+    "horse": {
+      "name": "Horse",
+      "desc": "Quick to punish a mistake."
+    },
+    "cannon": {
+      "name": "Cannon",
+      "desc": "Plans several moves ahead."
+    },
+    "chariot": {
+      "name": "Chariot",
+      "desc": "The strongest. Expect no gifts."
+    }
+  },
+  "settings": {
+    "language": "Language",
+    "appearance": "Appearance",
+    "system": "System",
+    "light": "Light",
+    "dark": "Dark",
+    "board": "Board",
+    "play": "Play",
+    "coordinates": "Show coordinates"
   },
   "design": {
     "title": "Design",
@@ -19,7 +148,11 @@
     "cards": "Cards",
     "controls": "Controls",
     "boards": "Boards",
-    "board": { "maple": "Maple", "xuan": "Xuan paper", "night": "Ink night" },
+    "board": {
+      "maple": "Maple",
+      "xuan": "Xuan paper",
+      "night": "Ink night"
+    },
     "sample": "Sample"
   }
 }

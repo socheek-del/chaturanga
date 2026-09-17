@@ -1,5 +1,15 @@
 {
   "brand": "象棋",
+  "app": {
+    "name": "象棋",
+    "seal": "象"
+  },
+  "nav": {
+    "label": "主菜单",
+    "back": "返回",
+    "play": "下棋",
+    "settings": "设置"
+  },
   "colors": {
     "w": "红方",
     "b": "黑方"
@@ -18,6 +28,114 @@
     "pieceName": "{{color}}{{piece}}",
     "pointWithPiece": "{{point}}，{{piece}}",
     "emptyPoint": "{{point}}，空"
+  },
+  "modes": {
+    "single": "人机对战",
+    "local": "双人同屏"
+  },
+  "home": {
+    "tagline": "随时随地免费下象棋。",
+    "singleDesc": "六位以棋子命名的对手，从入门到高手。",
+    "localDesc": "两人轮流使用同一台设备。",
+    "aboutGame": "关于象棋",
+    "traditional": "传统",
+    "intro": "象棋是中国的传统棋类。棋子走在线的交叉点上，河界把棋盘分成两半，将帅不能离开九宫。困毙判负，长将、长捉也判负。"
+  },
+  "play": {
+    "start": "开始",
+    "turn": "轮到{{color}}",
+    "check": "将军",
+    "captured": "被吃的棋子",
+    "clockOf": "{{color}}的时钟",
+    "moves": "着法",
+    "noMoves": "还没有着法",
+    "first": "第一步",
+    "back": "上一步",
+    "forward": "下一步",
+    "last": "最新一步",
+    "flip": "翻转棋盘",
+    "undo": "悔棋",
+    "resign": "认输",
+    "backToLive": "回到对局",
+    "newGame": "新对局",
+    "rematch": "再来一局",
+    "review": "查看棋盘",
+    "cancel": "取消",
+    "resignConfirm": "{{color}}认输？",
+    "timeControl": "用时",
+    "noClock": "不计时",
+    "custom": "自定义",
+    "minutes": "分钟",
+    "increment": "每步加秒",
+    "categories": {
+      "bullet": "超快棋",
+      "blitz": "快棋",
+      "rapid": "中速棋",
+      "classical": "慢棋"
+    },
+    "result": {
+      "whiteWins": "红方胜",
+      "blackWins": "黑方胜",
+      "draw": "和棋"
+    },
+    "reason": {
+      "checkmate": "将死",
+      "stalemate": "困毙：无子可走判负",
+      "repetition": "三次重复局面",
+      "fifty-move": "五十回合无吃子",
+      "insufficient-material": "双方都无法将死",
+      "perpetual-check": "长将判负",
+      "perpetual-chase": "长捉判负",
+      "timeout": "超时",
+      "resign": "认输"
+    }
+  },
+  "computer": {
+    "chooseBot": "选择对手",
+    "level": "第 {{level}} 级",
+    "side": "执子",
+    "sideWhite": "红方",
+    "sideBlack": "黑方",
+    "sideRandom": "随机",
+    "you": "你",
+    "thinking": "{{name}}正在思考",
+    "hint": "提示"
+  },
+  "bots": {
+    "soldier": {
+      "name": "兵",
+      "desc": "刚学会下棋，走得快也走得随意。"
+    },
+    "advisor": {
+      "name": "士",
+      "desc": "能看到下一步的吃子。"
+    },
+    "elephant": {
+      "name": "相",
+      "desc": "稳健谨慎。"
+    },
+    "horse": {
+      "name": "傌",
+      "desc": "善于抓住失误。"
+    },
+    "cannon": {
+      "name": "炮",
+      "desc": "能算好几步。"
+    },
+    "chariot": {
+      "name": "俥",
+      "desc": "最强的对手，不会让着你。"
+    }
+  },
+  "settings": {
+    "language": "语言",
+    "appearance": "外观",
+    "system": "跟随系统",
+    "light": "浅色",
+    "dark": "深色",
+    "board": "棋盘",
+    "play": "对局",
+    "coordinates": "显示坐标"
   },
   "design": {
     "title": "设计",

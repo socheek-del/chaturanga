@@ -1462,7 +1462,7 @@
       "milestone": "M13",
       "title": "Xiangqi web app: pass-and-play, computer, PWA, languages",
       "user_visible_behavior": "A user plays Xiangqi locally or vs computer on an installable, offline-capable PWA in Simplified Chinese (default) or English.",
-      "status": "not_started",
+      "status": "in_progress",
       "verification": [
         "play.spec.ts: tap/drag moves; illegal targets refused (horse leg, elephant across the river, a flying-general move not offered); undo; board flips for Black.",
         "computer.spec.ts: the bot replies as both colors; a hint shows.",
@@ -1472,8 +1472,12 @@
         "Game-over dialog shows the winner (not 'draw') on a stalemate.",
         "npm run verify; npm run e2e -w apps/xiangqi/web; npm run e2e:pwa -w apps/xiangqi/web."
       ],
-      "evidence": [],
-      "notes": "Depends on xq-004's approved art/theme. D1-D10 owner decisions accepted 2026-09-15 (see docs/PLATFORM.md)."
+      "evidence": [
+        "2026-09-17: apps/xiangqi/web grows from the xq-004 showcase into the playable site, adapted from apps/sittuyin/web: router (home, play/local, play/computer, settings, design), AppShell with focus mode (Learn/About join with xq-006/xq-010), ThemeController, persisted settings (language, colour scheme, board theme maple/xuan/night, coordinates, time control, bot level and side), local and computer sessions saved in localStorage, the shared GameScreen on grid='points' with BoardLines underlay and carved-disc pieces, TimeControlPicker, six bots from @chaturanga/xiangqi-ai in a Web Worker. The worker receives the start FEN and the move list and rebuilds a Game, so bots see the whole history and avoid losing perpetual checks/chases (xq-003 hook). Hint button. Installable PWA (vite-plugin-pwa, manifest lang zh-Hans, icons generated from the 帥 glyph by scripts/generate-icons.mjs), pre-paint theme/language script. zh-Hans and en locales, complete per describeLocales, including play.reason.perpetual-check/perpetual-chase and a stalemate reason that says it loses.",
+        "2026-09-17: E2E (npx playwright test, vite only, no Worker yet) 16/16: play.spec 9 (points board of 90 with 32 pieces and the underlay; tapped move, SAN Che3 and undo; dragged move; hobbled horse b1 offered only a3/c3; elephant on c5 offered only a3/e3, never across the river; the lone horse screen between the generals on e5 is offered nothing while the general gets d1/e2/f1; flip to Black; stalemate i8i9 shows the dialog '红方胜' with reason '困毙：无子可走判负'; refresh restores the game), computer.spec 3 (bot replies as Black; bot opens as Red with the board flipped; hint marks two points), i18n.spec 3 (html lang zh-Hans by default; ?lang=en persists after reload; English chosen in settings persists after reload), mobile.spec 1 (390x844: whole 9x10 board inside the viewport at a 10/9 height ratio, nav hidden, no horizontal scroll; e2e-evidence/play-390.png reviewed). e2e:pwa 2/2 (installable with no installability errors; offline computer game and local game).",
+        "2026-09-17: npm run verify (whole repo) exit 0; npm run build:xiangqi OK (593 kB js / 35 kB css, precache 19 entries 784 KiB, Noto Sans latin only, no CJK font file); root scripts dev:xiangqi and build:xiangqi; CI verify job now also runs npm run build:xiangqi."
+      ],
+      "notes": "Depends on xq-004's approved art/theme. D1-D10 owner decisions accepted 2026-09-15 (see docs/PLATFORM.md). Every verification step passes, but the site is styled on the 'Mo' proposal, which the owner has not approved yet, so this stays in_progress until xq-004 is approved. A different direction only changes index.css tokens, board themes, BoardLines and PieceSvg; re-run the E2E and PWA suites after restyling."
     },
     {
       "id": "xq-006",

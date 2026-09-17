@@ -21,7 +21,8 @@ export interface FamilyLink {
   defaultLocale: string;
 }
 
-const SITES: Record<GameId, { url: string; locales: readonly string[]; defaultLocale: string }> = {
+/** Each game's own site settings, read from its product.config and site.config. */
+export const SITES: Readonly<Record<GameId, { url: string; locales: readonly string[]; defaultLocale: string }>> = {
   makruk: { url: MAKRUK_URL, locales: MAKRUK.locales, defaultLocale: MAKRUK.defaultLocale },
   sittuyin: { url: SITTUYIN_URL, locales: SITTUYIN.locales, defaultLocale: SITTUYIN.defaultLocale },
 };

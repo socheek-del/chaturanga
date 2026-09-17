@@ -1530,12 +1530,16 @@
       "milestone": "M13",
       "title": "Family tests independent of the number of games",
       "user_visible_behavior": "The 'more games' links and their tests work for any number of sibling games, so adding a game never requires editing another game's test files again.",
-      "status": "not_started",
+      "status": "passing",
       "verification": [
         "packages/family/src/family.test.ts, apps/makruk/web/e2e/family.spec.ts and apps/sittuyin/web/e2e/family.spec.ts loop over familyLinks(id) instead of asserting a fixed sibling count.",
         "npm run verify; both products' family.spec.ts."
       ],
-      "evidence": [],
+      "evidence": [
+        "2026-09-17: packages/family/src/sites.ts exports SITES (read-only). family.test.ts (5 tests) now loops: SITE_LANGUAGES equals the union of every site's locales (no hardcoded ['en','my','th']); every game is named in every one; SITES and GAMES list the same ids; for every game, familyLinks(id) is exactly the other games, each link carrying the sibling's names and SITES entry. The only per-game lines left are the ones that read each game's own product.config and site.config, and that part of the shared package already changes when a game joins (sites.ts imports those configs).",
+        "2026-09-17: apps/makruk/web/e2e/family.spec.ts and apps/sittuyin/web/e2e/family.spec.ts rewritten from one template: siblings = familyLinks(SITE), languages from the app's own PRODUCT (default and the other locale). For every sibling it checks the section and footer link name in the home language and its href (?lang only when the sibling speaks it and it isn't the sibling's default), the footer on /learn in the other language, link counts equal to siblings.length, and that no sibling name appears in a language the site doesn't speak (replacing the fixed Burmese/Thai script checks). Neither spec names another game any more.",
+        "2026-09-17: Makruk family.spec 1/1 and Sittuyin family.spec 1/1 (Playwright); lint and tsc clean for both apps and packages/family; npm run verify (whole repo) exit 0."
+      ],
       "notes": "The last time those two apps' test files change for a new game joining the family."
     },
     {

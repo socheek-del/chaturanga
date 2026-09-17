@@ -102,6 +102,49 @@ describe('search on a SearchAdapter (sit-004)', () => {
   });
 });
 
+describe('decisive repetitions (xq-003)', () => {
+  /** Nim whose repetitions are decisive: a repeated position loses for the side that just moved into it. */
+  class StrictNim extends Nim {
+    repetitionScore() {
+      return MATE - 1;
+    }
+  }
+
+  it('uses the adapter score for a root move that repeats a position', () => {
+    // From 6 stones taking 2 leaves 4 (the forced win), but that position was seen: now it loses.
+    const result = search(new StrictNim(6), { maxDepth: 6, history: ['4 1'], contempt: 50 });
+    expect(result.rootMoves.find((r) => r.move === 2)!.score).toBe(-(MATE - 1));
+  });
+
+  it("uses the adapter score for the opponent's reply recreating a position", () => {
+    // Taking 3 from 7 leaves 4; every reply recreates a known position, which now loses for the replier.
+    const result = search(new StrictNim(7), { maxDepth: 4, history: ['3 0', '2 0', '1 0'], contempt: 40 });
+    expect(result.rootMoves.find((r) => r.move === 3)!.score).toBe(MATE - 1);
+  });
+
+  it('still searches an undecided root repetition, so a losing reply shows through', () => {
+    // Taking 2 from 6 repeats '4 1' (undecided); every reply repeats again and loses for the root side.
+    class LateNim extends Nim {
+      repetitionScore() {
+        return this.key() === '4 1' ? undefined : -(MATE - 1);
+      }
+    }
+    const history = ['4 1', '3 0', '2 0', '1 0'];
+    const result = search(new LateNim(6), { maxDepth: 6, history, contempt: 50 });
+    expect(result.rootMoves.find((r) => r.move === 2)!.score).toBe(-(MATE - 1));
+  });
+
+  it('falls back to the contempt draw when the adapter returns undefined', () => {
+    class DrawNim extends Nim {
+      repetitionScore() {
+        return undefined;
+      }
+    }
+    const result = search(new DrawNim(6), { maxDepth: 6, history: ['4 1'], contempt: 50 });
+    expect(result.rootMoves.find((r) => r.move === 2)!.score).toBe(-50);
+  });
+});
+
 describe('pickRootMove (sit-004)', () => {
   const result = {
     move: 1,

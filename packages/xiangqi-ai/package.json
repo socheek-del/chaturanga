@@ -1,23 +1,23 @@
 {
-  "name": "@chaturanga/xiangqi",
+  "name": "@chaturanga/xiangqi-ai",
   "version": "0.0.0",
   "private": true,
   "type": "module",
   "license": "GPL-3.0-or-later",
   "exports": {
-    ".": "./src/index.ts",
-    "./core": "./src/core.ts"
+    ".": "./src/index.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:deep": "PERFT_DEEP=1 vitest run",
-    "perft:reference": "node scripts/perft-reference.cjs"
+    "test:strength": "node scripts/strength.mjs"
   },
   "dependencies": {
-    "@chaturanga/rules-core": "*"
+    "@chaturanga/ai-core": "*",
+    "@chaturanga/rules-core": "*",
+    "@chaturanga/xiangqi": "*"
   },
   "devDependencies": {
-    "ffish": "^0.7.10"
+    "esbuild": "^0.28.1"
   }
 }

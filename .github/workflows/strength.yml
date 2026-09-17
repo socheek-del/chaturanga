@@ -1,6 +1,6 @@
 name: Bot strength ladder
 
-# ai-002 (Makruk) and sit-004 (Sittuyin) evidence. The ladder is CPU-heavy (Makruk L6 vs L5 ≈ 15 min per
+# ai-002 (Makruk), sit-004 (Sittuyin) and xq-003 (Xiangqi) evidence. The ladder is CPU-heavy (Makruk L6 vs L5 ≈ 15 min per
 # game on one core), so it runs on demand across parallel runners instead of on a laptop. Games are
 # deterministic (node-limited search, fixed seeds), so results match a local
 # `npm run test:strength -w <package>`.
@@ -16,6 +16,7 @@ on:
         options:
           - packages/ai
           - packages/sittuyin-ai
+          - packages/xiangqi-ai
       pair:
         description: 'Pair n = level n+1 vs level n (1–5)'
         required: true
@@ -55,7 +56,7 @@ jobs:
           pids=()
           for k in $(seq 0 $((SHARDS_PER_JOB - 1))); do
             STRENGTH_SHARD=$(( ${{ matrix.job }} * SHARDS_PER_JOB + k ))/$count \
-              npx vitest run src/strength.test.ts > "shard-$k.log" 2>&1 &
+              npm run test:strength > "shard-$k.log" 2>&1 &
             pids+=($!)
           done
           status=0
@@ -94,7 +95,7 @@ jobs:
           STRENGTH_GAMES: ${{ inputs.games }}
         run: |
           cat ../../games/*/strength-games.log > strength-games.log
-          npx vitest run src/strength.test.ts
+          npm run test:strength
       - name: Summary
         if: always()
         working-directory: ${{ inputs.package }}

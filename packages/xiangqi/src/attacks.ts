@@ -17,9 +17,17 @@ import {
 } from './board';
 import type { Square } from './types';
 
+/** The nine palace points of each colour, where a general always stands in a legal game. */
+const PALACE_POINTS: readonly [Square[], Square[]] = [
+  [3, 4, 5, 12, 13, 14, 21, 22, 23],
+  [84, 85, 86, 75, 76, 77, 66, 67, 68],
+];
+
 /** Square of the general of colour `c`, or -1 when it is not on the board. */
 export function findGeneral(board: Board, c: ColorIndex): Square {
   const code = GENERAL | colorBits(c);
+  // Hot path for search: look in the palace first, then anywhere (a FEN may place a general elsewhere).
+  for (const sq of PALACE_POINTS[c]) if (board[sq] === code) return sq;
   for (let sq = 0; sq < board.length; sq++) if (board[sq] === code) return sq;
   return -1;
 }

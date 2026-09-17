@@ -43,6 +43,7 @@ export default defineConfig(
       'packages/rules-core/src/**/*.ts',
       'packages/ai-core/src/**/*.ts',
       'packages/sittuyin-ai/src/**/*.ts',
+      'packages/xiangqi-ai/src/**/*.ts',
     ],
     ignores: ['packages/*/src/**/*.test.ts', 'packages/*/src/testing/**'],
     rules: {

@@ -26,6 +26,14 @@ export interface SearchAdapter {
   orderKey(move: number): number;
   /** Position identity for repetition, comparable with the `history` keys. */
   key(): string;
+  /**
+   * Optional, for games where a repetition can be decisive (Xiangqi: perpetual check or chase loses). Called
+   * only for a position found in `history`; returns its score from the point of view of the side to move, or
+   * undefined when the repetition is not decided yet. For an adapter with this hook, an undecided root move is
+   * still searched, so it is worth at most a draw with contempt but can lose (the reply completes a perpetual).
+   * Adapters without the hook keep the default: every repetition is a draw with contempt.
+   */
+  repetitionScore?(): number | undefined;
 }
 
 export interface SearchOptions {
@@ -112,7 +120,7 @@ export function search(adapter: SearchAdapter, options: SearchOptions): SearchRe
     // The opponent's reply recreating an earlier position is a draw too: without this, a stronger bot walks
     // into lines where the weaker side can repeat. Only near the root, where the key's string cost is small.
     if (ply === REPETITION_PLY && seen.size > 0 && seen.has(adapter.key())) {
-      return adapter.turn() === root ? -contempt : contempt;
+      return adapter.repetitionScore?.() ?? (adapter.turn() === root ? -contempt : contempt);
     }
     const checked = adapter.inCheck();
     if (checked && ply < MAX_PLY) depth++; // check extension: don't stop the search in the middle of a mating attack
@@ -129,6 +137,14 @@ export function search(adapter: SearchAdapter, options: SearchOptions): SearchRe
       if (score > alpha) alpha = score;
     }
     return alpha;
+  };
+
+  /** Score (for the root side) of a root move that recreates an earlier position; the move is already made. */
+  const repeatedRootScore = (depth: number, beta: number): number => {
+    if (!adapter.repetitionScore) return -contempt;
+    const decided = adapter.repetitionScore();
+    if (decided !== undefined) return -decided;
+    return Math.min(-contempt, -negamax(depth - 1, -MATE - 1, beta, 1));
   };
 
   let rootMoves: RootMove[] = adapter.legalMoves().map((move) => ({ move, score: 0 }));
@@ -150,7 +166,8 @@ export function search(adapter: SearchAdapter, options: SearchOptions): SearchRe
       adapter.make(m);
       // Exact root scores need a full window for every move (bot noise picks among them).
       const beta = exactRootScores ? MATE + 1 : -alpha;
-      const score = seen.size > 0 && seen.has(adapter.key()) ? -contempt : -negamax(depth - 1, -MATE - 1, beta, 1);
+      const score =
+        seen.size > 0 && seen.has(adapter.key()) ? repeatedRootScore(depth, beta) : -negamax(depth - 1, -MATE - 1, beta, 1);
       adapter.unmake();
       if (stopped) break;
       scored.push({ move: m, score });

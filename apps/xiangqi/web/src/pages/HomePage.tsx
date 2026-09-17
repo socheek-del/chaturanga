@@ -1,11 +1,12 @@
 import { Badge, Card } from '@chaturanga/ui';
-import { Cpu, Users } from 'lucide-react';
+import { Cpu, GraduationCap, Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 
 const MODES = [
   { to: '/play/computer', key: 'modes.single', desc: 'home.singleDesc', icon: Cpu },
   { to: '/play/local', key: 'modes.local', desc: 'home.localDesc', icon: Users },
+  { to: '/learn', key: 'home.learn', desc: 'home.learnDesc', icon: GraduationCap },
 ];
 
 export function HomePage() {

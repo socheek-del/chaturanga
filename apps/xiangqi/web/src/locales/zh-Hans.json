@@ -8,7 +8,8 @@
     "label": "主菜单",
     "back": "返回",
     "play": "下棋",
-    "settings": "设置"
+    "settings": "设置",
+    "learn": "学习"
   },
   "colors": {
     "w": "红方",
@@ -39,7 +40,9 @@
     "localDesc": "两人轮流使用同一台设备。",
     "aboutGame": "关于象棋",
     "traditional": "传统",
-    "intro": "象棋是中国的传统棋类。棋子走在线的交叉点上，河界把棋盘分成两半，将帅不能离开九宫。困毙判负，长将、长捉也判负。"
+    "intro": "象棋是中国的传统棋类。棋子走在线的交叉点上，河界把棋盘分成两半，将帅不能离开九宫。困毙判负，长将、长捉也判负。",
+    "learn": "学象棋",
+    "learnDesc": "十三节小课：棋盘、每种棋子、特殊规则和基本杀法。"
   },
   "play": {
     "start": "开始",
@@ -154,5 +157,20 @@
       "night": "墨夜"
     },
     "sample": "示例"
+  },
+  "learn": {
+    "title": "课程",
+    "exit": "退出课程",
+    "progress": "课程进度",
+    "check": "检查",
+    "continue": "继续",
+    "correct": "答对了！",
+    "wrong": "还差一点",
+    "tryAgain": "再试一次",
+    "complete": "课程完成！",
+    "stars": "{{count}} 颗星",
+    "unit": "第 {{number}} 单元",
+    "start": "开始",
+    "xpLabel": "经验值"
   }
 }

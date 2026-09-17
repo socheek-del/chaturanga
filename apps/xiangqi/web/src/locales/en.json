@@ -8,7 +8,8 @@
     "label": "Main",
     "back": "Back",
     "play": "Play",
-    "settings": "Settings"
+    "settings": "Settings",
+    "learn": "Learn"
   },
   "colors": {
     "w": "Red",
@@ -39,7 +40,9 @@
     "localDesc": "Pass the device back and forth.",
     "aboutGame": "About Xiangqi",
     "traditional": "Traditional",
-    "intro": "Xiangqi is the chess of China. Pieces stand on the points where lines cross, a river divides the board, and each general must stay inside its palace. Stalemate loses, and so does checking or chasing without end."
+    "intro": "Xiangqi is the chess of China. Pieces stand on the points where lines cross, a river divides the board, and each general must stay inside its palace. Stalemate loses, and so does checking or chasing without end.",
+    "learn": "Learn Xiangqi",
+    "learnDesc": "Thirteen short lessons: the board, every piece, the special rules and basic mates."
   },
   "play": {
     "start": "Start",
@@ -154,5 +157,20 @@
       "night": "Ink night"
     },
     "sample": "Sample"
+  },
+  "learn": {
+    "title": "Lessons",
+    "exit": "Leave lesson",
+    "progress": "Lesson progress",
+    "check": "Check",
+    "continue": "Continue",
+    "correct": "Correct!",
+    "wrong": "Not quite",
+    "tryAgain": "Try again",
+    "complete": "Lesson complete!",
+    "stars": "Stars: {{count}}",
+    "unit": "Unit {{number}}",
+    "start": "Start",
+    "xpLabel": "Experience points"
   }
 }

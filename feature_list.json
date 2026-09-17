@@ -1487,12 +1487,16 @@
       "milestone": "M13",
       "title": "Xiangqi lessons",
       "user_visible_behavior": "A beginner learns the board, every piece, the flying general, repetition rules and basic mating patterns through interactive lessons in Chinese and English.",
-      "status": "not_started",
+      "status": "passing",
       "verification": [
         "lessons.test.ts: describeLessons coverage, every piece type has its own lesson, squares answers enforced by targetsOf, text present in both languages.",
         "learn.spec.ts completes one lesson in each language."
       ],
-      "evidence": [],
+      "evidence": [
+        "2026-09-17: apps/xiangqi/web/src/features/learn/lessons.ts: 13 lessons in 4 units, every text in zh-Hans and en. The board: points, river, palaces, tap the five Soldiers. The pieces: General (incl. why f2 is refused by the flying general), Advisor, Elephant (and a blocked eye, and no crossing the river), Horse (and hobbled), Chariot (targets and a capture), Cannon (screen capture, never over two), Soldier (before and after the river). Special rules: flying general (targets + the lone screen may not move), check and checkmate, stalemate loses, repetition (idle draw, perpetual check loses, perpetual chase loses). Basic mates: cannon behind horse, chariot with the General controlling the file. LessonPlayer on grid='points' with the BoardLines underlay, LearnPage with seal-shaped lesson markers in the Mo palette, LessonPage, a progress store under the xiangqi. prefix, a /learn route, a Learn nav entry and a home card.",
+        "2026-09-17: lessons.test.ts (55 unit tests with the rest of the app): describeLessons(PRODUCT, xiangqi, ALL_LESSONS), so every FEN parses, every move solution is legal, every squares answer with targetsOf equals the engine's legal destinations (10 such steps) and both languages are filled. Plus: every unit and quiz choice in both languages; the exact unit and lesson list; every piece type has its own lesson; every squares step asking where a piece can go names targetsOf; every mate solution (a1a10, a1d1, a3e3, h2d2) is checkmate for Red; every ending claim (stalemate i8i9 wins for Red, idle horse shuffle draws, a9/a10 perpetual check loses for Red, chariot-follows-cannon perpetual chase loses for Red) replays through Game.status() exactly. The first run caught two bad fixtures in the flying-general lesson (both generals on an open file, and an empty squares answer), fixed.",
+        "2026-09-17: e2e/learn.spec.ts 3/3: the path lists 13 lessons in 4 units at 0 XP; the Advisor lesson completed in Chinese with a wrong answer first (+10 XP, marked completed on the path); the Chariot lesson completed in English (squares step, capture move with its success text, 3 stars). Full Xiangqi E2E 19/19; npm run verify (whole repo) exit 0."
+      ],
       "notes": ""
     },
     {

@@ -1,0 +1,166 @@
+@import 'tailwindcss';
+/* Shared UI packages live outside this app folder; let Tailwind see their classes. */
+@source '../../../../packages/board-ui/src';
+@source '../../../../packages/game-shell/src/ui';
+@source '../../../../packages/ui/src';
+
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/*
+ * "Mo" (墨, ink) design tokens (apps/xiangqi/docs/design.md): ink and a cinnabar seal on xuan paper for the
+ * interface, a maple-wood board with carved discs for play. Light is the default; `-shadow` = stronger shade.
+ */
+:root,
+[data-theme='light'] {
+  --canvas: #f5f0e6;
+  --surface: #fffdf8;
+  --surface-2: #ebe3d3;
+  --line: #d9cdb7;
+  --ink: #1e1a16;
+  --muted: #5e554a;
+  --subtle: #9a8f80;
+
+  --primary: #2a2622;
+  --primary-shadow: #171411;
+  --primary-soft: #e6dfd2;
+  --secondary: #b3412a;
+  --secondary-shadow: #8e3220;
+  --secondary-soft: #f6e1da;
+  --danger: #a51d3c;
+  --danger-shadow: #7f162e;
+  --danger-soft: #f5dde3;
+  --warning: #b07a12;
+  --warning-shadow: #87600f;
+  --warning-soft: #f5e9cf;
+  --gold: #9c7a35;
+  --gold-shadow: #7a5f29;
+  --on-accent: #fffdf8;
+  --on-warning: #2a2006;
+  --on-gold: #1e1a16;
+  --scrim: #0e0c0a;
+
+  --card-shadow: 0 1px 2px rgb(30 26 22 / 0.08), 0 8px 24px -12px rgb(30 26 22 / 0.22);
+
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  --canvas: #14120f;
+  --surface: #1d1a16;
+  --surface-2: #2a2620;
+  --line: #3a342c;
+  --ink: #f1ebdf;
+  --muted: #b8ad9c;
+  --subtle: #7d7366;
+
+  --primary: #efe6d4;
+  --primary-shadow: #d3c7b0;
+  --primary-soft: #3a342b;
+  --secondary: #e5775f;
+  --secondary-shadow: #c95e47;
+  --secondary-soft: #3e211a;
+  --danger: #f07c96;
+  --danger-shadow: #d25f79;
+  --danger-soft: #3f1d26;
+  --warning: #e8b64f;
+  --warning-shadow: #c99a36;
+  --warning-soft: #372b13;
+  --gold: #d6b56c;
+  --gold-shadow: #b89650;
+  --on-accent: #14120f;
+  --on-warning: #2a2006;
+  --on-gold: #14120f;
+  --scrim: #050403;
+
+  --card-shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 10px 28px -14px rgb(0 0 0 / 0.7);
+
+  color-scheme: dark;
+}
+
+@theme inline {
+  /* D9: the system CJK font for Chinese, self-hosted Noto Sans for Latin. No CJK font file is ever loaded. */
+  --font-sans: 'Noto Sans', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC', ui-sans-serif, system-ui, sans-serif;
+  --shadow-card: var(--card-shadow);
+
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-primary: var(--primary);
+  --color-primary-shadow: var(--primary-shadow);
+  --color-primary-soft: var(--primary-soft);
+  --color-secondary: var(--secondary);
+  --color-secondary-shadow: var(--secondary-shadow);
+  --color-secondary-soft: var(--secondary-soft);
+  --color-danger: var(--danger);
+  --color-danger-shadow: var(--danger-shadow);
+  --color-danger-soft: var(--danger-soft);
+  --color-warning: var(--warning);
+  --color-warning-shadow: var(--warning-shadow);
+  --color-warning-soft: var(--warning-soft);
+  --color-gold: var(--gold);
+  --color-gold-shadow: var(--gold-shadow);
+  --color-on-accent: var(--on-accent);
+  --color-on-warning: var(--on-warning);
+  --color-on-gold: var(--on-gold);
+  --color-scrim: var(--scrim);
+}
+
+html,
+body {
+  background: var(--canvas);
+  color: var(--ink);
+}
+
+body {
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Seal motif for hero areas: a vermilion square seal and faint ink-wash bands. Needs `relative overflow-hidden`. */
+.motif-mo::after {
+  content: '';
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: 50%;
+  pointer-events: none;
+  background:
+    linear-gradient(transparent 0 46%, rgb(255 255 255 / 0.08) 46% 54%, transparent 54%),
+    radial-gradient(ellipse at 80% 20%, rgb(255 255 255 / 0.12), transparent 60%);
+  mask-image: linear-gradient(to left, black 20%, transparent);
+}
+
+.seal {
+  display: inline-grid;
+  place-items: center;
+  border: 2px solid currentColor;
+  border-radius: 0.35rem;
+  color: var(--secondary);
+}
+
+/* The moved piece slides in from its origin point. */
+@keyframes piece-slide {
+  from {
+    transform: translate(var(--dx), var(--dy));
+  }
+  to {
+    transform: translate(0, 0);
+  }
+}
+
+.piece-slide {
+  animation: piece-slide 170ms cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

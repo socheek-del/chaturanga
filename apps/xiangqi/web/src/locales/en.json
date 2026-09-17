@@ -1,0 +1,25 @@
+{
+  "brand": "Xiangqi",
+  "colors": { "w": "Red", "b": "Black" },
+  "pieces": { "k": "General", "a": "Advisor", "b": "Elephant", "n": "Horse", "r": "Chariot", "c": "Cannon", "p": "Soldier" },
+  "board": {
+    "label": "Xiangqi board",
+    "pieceName": "{{color}} {{piece}}",
+    "pointWithPiece": "{{point}}, {{piece}}",
+    "emptyPoint": "{{point}}, empty"
+  },
+  "design": {
+    "title": "Design",
+    "intro": "The Xiangqi site's own look: ink and a cinnabar seal, a maple board and carved pieces.",
+    "swatches": "Colours",
+    "buttons": "Buttons",
+    "pieces": "Pieces",
+    "typography": "Typography",
+    "typographySample": "Xiangqi is the traditional chess of China.",
+    "cards": "Cards",
+    "controls": "Controls",
+    "boards": "Boards",
+    "board": { "maple": "Maple", "xuan": "Xuan paper", "night": "Ink night" },
+    "sample": "Sample"
+  }
+}

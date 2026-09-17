@@ -1,0 +1,40 @@
+{
+  "brand": "象棋",
+  "colors": {
+    "w": "红方",
+    "b": "黑方"
+  },
+  "pieces": {
+    "k": "帅/将",
+    "a": "仕/士",
+    "b": "相/象",
+    "n": "马",
+    "r": "车",
+    "c": "炮",
+    "p": "兵/卒"
+  },
+  "board": {
+    "label": "象棋棋盘",
+    "pieceName": "{{color}}{{piece}}",
+    "pointWithPiece": "{{point}}，{{piece}}",
+    "emptyPoint": "{{point}}，空"
+  },
+  "design": {
+    "title": "设计",
+    "intro": "象棋网站的专属风格：墨色与朱砂印章，枫木棋盘与刻字棋子。",
+    "swatches": "颜色",
+    "buttons": "按钮",
+    "pieces": "棋子",
+    "typography": "文字",
+    "typographySample": "象棋是中国的传统棋类游戏。",
+    "cards": "卡片",
+    "controls": "控件",
+    "boards": "棋盘",
+    "board": {
+      "maple": "枫木",
+      "xuan": "宣纸",
+      "night": "墨夜"
+    },
+    "sample": "示例"
+  }
+}

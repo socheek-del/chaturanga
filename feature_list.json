@@ -1440,14 +1440,19 @@
       "milestone": "M13",
       "title": "Xiangqi design identity and piece art (owner approval gate)",
       "user_visible_behavior": "Xiangqi has its own visual identity (not Makruk's Wat, not Sittuyin's Daung, not Duolingo) with SVG-path piece characters, approved by the owner.",
-      "status": "not_started",
+      "status": "in_progress",
       "verification": [
         "apps/xiangqi/docs/design.md written: palette (light+dark, every token listed in packages/ui/TOKENS.md), typography, board look, and a piece set for all 7 types x 2 colors.",
         "DesignPage.tsx showcase plus a capture-design.mjs script; screenshots at 390/1280px, light+dark, saved to apps/xiangqi/docs/evidence/.",
         "Owner reviews and approves the direction; the feature stays in_progress until approved."
       ],
-      "evidence": [],
-      "notes": "Stays in_progress until the owner signs off, the same pattern as sit-005."
+      "evidence": [
+        "2026-09-17: apps/xiangqi/docs/design.md proposes 'Mo' (墨, ink): ink primary and seal-vermilion secondary on xuan paper, maple board, carved-disc pieces. It lists every TOKENS.md colour for light and dark, typography per D9 (system CJK stack plus self-hosted Noto Sans latin 400/600), the three board themes (maple default, xuan paper, ink night), the piece set, a comparison table against Makruk 'Wat' and Sittuyin 'Daung', and three open questions for the owner. Contrast figures in the doc were computed, not estimated (muted 7.2:1 on surface, paper-white on vermilion 5.6:1, ink on canvas 15.2:1, on-warning 4.3:1 for button labels only).",
+        "2026-09-17: minimal apps/xiangqi/web (showcase only; xq-005 adds router, PWA, family links and site address): product.config.ts (zh-Hans default + en, storage prefix xiangqi.), i18n from ?lang, zh-Hans/en locales with a key-parity test, index.css tokens, board-ui points grid with BoardLines underlay (frame, ranks, files broken at the river, palace diagonals, cannon/soldier point brackets, 楚河 漢界 as glyph paths), PieceSvg, three board themes, DesignPage with both colour schemes and a legal engine-played sample position (selection targets taken from legalMoves).",
+        "2026-09-17: piece set for all 7 types x 2 colours per D4 as SVG paths, no font at runtime. scripts/generate-glyphs.mjs (npm run glyphs) fetches a Google Fonts subset of exactly those 14 characters plus 楚河漢界 from Noto Serif TC Black, parses it with opentype.js (devDependency) and writes centred outlines to src/features/board/glyphs.ts (committed). The OFL 1.1 text with the font's own copyright line (© 2017-2024 Adobe, read from the font's name table) is in src/features/board/OFL.txt. glyphs.test.ts checks the D4 characters for both colours and that every outline is inside the 100x100 box. LXGW WenKai TC was compared in a scratch render and was less legible at 40px.",
+        "2026-09-17: screenshots by scripts/capture-design.mjs (npm run capture:design) against vite preview: apps/xiangqi/docs/evidence/design-{light,dark}-{390,1280}.png plus design-{light,dark}-1280-en.png. Reviewed by eye: pieces legible at 40px and 28px, boards fit at 390px in both schemes, river text and palace lines render in all three themes. npm run verify (whole repo, now including @chaturanga/xiangqi-web typecheck + 3 tests) exit 0; eslint clean."
+      ],
+      "notes": "Stays in_progress until the owner signs off, the same pattern as sit-005. Awaiting the owner on: the Mo direction, the default board (maple or xuan paper), and the piece typeface. Screens to review: apps/xiangqi/docs/evidence/design-light-1280.png and design-dark-390.png."
     },
     {
       "id": "xq-005",

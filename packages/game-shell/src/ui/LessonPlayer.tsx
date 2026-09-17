@@ -32,6 +32,10 @@ export interface LessonPlayerProps<G extends VariantGame, Verify = never> {
   renderMascot?: (mood: LessonMood, className: string) => ReactNode;
   /** Markings drawn across the board, such as the diagonals a Sittuyin Ne promotes on. */
   boardOverlay?: ReactNode;
+  /** `points` puts pieces on line intersections (Xiangqi); the product then draws the lines in `boardUnderlay`. */
+  boardGrid?: 'squares' | 'points';
+  /** Drawn under the pieces, such as a Xiangqi board's lines, river and palaces. */
+  boardUnderlay?: ReactNode;
   /** Plays a sound; omit for a silent product. */
   onSound?: (sound: LessonSound) => void;
 
@@ -217,6 +221,8 @@ function StepBoard<G extends VariantGame, Verify>({
       label={props.boardLabel}
       describeSquare={props.describeSquare}
       overlay={props.boardOverlay}
+      grid={props.boardGrid}
+      underlay={props.boardUnderlay}
       {...rest}
     />
   );

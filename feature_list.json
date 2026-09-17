@@ -1416,14 +1416,20 @@
       "milestone": "M12",
       "title": "Intersection boards and non-square board fitting",
       "user_visible_behavior": "board-ui can draw pieces on line intersections instead of inside squares, and the mobile layout fits boards of any aspect ratio, with Makruk and Sittuyin visually unchanged.",
-      "status": "not_started",
+      "status": "passing",
       "verification": [
         "Board.tsx gains grid: 'squares' | 'points' (default squares) and an underlay prop drawn under the pieces.",
         "useFittedBoard takes an aspect ratio (files/ranks); a ratio of 1 keeps today's Makruk/Sittuyin result unchanged.",
         "Board.test.tsx cases for the points grid (point count, square names, Black orientation).",
         "npm run verify; both products' full E2E, e2e:pwa, and screenshot captures compared before/after."
       ],
-      "evidence": [],
+      "evidence": [
+        "2026-09-17: packages/board-ui Board.tsx gains grid: 'squares' | 'points' (default squares; data-grid on the board) and an underlay prop, a positioned pointer-events-none layer that is the board's first child so every cell paints over it. Points mode: one plain surface (board colour, no gap-px/p-px, no per-cell fill), pieces centred on intersections, and selected/last-move/hover/hint marks drawn as discs (inset-[6%] rounded-full). The prop doc gives the underlay geometry (point at (col + 0.5, row + 0.5) in viewBox 0 0 files ranks). Squares mode renders the same DOM and classes as before.",
+        "2026-09-17: packages/game-shell fittedBoard.ts: fittedBoardWidth(columnWidth, availableHeight, aspect = 1) extracted and useFittedBoard(aspect) uses it; GameScreen passes files / ranks, and the desktop column cap became lg:max-w-[min(100%,calc((100dvh-13rem)*var(--board-aspect)),44rem)] with --board-aspect set inline (1 for 8x8). GameScreen and LessonPlayer gain boardGrid and boardUnderlay pass-through props.",
+        "2026-09-17: tests. Board.test.tsx +3 (points grid of 90 cells a10..i1 from Red and i1..a10 from Black, aspect 9 / 10, plain surface; underlay first child, disc marks; squares default unchanged incl. exact highlight class). fittedBoard.test.ts (new, 3): aspect 1 equals the old floor(max(160, min(w, h))) formula on 5 cases, 9/10 narrows to 360px in 400px of height, 160px minimum. GameScreen.test.tsx +2: default squares and --board-aspect 1; points grid and underlay reach the board. board-ui 23, game-shell 33 tests green.",
+        "2026-09-17: visual regression. Scratch Playwright capture of Makruk and Sittuyin on the same dev servers: pass-and-play at fixed positions (Makruk start via ?fen, Sittuyin seeded saved game) at 390x844 and 1280x860, light and dark, plus the board element alone and a lesson page. Before = changes stashed, captured twice; after = changes restored, captured twice. All 10 Makruk images and all 8 Sittuyin board-element images match a before image byte for byte. Sittuyin full-page shots are not stable run to run even with no code change (after-vs-after differs); the one full-page image without a byte match (sittuyin play 390) differs from before by 12 px in one run and 82 px in another, in different places, and its board element is byte-identical.",
+        "2026-09-17: E2E with the change. Makruk npm run e2e 65 passed / 2 failed: clock.spec 'clock counts down' (fails identically on the pre-change baseline, recorded in session 011) and computer.spec 'UI keeps animating while the strongest bot thinks', which passed 2/2 when re-run alone with --workers 1 (a load flake: other work was running). Makruk e2e:pwa 2/2. Sittuyin e2e 34/34, e2e:pwa 2/2. Lint and tsc clean for board-ui, game-shell and both apps."
+      ],
       "notes": ""
     },
     {

@@ -28,6 +28,13 @@ export interface BoardProps {
   describeSquare: (square: string, piece: Piece | null) => string;
   files?: number;
   ranks?: number;
+  /**
+   * `squares` (default): pieces stand inside squares separated by grid lines, as in Makruk and Sittuyin.
+   * `points`: pieces stand on line intersections, as in Xiangqi. The board is one plain surface and the product
+   * draws its lines in `underlay`; point (file, rank) sits at the centre of its cell, so in an SVG with
+   * `viewBox="0 0 files ranks"` its display column `c` and row `r` are at (c + 0.5, r + 0.5).
+   */
+  grid?: 'squares' | 'points';
   orientation?: Color;
   showCoordinates?: boolean;
   selected?: Square | null;
@@ -51,6 +58,11 @@ export interface BoardProps {
    * marking would cut through the art. Never receives pointer events.
    */
   overlay?: ReactNode;
+  /**
+   * Drawn across the whole board under the pieces and every marking, such as a Xiangqi board's lines, river
+   * and palaces. Fills the board's padding box. Never receives pointer events.
+   */
+  underlay?: ReactNode;
   className?: string;
 }
 
@@ -95,6 +107,7 @@ export function Board({
   describeSquare,
   files = 8,
   ranks = 8,
+  grid = 'squares',
   orientation = 'w',
   showCoordinates = true,
   selected = null,
@@ -109,8 +122,12 @@ export function Board({
   onDrop,
   handle,
   overlay,
+  underlay,
   className,
 }: BoardProps) {
+  const points = grid === 'points';
+  // On a points board, cell-wide highlights become discs around the point.
+  const mark = points ? 'absolute inset-[6%] rounded-full' : 'absolute inset-0';
   const boardRef = useRef<HTMLDivElement>(null);
   const [drag, setDrag] = useState<DragState | null>(null);
   const droppedOn = useRef<Square | null>(null);
@@ -220,11 +237,11 @@ export function Board({
           onPointerDown={(e) => startDrag(square, e)}
           onClick={() => onSquareClick?.(square)}
           className="relative min-h-0 min-w-0 select-none focus-visible:z-10 focus-visible:outline-3 focus-visible:outline-secondary"
-          style={{ background: theme.board }}
+          style={points ? undefined : { background: theme.board }}
         >
-          {highlight && <span className="absolute inset-0" style={{ background: highlight }} />}
-          {hovered === square && <span className="absolute inset-0 border-4" style={{ borderColor: theme.selected }} />}
-          {isHint && <span className="absolute inset-0 animate-pulse border-4 border-gold bg-gold/25" />}
+          {highlight && <span className={mark} style={{ background: highlight }} />}
+          {hovered === square && <span className={cx(mark, 'border-4')} style={{ borderColor: theme.selected }} />}
+          {isHint && <span className={cx(mark, 'animate-pulse border-4 border-gold bg-gold/25')} />}
           {square === checkSquare && (
             <span
               className="absolute inset-0"
@@ -292,18 +309,30 @@ export function Board({
         data-orientation={orientation}
         data-files={files}
         data-ranks={ranks}
+        data-grid={grid}
         onPointerMove={moveDrag}
         onPointerUp={endDrag}
         onPointerCancel={() => setDrag(null)}
-        className={cx('relative grid w-full touch-none gap-px rounded-lg border-4 p-px shadow-lg', className)}
+        className={cx(
+          points
+            ? 'relative grid w-full touch-none rounded-lg border-4 shadow-lg'
+            : 'relative grid w-full touch-none gap-px rounded-lg border-4 p-px shadow-lg',
+          className,
+        )}
         style={{
-          background: theme.line,
+          background: points ? theme.board : theme.line,
           borderColor: theme.line,
           aspectRatio: `${files} / ${ranks}`,
           gridTemplateColumns: `repeat(${files}, minmax(0, 1fr))`,
           gridTemplateRows: `repeat(${ranks}, minmax(0, 1fr))`,
         }}
       >
+        {/* Before the cells so they paint over it; positioned for the same reason as the overlay below. */}
+        {underlay && (
+          <div aria-hidden data-underlay className="pointer-events-none absolute inset-0">
+            {underlay}
+          </div>
+        )}
         {cells}
         {/* Positioned, not a grid item: as a grid item it takes part in row sizing and collapses the squares. */}
         {overlay && (

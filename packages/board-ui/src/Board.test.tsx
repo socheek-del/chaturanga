@@ -45,6 +45,53 @@ describe('Board (plat-005a)', () => {
     expect(view.getByRole('grid').style.aspectRatio).toBe('9 / 9');
   });
 
+  it('draws a points grid: one cell per intersection, named like squares, from Red and from Black (plat-009)', () => {
+    const pieces = [{ square: 4, piece: { color: 'w', type: 'k', promoted: false } as Piece }];
+    const red = render(<Board {...base} pieces={pieces} files={9} ranks={10} grid="points" />);
+    const board = red.getByRole('grid');
+    const cells = red.getAllByRole('gridcell');
+    expect(cells).toHaveLength(90);
+    expect(cells[0]!.dataset.square).toBe('a10');
+    expect(cells[89]!.dataset.square).toBe('i1');
+    expect(board.dataset.grid).toBe('points');
+    expect(board.style.aspectRatio).toBe('9 / 10');
+    // One plain surface: no grid gap or line-coloured background between cells, no per-cell fill.
+    expect(board.className).not.toContain('gap-px');
+    expect(board.style.background).toBe(theme.board);
+    expect(cells[0]!.style.background).toBe('');
+    expect(red.getByLabelText('e1 wk').querySelector('[data-piece="wk"]')).not.toBeNull();
+    cleanup();
+    const black = render(<Board {...base} pieces={pieces} files={9} ranks={10} grid="points" orientation="b" />);
+    const flipped = black.getAllByRole('gridcell');
+    expect(flipped[0]!.dataset.square).toBe('i1');
+    expect(flipped[89]!.dataset.square).toBe('a10');
+  });
+
+  it('draws the underlay under the cells, and marks points with discs (plat-009)', () => {
+    const lines = <svg data-testid="lines" />;
+    const view = render(
+      <Board {...base} pieces={[]} files={9} ranks={10} grid="points" underlay={lines} selected={4} lastMove={{ from: 13, to: 22 }} />,
+    );
+    const underlay = view.container.querySelector('[data-underlay]') as HTMLElement;
+    expect(underlay.querySelector('[data-testid="lines"]')).toBeTruthy();
+    expect(underlay.className).toContain('pointer-events-none');
+    // First child of the board, so every cell paints over it.
+    expect(view.getByRole('grid').firstElementChild).toBe(underlay);
+    const selected = view.container.querySelector('[data-square="e1"] span') as HTMLElement;
+    expect(selected.className).toContain('rounded-full');
+    expect(view.getAllByRole('gridcell')).toHaveLength(90);
+  });
+
+  it('keeps the squares board unchanged when no grid is given (plat-009)', () => {
+    const view = render(<Board {...base} pieces={[]} selected={4} />);
+    const board = view.getByRole('grid');
+    expect(board.dataset.grid).toBe('squares');
+    expect(board.className).toContain('gap-px');
+    expect(board.style.background).toBe(theme.line);
+    expect(view.container.querySelector('[data-underlay]')).toBeNull();
+    expect((view.container.querySelector('[data-square="e1"] span') as HTMLElement).className).toBe('absolute inset-0');
+  });
+
   it('draws an overlay over the board without collapsing the squares', () => {
     const marking = <svg data-testid="marking" />;
     const view = render(<Board {...base} pieces={[]} overlay={marking} />);

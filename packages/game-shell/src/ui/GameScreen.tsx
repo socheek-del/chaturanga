@@ -1,7 +1,7 @@
 import { Board, type BoardHandle, type BoardTheme, HandTray, parseUci, useMoveInput } from '@chaturanga/board-ui';
 import { type Color, type Piece, type Square, timesAt, type Variant, type VariantGame } from '@chaturanga/rules-core';
 import { Button, Card, Modal } from '@chaturanga/ui';
-import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
+import { type CSSProperties, type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { capturedBy, type GameResult, isUndoableResult, materialBalance } from '../result';
 import { type GameSessionStore, inSetupPhase } from '../session';
@@ -54,6 +54,10 @@ export interface GameScreenProps<G extends VariantGame> {
   describeHandPiece?: (type: string, count: number) => string;
   /** Markings drawn across the board, such as the diagonals a Sittuyin Ne promotes on. */
   boardOverlay?: ReactNode;
+  /** `points` puts pieces on line intersections (Xiangqi); the product then draws the lines in `boardUnderlay`. */
+  boardGrid?: 'squares' | 'points';
+  /** Drawn under the pieces, such as a Xiangqi board's lines, river and palaces. */
+  boardUnderlay?: ReactNode;
 }
 
 export function GameScreen<G extends VariantGame>({
@@ -83,6 +87,8 @@ export function GameScreen<G extends VariantGame>({
   handLabel,
   describeHandPiece,
   boardOverlay,
+  boardGrid,
+  boardUnderlay,
 }: GameScreenProps<G>) {
   const { t } = useTranslation();
   const s = useSession();
@@ -123,7 +129,8 @@ export function GameScreen<G extends VariantGame>({
   );
 
   const placing = inSetupPhase(game);
-  const fit = useFittedBoard();
+  const aspect = variant.files / variant.ranks;
+  const fit = useFittedBoard(aspect);
   const input = useMoveInput({
     game,
     version,
@@ -182,7 +189,11 @@ export function GameScreen<G extends VariantGame>({
     <div className="mx-auto w-full max-w-6xl lg:grid lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-start lg:gap-x-4">
       <h1 className="sr-only">{title}</h1>
       <div ref={fit.columnRef} data-testid="game-focus" className="flex flex-col gap-2 lg:contents">
-      <div className="flex flex-col gap-1.5 lg:row-span-2 lg:mx-auto lg:w-full lg:max-w-[min(100%,calc(100dvh-13rem),44rem)] lg:gap-2">
+      {/* On wide screens the board may be as tall as the screen allows: its width is that height times its aspect. */}
+      <div
+        className="flex flex-col gap-1.5 lg:row-span-2 lg:mx-auto lg:w-full lg:max-w-[min(100%,calc((100dvh-13rem)*var(--board-aspect)),44rem)] lg:gap-2"
+        style={{ '--board-aspect': aspect } as CSSProperties}
+      >
         {/* Bars take the board's width so they stay aligned with it; trays keep the full width so pieces never wrap. */}
         <div className="mx-auto w-full" style={fit.style}>
           {bar(top, rotateTopBar)}
@@ -211,6 +222,8 @@ export function GameScreen<G extends VariantGame>({
           onDrop={input.onDrop}
           handle={boardHandle}
           overlay={boardOverlay}
+          grid={boardGrid}
+          underlay={boardUnderlay}
         />
         </div>
         {variant.hasHands && tray(orientation)}

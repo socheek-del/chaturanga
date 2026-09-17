@@ -156,6 +156,35 @@ describe('GameScreen with Makruk', () => {
   });
 });
 
+describe('GameScreen board options (plat-009)', () => {
+  it('draws squares with a square aspect by default', () => {
+    const useSession = createGameSession(makruk);
+    useSession.getState().start(null);
+    const view = render(<GameScreen {...play} {...identity} variant={makruk} useSession={useSession} />);
+    expect(view.getByRole('grid').dataset.grid).toBe('squares');
+    expect(view.container.querySelector('[data-underlay]')).toBeNull();
+    const column = view.getByRole('grid').closest('[style*="--board-aspect"]') as HTMLElement;
+    expect(column.style.getPropertyValue('--board-aspect')).toBe('1');
+  });
+
+  it('passes a points grid and an underlay through to the board', () => {
+    const useSession = createGameSession(makruk);
+    useSession.getState().start(null);
+    const view = render(
+      <GameScreen
+        {...play}
+        {...identity}
+        variant={makruk}
+        useSession={useSession}
+        boardGrid="points"
+        boardUnderlay={<svg data-testid="lines" />}
+      />,
+    );
+    expect(view.getByRole('grid').dataset.grid).toBe('points');
+    expect(view.container.querySelector('[data-underlay] [data-testid="lines"]')).not.toBeNull();
+  });
+});
+
 describe('GameScreen with Sittuyin', () => {
   const sittuyinProps = {
     ...play,

@@ -82,6 +82,8 @@ broken starting state.
     for the Makruk web app, AI and worker.
   - `packages/sittuyin` (`@chaturanga/sittuyin`): pure Sittuyin rules (`RULES.md`). The single source of
     truth for the Sittuyin web app, AI and worker.
+  - `packages/xiangqi` (`@chaturanga/xiangqi`): pure Xiangqi rules (`RULES.md`), including the chasing and
+    perpetual-check rules ported from Fairy-Stockfish. No app uses it yet.
   - `packages/ai-core` (`@chaturanga/ai-core`): game-independent alpha-beta search over a `SearchAdapter`,
     bot personas and root-move picking.
   - `packages/ai` (`@chaturanga/makruk-ai`): Makruk computer opponents, run in a Web Worker. It keeps its own

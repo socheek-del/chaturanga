@@ -1,7 +1,7 @@
 /**
  * Xiangqi (象棋, Chinese chess) rules engine. Pure TypeScript: no DOM, network, or timers.
- * Rules follow Fairy-Stockfish's `xiangqi` variant. Game status is ongoing/checkmate only at this
- * step (xq-001); stalemate, perpetual check/chase and the 60-move rule land in xq-002.
+ * Rules follow Fairy-Stockfish's `xiangqi` variant (RULES.md): checkmate, losing stalemate, idle
+ * repetition, perpetual check and perpetual chase, the 50-move rule and insufficient material.
  */
 export { FenError, parseFen, serializeFen, START_FEN } from './fen';
 export { Game, IllegalMoveError, moveToUci } from './game';

@@ -496,3 +496,42 @@ handoff; no agent updates it automatically.
   idle-repetition draw, perpetual-check loss, perpetual-chase loss (ported from the Fairy-Stockfish
   chasing algorithm, not invented — flagged in the plan as the highest-risk engine task in the whole
   Xiangqi plan), 50-move rule, insufficient material.
+
+### Session 012
+
+- Date: 2026-09-17.
+- Goal: `xq-002` (Xiangqi game end), Step 4 of `apps/xiangqi/docs/PLAN.md`.
+- Baseline: `./init.sh` failed only on lint of an untracked leftover probe (`packages/xiangqi/probe4.mjs`,
+  `console` undefined). The committed tree was green. The probe was moved out of the repo, not committed.
+- `xq-002` is now `passing`.
+  - Ported, not invented, from Fairy-Stockfish at `705dd366` (the last `position.cpp` commit before ffish
+    0.7.10; `position.cpp` on master is still identical): `src/chase.ts` = `Position::chased()`,
+    `src/gameEnd.ts` = `is_optional_game_end()` (50-move rule with the AXF check offset, threefold
+    repetition judged perpetual check → perpetual chase → draw) + `has_insufficient_material()` + ffish's
+    `result(true)` order, `src/bitboard.ts` = the bitboard helpers they read (BigInt square sets so the port
+    reads line by line). `Game` keeps one StateInfo per ply and pops it on undo.
+  - The previous session's untracked `chase.ts` draft was replaced: it skipped the pin, impaired-horse,
+    fake-root and discovered-check branches, and wrongly never chased crossed soldiers.
+  - `packages/xiangqi/RULES.md` (new): board, pieces, every game-end ruling, the chase algorithm branch by
+    branch, named cases, lock-step coverage and tallies.
+  - `src/gameEnd.test.ts` (new, 14 named tests), each also run on ffish (`isGameOver(true)`/`result(true)`).
+    The local `docs/xiangqi-implementation-note.md` the feature's first verification bullet names is not in
+    this environment (it was untracked), so its probes were re-derived and checked inside these tests.
+  - `src/reference.test.ts` now compares the result on every ply, in three modes: random games (half
+    repetition-biased), forced 8-ply quiet cycles, and cycles found by ffish alone (ffish tries every quiet
+    move pair and keeps decisive cycles). The positive chase/check cases therefore come from the reference
+    engine, not from the code under test.
+  - Verification: `npm run verify` (whole repo) exit 0. `npm run test:deep -w packages/xiangqi`: 117/117 in 242s. Deep tallies: random games 91 checkmate, 3
+    stalemate, 205 repetition, 1 perpetual check, 11 fifty-move, 8 insufficient material; forced cycles
+    2689 repetition, 10 perpetual check, 2 perpetual chase; ffish-found cycles 190 perpetual chase, 71
+    perpetual check. No disagreements. No Makruk or Sittuyin file touched, and no app imports
+    `@chaturanga/xiangqi` yet, so no E2E applies.
+  - Known limits: ffish only returns the result string, so lock-step can't tell perpetual-check from
+    perpetual-chase (or repetition from fifty-move) when the result is the same; the named tests pin the kind.
+    `Game.move()` now computes chase sets every ply; fine for play, but the `xq-003` bots should search on raw
+    board ops, not `Game.move()`.
+  - Pitfall: the Fairy-Stockfish source is fetchable in this sandbox
+    (`raw.githubusercontent.com/fairy-stockfish/Fairy-Stockfish/705dd366f6/src/...`); read it before
+    guessing any ffish ruling.
+- Next best step: `xq-003` (Xiangqi bots and ladder), or `plat-009` (intersection boards) if bots should wait
+  for a playable UI. `xq-003` is next by priority.

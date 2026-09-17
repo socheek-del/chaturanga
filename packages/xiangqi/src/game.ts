@@ -3,6 +3,7 @@ import { BLACK, codeToPiece, fileOf, FILES, rankOf, SAN_LETTER, TYPE_MASK } from
 import { findGeneral, inCheck } from './attacks';
 import { parseFen, serializeFen, START_FEN } from './fen';
 import { encodeMove, generateLegalMoves, makeRaw, moveFrom, moveTo, unmakeRaw } from './movegen';
+import { type GameState, isInsufficientMaterial, nextState, optionalGameEnd, rootState } from './gameEnd';
 import type { Color, GameStatus, Move, MoveRecord, Piece, Square } from './types';
 
 export { IllegalMoveError };
@@ -24,6 +25,8 @@ export class Game {
   private rule50: number;
   private fullmove: number;
   private readonly history: HistoryEntry[] = [];
+  /** Fairy-Stockfish StateInfo chain for repetition, perpetual check/chase and the 50-move rule. */
+  private readonly states: GameState[];
 
   constructor(fen: string = START_FEN) {
     const data = parseFen(fen);
@@ -31,6 +34,7 @@ export class Game {
     this.side = data.turn;
     this.rule50 = data.rule50;
     this.fullmove = data.fullmove;
+    this.states = [rootState(this.board, this.side, this.rule50)];
   }
 
   get turn(): Color {
@@ -105,6 +109,9 @@ export class Game {
     this.rule50 = captured ? 0 : this.rule50 + 1;
     if (mover === 1) this.fullmove++;
     this.side = mover === 0 ? 1 : 0;
+    this.states.push(
+      nextState(this.states.at(-1)!, this.board, moveFrom(encoded), moveTo(encoded), captured !== 0, this.rule50),
+    );
 
     const replies = generateLegalMoves(this.board, this.side);
     const check = inCheck(this.board, this.side);
@@ -127,17 +134,25 @@ export class Game {
     if (!entry) return null;
     const mover: ColorIndex = entry.moved & BLACK ? 1 : 0;
     unmakeRaw(this.board, entry.move, entry.moved, entry.captured);
+    this.states.pop();
     this.side = mover;
     this.rule50 = entry.rule50;
     this.fullmove = entry.fullmove;
     return entry.record;
   }
 
+  /**
+   * Game end in the order ffish's `result(true)` checks it: insufficient material, no legal moves
+   * (checkmate, or a stalemate that loses), then the 50-move rule and repetition (idle repetition draws,
+   * perpetual check or chase loses). See RULES.md.
+   */
   status(): GameStatus {
+    if (isInsufficientMaterial(this.board)) return { kind: 'insufficient-material' };
     if (generateLegalMoves(this.board, this.side).length === 0) {
-      return this.inCheck() ? { kind: 'checkmate', winner: toColor(this.side === 0 ? 1 : 0) } : { kind: 'stalemate' };
+      const winner = toColor(this.side === 0 ? 1 : 0);
+      return this.states.at(-1)!.checkers ? { kind: 'checkmate', winner } : { kind: 'stalemate', winner };
     }
-    return { kind: 'ongoing' };
+    return optionalGameEnd(this.states, true) ?? { kind: 'ongoing' };
   }
 
   isGameOver(): boolean {

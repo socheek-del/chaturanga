@@ -1367,7 +1367,7 @@
       "milestone": "M12",
       "title": "Xiangqi game end: stalemate loss, perpetual check, chase, 50-move, material",
       "user_visible_behavior": "A Xiangqi game correctly ends by checkmate, a losing stalemate, an idle repetition draw, a perpetual-check or perpetual-chase loss, the 50-move rule, or insufficient material, matching Fairy-Stockfish on every ply.",
-      "status": "not_started",
+      "status": "passing",
       "verification": [
         "Every probe in docs/xiangqi-implementation-note.md section 2.4 recorded as a named unit test (stalemate loses, perpetual check loses at the 3rd occurrence, perpetual chase loses, idle repetition draws, 50-move draw, insufficient material).",
         "The chasing-rule algorithm is ported from the Fairy-Stockfish source (not invented) and documented in packages/xiangqi/RULES.md.",
@@ -1375,8 +1375,15 @@
         "describeVariantConformance registered for the xiangqi variant.",
         "npm run verify; npm run test:deep -w packages/xiangqi."
       ],
-      "evidence": [],
-      "notes": "Highest-risk engine step: chasing rules must match ffish exactly on every probed case, not an approximation."
+      "evidence": [
+        "2026-09-17: ported, not invented. packages/xiangqi/src/chase.ts is Position::chased(), src/gameEnd.ts is is_optional_game_end() (the 50-move rule with its AXF check offset, then threefold repetition judged by perpetual check, then perpetual chase) plus has_insufficient_material() and the ffish result(true) order, src/bitboard.ts is the attacks_bb / attacks_from / attackers_to / slider_blockers / between_bb / line_bb / undo_move_board helpers they read. Source: Fairy-Stockfish src/position.cpp, apiutil.h, bitboard.{h,cpp}, ffishjs.cpp at 705dd366 (the last position.cpp commit, 3 days before ffish 0.7.10 was published; position.cpp on master is still byte-identical). Game keeps one StateInfo per ply (key, checkers, chased, move, rule50, pliesFromNull, blockers), popped on undo. The earlier untracked chase.ts draft (which skipped the pin, impaired-horse, fake-root and discovered-check branches and wrongly excluded crossed soldiers) was replaced.",
+        "2026-09-17: packages/xiangqi/RULES.md (new) documents the board, pieces and every game-end ruling, the chase algorithm branch by branch, the named cases and the lock-step coverage.",
+        "2026-09-17: src/gameEnd.test.ts (new, 14 named tests; each one also plays its moves on ffish and asserts isGameOver(true)/result(true), so every test is its own probe): stalemate loses; checkmate wins; idle repetition draws at the 3rd occurrence and not the 2nd; perpetual check loses at the 3rd occurrence and not before; perpetual chase of an undefended cannon loses; a piece defended on every other cycle is not chased (draw); a crossed soldier can be chased; chariot on chariot is mutual (draw); 50-move draw at 100; AXF offset: 14 checks in 38 plies delays the draw to 108 (found by probing ffish with repetition avoided); advisors/elephants only is insufficient; a capture that leaves only advisors/elephants ends the game; a lone soldier plays on; undo restores repetition history. The local docs/xiangqi-implementation-note.md named in the first verification bullet is not present in this environment (it was an untracked file), so every ruling it listed was re-probed against ffish inside these tests instead.",
+        "2026-09-17: src/reference.test.ts extended: every ply now also compares game.status() with ffish isGameOver(true) and result(true). (1) Random games, every other one repetition-biased (steps back along its own last move 55%, gives check 30%). (2) Forced 8-ply quiet cycles from random middlegames. (3) Cycles found by ffish alone: in each middlegame ffish tries every quiet move pair and keeps those whose cycle ends decisively, and one is replayed through both engines, so positive chase/check cases come from the reference engine, not the code under test. Deep tallies: games 91 checkmate, 3 stalemate, 205 repetition, 1 perpetual-check, 11 fifty-move, 8 insufficient-material, 81 ply cap; forced cycles 2689 repetition, 10 perpetual-check, 2 perpetual-chase; ffish-found cycles 190 perpetual-chase, 71 perpetual-check. Zero disagreements.",
+        "2026-09-17: describeVariantConformance registered for xiangqi (src/variant.test.ts, unchanged from xq-001, still green with the new status()).",
+        "2026-09-17: npm run test:deep -w packages/xiangqi: 6 files, 117/117 tests passed in 242s (fen, movegen, perft, variant conformance, 14 named game-end tests, and the three lock-step modes at 400 games / 4000 cycles / 1000 ffish searches). npm run verify (whole repo): exit 0."
+      ],
+      "notes": "Highest-risk engine step: chasing rules must match ffish exactly on every probed case, not an approximation. Remaining limit: ffish exposes only the result string, so the lock-step tests cannot tell perpetual-check from perpetual-chase, or repetition from fifty-move, when the result is the same; the named tests pin the kind for each case. Game.move() now computes chase sets for every ply (BigInt bitboards), which is fine for play and adjudication; the bots (xq-003) should use raw board ops in search and not call Game.move() per node."
     },
     {
       "id": "xq-003",

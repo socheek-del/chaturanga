@@ -30,7 +30,9 @@
   - web app with pass-and-play, computer, PWA and zh-Hans/en (xq-005, in_progress until the design is
     approved);
   - 13 lessons (xq-006);
-  - online play on its own Worker (xq-007).
+  - online play on its own Worker (xq-007);
+  - About page and `apps/xiangqi/AGENTS.md` (xq-010, partial);
+  - Chinese review sheet (xq-011, blocked on a native reviewer).
 - **Platform:** intersection boards and aspect-aware fitting (plat-009); family tests independent of game count
   (plat-010); ai-core `repetitionScore` hook.
 - **Not pushed:** GitHub credentials expired on this machine. Run `gh auth login` then `git push origin main`.

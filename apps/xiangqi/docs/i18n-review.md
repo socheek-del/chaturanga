@@ -64,6 +64,6 @@ missing or empty in either language), or list corrections in the table below and
 
 ## Sign-off
 
-| Reviewer | Date | Scope reviewed | Notes |
-|---|---|---|---|
-| | | | |
+| Reviewer | Native Chinese speaker | Plays Xiangqi | Date | Result |
+|---|---|---|---|---|
+| | | | | |

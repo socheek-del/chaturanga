@@ -577,7 +577,11 @@ handoff; no agent updates it automatically.
   - workerd tests 10/10, including a 12-ply line from the start that the server scores as a perpetual chase
     and stores in D1.
   - Two-browser online E2E passes.
-- Final checks this session: `npm run verify` exit 0; Xiangqi E2E 22/22 with Worker; Xiangqi e2e:pwa 2/2;
+- `xq-010` in_progress. About page (zh-Hans/en, GitHub links; about.spec 1/1) and `apps/xiangqi/AGENTS.md`
+  are done. SEO, sitemap, Open Graph image and README media all need the site address (D8).
+- `xq-011` blocked: review sheet `apps/xiangqi/docs/i18n-review.md` is written; it needs a native Chinese
+  reviewer.
+- Final checks this session: `npm run verify` exit 0; Xiangqi E2E 23/23 with Worker; Xiangqi e2e:pwa 2/2;
   `npm run build:xiangqi` OK.
 - Pitfalls:
   - Hand-made Xiangqi FENs are easy to get wrong: generals facing on an open file, or the side not to move in
@@ -588,5 +592,5 @@ handoff; no agent updates it automatically.
   - vitest hides console output from passing tests: write probe results to a file.
 - Next best step:
   - **Owner:** push; approve or redirect the Mo design (xq-004); choose the Xiangqi subdomain (D8).
-  - **Agent, after the push:** dispatch the Xiangqi ladder on Actions (xq-003); xq-010 parts that need no
-    production (About page, SEO tags, sitemap). xq-008 and xq-009 wait for the subdomain.
+  - **Agent, after the push:** dispatch the Xiangqi ladder on Actions (xq-003). xq-008, xq-009 and the rest of
+    xq-010 wait for the subdomain; xq-011 waits for a native reviewer.

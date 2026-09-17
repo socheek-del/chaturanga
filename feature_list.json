@@ -1606,12 +1606,14 @@
       "milestone": "M13",
       "title": "Native Chinese review",
       "user_visible_behavior": "A native Simplified Chinese speaker has reviewed every user-visible string, lesson, bot name and terminology choice.",
-      "status": "not_started",
+      "status": "blocked",
       "verification": [
         "apps/xiangqi/docs/i18n-review.md written: UI strings, lessons, bots, SEO, manifest, OG image text, family names, and a terminology table."
       ],
-      "evidence": [],
-      "notes": "Expected to stay blocked on a human reviewer once the review doc exists, the same pattern as sit-011 and polish-002."
+      "evidence": [
+        "2026-09-17: apps/xiangqi/docs/i18n-review.md written in the sit-011 format: what to review (UI strings, lessons incl. the standard terms 蹩马腿/塞象眼/炮架, result reasons 困毙/长将/长捉, bots, online, About, manifest, design and board theme names), a 21-row terminology table (pieces in sentences vs the traditional board characters of D4, palace, river, check/checkmate, stalemate, perpetual check/chase, flying general, time categories, pass-and-play), how to submit corrections, and a sign-off table. SEO tags, the Open Graph image text and the family names are listed as not written yet (xq-009, xq-010) so the reviewer adds them when they exist."
+      ],
+      "notes": "BLOCKED on a human: the review needs a native Chinese speaker, which an agent cannot provide or fabricate. Hand apps/xiangqi/docs/i18n-review.md to a reviewer (ideally a Xiangqi player), apply their corrections and record the sign-off row. Re-open the sheet's 'not written yet' rows after xq-009 and xq-010."
     }
   ]
 }

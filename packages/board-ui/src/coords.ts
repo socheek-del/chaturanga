@@ -7,8 +7,12 @@ export { squareNameOf, squareOf } from '@chaturanga/rules-core';
 export type ParsedMove =
   /** `R@a1`: a piece placed from hand (type in lower case). */
   | { kind: 'drop'; type: string; to: Square; uci: string }
-  /** `e3e4`, promotion with a suffix letter (`a5a6m`, `h5g4f`) or `+` (`g8g9+`), in place when from equals to. */
-  | { kind: 'move'; from: Square; to: Square; promotion: boolean; uci: string };
+  /**
+   * `e3e4`, promotion with a suffix letter (`a5a6m`, `h5g4f`, `e7e8q`) or `+` (`g8g9+`), in place when from
+   * equals to. `promotion` is the suffix itself, so a game with a choice of pieces (chess) can tell its
+   * promotions apart; `null` when the move does not promote.
+   */
+  | { kind: 'move'; from: Square; to: Square; promotion: string | null; uci: string };
 
 /** Parses an engine move in Fairy-Stockfish coordinate notation. */
 export function parseUci(uci: string, files: number): ParsedMove | null {
@@ -22,5 +26,5 @@ export function parseUci(uci: string, files: number): ParsedMove | null {
   const from = squareOf(move[1]!, files);
   const to = squareOf(move[2]!, files);
   if (from === null || to === null) return null;
-  return { kind: 'move', from, to, promotion: move[3] !== '', uci };
+  return { kind: 'move', from, to, promotion: move[3] === '' ? null : move[3]!, uci };
 }

@@ -57,6 +57,8 @@ export interface GameScreenProps<G extends VariantGame> {
   onSound?: (sound: GameSound) => void;
   /** The product's own counting card; counting rules differ per game. */
   renderCounting?: (game: G) => ReactNode;
+  /** Required when a promotion offers a choice of pieces (chess): names each piece on its button. */
+  describePromotion?: (piece: Piece) => string;
   /** Required when the variant has hands: names a tray and a piece type in it. */
   handLabel?: (color: Color) => string;
   describeHandPiece?: (type: string, count: number) => string;
@@ -95,6 +97,7 @@ export function GameScreen<G extends VariantGame>({
   pieceValues,
   onSound,
   renderCounting,
+  describePromotion,
   handLabel,
   describeHandPiece,
   boardOverlay,
@@ -152,8 +155,14 @@ export function GameScreen<G extends VariantGame>({
     files: variant.files,
   });
 
-  // The piece being moved, so the promotion prompt can show both faces in the product's own art.
-  const promotionPiece = input.pendingPromotion ? game.pieceAt(input.pendingPromotion.from) : null;
+  // The piece being moved, so the promotion prompt can show every face in the product's own art.
+  const pendingPromotion = input.pendingPromotion;
+  const promotionPiece = pendingPromotion ? game.pieceAt(pendingPromotion.from) : null;
+  // Two choices, one of them the move played as it is (Shogi): the prompt is a yes/no question. Otherwise
+  // every choice promotes and the player picks a piece (chess).
+  const plainChoice = pendingPromotion?.choices.find((c) => c.promotion === null) ?? null;
+  const promotingChoices = pendingPromotion?.choices.filter((c) => c.promotion !== null) ?? [];
+  const asksYesNo = !!plainChoice && promotingChoices.length === 1;
 
   const top: Color = orientation === 'w' ? 'b' : 'w';
   const times = clock ? timesAt(clock, now) : null;
@@ -313,28 +322,53 @@ export function GameScreen<G extends VariantGame>({
           onNewGame={s.exitToSetup}
         />
       )}
-      {/* Games where the same move can be played promoted or not (Shogi) ask before playing it. */}
-      <Modal open={!!input.pendingPromotion} onClose={input.cancelPromotion} title={t('play.promoteAsk')}>
-        <div className="grid grid-cols-2 gap-3">
-          <Button
-            variant="warning"
-            data-testid="promote-yes"
-            className="flex items-center justify-center gap-2"
-            onClick={() => input.choosePromotion(true)}
-          >
-            {promotionPiece && renderPiece({ ...promotionPiece, promoted: true }, 'h-8 w-8')}
-            {t('play.promoteYes')}
-          </Button>
-          <Button
-            variant="outline"
-            data-testid="promote-no"
-            className="flex items-center justify-center gap-2"
-            onClick={() => input.choosePromotion(false)}
-          >
-            {promotionPiece && renderPiece({ ...promotionPiece, promoted: false }, 'h-8 w-8')}
-            {t('play.promoteNo')}
-          </Button>
-        </div>
+      {/* A move with more than one way to be played waits for the choice: promote or not (Shogi), or which
+          piece to promote to (chess). */}
+      <Modal
+        open={!!pendingPromotion}
+        onClose={input.cancelPromotion}
+        title={asksYesNo ? t('play.promoteAsk') : t('play.promoteTo')}
+      >
+        {asksYesNo ? (
+          <div className="grid grid-cols-2 gap-3">
+            <Button
+              variant="warning"
+              data-testid="promote-yes"
+              className="flex items-center justify-center gap-2"
+              onClick={() => input.choosePromotion(promotingChoices[0]!.uci)}
+            >
+              {promotionPiece && renderPiece({ ...promotionPiece, promoted: true }, 'h-8 w-8')}
+              {t('play.promoteYes')}
+            </Button>
+            <Button
+              variant="outline"
+              data-testid="promote-no"
+              className="flex items-center justify-center gap-2"
+              onClick={() => input.choosePromotion(plainChoice!.uci)}
+            >
+              {promotionPiece && renderPiece({ ...promotionPiece, promoted: false }, 'h-8 w-8')}
+              {t('play.promoteNo')}
+            </Button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 gap-3">
+            {promotingChoices.map((choice) => {
+              const piece: Piece = { color: promotionPiece?.color ?? 'w', type: choice.promotion!, promoted: true };
+              return (
+                <Button
+                  key={choice.uci}
+                  variant="outline"
+                  data-testid={`promote-${choice.promotion}`}
+                  className="flex items-center justify-center gap-2"
+                  onClick={() => input.choosePromotion(choice.uci)}
+                >
+                  {renderPiece(piece, 'h-8 w-8')}
+                  {describePromotion?.(piece) ?? ''}
+                </Button>
+              );
+            })}
+          </div>
+        )}
       </Modal>
       <Modal
         open={confirmResign}

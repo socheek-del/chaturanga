@@ -189,9 +189,9 @@ Fairy-Stockfish's `chess` variant, the same rule as the other four games; castli
   Both divergences are written into `packages/shogi/RULES.md`. **D7**, the design identity, still needs the owner.
 - Shogi brand identity: "Kaya" (榧), `apps/shogi/docs/design.md`. **Still awaiting owner approval** (sg-004);
   the live site is already styled on it.
-- Chess owner decisions D1-D12 (`apps/chess/docs/PLAN.md`): proposed defaults, to confirm before `ch-001`.
-  Three need the owner specifically: **D1** the site languages (English only at launch is the proposal),
-  **D7** the design identity, approved before styling, and **D8** the subdomain, chosen at `ch-008`. **D11**
-  (threefold and the fifty-move rule are claimable in Fairy-Stockfish, not automatic) is a product choice, and
-  whichever way it goes is written into `packages/chess/RULES.md`.
+- Chess owner decisions D1-D12 (`apps/chess/docs/PLAN.md`): accepted 2026-09-18. **D1** English only at
+  launch (a second language stays `ch-011`); **D8** the subdomain is `chess.beanroti.com`; **D11** threefold
+  and the fifty-move rule end the game automatically, and the divergence from the FIDE claim procedure is
+  written into `packages/chess/RULES.md`; **D7** the design identity is proposed in
+  `apps/chess/docs/design.md`, the site ships on it and the owner approves after screenshots.
 - Chess brand identity: its own design document, approved before styling. Decided in ch-004.

@@ -96,17 +96,26 @@ export const PAWN_CAPTURES: readonly [Square[][], Square[][]] = [
     [-1, -1],
   ]),
 ];
+function rays(directions: ReadonlyArray<readonly [number, number]>): Square[][][] {
+  return Array.from({ length: 64 }, (_, sq) =>
+    directions.map(([df, dr]) => {
+      const ray: Square[] = [];
+      let f = fileOf(sq) + df;
+      let r = rankOf(sq) + dr;
+      while (f >= 0 && f < 8 && r >= 0 && r < 8) {
+        ray.push(r * 8 + f);
+        f += df;
+        r += dr;
+      }
+      return ray;
+    }),
+  );
+}
+
 /** Rook rays: for each square, 4 arrays of squares ordered outward. */
-export const ROOK_RAYS: Square[][][] = Array.from({ length: 64 }, (_, sq) =>
-  ORTHOGONALS.map(([df, dr]) => {
-    const ray: Square[] = [];
-    let f = fileOf(sq) + df;
-    let r = rankOf(sq) + dr;
-    while (f >= 0 && f < 8 && r >= 0 && r < 8) {
-      ray.push(r * 8 + f);
-      f += df;
-      r += dr;
-    }
-    return ray;
-  }),
-);
+export const ROOK_RAYS: Square[][][] = rays(ORTHOGONALS);
+/**
+ * Diagonal-slider rays, ordered outward like `ROOK_RAYS`. The Makruk family has no diagonal slider; chess
+ * (bishop, queen) does.
+ */
+export const BISHOP_RAYS: Square[][][] = rays(DIAGONALS);

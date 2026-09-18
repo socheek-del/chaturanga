@@ -27,6 +27,7 @@
     "react-i18next": "^17.0.13"
   },
   "devDependencies": {
+    "@chaturanga/chess": "*",
     "@chaturanga/makruk": "*",
     "@chaturanga/shogi": "*",
     "@chaturanga/sittuyin": "*",

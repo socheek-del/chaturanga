@@ -1,0 +1,22 @@
+{
+  "name": "@chaturanga/chess",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "GPL-3.0-or-later",
+  "exports": {
+    ".": "./src/index.ts",
+    "./core": "./src/core.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:deep": "PERFT_DEEP=1 vitest run"
+  },
+  "dependencies": {
+    "@chaturanga/rules-core": "*"
+  },
+  "devDependencies": {
+    "ffish": "^0.7.10"
+  }
+}

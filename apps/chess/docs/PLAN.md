@@ -16,7 +16,11 @@ Everything below about rules was probed against Fairy-Stockfish's `chess` varian
 same reference the four other engines are verified against. Probe output quoted here is real. This plan and
 `feature_list.json` are the system of record.
 
-## Owner decisions (proposed defaults — confirm before `ch-001`)
+## Owner decisions (D1-D12 accepted 2026-09-18)
+
+The owner accepted the proposals below on 2026-09-18, with the subdomain (D8) chosen as `chess.beanroti.com`,
+the languages (D1) English only, the draw rules (D11) automatic, and the design identity (D7) to be proposed
+and shipped on, with approval after screenshots.
 
 | # | Topic | Proposed decision |
 |---|---|---|
@@ -27,7 +31,7 @@ same reference the four other engines are verified against. Probe output quoted 
 | D5 | Side names | White and Black. White moves first and maps to the engine colour `w`. This is the one game where the platform's `w`/`b` needs no translation. |
 | D6 | Move-list notation | Engine SAN (`Nf3`, `exd6`, `O-O`, `e8=Q`, `Qxf7#`), paired under move numbers, which the shared move list already does. Figurine notation is a later display-only option; moves stay coordinate strings end to end. |
 | D7 | Design identity | Its own identity, proposed in `apps/chess/docs/design.md` with screenshots and approved by the owner before the site is styled — the same gate as Sittuyin's "Daung" (`sit-005`), Xiangqi's "Mo" (`xq-004`) and Shogi's (`sg-004`). It must not resemble lichess or chess.com any more than it resembles Duolingo. |
-| D8 | Subdomain | Chosen by the owner at the deploy step (`ch-008`). It lives only in `apps/chess/web/site.config.ts` and the Worker's `routes`; never written anywhere else. |
+| D8 | Subdomain | `chess.beanroti.com`, chosen by the owner on 2026-09-18. It lives only in `apps/chess/web/site.config.ts` and the Worker's `routes`; never written anywhere else. |
 | D9 | UI font | The self-hosted Noto Sans already used for Latin text. No new font: the pieces are SVG paths and the site is Latin-only. |
 | D10 | Bot personas | Six bots named after the pieces: Pawn, Knight, Bishop, Rook, Queen, King — the same "named after the pieces" pattern as Xiangqi and Shogi. No Elo numbers on the labels, because a claimed rating invites comparison the search cannot honour. |
 | D11 | Threefold repetition and the fifty-move rule | The probe shows Fairy-Stockfish reports these as *claimable*, not automatic (`isGameOver()` false, `result()` `*`; with `claimDraw=true` both become `1/2-1/2`). Proposal: **the engine ends the game automatically** on the third repetition and on the fiftieth move, i.e. the platform plays `claimDraw=true` semantics, with no claim button and no claim message in the online protocol. The divergence from the FIDE claim procedure (and the fact that fivefold and the 75-move rule can therefore never be reached) is written into `packages/chess/RULES.md`. The alternative — a claim button — costs a new protocol message, a new online UI state and a new way for a game to end; it can be added later without changing the engine. |

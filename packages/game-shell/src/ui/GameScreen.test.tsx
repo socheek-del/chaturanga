@@ -1,4 +1,5 @@
 // @vitest-environment happy-dom
+import { chess } from '@chaturanga/chess';
 import { makruk } from '@chaturanga/makruk';
 import type { Piece } from '@chaturanga/rules-core';
 import { shogi } from '@chaturanga/shogi';
@@ -21,6 +22,7 @@ const KEYS = {
   'play.promoteAsk': 'Promote?',
   'play.promoteYes': 'Promote',
   'play.promoteNo': 'Keep',
+  'play.promoteTo': 'Promote to',
   'play.captured': 'Captured',
   'play.clockOf': "{{color}}'s clock",
   'play.moves': 'Moves',
@@ -321,5 +323,55 @@ describe('undoAllowed', () => {
     expect(undoAllowed({ game: game(4), result: { winner: null, reason: 'fifty-move' } })).toBe(true);
     expect(undoAllowed({ game: game(4), result: { winner: 'b', reason: 'timeout' } })).toBe(false);
     expect(undoAllowed({ game: game(4), result: { winner: 'b', reason: 'resign' } })).toBe(false);
+  });
+});
+
+describe('GameScreen with chess, where a promotion offers a choice of pieces (plat-014)', () => {
+  const chessProps = {
+    ...play,
+    ...identity,
+    variant: chess,
+    describePromotion: (piece: Piece) => `piece ${piece.type}`,
+  };
+  const PROMOTION = 'r3k3/1P6/8/8/8/8/8/4K3 w - - 0 1';
+
+  it('asks which piece instead of queening by itself', () => {
+    const useSession = createGameSession(chess);
+    useSession.getState().start(null, PROMOTION);
+    const view = render(<GameScreen {...chessProps} useSession={useSession} />);
+
+    fireEvent.click(square(view, 'b7'));
+    fireEvent.click(square(view, 'b8'));
+    expect(useSession.getState().game.moves()).toEqual([]);
+    expect(view.getByText('Promote to')).toBeTruthy();
+    for (const type of ['q', 'r', 'b', 'n']) {
+      const button = view.getByTestId(`promote-${type}`);
+      expect(button.textContent).toContain(`piece ${type}`);
+      expect(button.querySelector(`[data-art="w${type}"]`)).toBeTruthy();
+    }
+    expect(view.queryByTestId('promote-yes')).toBeNull();
+  });
+
+  it('plays the under-promotion the player picks', () => {
+    const useSession = createGameSession(chess);
+    useSession.getState().start(null, PROMOTION);
+    const view = render(<GameScreen {...chessProps} useSession={useSession} />);
+
+    fireEvent.click(square(view, 'b7'));
+    fireEvent.click(square(view, 'b8'));
+    fireEvent.click(view.getByTestId('promote-n'));
+    expect(useSession.getState().game.moves().map((m) => m.uci)).toEqual(['b7b8n']);
+    expect(useSession.getState().game.pieceAt(57)?.type).toBe('n');
+  });
+
+  it('castles from a single king move, and moves the rook with it', () => {
+    const useSession = createGameSession(chess);
+    useSession.getState().start(null, 'r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1');
+    const view = render(<GameScreen {...chessProps} useSession={useSession} />);
+
+    fireEvent.click(square(view, 'e1'));
+    fireEvent.click(square(view, 'g1'));
+    expect(useSession.getState().game.moves().map((m) => m.san)).toEqual(['O-O']);
+    expect(useSession.getState().game.pieceAt(5)?.type).toBe('r');
   });
 });

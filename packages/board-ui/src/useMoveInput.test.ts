@@ -174,14 +174,21 @@ describe('useMoveInput with Shogi, where a move may promote or not (plat-011)', 
     act(() => hook.result.current.onSquareClick(shogiSquare('e6')));
     act(() => hook.result.current.onSquareClick(shogiSquare('e7')));
     expect(onMove).not.toHaveBeenCalled();
-    expect(hook.result.current.pendingPromotion).toEqual({ from: shogiSquare('e6'), to: shogiSquare('e7') });
+    expect(hook.result.current.pendingPromotion).toEqual({
+      from: shogiSquare('e6'),
+      to: shogiSquare('e7'),
+      choices: [
+        { uci: 'e6e7', promotion: null },
+        { uci: 'e6e7+', promotion: '+' },
+      ],
+    });
   });
 
   it('plays the promoting move when the player says yes', () => {
     const { hook, onMove } = setupShogi(SILVER_OUTSIDE_ZONE);
     act(() => hook.result.current.onSquareClick(shogiSquare('e6')));
     act(() => hook.result.current.onSquareClick(shogiSquare('e7')));
-    act(() => hook.result.current.choosePromotion(true));
+    act(() => hook.result.current.choosePromotion('e6e7+'));
     expect(onMove).toHaveBeenCalledWith('e6e7+');
     expect(hook.result.current.pendingPromotion).toBeNull();
   });
@@ -190,7 +197,7 @@ describe('useMoveInput with Shogi, where a move may promote or not (plat-011)', 
     const { hook, onMove } = setupShogi(SILVER_OUTSIDE_ZONE);
     act(() => hook.result.current.onSquareClick(shogiSquare('e6')));
     act(() => hook.result.current.onSquareClick(shogiSquare('e7')));
-    act(() => hook.result.current.choosePromotion(false));
+    act(() => hook.result.current.choosePromotion('e6e7'));
     expect(onMove).toHaveBeenCalledWith('e6e7');
   });
 
@@ -234,5 +241,89 @@ describe('useMoveInput with Shogi, where a move may promote or not (plat-011)', 
     expect(hook.result.current.selectedHand).toBe('s');
     act(() => hook.result.current.onSquareClick(shogiSquare('e5')));
     expect(onMove).toHaveBeenCalledWith('S@e5');
+  });
+});
+
+/**
+ * A promotion that offers a choice of pieces (plat-014). Chess has four promotions on the same from-to pair
+ * and no plain move among them, so this uses a stub legal-move source rather than an engine: packages/chess
+ * lands in ch-001.
+ */
+describe('useMoveInput with a promotion that offers a choice of pieces (plat-014)', () => {
+  const FOUR_PROMOTIONS = ['e7e8q', 'e7e8r', 'e7e8b', 'e7e8n', 'a1a2'];
+
+  function setupChoice(legal: string[]) {
+    const onMove = vi.fn();
+    const game: MoveSource = { legalUci: () => legal };
+    const hook = renderHook(() => useMoveInput({ game, version: 0, canMove: true, onMove }));
+    return { hook, onMove };
+  }
+
+  it('asks which piece instead of quietly queening', () => {
+    const { hook, onMove } = setupChoice(FOUR_PROMOTIONS);
+    act(() => hook.result.current.onSquareClick(sq('e7')));
+    act(() => hook.result.current.onSquareClick(sq('e8')));
+    expect(onMove).not.toHaveBeenCalled();
+    expect(hook.result.current.pendingPromotion).toEqual({
+      from: sq('e7'),
+      to: sq('e8'),
+      choices: [
+        { uci: 'e7e8q', promotion: 'q' },
+        { uci: 'e7e8r', promotion: 'r' },
+        { uci: 'e7e8b', promotion: 'b' },
+        { uci: 'e7e8n', promotion: 'n' },
+      ],
+    });
+  });
+
+  it('plays exactly the choice the player picks, including an under-promotion', () => {
+    for (const uci of ['e7e8q', 'e7e8r', 'e7e8b', 'e7e8n']) {
+      const { hook, onMove } = setupChoice(FOUR_PROMOTIONS);
+      act(() => hook.result.current.onSquareClick(sq('e7')));
+      act(() => hook.result.current.onSquareClick(sq('e8')));
+      act(() => hook.result.current.choosePromotion(uci));
+      expect(onMove).toHaveBeenCalledWith(uci);
+      expect(hook.result.current.pendingPromotion).toBeNull();
+    }
+  });
+
+  it('a move string that is not one of the choices plays nothing', () => {
+    const { hook, onMove } = setupChoice(FOUR_PROMOTIONS);
+    act(() => hook.result.current.onSquareClick(sq('e7')));
+    act(() => hook.result.current.onSquareClick(sq('e8')));
+    act(() => hook.result.current.choosePromotion('e7e8k'));
+    expect(onMove).not.toHaveBeenCalled();
+    expect(hook.result.current.pendingPromotion).toBeNull();
+  });
+
+  it('a dragged promotion asks as well, and cancelling plays nothing', () => {
+    const { hook, onMove } = setupChoice(FOUR_PROMOTIONS);
+    act(() => {
+      hook.result.current.onDrop(sq('e7'), sq('e8'));
+    });
+    expect(hook.result.current.pendingPromotion?.choices).toHaveLength(4);
+    act(() => hook.result.current.cancelPromotion());
+    expect(onMove).not.toHaveBeenCalled();
+    expect(hook.result.current.pendingPromotion).toBeNull();
+  });
+
+  it('a single promotion plays straight through, and an ordinary move never asks', () => {
+    const one = setupChoice(['e7e8q', 'a1a2']);
+    act(() => one.hook.result.current.onSquareClick(sq('e7')));
+    act(() => one.hook.result.current.onSquareClick(sq('e8')));
+    expect(one.onMove).toHaveBeenCalledWith('e7e8q');
+
+    const plain = setupChoice(FOUR_PROMOTIONS);
+    act(() => plain.hook.result.current.onSquareClick(sq('a1')));
+    act(() => plain.hook.result.current.onSquareClick(sq('a2')));
+    expect(plain.onMove).toHaveBeenCalledWith('a1a2');
+    expect(plain.hook.result.current.pendingPromotion).toBeNull();
+  });
+
+  it('marks the promotion targets so the board can show them', () => {
+    const { hook } = setupChoice(FOUR_PROMOTIONS);
+    act(() => hook.result.current.onSquareClick(sq('e7')));
+    expect(hook.result.current.targets).toEqual([sq('e8')]);
+    expect(hook.result.current.promotionTargets).toEqual([sq('e8')]);
   });
 });

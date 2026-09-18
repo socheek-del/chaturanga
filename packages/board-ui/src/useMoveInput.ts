@@ -19,16 +19,24 @@ export interface MoveInputOptions {
   files?: number;
 }
 
+/** One way a pending move can be played: as it is, or promoting to a named piece. */
+export interface PromotionChoice {
+  uci: string;
+  /** The move's promotion suffix (`+`, `q`, `m`, …), or null for the move played without promoting. */
+  promotion: string | null;
+}
+
 export interface MoveInput {
   /** Selected board square. */
   selected: Square | null;
   /**
-   * A move the player started that can be played promoted or unpromoted, waiting for the choice. Games
-   * where promotion is automatic (Makruk) or a move of its own (Sittuyin) never set it.
+   * A move the player started that has more than one way to be played, waiting for the choice: promote or
+   * not (Shogi), or which piece to promote to (chess). Games where promotion is automatic (Makruk) or a
+   * move of its own (Sittuyin) never set it.
    */
-  pendingPromotion: { from: Square; to: Square } | null;
-  /** Plays the pending move, promoted or not; does nothing when nothing is pending. */
-  choosePromotion: (promote: boolean) => void;
+  pendingPromotion: { from: Square; to: Square; choices: PromotionChoice[] } | null;
+  /** Plays one of the pending choices by its move string; does nothing when nothing is pending. */
+  choosePromotion: (uci: string) => void;
   /** Drops the pending move without playing it. */
   cancelPromotion: () => void;
   /** Selected piece type in the side-to-move's hand. */
@@ -51,7 +59,7 @@ export interface MoveInput {
 }
 
 type Selection = { version: number } & ({ kind: 'square'; square: Square } | { kind: 'hand'; type: string });
-type Pending = { version: number; from: Square; to: Square };
+type Pending = { version: number; from: Square; to: Square; choices: PromotionChoice[] };
 type BoardMove = Extract<ParsedMove, { kind: 'move' }>;
 type DropMove = Extract<ParsedMove, { kind: 'drop' }>;
 
@@ -69,7 +77,8 @@ export function useMoveInput({ game, version, canMove, onMove, files = 8 }: Move
   const drops = legal.filter((m): m is DropMove => m.kind === 'drop');
 
   const current = selection && selection.version === version ? selection : null;
-  const pendingPromotion = pending && pending.version === version ? { from: pending.from, to: pending.to } : null;
+  const pendingPromotion =
+    pending && pending.version === version ? { from: pending.from, to: pending.to, choices: pending.choices } : null;
   const selected = current?.kind === 'square' ? current.square : null;
   const selectedHand = current?.kind === 'hand' ? current.type : null;
 
@@ -92,25 +101,22 @@ export function useMoveInput({ game, version, canMove, onMove, files = 8 }: Move
   const play = (from: Square, to: Square): boolean => {
     const candidates = boardMoves.filter((m) => m.from === from && m.to === to);
     if (candidates.length === 0) return false;
-    const plain = candidates.find((m) => !m.promotion);
-    const promoting = candidates.find((m) => m.promotion);
     setSelection(null);
-    // Both on the same squares (Shogi): the player chooses, so the move waits until they do.
-    if (plain && promoting) {
-      setPending({ version, from, to });
+    // More than one move on the same squares: promote or not (Shogi), or which piece (chess). The player
+    // chooses, so the move waits until they do.
+    if (candidates.length > 1) {
+      setPending({ version, from, to, choices: candidates.map(({ uci, promotion }) => ({ uci, promotion })) });
       return true;
     }
-    onMove((plain ?? promoting)!.uci);
+    onMove(candidates[0]!.uci);
     return true;
   };
 
-  const choosePromotion = (promote: boolean) => {
+  const choosePromotion = (uci: string) => {
     if (!pendingPromotion) return;
-    const move = boardMoves.find(
-      (m) => m.from === pendingPromotion.from && m.to === pendingPromotion.to && !!m.promotion === promote,
-    );
+    const choice = pendingPromotion.choices.find((c) => c.uci === uci);
     setPending(null);
-    if (move) onMove(move.uci);
+    if (choice) onMove(choice.uci);
   };
 
   const cancelPromotion = () => setPending(null);

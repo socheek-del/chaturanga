@@ -1799,15 +1799,20 @@
       "milestone": "M15",
       "title": "Shogi design identity and piece art (owner approval gate)",
       "user_visible_behavior": "The Shogi site has its own look — board, palette, type and wedge-tile pieces — that is not any other family game's and not Duolingo's.",
-      "status": "not_started",
+      "status": "in_progress",
       "verification": [
         "apps/shogi/docs/design.md: palette in light and dark with every token listed in packages/ui/TOKENS.md, typography, board look, and all 14 faces x 2 sides as SVG paths.",
         "Piece faces readable at 40px; promoted faces in red.",
         "Showcase page plus light and dark screenshots at desktop and phone width.",
         "Stays in_progress until the owner approves."
       ],
-      "evidence": [],
-      "notes": "Same gate as sit-005 (Daung) and xq-004 (Mo). Kanji are drawn as SVG paths, not font text (D4), so the board never needs a Japanese font and the PWA never precaches one."
+      "evidence": [
+        "2026-09-18: apps/shogi/docs/design.md proposes \"Kaya\" (榧): warm torreya wood and washi, indigo (藍) for controls, and vermilion (朱) reserved for a promoted piece — the one place a real set uses red. Every token in packages/ui/TOKENS.md is defined for light and dark in apps/shogi/web/src/index.css.",
+        "2026-09-18: pieces are five-sided wooden tiles with sumi kanji (王 飛 角 金 銀 桂 香 歩, 玉 for Gote's king, and 龍 馬 全 圭 杏 と in vermilion when promoted), drawn from SVG outlines generated once from Noto Serif JP Black (npm run glyphs; OFL.txt beside them), so no Japanese font is ever downloaded. Both sides share the same faces and the far player's tiles are turned 180 degrees.",
+        "2026-09-18: three board themes (榧 kaya, 新榧 shinkaya, 夜 yoru) with 9x9 grid lines and the four star points; PWA icons and favicon re-rendered from the 王 glyph on indigo (npm run icons).",
+        "2026-09-18: showcase page at /design; screenshots in apps/shogi/docs/evidence/design-{light,dark}-{390,1280}.png plus the English pair at 1280 (npm run capture:design). Reviewed by eye: kanji legible at 40px, promoted faces clearly red, board fits at 390px in both schemes."
+      ],
+      "notes": "Stays in_progress until the owner approves the identity (decision D7), exactly as sit-005 and xq-004 did. The live site is styled on the proposal in the meantime."
     },
     {
       "id": "sg-005",
@@ -1817,14 +1822,19 @@
       "milestone": "M15",
       "title": "Shogi web app: pass-and-play, computer, PWA, languages",
       "user_visible_behavior": "A visitor plays Shogi on one device or against the six bots, drops captured pieces, chooses whether to promote, and uses the site in Japanese or English, installed or offline.",
-      "status": "not_started",
+      "status": "passing",
       "verification": [
         "Playwright E2E: a full game, a drop from hand, an accepted and a declined promotion, an illegal nifu drop refused in the UI, history navigation, language switch.",
         "e2e:pwa: installable and playable offline.",
         "describeLocales: ja and en complete for shared and app namespaces.",
         "Gote pieces rendered rotated 180 degrees, following the board orientation."
       ],
-      "evidence": [],
+      "evidence": [
+        "2026-09-18: apps/shogi/web built on the Xiangqi app's structure: pass-and-play, six bots in a Web Worker, hand trays, the promotion prompt, move list, clocks, settings, PWA and ja/en. board-ui's squares grid with the StarPoints underlay, and the traditional coordinates (files 9..1, ranks 一..九) through plat-013.",
+        "2026-09-18: Playwright e2e 23/23 — a 9x9 board with 40 pieces and Sente at the bottom, tap and drag moves, undo, the engine's exact legal squares for the boxed-in rook, the promotion prompt answered yes, a capture landing in the hand tray (and undo taking it back), history navigation, reload restore, the six bots (both sides, and a hint), Japanese by default with ?lang=en and a remembered setting, the phone layout, lessons, online play and the family links.",
+        "2026-09-18: e2e:pwa 2/2 — installable (manifest short_name 将棋, icons, service worker) and playable offline against the computer and pass-and-play.",
+        "2026-09-18: npm run build:shogi OK; npm run verify exit 0 across every workspace, with the app's own unit tests (locales complete in ja and en, lessons, glyphs) at 64 passed."
+      ],
       "notes": "Depends on plat-011, plat-012, plat-013 and sg-004. The UI says 先手/後手 with ☗/☖, never black/white (D5); board coordinates follow D12."
     },
     {
@@ -1835,14 +1845,17 @@
       "milestone": "M15",
       "title": "Shogi lessons",
       "user_visible_behavior": "A beginner learns Shogi from about 14 interactive lessons in Japanese or English, with progress kept between visits.",
-      "status": "not_started",
+      "status": "passing",
       "verification": [
         "describeLessons passes for every lesson.",
         "Every claim in a lesson checked against the engine.",
         "An E2E completing one lesson in each language."
       ],
-      "evidence": [],
-      "notes": "Planned set: the board and notation, pawn/lance/knight, silver, gold, king, rook, bishop, promotion, drops, nifu and uchifuzume, check and mate, sennichite and impasse, a guided first game."
+      "evidence": [
+        "2026-09-18: 15 lessons in four units — the board; the eight pieces one by one; promotion, drops, nifu and uchifuzume, check and checkmate, sennichite; and finishing with two mates. Every claim is checked against the engine by describeLessons plus the app's own tests: positions parse, move solutions are legal,each squares answer equals the engine's legal destinations, both mates really mate, and the four ending claims (checkmate, stalemate, sennichite draw, perpetual check) match status().",
+        "2026-09-18: app unit tests 64 passed including the lesson suite; e2e learn.spec 3/3 — the path lists 15 lessons, the Gold lesson completed in Japanese with a wrong answer on the way, and the drops lesson completed in English by dropping a gold from the hand tray."
+      ],
+      "notes": "The lesson player needed the hand trays wired up (handLabel/describeHandPiece) so a drop lesson can be played."
     },
     {
       "id": "sg-007",
@@ -1852,14 +1865,18 @@
       "milestone": "M15",
       "title": "Shogi online play",
       "user_visible_behavior": "Two people play Shogi online by room code or quick match, with server-run clocks and no chat.",
-      "status": "not_started",
+      "status": "passing",
       "verification": [
         "apps/shogi/worker on server-kit (GameRoomBase, MatchmakerBase) with its own D1 and migration.",
         "workerd tests: the server validates every move including drops and promotions, and stores a finished game in D1.",
         "A recorded line the server scores as a perpetual check.",
         "A two-browser E2E playing a game containing a drop and a promotion."
       ],
-      "evidence": [],
+      "evidence": [
+        "2026-09-18: apps/shogi/worker on server-kit (GameRoomBase/MatchmakerBase driven by the shogi variant), its own D1 'shogi' with the games migration, and its own port (:8790) — no binding or database shared with another game.",
+        "2026-09-18: workerd tests 10/10, including: an illegal move (a blocked lance, a king stepping two squares, a bishop moving straight) and a move out of turn both rejected; clocks running from the first ply because Shogi has no setup phase; a 12-ply shuffle that the server scores as sennichite and stores as a draw; hibernation; and no chat.",
+        "2026-09-18: two-browser e2e 3/3 — a room by code with both boards in step over four moves, an unknown code showing an error, and the lobby in English with a Shogi-only seat token."
+      ],
       "notes": "Own Worker port, own D1, no shared database with another game."
     },
     {
@@ -1888,13 +1905,16 @@
       "milestone": "M15",
       "title": "Shogi joins the family links",
       "user_visible_behavior": "Each of the four sites lists the other three in its 'more games' section, each named in the reader's language.",
-      "status": "not_started",
+      "status": "passing",
       "verification": [
         "packages/family: 'ja' added to FamilyLanguage, a Japanese name for every game, Shogi in GAMES and SITES.",
         "packages/family tests: every game has a name in every site language.",
         "A MoreGames test per app; all four sites link to the other three."
       ],
-      "evidence": [],
+      "evidence": [
+        "2026-09-18: packages/family gained 'ja' as a family language and Shogi as a game; every game now has a Japanese name (タイ将棋, シットゥイン, シャンチー, 将棋) and Shogi has a name in all five languages. packages/family tests 5/5.",
+        "2026-09-18: e2e family.spec 1/1 on the Shogi site — it links to all three siblings at their configured addresses, in the site language, in both the home section and the footer, and shows no name in a language it does not speak. plat-010 held: no sibling app's spec needed an edit."
+      ],
       "notes": "Only packages/family and each app's own MoreGames data change — no other game's product files. plat-010 already made the family tests independent of the number of games."
     },
     {

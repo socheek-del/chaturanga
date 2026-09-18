@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="%DEFAULT_LOCALE%">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#2a2419" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!-- sg-010 adds the real SEO tags; until the site is deployed it stays out of search results. -->
+    <meta name="robots" content="noindex" />
+    <title>将棋 · Shogi</title>
+    <script>
+      // Apply the saved colour scheme and language before first paint (avoids a light flash in dark mode).
+      try {
+        var saved = (JSON.parse(localStorage.getItem('%SETTINGS_KEY%') || '{}').state) || {};
+        var scheme = saved.colorScheme || 'system';
+        var dark = scheme === 'dark' || (scheme === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        var locales = %LOCALES_JSON%;
+        var urlLang = new URLSearchParams(location.search).get('lang');
+        var lang = locales.indexOf(urlLang) >= 0 ? urlLang : locales.indexOf(saved.language) >= 0 ? saved.language : null;
+        if (lang) document.documentElement.lang = lang;
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,167 @@
+@import 'tailwindcss';
+/* Shared UI packages live outside this app folder; let Tailwind see their classes. */
+@source '../../../../packages/board-ui/src';
+@source '../../../../packages/game-shell/src/ui';
+@source '../../../../packages/ui/src';
+
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/*
+ * "Kaya" (榧) design tokens (apps/shogi/docs/design.md): warm torreya wood and washi for the interface,
+ * indigo for what you press and vermilion for what a promoted piece is written in. Light is the default;
+ * `-shadow` = the stronger shade a pressed control uses.
+ */
+:root,
+[data-theme='light'] {
+  --canvas: #f6efe1;
+  --surface: #fffcf4;
+  --surface-2: #eee3cb;
+  --line: #ddcfad;
+  --ink: #221d16;
+  --muted: #5f5544;
+  --subtle: #998d76;
+
+  --primary: #1f3d5c;
+  --primary-shadow: #16293d;
+  --primary-soft: #dce6ef;
+  --secondary: #a8231f;
+  --secondary-shadow: #831a17;
+  --secondary-soft: #f6dedc;
+  --danger: #a51d3c;
+  --danger-shadow: #7f162e;
+  --danger-soft: #f5dde3;
+  --warning: #b07a12;
+  --warning-shadow: #87600f;
+  --warning-soft: #f5e9cf;
+  --gold: #9c7a35;
+  --gold-shadow: #7a5f29;
+  --on-accent: #fffdf8;
+  --on-warning: #2a2006;
+  --on-gold: #1e1a16;
+  --scrim: #0e0c0a;
+
+  --card-shadow: 0 1px 2px rgb(30 26 22 / 0.08), 0 8px 24px -12px rgb(30 26 22 / 0.22);
+
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  --canvas: #15130e;
+  --surface: #1e1b15;
+  --surface-2: #2b271e;
+  --line: #3c352a;
+  --ink: #f2ecdd;
+  --muted: #baaf99;
+  --subtle: #7f7563;
+
+  --primary: #9dc0e0;
+  --primary-shadow: #7ba3c8;
+  --primary-soft: #23303d;
+  --secondary: #e5775f;
+  --secondary-shadow: #c95e47;
+  --secondary-soft: #3e211a;
+  --danger: #f07c96;
+  --danger-shadow: #d25f79;
+  --danger-soft: #3f1d26;
+  --warning: #e8b64f;
+  --warning-shadow: #c99a36;
+  --warning-soft: #372b13;
+  --gold: #d6b56c;
+  --gold-shadow: #b89650;
+  --on-accent: #14120f;
+  --on-warning: #2a2006;
+  --on-gold: #14120f;
+  --scrim: #050403;
+
+  --card-shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 10px 28px -14px rgb(0 0 0 / 0.7);
+
+  color-scheme: dark;
+}
+
+@theme inline {
+  /* D9: the system Japanese font, self-hosted Noto Sans for Latin. No Japanese font file is ever loaded. */
+  --font-sans: 'Noto Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Noto Sans JP', 'Meiryo', ui-sans-serif, system-ui, sans-serif;
+  --shadow-card: var(--card-shadow);
+
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-primary: var(--primary);
+  --color-primary-shadow: var(--primary-shadow);
+  --color-primary-soft: var(--primary-soft);
+  --color-secondary: var(--secondary);
+  --color-secondary-shadow: var(--secondary-shadow);
+  --color-secondary-soft: var(--secondary-soft);
+  --color-danger: var(--danger);
+  --color-danger-shadow: var(--danger-shadow);
+  --color-danger-soft: var(--danger-soft);
+  --color-warning: var(--warning);
+  --color-warning-shadow: var(--warning-shadow);
+  --color-warning-soft: var(--warning-soft);
+  --color-gold: var(--gold);
+  --color-gold-shadow: var(--gold-shadow);
+  --color-on-accent: var(--on-accent);
+  --color-on-warning: var(--on-warning);
+  --color-on-gold: var(--on-gold);
+  --color-scrim: var(--scrim);
+}
+
+html,
+body {
+  background: var(--canvas);
+  color: var(--ink);
+}
+
+body {
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Wood-grain motif for hero areas: the long soft lines of a kaya board. Needs `relative overflow-hidden`. */
+.motif-kaya::after {
+  content: '';
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: 55%;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(105deg, rgb(255 255 255 / 0.07) 0 2px, transparent 2px 14px),
+    radial-gradient(ellipse at 85% 25%, rgb(255 255 255 / 0.1), transparent 60%);
+  mask-image: linear-gradient(to left, black 20%, transparent);
+}
+
+.seal {
+  display: inline-grid;
+  place-items: center;
+  border: 2px solid currentColor;
+  border-radius: 0.35rem;
+  color: var(--secondary);
+}
+
+/* The moved piece slides in from its origin point. */
+@keyframes piece-slide {
+  from {
+    transform: translate(var(--dx), var(--dy));
+  }
+  to {
+    transform: translate(0, 0);
+  }
+}
+
+.piece-slide {
+  animation: piece-slide 170ms cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

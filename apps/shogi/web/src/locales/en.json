@@ -1,0 +1,240 @@
+{
+  "brand": "Shogi",
+  "app": {
+    "name": "Shogi",
+    "seal": "将"
+  },
+  "family": {
+    "title": "More games"
+  },
+  "nav": {
+    "label": "Main",
+    "back": "Back",
+    "play": "Play",
+    "settings": "Settings",
+    "learn": "Learn",
+    "about": "About"
+  },
+  "colors": {
+    "w": "Sente",
+    "b": "Gote"
+  },
+  "pieces": {
+    "k": "King",
+    "r": "Rook",
+    "b": "Bishop",
+    "g": "Gold",
+    "s": "Silver",
+    "n": "Knight",
+    "l": "Lance",
+    "p": "Pawn",
+    "+r": "Dragon",
+    "+b": "Horse",
+    "+s": "Promoted silver",
+    "+n": "Promoted knight",
+    "+l": "Promoted lance",
+    "+p": "Promoted pawn"
+  },
+  "board": {
+    "label": "Shogi board",
+    "pieceName": "{{color}} {{piece}}",
+    "squareWithPiece": "{{square}}, {{piece}}",
+    "emptySquare": "{{square}}, empty",
+    "hand": "{{color}}'s pieces in hand",
+    "handPiece": "{{piece}} ×{{count}}"
+  },
+  "modes": {
+    "single": "Play the computer",
+    "local": "Two players, one device",
+    "online": "Play online"
+  },
+  "home": {
+    "tagline": "Play Shogi, Japanese chess, free on any device.",
+    "singleDesc": "Six opponents named after the pieces, from beginner to strong.",
+    "localDesc": "Pass the device back and forth.",
+    "aboutGame": "About Shogi",
+    "traditional": "Traditional",
+    "intro": "Shogi is the chess of Japan. A captured piece changes sides and comes back into play, dropped anywhere on the board, so no position is ever quiet for long. Deep in enemy ground a piece may turn over and promote.",
+    "learn": "Learn Shogi",
+    "learnDesc": "Fourteen short lessons: the board, every piece, promotion, drops and the rules that catch beginners out.",
+    "onlineDesc": "Invite a friend with a code, or get matched."
+  },
+  "play": {
+    "start": "Start",
+    "turn": "{{color}} to move",
+    "check": "Check",
+    "captured": "Captured pieces",
+    "clockOf": "{{color}}'s clock",
+    "moves": "Moves",
+    "noMoves": "No moves yet",
+    "first": "First move",
+    "back": "Previous move",
+    "forward": "Next move",
+    "last": "Latest move",
+    "flip": "Flip the board",
+    "undo": "Take back",
+    "resign": "Resign",
+    "backToLive": "Back to the game",
+    "newGame": "New game",
+    "rematch": "Play again",
+    "review": "Look at the board",
+    "cancel": "Cancel",
+    "resignConfirm": "Resign for {{color}}?",
+    "promoteAsk": "Promote?",
+    "promoteYes": "Promote",
+    "promoteNo": "Keep",
+    "timeControl": "Time",
+    "noClock": "No clock",
+    "custom": "Custom",
+    "minutes": "Minutes",
+    "increment": "Increment (s)",
+    "categories": {
+      "bullet": "Bullet",
+      "blitz": "Blitz",
+      "rapid": "Rapid",
+      "classical": "Classical"
+    },
+    "result": {
+      "whiteWins": "Sente wins",
+      "blackWins": "Gote wins",
+      "draw": "Draw"
+    },
+    "reason": {
+      "checkmate": "Checkmate",
+      "stalemate": "Stalemate: no legal move loses",
+      "repetition": "Sennichite: the same position four times",
+      "fifty-move": "Fifty moves without a capture",
+      "insufficient-material": "Neither side can checkmate",
+      "perpetual-check": "Perpetual check loses",
+      "perpetual-chase": "Perpetual chase loses",
+      "timeout": "Out of time",
+      "resign": "Resigned",
+      "agreement": "Draw agreed",
+      "abandon": "Opponent left"
+    }
+  },
+  "computer": {
+    "chooseBot": "Choose an opponent",
+    "level": "Level {{level}}",
+    "side": "Your side",
+    "sideWhite": "Sente",
+    "sideBlack": "Gote",
+    "sideRandom": "Random",
+    "you": "You",
+    "thinking": "{{name}} is thinking",
+    "hint": "Hint"
+  },
+  "bots": {
+    "fu": {
+      "name": "Fu",
+      "desc": "Just learning. Plays quickly and loosely."
+    },
+    "keima": {
+      "name": "Keima",
+      "desc": "Sees captures one move ahead."
+    },
+    "gin": {
+      "name": "Gin",
+      "desc": "Steady and careful."
+    },
+    "kin": {
+      "name": "Kin",
+      "desc": "Quick to punish a mistake."
+    },
+    "kaku": {
+      "name": "Kaku",
+      "desc": "Plans several moves ahead."
+    },
+    "hisha": {
+      "name": "Hisha",
+      "desc": "The strongest. Expect no gifts."
+    }
+  },
+  "settings": {
+    "language": "Language",
+    "appearance": "Appearance",
+    "system": "System",
+    "light": "Light",
+    "dark": "Dark",
+    "board": "Board",
+    "play": "Play",
+    "coordinates": "Show coordinates"
+  },
+  "design": {
+    "title": "Design",
+    "intro": "The Shogi site's own look: torreya wood, ink on wooden tiles, and red for a promoted face.",
+    "swatches": "Colours",
+    "buttons": "Buttons",
+    "pieces": "Pieces",
+    "typography": "Typography",
+    "typographySample": "Shogi is the traditional chess of Japan.",
+    "cards": "Cards",
+    "controls": "Controls",
+    "boards": "Boards",
+    "board": {
+      "kaya": "Kaya",
+      "shinkaya": "New kaya",
+      "yoru": "Night"
+    },
+    "sample": "Sample"
+  },
+  "learn": {
+    "title": "Lessons",
+    "exit": "Leave lesson",
+    "progress": "Lesson progress",
+    "check": "Check",
+    "continue": "Continue",
+    "correct": "Correct!",
+    "wrong": "Not quite",
+    "tryAgain": "Try again",
+    "complete": "Lesson complete!",
+    "stars": "Stars: {{count}}",
+    "unit": "Unit {{number}}",
+    "start": "Start",
+    "xpLabel": "Experience points"
+  },
+  "online": {
+    "opponent": "Opponent",
+    "quickTitle": "Quick match",
+    "quickHint": "Pick a time control and we'll find you an opponent.",
+    "searching": "Finding an opponent ({{pool}})…",
+    "createTitle": "Create a private room",
+    "color": "Your side",
+    "create": "Create room",
+    "joinTitle": "Join with a code",
+    "codeLabel": "Room code",
+    "join": "Join",
+    "invalidCode": "Room codes have 6 characters",
+    "notFound": "Room not found",
+    "serverError": "Couldn't reach the server. Please try again.",
+    "connecting": "Connecting…",
+    "reconnecting": "Connection lost, reconnecting…",
+    "waitingTitle": "Your room is ready",
+    "shareHint": "Send this code or link to a friend to start playing.",
+    "copyLink": "Copy link",
+    "copied": "Copied",
+    "qrAlt": "QR code to join the room",
+    "waitingFor": "Waiting for your friend to join…",
+    "spectating": "You are watching this game",
+    "offerDraw": "Offer a draw",
+    "drawOffered": "Draw offered",
+    "drawOfferReceived": "Your opponent offers a draw",
+    "accept": "Accept",
+    "decline": "Decline",
+    "opponentDisconnected": "Your opponent disconnected — you win if they are not back in {{seconds}}s",
+    "rematchOffered": "Waiting for your opponent to accept the rematch…",
+    "rematchReceived": "Your opponent wants a rematch. Press \"Play again\" to accept."
+  },
+  "about": {
+    "what": "This is a free site for playing Shogi, Japanese chess. No account, no ads.",
+    "free": "Play the computer, play a friend online or on one device, and learn the rules with lessons.",
+    "whatTitle": "What is Shogi?",
+    "whatBody": "Shogi is the traditional chess of Japan, played for around five hundred years in its present form. What makes it its own game is the hand: a captured piece changes owner and can be dropped back onto almost any empty square, so material is never really gone and attacks never really end. Pieces that reach the last three ranks may turn over and promote — most of them to a gold general. A pawn may not be dropped onto a file where you already have one, and may never be dropped to deliver checkmate. Sente moves first.",
+    "openSource": "Open source",
+    "licence": "The code is public under the GPL-3.0 licence. Anyone can help: report bugs, improve lessons, review the Japanese text or write code.",
+    "source": "View the source",
+    "contribute": "How to contribute",
+    "reportBug": "Report a bug or suggest an idea",
+    "madeBy": "Made by {{name}}"
+  }
+}

@@ -89,9 +89,11 @@ All art is made in-house as optimised SVG.
   dark fill with a light inner highlight. Each type keeps its traditional Makruk shape (tall crowned Khun,
   rounded Met, pointed Khon, horse-head Ma, boat-hull Ruea, flat cowrie-shell Bia).
 - **Piece sets:** three, chosen in settings. "Classic carved" (default) and "Modern flat" are stylised.
-  "Traditional wood" (art-003) draws the lathe-turned pieces of a physical Thai set in side view — wood
-  gradient, collar rings, cast shadow, and a promoted Bia shown as the cowrie turned over — for players who
-  find the stylised sets hard to name.
+  "Traditional wood" (art-003) copies a physical Thai set, for players who find the stylised sets hard to
+  name: the shapes and their relative sizes are measured from a photograph of a real set (Khun a tall turned
+  urn on a stepped foot, Met the same urn narrow, Khon shorter with a wide cap, Ruea a low bun with a turned
+  point, Bia a flat puck, Ma a carved horse), each generated from its lathe profile so the silhouette, the
+  turning grooves and the shading agree. A promoted Bia is the puck turned over, as on a real board.
 - **Boards:** Makruk boards are un-checkered — a single colour with grid lines. Themes vary material colour
   and line colour only.
 - **Marketing media:** screenshots, GIFs and social images must not show the site's domain (it may change).

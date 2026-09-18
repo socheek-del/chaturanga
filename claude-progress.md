@@ -715,5 +715,17 @@ was appended to, not rewritten.
   `scripts/capture-readme.mjs`) was left uncommitted for that session.
 - Owner decision 2026-09-18: the traditional set stays an option in settings only (default stays `classic`),
   and the Thai name "ไม้แกะแบบดั้งเดิม" is confirmed. No code change followed — both were already true.
+- Owner follow-up 2026-09-18: the set must look as close to real pieces as the design principles allow, so it
+  was redrawn from a reference photograph of a physical Thai set (Wikimedia Commons, `Category:Makruk pieces`,
+  `Piezas del makruk.png`). The Chrome extension was not connected, so the reference was opened with the
+  repo's own Playwright chromium and the six silhouettes were measured by pixel analysis (flood fill on the
+  wood-coloured pixels, then per-row widths). Measured sizes in px: Khun 53x92, Ma 56x114, Khon 44x73,
+  Met 35x73, Ruea 51x55, Bia 41x30 — so Met and Khon are the same height, the Bia is a flat puck, and the Ma
+  is the tallest piece. The raw rows could not be used directly (the photo is a 3/4 view, so every base read
+  as a cylinder); the profiles were re-authored from the measured proportions instead.
+- How the art is built now: each turned piece is generated from a lathe profile ([half-width, y] from the
+  foot up) by `turned()`, with corner-aware smoothing so a disc edge stays sharp and a cap stays round;
+  grooves are placed by height and get their width from the profile; a depth gradient darkens the foot. Ma is
+  a hand-drawn carving. The whole set is scaled 1.12x about the ground line to fill the square.
 - Next best step:
   - **Agent:** `xq-010`, then `plat-011`.

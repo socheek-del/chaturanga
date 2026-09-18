@@ -823,9 +823,11 @@
         "2026-09-18: apps/makruk/web/e2e/art.spec.ts (art-003) passed at 360px: choosing ไม้แกะแบบดั้งเดิม persists over a reload (aria-checked), the crafted FEN renders svg[data-set=traditional] with the expected data-type on all 12 squares (r, n, s, m, k, p~ in both colours), and a new game renders 32 traditional pieces.",
         "2026-09-18: art.spec.ts (theme-002) updated and passed: settings now show 6 board themes and 3 piece sets, each preview 7 SVGs. 4 passed in apps/makruk/web/e2e/art.spec.ts.",
         "2026-09-18: screenshots settings-pieces.png, traditional-360.png and board-traditional.png reviewed — the set reads as turned wood on the teak board and the six types stay distinct at 44px.",
-        "2026-09-18: npm run typecheck -w apps/makruk/web clean; npm run test -w apps/makruk/web 108 passed (locale completeness covers the new th/en names)."
+        "2026-09-18: npm run typecheck -w apps/makruk/web clean; npm run test -w apps/makruk/web 108 passed (locale completeness covers the new th/en names).",
+        "2026-09-18: owner asked for pieces as close as possible to the real thing, so the set was redrawn from a reference photograph of a physical Thai set (Wikimedia Commons, Category:Makruk pieces). The six silhouettes and their relative heights and widths were measured from the photo by pixel analysis (Khun 53x92 px, Ma 56x114, Khon 44x73, Met 35x73, Ruea 51x55, Bia 41x30) and re-authored as lathe profiles: each piece is now generated from its profile with corner-aware smoothing, turning grooves that follow the body, a round-body gradient and a depth pass. Bia is a flat puck, not a dome; Met and Khon are the same height; Ma is a carved horse.",
+        "2026-09-18: art.spec.ts 4 passed after the redraw; typecheck clean; 108 unit tests passed; eslint clean. Screenshots regenerated: settings-pieces.png, traditional-360.png, board-traditional.png."
       ],
-      "notes": "Owner request 2026-09-18: the stylised sets confuse some players. Owner decision 2026-09-18: the traditional set stays an option only — the default stays classic — and the Thai name ไม้แกะแบบดั้งเดิม is confirmed."
+      "notes": "Owner request 2026-09-18: the stylised sets confuse some players. Owner decisions 2026-09-18: the traditional set stays an option only (the default stays classic), the Thai name is ไม้แกะแบบดั้งเดิม, and the art must follow a real physical set as closely as the design principles allow."
     },
     {
       "id": "polish-001",

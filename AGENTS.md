@@ -6,13 +6,14 @@ Chaturanga is a family of traditional chess games. Each game is its own web PWA 
 - **Sittuyin** (Burmese chess): live.
 - **Xiangqi** (Chinese chess): live (`apps/xiangqi/docs/PLAN.md`). Its design is "Mo"
   (`apps/xiangqi/docs/design.md`), approved by the owner on 2026-09-18.
-- **Shogi** (Japanese chess): planned, not built. The plan is `apps/shogi/docs/PLAN.md`; its features are
-  `plat-011..013` (platform prep) and `sg-001..011`. Owner decisions D1-D12 in that plan are proposed defaults
-  awaiting confirmation.
+- **Shogi** (Japanese chess): live (`apps/shogi/docs/PLAN.md`). Its design ("Kaya") still awaits owner
+  approval (`apps/shogi/docs/design.md`), so the live site is styled on an unapproved proposal. It is the
+  first game with pieces in hand during play and an optional promotion; the platform-prep features
+  `plat-011..013` made both generic.
 - Others may follow.
 
 Owner decisions, target layout and order of work are in `docs/PLATFORM.md`. Facts about a single game live next
-to that game: `apps/makruk/AGENTS.md` for the Makruk product, `apps/sittuyin/AGENTS.md` for the Sittuyin product, `apps/xiangqi/AGENTS.md` for the Xiangqi product, and `packages/<game>/RULES.md` for the rules
+to that game: `apps/makruk/AGENTS.md` for the Makruk product, `apps/sittuyin/AGENTS.md` for the Sittuyin product, `apps/xiangqi/AGENTS.md` for the Xiangqi product, `apps/shogi/AGENTS.md` for the Shogi product, and `packages/<game>/RULES.md` for the rules
 as implemented.
 
 This repository is designed for long-running coding-agent work. The goal is not to maximize raw code output.
@@ -95,6 +96,15 @@ broken starting state.
     online rooms, PWA and zh-Hans/en, on board-ui's `grid="points"`. The Worker runs on :8789, deploys on its
     own subdomain and D1 (xq-008), and links to its siblings (xq-009). SEO and the READMEs are still to come
     (xq-010). `npm run smoke:prod -w apps/xiangqi/web` drives the live site.
+  - `packages/shogi` (`@chaturanga/shogi`): pure Shogi rules (`RULES.md`), including drops, optional and
+    forced promotion, nifu, uchifuzume and sennichite. `/core` is the raw API for search code. It differs
+    from Fairy-Stockfish in two documented places (uchifuzume, impasse).
+  - `packages/shogi-ai` (`@chaturanga/shogi-ai`): Shogi bots on ai-core; drops are ordered last and left out
+    of quiescence. The ladder is a bundled Node script (`npm run test:strength -w packages/shogi-ai`).
+  - `apps/shogi/web`, `apps/shogi/worker`: the Shogi product (`apps/shogi/AGENTS.md`). Pass-and-play,
+    computer, 15 lessons, online rooms, PWA and ja/en, on the 9x9 squares board with both piece stands always
+    on screen. The Worker runs on :8790, deploys on its own subdomain and D1 (sg-008), and links to its
+    siblings (sg-009). `npm run smoke:prod -w apps/shogi/web` drives the live site.
   - `packages/ai-core` (`@chaturanga/ai-core`): game-independent alpha-beta search over a `SearchAdapter`,
     bot personas and root-move picking.
   - `packages/ai` (`@chaturanga/makruk-ai`): Makruk computer opponents, run in a Web Worker. It keeps its own
@@ -140,8 +150,9 @@ broken starting state.
 - **License:** GPL-3.0 (public repo; Fairy-Stockfish WASM is allowed).
 - **Source control:** remote `git@github-socheek-del:socheek-del/chaturanga.git` (renamed from `Makruk`;
   the old URL redirects). Branch `main`. Conventional Commits.
-- **CI:** `.github/workflows/ci.yml` runs verify and build on every push and PR, and deploys Makruk on push
-  to `main`. `.github/workflows/strength.yml` runs the Makruk bot ladder on demand.
+- **CI:** `.github/workflows/ci.yml` runs verify and build on every push and PR, and on push to `main`
+  deploys each product whose own folders — or a shared package — changed.
+  `.github/workflows/strength.yml` runs a bot ladder on demand for any of the bot packages.
 
 ## Required Artifacts
 

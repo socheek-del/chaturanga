@@ -749,3 +749,48 @@ was appended to, not rewritten.
   board themes.
 - Next best step:
   - **Agent:** `xq-010`, then `plat-011`.
+
+### Session 016 (Shogi, built and deployed)
+
+Implemented the Shogi plan written in session 015. The site is live and every feature but two is `passing`.
+
+- **Platform prep (`plat-011`, `plat-012`, `plat-013`, all passing).** board-ui's move input now holds a move
+  whose from-to pair has both a promoting and a plain version and asks the player (GameScreen renders the
+  prompt with the product's own art); the shared parser learned the `+` suffix. `Variant.hasSetupPhase`
+  (optional, defaulting to `hasHands`) separates Sittuyin's setup from hands that fill from captures, so a
+  Shogi game runs its clocks from ply 1 and keeps both piece stands on screen. `Board` takes `fileLabels` and
+  `rankLabels`. No other game's files changed; Makruk, Sittuyin and Xiangqi tests are untouched and green.
+- **`sg-001`, `sg-002` passing.** `packages/shogi`: 9x9, hands, drops, optional and forced promotion, nifu,
+  uchifuzume, checkmate, losing stalemate, sennichite with the perpetual-check exception. 127 tests: perft
+  over 13 positions, 60 lock-step random games and 200 forced repetition cycles against ffish comparing legal
+  moves, SAN, FEN and the result every ply.
+  - **Divergence found and kept:** Fairy-Stockfish's `shogi` variant does **not** implement uchifuzume — it
+    played a mating pawn drop and scored it. This engine forbids it, exposes `Game.uchifuzumeUci()`, and keeps
+    a Fairy-Stockfish-compatible mode so the comparison tests still pin every other difference. It also does
+    not adjudicate impasse, and neither does Fairy-Stockfish (decision D11 settled by probe). Both are in
+    `packages/shogi/RULES.md`.
+  - Two bugs the reference test caught: the halfmove counter resets on a capture, a drop and a promotion but
+    not on a plain pawn move; SAN disambiguates by the letter a piece prints (a gold, a promoted silver and a
+    promoted pawn all print `G`), not by the piece.
+- **`sg-003` in_progress.** `packages/shogi-ai`: six bots on ai-core, material including hands, drops ordered
+  last and out of quiescence. Ladder locally: L2 beats L1 6-0, L3 beats L2 5-1, L4 beats L3 5-1, L5 beats L4
+  10-0. L6 vs L5 is slow (about 5 minutes a game) and was still running at the end of the session — that pair
+  is all that stands between this feature and `passing`.
+- **`sg-004` in_progress (owner gate).** "Kaya" (榧): torreya wood, indigo controls, vermilion only for a
+  promoted face; five-sided tiles with SVG kanji outlines, turned 180° for the far player. Screenshots in
+  `apps/shogi/docs/evidence/`. The live site is styled on it while it waits for approval.
+- **`sg-005`, `sg-006`, `sg-007`, `sg-009`, `sg-010` passing.** The app (e2e 23/23, PWA 2/2), 15 lessons,
+  online rooms (workerd 10/10, two-browser e2e), the family links (all four sites), and SEO with an Open
+  Graph image and both READMEs.
+- **`sg-008` passing — the site is live.** D1 `shogi` created and migrated, `AUTH_SECRET` set, Worker
+  deployed on its own subdomain, CI given a `shogi` filter and a `deploy-shogi` job. Production smoke 13/13,
+  including a two-browser online game on the live Worker and the family links across all four live sites.
+- **`sg-011` blocked**, as expected: `apps/shogi/docs/i18n-review.md` needs a native Japanese reviewer.
+- Pitfalls worth remembering:
+  - A hand-made Shogi FEN is invalid when a rook or lance shares a file with the enemy king — the side not to
+    move ends up in check. Three fixtures failed that way before being parsed with `new Game(fen)` first.
+  - `+P` makes a square two characters; anything that assumes one letter per square breaks.
+  - The bishop on b2 has no legal move at all from the start position.
+- Next best step:
+  - **Owner:** approve or redirect the Kaya design (`sg-004`); find a native Japanese reviewer (`sg-011`).
+  - **Agent:** finish the L6-vs-L5 ladder and record it, which moves `sg-003` to passing.

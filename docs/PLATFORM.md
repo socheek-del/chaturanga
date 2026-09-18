@@ -7,7 +7,7 @@ Owner decisions, 2026-09-14:
 - Sites live on **subdomains** for now. Parent domains are temporary, so no code, image or doc hardcodes them. Each app reads its address from its own config, as Makruk does today with `apps/web/site.config.ts`.
 - **Sittuyin (Burmese chess)** is the second game. Its languages are Burmese (default) and English. Makruk stays Thai (default) and English.
 - **Xiangqi (Chinese chess)** is the third game, planned 2026-09-15. Its languages are Simplified Chinese (default) and English. Full plan: `apps/xiangqi/docs/PLAN.md`. It is the first game to break the 8x8-board and pieces-on-squares assumptions the platform code carried from Makruk and Sittuyin (9x10 board, pieces on intersections); the platform-prep features `plat-007..010` remove those assumptions generically before Xiangqi's own features (`xq-001..011`) build on them.
-- **Shogi (Japanese chess)** is the fourth game, planned 2026-09-18. Its languages are Japanese (default) and English. Full plan: `apps/shogi/docs/PLAN.md`. It is the first game where captured pieces come back (hands stay live for the whole game and a captured piece changes owner) and the first with an **optional** promotion, so the same from→to pair is two legal moves; the platform-prep features `plat-011..013` remove those assumptions — plus the board's fixed coordinate labels — before Shogi's own features (`sg-001..011`) build on them.
+- **Shogi (Japanese chess)** is the fourth game, built and deployed 2026-09-18. Its languages are Japanese (default) and English. Full plan: `apps/shogi/docs/PLAN.md`. It is the first game where captured pieces come back (hands stay live for the whole game and a captured piece changes owner) and the first with an **optional** promotion, so the same from→to pair is two legal moves; the platform-prep features `plat-011..013` remove those assumptions — plus the board's fixed coordinate labels — before Shogi's own features (`sg-001..011`) build on them.
 - Other games may come later.
 
 ## The one rule
@@ -45,7 +45,7 @@ apps/
   makruk/web      makruk/worker      Wat theme · th, en
   sittuyin/web    sittuyin/worker    own theme · my, en
   xiangqi/web     xiangqi/worker     own theme · zh-Hans, en (planned)
-  shogi/web       shogi/worker       own theme · ja, en (planned)
+  shogi/web       shogi/worker       own theme · ja, en
 ```
 
 The root README describes the family. Each game has its own README and translated README (`README.th.md`, `README.my.md`). The root `AGENTS.md` holds platform rules; `apps/<game>/AGENTS.md` holds game facts. `feature_list.json` features carry a `product` field (`platform`, `makruk`, `sittuyin`).
@@ -167,8 +167,9 @@ drop (`S@a2`) and nifu behaviour were probed with ffish 0.7.10 on 2026-09-18.
   (xq-004).
 - Xiangqi subdomain: chosen by the owner in xq-008 (2026-09-18). It lives only in
   `apps/xiangqi/web/site.config.ts` and the Xiangqi Worker's `routes`; never hardcoded elsewhere.
-- Shogi owner decisions D1-D12 (`apps/shogi/docs/PLAN.md`): proposed defaults, to confirm before `sg-001`.
-  Two need the owner specifically: **D7** the design identity, approved before styling, and **D8** the subdomain,
-  chosen at `sg-008`. **D11** (the 27-point impasse rule) is decided by a probe, not by preference, and whichever
-  way it goes is written into `packages/shogi/RULES.md`.
-- Shogi brand identity: its own design document, approved before styling. Decided in sg-004.
+- Shogi owner decisions D1-D12 (`apps/shogi/docs/PLAN.md`): implemented as proposed. **D8** the subdomain
+  follows the family's pattern (jp-chess); **D11** was settled by probe — Fairy-Stockfish does not adjudicate
+  impasse, so neither does this engine, and it does not implement uchifuzume either, which this engine does.
+  Both divergences are written into `packages/shogi/RULES.md`. **D7**, the design identity, still needs the owner.
+- Shogi brand identity: "Kaya" (榧), `apps/shogi/docs/design.md`. **Still awaiting owner approval** (sg-004);
+  the live site is already styled on it.

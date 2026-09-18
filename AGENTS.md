@@ -97,8 +97,8 @@ broken starting state.
     (`npm run test:strength -w packages/xiangqi-ai`), about 4x faster than under vitest.
   - `apps/xiangqi/web`, `apps/xiangqi/worker`: the Xiangqi product. It has pass-and-play, computer, 13 lessons,
     online rooms, PWA and zh-Hans/en, on board-ui's `grid="points"`. The Worker runs on :8789, deploys on its
-    own subdomain and D1 (xq-008), and links to its siblings (xq-009). SEO and the READMEs are still to come
-    (xq-010). `npm run smoke:prod -w apps/xiangqi/web` drives the live site.
+    own subdomain and D1 (xq-008), links to its siblings (xq-009), and carries its own SEO, Open Graph image
+    and READMEs (xq-010). `npm run smoke:prod -w apps/xiangqi/web` drives the live site.
   - `packages/shogi` (`@chaturanga/shogi`): pure Shogi rules (`RULES.md`), including drops, optional and
     forced promotion, nifu, uchifuzume and sennichite. `/core` is the raw API for search code. It differs
     from Fairy-Stockfish in two documented places (uchifuzume, impasse).

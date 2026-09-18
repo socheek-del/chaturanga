@@ -1630,7 +1630,7 @@
       "milestone": "M13",
       "title": "Xiangqi SEO, About page and README",
       "user_visible_behavior": "Xiangqi has per-page SEO tags, an About page with GitHub contribution links, and a showcase README in Chinese and English with media captured from production, with no domain visible.",
-      "status": "in_progress",
+      "status": "passing",
       "verification": [
         "Per-language titles/descriptions, hreflang, canonical, JSON-LD, sitemap+robots generated from SITE_URL, and an Open Graph image.",
         "About page with GitHub contribution links.",
@@ -1638,10 +1638,14 @@
         "apps/xiangqi/AGENTS.md completed; root AGENTS.md, README.md and docs/PLATFORM.md list Xiangqi as live."
       ],
       "evidence": [
-        "2026-09-17 (partial): About page at /about (nav entry) in zh-Hans and en, explaining Xiangqi and linking to the repository, CONTRIBUTING.md and new issues (all target _blank); e2e/about.spec.ts 1/1 in both languages. apps/xiangqi/AGENTS.md written (code map, languages, rules reference, points board and glyphs, dev/test commands, fixture pitfalls) and linked from the root AGENTS.md.",
-        "2026-09-18 (README half done): apps/xiangqi/README.md and README.zh-Hans.md written on the same shape as the Sittuyin pair — feature table, the two rules that surprise newcomers (flying general, stalemate loses), a piece table in both scripts, a mermaid architecture diagram, the package map, local-run commands and the contribution links. The live address appears once per file, as a [play] link definition at the bottom. Media captured from production by the new apps/xiangqi/web/scripts/capture-readme.mjs (BASE_URL=<live site> npm run capture:readme -w apps/xiangqi/web; ffmpeg + ImageMagick): docs/media/play-computer.gif, online.gif, lesson.gif and mobile.png. Sampled frames of all three GIFs and the collage were reviewed: no address bar, no domain, no room share link. The root README.md now lists Xiangqi as live and names packages/xiangqi, packages/xiangqi-ai, apps/xiangqi and dev:xiangqi."
+        "2026-09-17: About page at /about (nav entry) in zh-Hans and en, explaining Xiangqi and linking to the repository, CONTRIBUTING.md and new issues (all target _blank); e2e/about.spec.ts 1/1 in both languages. apps/xiangqi/AGENTS.md written and linked from the root AGENTS.md.",
+        "2026-09-18: apps/xiangqi/README.md and README.zh-Hans.md written on the Sittuyin pair's shape, with media captured from production by apps/xiangqi/web/scripts/capture-readme.mjs; the live address appears once per file, as a [play] link definition.",
+        "2026-09-18 (SEO half): apps/xiangqi/web/src/features/seo/{seo.ts,sitemap.ts,SeoController.tsx} on the Shogi pattern — per-page titles and descriptions in both languages, canonical, hreflang zh-Hans/en/x-default, Open Graph with og:locale zh_CN and alternate en_US, Twitter card and a schema.org @graph in index.html, all through the %SITE_URL% placeholder the vite plugin fills. robots.txt and sitemap.xml are generated from site.config.ts at build time and served in dev and preview.",
+        "2026-09-18: public/og-image.png (1200x630) rendered by scripts/generate-og-image.mjs from the real board playing a central-cannon opening, with the 象棋 wordmark and the Chinese lines drawn as SVG outlines (Noto Serif SC / Noto Sans SC through opentype.js, the same technique as the piece glyphs), so the card needs no CJK font. No address appears in it.",
+        "2026-09-18: verification — tsc, eslint clean; vitest 79 passed (5 files) including seo.test.ts; npm run build emits dist/robots.txt and dist/sitemap.xml whose only host is the configured one; Playwright e2e/seo.spec.ts 1 passed and the about/i18n/play specs 14 passed. npm run verify across the repo exits 0.",
+        "2026-09-18: root AGENTS.md and apps/xiangqi/AGENTS.md no longer say the SEO and READMEs are missing."
       ],
-      "notes": "Remaining: the SEO half — per-language titles and descriptions, hreflang, canonical, JSON-LD, sitemap.xml and robots.txt generated from SITE_URL, and an Open Graph image (the sibling products render theirs in generate-icons.mjs; Xiangqi's needs the CJK wordmark as outlines, since the app deliberately loads no CJK font). The About page's 'review the Chinese text' link waits for xq-011. Root README and docs/PLATFORM.md already list Xiangqi as live."
+      "notes": "The About page's 'review the Chinese text' link still waits for xq-011 (a native reviewer)."
     },
     {
       "id": "xq-011",

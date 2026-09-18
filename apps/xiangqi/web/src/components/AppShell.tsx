@@ -5,6 +5,7 @@ import { ArrowLeft, GraduationCap, Info, type LucideIcon, Settings, Swords } fro
 import { useTranslation } from 'react-i18next';
 import { Link, NavLink, Outlet } from 'react-router';
 import { PRODUCT } from '../../product.config';
+import { SeoController } from '../features/seo/SeoController';
 import { ThemeController } from './ThemeController';
 
 const NAV: ReadonlyArray<{ to: string; key: string; icon: LucideIcon; end?: boolean }> = [
@@ -20,6 +21,7 @@ export function AppShell() {
   const { focus, FocusProvider } = useFocusModeProvider();
   return (
     <div className="min-h-dvh bg-canvas text-ink md:flex">
+      <SeoController />
       <ThemeController />
       <nav
         aria-label={t('nav.label')}

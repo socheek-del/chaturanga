@@ -7,12 +7,76 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <!-- xq-010 adds the real SEO tags; until the site is deployed it stays out of search results. -->
-    <meta name="robots" content="noindex" />
-    <title>象棋 · Xiangqi</title>
+
+    <title>免费在线下象棋 — 人机对战，也能和朋友下 | Xiangqi</title>
+    <meta
+      name="description"
+      content="免费在线下象棋，无需注册。六个级别的电脑对手，用房间号邀请朋友，也可以两人同屏，还有十三节课程从零学起 · Play Xiangqi (Chinese chess) online free."
+    />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="%SITE_URL%/" />
+    <link rel="alternate" hreflang="zh-Hans" href="%SITE_URL%/" />
+    <link rel="alternate" hreflang="en" href="%SITE_URL%/?lang=en" />
+    <link rel="alternate" hreflang="x-default" href="%SITE_URL%/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="象棋 · Xiangqi" />
+    <meta property="og:title" content="免费在线下象棋 — 人机对战，也能和朋友下 | Xiangqi" />
+    <meta
+      property="og:description"
+      content="免费在线下象棋，无需注册。和电脑下，和朋友下，也能从课程学起 · Play Xiangqi (Chinese chess) online free."
+    />
+    <meta property="og:url" content="%SITE_URL%/" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:image" content="%SITE_URL%/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="象棋 · Xiangqi — a Xiangqi board with the pieces on their opening points" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="免费在线下象棋 | Xiangqi" />
+    <meta name="twitter:description" content="Play Xiangqi (Chinese chess) online free: computer, friends, two on one device and lessons." />
+    <meta name="twitter:image" content="%SITE_URL%/og-image.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "%SITE_URL%/#website",
+            "url": "%SITE_URL%/",
+            "name": "象棋 · Xiangqi",
+            "alternateName": ["Xiangqi", "Chinese Chess", "象棋", "中国象棋", "Xiang Qi"],
+            "inLanguage": ["zh-Hans", "en"]
+          },
+          {
+            "@type": ["VideoGame", "WebApplication"],
+            "@id": "%SITE_URL%/#game",
+            "name": "象棋 · Xiangqi (Chinese Chess)",
+            "alternateName": ["Xiangqi", "Chinese Chess", "象棋", "中国象棋"],
+            "url": "%SITE_URL%/",
+            "description": "Play Xiangqi (Chinese chess) online for free: against the computer at 6 levels, with friends by room code, two players on one device, plus 13 interactive lessons for beginners. Simplified Chinese and English.",
+            "image": "%SITE_URL%/og-image.png",
+            "genre": ["Board game", "Chess", "Strategy"],
+            "gamePlatform": ["Web browser", "Android", "iOS"],
+            "applicationCategory": "GameApplication",
+            "operatingSystem": "Any",
+            "playMode": ["SinglePlayer", "MultiPlayer"],
+            "numberOfPlayers": { "@type": "QuantitativeValue", "minValue": 1, "maxValue": 2 },
+            "inLanguage": ["zh-Hans", "en"],
+            "isAccessibleForFree": true,
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CNY" },
+            "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+            "codeRepository": "https://github.com/socheek-del/chaturanga"
+          }
+        ]
+      }
+    </script>
     <script>
       // Apply the saved colour scheme and language before first paint (avoids a light flash in dark mode).
       try {
+        // %SETTINGS_KEY% and %LOCALES_JSON% come from product.config.ts (see vite.config.ts).
         var saved = (JSON.parse(localStorage.getItem('%SETTINGS_KEY%') || '{}').state) || {};
         var scheme = saved.colorScheme || 'system';
         var dark = scheme === 'dark' || (scheme === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);

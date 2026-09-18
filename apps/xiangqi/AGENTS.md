@@ -9,7 +9,8 @@ Xiangqi (象棋, Chinese chess) is a web PWA. It offers:
 - its own "Mo" (墨, ink) design identity, approved by the owner on 2026-09-18 (`apps/xiangqi/docs/design.md`)
 
 The product plan is `apps/xiangqi/docs/PLAN.md`. The platform rules in the root `AGENTS.md` apply here too.
-**Not deployed yet:** there is no site address, family link, SEO or README (xq-008, xq-009, xq-010).
+It is live on its own subdomain (xq-008), links to its siblings (xq-009), and has its own SEO, Open Graph
+image and READMEs (xq-010). The Chinese text still waits for a native review (xq-011).
 
 ## Xiangqi Facts
 

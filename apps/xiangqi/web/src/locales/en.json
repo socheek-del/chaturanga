@@ -232,5 +232,39 @@
     "contribute": "How to contribute",
     "reportBug": "Report a bug or suggest an idea",
     "madeBy": "Made by {{name}}"
+  },
+  "seo": {
+    "home": {
+      "title": "Xiangqi Online — Play Chinese Chess Free vs Computer & Friends",
+      "description": "Play Xiangqi (Chinese chess) online for free, no sign-up. Face 6 computer levels, invite a friend by room code or share one device, and learn from lessons."
+    },
+    "computer": {
+      "title": "Play Xiangqi vs Computer — 6 Levels | Chinese Chess",
+      "description": "Practise Xiangqi against bots from beginner to strong, with hints and takebacks. Free, instant, and works on phones and desktops."
+    },
+    "online": {
+      "title": "Play Xiangqi Online with Friends | Chinese Chess",
+      "description": "Pick a time control for a quick match, or create a room and send the code to a friend. Free, no account needed."
+    },
+    "room": {
+      "title": "Online Xiangqi Room | Chinese Chess",
+      "description": "Join an online Xiangqi (Chinese chess) game with a friend."
+    },
+    "local": {
+      "title": "Two-Player Xiangqi on One Device | Chinese Chess",
+      "description": "Pass the phone back and forth and play Xiangqi with someone next to you. Free, no account, works offline."
+    },
+    "learn": {
+      "title": "Learn Xiangqi — 13 Free Lessons | Chinese Chess",
+      "description": "Learn Xiangqi from scratch: the board, every piece, the river and the palace, the flying general, stalemate, perpetual check and basic mates. Thirteen short lessons."
+    },
+    "about": {
+      "title": "About This Free Xiangqi Site | Chinese Chess",
+      "description": "A free, open-source Xiangqi site: no account, no ads. Play the computer or a friend, and learn the rules."
+    },
+    "settings": {
+      "title": "Settings | Xiangqi",
+      "description": "Language, appearance, board and clock settings for the Xiangqi site."
+    }
   }
 }

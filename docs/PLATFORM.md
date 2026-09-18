@@ -8,6 +8,7 @@ Owner decisions, 2026-09-14:
 - **Sittuyin (Burmese chess)** is the second game. Its languages are Burmese (default) and English. Makruk stays Thai (default) and English.
 - **Xiangqi (Chinese chess)** is the third game, planned 2026-09-15. Its languages are Simplified Chinese (default) and English. Full plan: `apps/xiangqi/docs/PLAN.md`. It is the first game to break the 8x8-board and pieces-on-squares assumptions the platform code carried from Makruk and Sittuyin (9x10 board, pieces on intersections); the platform-prep features `plat-007..010` remove those assumptions generically before Xiangqi's own features (`xq-001..011`) build on them.
 - **Shogi (Japanese chess)** is the fourth game, built and deployed 2026-09-18. Its languages are Japanese (default) and English. Full plan: `apps/shogi/docs/PLAN.md`. It is the first game where captured pieces come back (hands stay live for the whole game and a captured piece changes owner) and the first with an **optional** promotion, so the same from→to pair is two legal moves; the platform-prep features `plat-011..013` remove those assumptions — plus the board's fixed coordinate labels — before Shogi's own features (`sg-001..011`) build on them.
+- **International chess** is the fifth game, planned 2026-09-18. Its language is English at launch (a second language is an open question, because each declared language becomes a family language that needs a name for every game). Full plan: `apps/chess/docs/PLAN.md`. It is the first game with castling, with en passant and with a promotion that offers a choice of four pieces; only the last of those needs a platform change (`plat-014`), before chess's own features (`ch-001..011`).
 - Other games may come later.
 
 ## The one rule
@@ -124,6 +125,13 @@ Every step leaves Makruk green: `npm run verify`, `npm run e2e`, CI deploy.
    - Design identity, web app, lessons, online play.
    - Deploy on its subdomain, family links, SEO and README.
    - Native Japanese review.
+6. **Chess product (M16-M17: plat-014, ch-001..011).**
+   - Platform prep: promotion with a choice of pieces in the shared move input.
+   - Engine (castling, en passant, under-promotion) and game end (stalemate, insufficient material, threefold, fifty-move).
+   - AI and bot ladder.
+   - Design identity, web app, lessons, online play.
+   - Deploy on its subdomain, family links, SEO and README.
+   - A second site language, once the owner names one.
 
 ## Sittuyin product plan
 
@@ -142,6 +150,14 @@ Proposed owner decisions (D1-D12, awaiting confirmation), architecture, the gap 
 optional promotion, and the step-by-step work breakdown: `apps/shogi/docs/PLAN.md`. Shogi's rules authority is
 Fairy-Stockfish's `shogi` variant, the same rule as the other three games; its start position, promotion (`g8g9+`),
 drop (`S@a2`) and nifu behaviour were probed with ffish 0.7.10 on 2026-09-18.
+
+## Chess product plan
+
+Proposed owner decisions (D1-D12, awaiting confirmation), architecture, the gap analysis for promotion with a
+choice of pieces, and the step-by-step work breakdown: `apps/chess/docs/PLAN.md`. Chess's rules authority is
+Fairy-Stockfish's `chess` variant, the same rule as the other four games; castling (`e1g1`, `e1c1`), promotion
+(`e7e8q|r|b|n`), en passant (`e5d6`) and the claimable threefold and fifty-move draws were probed with ffish
+0.7.10 on 2026-09-18.
 
 ## Sittuyin rules reference (from Fairy-Stockfish `sittuyin`, probed with ffish 0.7.10)
 
@@ -173,3 +189,9 @@ drop (`S@a2`) and nifu behaviour were probed with ffish 0.7.10 on 2026-09-18.
   Both divergences are written into `packages/shogi/RULES.md`. **D7**, the design identity, still needs the owner.
 - Shogi brand identity: "Kaya" (榧), `apps/shogi/docs/design.md`. **Still awaiting owner approval** (sg-004);
   the live site is already styled on it.
+- Chess owner decisions D1-D12 (`apps/chess/docs/PLAN.md`): proposed defaults, to confirm before `ch-001`.
+  Three need the owner specifically: **D1** the site languages (English only at launch is the proposal),
+  **D7** the design identity, approved before styling, and **D8** the subdomain, chosen at `ch-008`. **D11**
+  (threefold and the fifty-move rule are claimable in Fairy-Stockfish, not automatic) is a product choice, and
+  whichever way it goes is written into `packages/chess/RULES.md`.
+- Chess brand identity: its own design document, approved before styling. Decided in ch-004.

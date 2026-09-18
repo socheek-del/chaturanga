@@ -1,5 +1,5 @@
 {
-  "project": "Chaturanga — family of traditional chess games (Makruk, Sittuyin and Xiangqi live; Shogi planned)",
+  "project": "Chaturanga — family of traditional chess games (Makruk, Sittuyin, Xiangqi and Shogi live; international chess planned)",
   "last_updated": "2026-09-18",
   "rules": {
     "single_active_feature": true,
@@ -1963,6 +1963,204 @@
         "2026-09-18: apps/shogi/docs/i18n-review.md written in the sit-011/xq-011 format: what to review (UI strings, all 15 lessons, result reasons, sides, bots, online, About, manifest, SEO and the Open Graph text, design and board names, the family game names, the Japanese README), a 25-row terminology table, how to send corrections, and a sign-off table."
       ],
       "notes": "BLOCKED on a human: the review needs a native Japanese speaker, which an agent cannot provide or fabricate. Hand apps/shogi/docs/i18n-review.md to a reviewer (ideally a Shogi player), apply the corrections and record the sign-off row."
+    },
+    {
+      "id": "plat-014",
+      "product": "platform",
+      "priority": 91,
+      "area": "play",
+      "milestone": "M16",
+      "title": "Promotion with a choice of pieces in the shared move input",
+      "user_visible_behavior": "In a game where a pawn may promote to more than one piece, the player picks which piece, with every choice drawn in the product’s own art; games with automatic, forced or yes/no promotion are unchanged.",
+      "status": "not_started",
+      "verification": [
+        "board-ui unit tests: four promotion moves on the same from-to pair raise a pending choice and each choice plays its own move; a single promotion plays straight through; Shogi’s two-choice case and Makruk’s automatic promotion are unchanged.",
+        "game-shell unit test: the prompt renders one button per choice through the product’s renderPiece, is keyboard reachable and can be dismissed.",
+        "Makruk, Sittuyin and Shogi E2E unchanged."
+      ],
+      "evidence": [],
+      "notes": "useMoveInput.play() today splits candidates into one plain and one promoting move; with four promotions and no plain move it silently auto-queens and under-promotion is unreachable (apps/chess/docs/PLAN.md, step 1). Touches packages/board-ui/src/useMoveInput.ts and packages/game-shell/src/ui/GameScreen.tsx — do not start while a parallel Shogi session has GameScreen.tsx open. New shared keys go in packages/game-shell/KEYS.md."
+    },
+    {
+      "id": "ch-001",
+      "product": "chess",
+      "priority": 92,
+      "area": "engine",
+      "milestone": "M16",
+      "title": "Chess board, FEN and move generation",
+      "user_visible_behavior": "packages/chess models the 8x8 board, castling rights and the en-passant square, and generates legal moves including castling, en passant and all four promotions, verified against Fairy-Stockfish.",
+      "status": "not_started",
+      "verification": [
+        "fen.test.ts: round-trip on 10+ ffish-generated positions; 10+ invalid FENs rejected (bad castling field, impossible en-passant square, two kings, the side not to move in check).",
+        "movegen.test.ts: one test per piece type, castling legal and blocked (through check, out of check, rights lost), en passant including the pinned case, and all four promotions.",
+        "perft.test.ts: the standard perft suite (start position, Kiwipete, positions 3-6) to shallow depths in verify and full depths with PERFT_DEEP=1.",
+        "reference.test.ts: lock-step random games vs ffish comparing sorted legal moves, SAN and FEN on every ply.",
+        "describeVariantConformance(chess, ...) passes."
+      ],
+      "evidence": [],
+      "notes": "Needs a diagonal-slider attack table in packages/rules-core (the Makruk family has no bishop or queen). Castling rights, the en-passant square and the halfmove clock stay inside packages/chess."
+    },
+    {
+      "id": "ch-002",
+      "product": "chess",
+      "priority": 93,
+      "area": "engine",
+      "milestone": "M16",
+      "title": "Chess game end",
+      "user_visible_behavior": "A chess game ends with checkmate, stalemate (a draw), insufficient material, threefold repetition or the fifty-move rule, and the result dialog names which.",
+      "status": "not_started",
+      "verification": [
+        "status.test.ts: a mate, a stalemate, each insufficient-material combination Fairy-Stockfish recognises, a threefold line and a fifty-move line, each compared with ffish result(claimDraw).",
+        "packages/chess/RULES.md states how threefold and the fifty-move rule end a game and matches the code."
+      ],
+      "evidence": [],
+      "notes": "Owner decision D11 (apps/chess/docs/PLAN.md): the probe shows ffish reports threefold and fifty-move as claimable (isGameOver() false, result() \"*\"; claimDraw true gives 1/2-1/2). Proposal is to end the game automatically, with no claim button and no new online message, and to write the divergence from the FIDE claim procedure into RULES.md."
+    },
+    {
+      "id": "ch-003",
+      "product": "chess",
+      "priority": 94,
+      "area": "ai",
+      "milestone": "M16",
+      "title": "Chess computer opponents on ai-core",
+      "user_visible_behavior": "Six chess bots to play against, each clearly stronger than the one below, each moving inside the app’s time budget on a phone.",
+      "status": "not_started",
+      "verification": [
+        "npm run test:strength -w packages/chess-ai: each persona beats the one below over a fixed match.",
+        "A mate-in-N test set is solved.",
+        "A fixed-seed game plays no illegal move; timing numbers recorded for the top persona."
+      ],
+      "evidence": [],
+      "notes": "Evaluation must be a real one (material, piece-square tables, pawn structure, king safety, mobility) with quiescence and the ai-core repetitionScore hook. A weak bot in chess reads as broken, not as easy: ship nothing rather than a weak bot with a strong name."
+    },
+    {
+      "id": "ch-004",
+      "product": "chess",
+      "priority": 95,
+      "area": "design",
+      "milestone": "M17",
+      "title": "Chess design identity and piece art (owner approval gate)",
+      "user_visible_behavior": "The chess site has its own look — palette, board colours in light and dark, and its own piece set — that resembles neither its siblings nor the big chess sites.",
+      "status": "not_started",
+      "verification": [
+        "apps/chess/docs/design.md with palette, board themes, typography and the piece set, with screenshots.",
+        "Owner approval recorded in the document and in docs/PLATFORM.md before the site is styled."
+      ],
+      "evidence": [],
+      "notes": "Owner decision D4/D7. Pieces are drawn in-house in the Staunton style; Wikimedia chess sets are CC BY-SA and would drag attribution obligations into the app (see art-003)."
+    },
+    {
+      "id": "ch-005",
+      "product": "chess",
+      "priority": 96,
+      "area": "play",
+      "milestone": "M17",
+      "title": "Chess web app",
+      "user_visible_behavior": "A chess PWA with pass-and-play, play against the computer, move list in SAN, clocks, settings and an installable offline app, in English.",
+      "status": "not_started",
+      "verification": [
+        "describeLocales: every key present in every declared language.",
+        "Unit tests for the stores.",
+        "Playwright E2E: a pass-and-play game to mate, a castling move, an en-passant capture, an under-promotion to a knight, a stalemate, and a game against the weakest bot."
+      ],
+      "evidence": [],
+      "notes": "Depends on plat-014 for the promotion prompt. board-ui needs no change for castling or en passant (probe in apps/chess/docs/PLAN.md)."
+    },
+    {
+      "id": "ch-006",
+      "product": "chess",
+      "priority": 97,
+      "area": "learn",
+      "milestone": "M17",
+      "title": "Chess lessons",
+      "user_visible_behavior": "About 15 lessons that teach the pieces, check and mate, castling, en passant, promotion, stalemate, the basic tactics and two simple endgames, with progress kept on the device.",
+      "status": "not_started",
+      "verification": [
+        "describeLessons: every lesson’s moves are legal from its FEN and its goal is reachable.",
+        "Unit tests for progress storage."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "ch-007",
+      "product": "chess",
+      "priority": 98,
+      "area": "online",
+      "milestone": "M17",
+      "title": "Chess online play",
+      "user_visible_behavior": "Two people play chess in a room from a code or a quick match, with clocks, resign, draw offers and rematch, and no chat.",
+      "status": "not_started",
+      "verification": [
+        "Worker unit tests for the room state machine with the chess variant, including a rejected illegal move and a rejected move from the wrong seat.",
+        "E2E with two browser contexts: a short game, a resignation and an accepted draw offer."
+      ],
+      "evidence": [],
+      "notes": "server-kit and protocol already carry resign, offerDraw, acceptDraw, declineDraw and rematch; chess needs no new message. Worker dev port :8791."
+    },
+    {
+      "id": "ch-008",
+      "product": "chess",
+      "priority": 99,
+      "area": "infra",
+      "milestone": "M17",
+      "title": "Deploy chess on its own subdomain",
+      "user_visible_behavior": "The chess site is live on its own address with its own Worker and D1 database.",
+      "status": "not_started",
+      "verification": [
+        "npm run smoke:prod -w apps/chess/web passes against the live site.",
+        "No domain hardcoded outside apps/chess/web/site.config.ts and the Worker routes; no domain in committed screenshots or docs."
+      ],
+      "evidence": [],
+      "notes": "Owner picks the subdomain (D8). Root scripts dev:chess / build:chess / deploy:chess added next to the siblings."
+    },
+    {
+      "id": "ch-009",
+      "product": "chess",
+      "priority": 100,
+      "area": "platform",
+      "milestone": "M17",
+      "title": "Chess joins the family links",
+      "user_visible_behavior": "Every family site lists chess in its \"more games\" section, in the reader’s own language, and the chess site lists the other four.",
+      "status": "not_started",
+      "verification": [
+        "packages/family unit test: every game has a name in every declared family language.",
+        "All five sites build and each shows its four siblings."
+      ],
+      "evidence": [],
+      "notes": "GameId gains 'chess'; GAMES gains its names in th, my, zh-Hans, ja and en; SITES reads apps/chess/web/site.config.ts and product.config.ts."
+    },
+    {
+      "id": "ch-010",
+      "product": "chess",
+      "priority": 101,
+      "area": "docs",
+      "milestone": "M17",
+      "title": "Chess SEO, About page and READMEs",
+      "user_visible_behavior": "The chess site is findable, shares a proper preview card, and explains its rules, licence and credits on an About page.",
+      "status": "not_started",
+      "verification": [
+        "seo.test.ts passes (meta, Open Graph, sitemap).",
+        "The README media script runs and its output shows no domain.",
+        "apps/chess/README.md, apps/chess/AGENTS.md and packages/chess/RULES.md are complete."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "ch-011",
+      "product": "chess",
+      "priority": 102,
+      "area": "i18n",
+      "milestone": "M17",
+      "title": "A second chess site language",
+      "user_visible_behavior": "The chess site is complete in a second language, chosen by the owner.",
+      "status": "blocked",
+      "verification": [
+        "describeLocales passes for the new language.",
+        "Every game has a name in the new language in packages/family.",
+        "A native speaker reviews the strings and the sign-off is recorded."
+      ],
+      "evidence": [],
+      "notes": "BLOCKED on owner decision D1 (apps/chess/docs/PLAN.md): chess has no single home language, and each declared language becomes a FamilyLanguage that needs a name for every game. Launch is English only."
     }
   ]
 }

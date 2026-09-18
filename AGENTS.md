@@ -10,6 +10,9 @@ Chaturanga is a family of traditional chess games. Each game is its own web PWA 
   approval (`apps/shogi/docs/design.md`), so the live site is styled on an unapproved proposal. It is the
   first game with pieces in hand during play and an optional promotion; the platform-prep features
   `plat-011..013` made both generic.
+- **Chess** (international chess): planned, not built. The plan is `apps/chess/docs/PLAN.md`; its features are
+  `plat-014` (platform prep) and `ch-001..011`. Owner decisions D1-D12 in that plan are proposed defaults awaiting
+  confirmation.
 - Others may follow.
 
 Owner decisions, target layout and order of work are in `docs/PLATFORM.md`. Facts about a single game live next

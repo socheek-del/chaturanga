@@ -794,3 +794,28 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
 - Next best step:
   - **Owner:** approve or redirect the Kaya design (`sg-004`); find a native Japanese reviewer (`sg-011`).
   - **Agent:** finish the L6-vs-L5 ladder and record it, which moves `sg-003` to passing.
+
+### Session 018 (chess planning only)
+
+- Date: 2026-09-18
+- Goal: plan international chess as the fifth product. No implementation.
+- Done:
+  - `apps/chess/docs/PLAN.md`: proposed owner decisions D1-D12, architecture, an ffish 0.7.10 probe of the
+    `chess` variant, the gap analysis against the platform, a 12-step work breakdown and the risks.
+  - `feature_list.json`: 12 new features, all `not_started` except `ch-011` (blocked on owner decision D1) —
+    `plat-014` (promotion with a choice of pieces) and `ch-001..ch-011`, milestones M16-M17, priorities 91-102.
+  - `docs/PLATFORM.md` and `AGENTS.md` record chess as the fifth game and its open owner decisions.
+- Probe evidence (ffish 0.7.10, variant `chess`, run 2026-09-18): castling is `e1g1` / `e1c1` with SAN
+  `O-O` / `O-O-O`; promotion is four moves on one from-to pair (`e7e8q,e7e8r,e7e8b,e7e8n`); en passant is
+  `e5d6` (`exd6`) onto an empty square; stalemate and insufficient material end the game on their own, while
+  threefold and the fifty-move rule report `*` unless `claimDraw` is true.
+- Only real platform gap found: `useMoveInput` splits promotions into one plain and one promoting move, so
+  four chess promotions would silently auto-queen. That is `plat-014`.
+- Not done, on purpose: no code, no `packages/chess`, no `apps/chess/web`. A parallel Shogi session was
+  working in the same tree during this session (it committed `ae80b7f` while this ran); `plat-014` touches
+  `packages/board-ui/src/useMoveInput.ts` and `packages/game-shell/src/ui/GameScreen.tsx`, so it must not be
+  started until that session's work is committed.
+- Next best step:
+  - **Owner:** confirm D1 (English only at launch), D7 (design identity gate) and D11 (threefold and
+    fifty-move end the game automatically).
+  - **Agent:** finish the open Shogi features (`sg-003`, `sg-004`), then `plat-014`, then `ch-001`.

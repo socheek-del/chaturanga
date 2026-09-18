@@ -22,14 +22,16 @@
     {
       "binding": "DB",
       "database_name": "xiangqi",
-      // Placeholder until xq-008 creates the production database; local dev and tests use a local database.
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      // Production database, created 2026-09-18 (xq-008). Local dev and tests use a local database.
+      "database_id": "1f9042ad-3c89-4c04-8f75-25b7be61f7b7",
       "migrations_dir": "migrations"
     }
   ],
   "vars": {
     "RECONNECT_GRACE_MS": "60000"
   },
-  // No route yet: the owner chooses the subdomain at deploy time (D8, xq-008).
+  // The subdomain the owner chose (D8, xq-008). Moving domains: change this and the default in
+  // apps/xiangqi/web/site.config.ts, nothing else.
+  "routes": [{ "pattern": "cn-chess.beanroti.com", "custom_domain": true }],
   "observability": { "enabled": true }
 }

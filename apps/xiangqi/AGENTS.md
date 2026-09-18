@@ -31,8 +31,9 @@ The product plan is `apps/xiangqi/docs/PLAN.md`. The platform rules in the root 
 - **Board:** board-ui's `grid="points"` with the `BoardLines` underlay. Points are named like squares (`e1`,
   `a10`). Piece characters are SVG outlines generated from Noto Serif TC (`npm run glyphs`, OFL in
   `src/features/board/OFL.txt`), so no CJK font is ever loaded.
-- **Site address:** not chosen yet (owner decision D8). Never write one into code or docs before the owner
-  decides in xq-008.
+- **Site address:** read it from `apps/xiangqi/web/site.config.ts` (`SITE_URL`), never write it anywhere else.
+  The owner chose the subdomain on 2026-09-18 (D8, xq-008); override it per build with `XIANGQI_SITE_URL`.
+  Moving domains means that default and `routes` in `apps/xiangqi/worker/wrangler.jsonc`, nothing else.
 - **Dev and tests:**
   - `npm run dev:xiangqi` runs the Worker on :8789 and the web app on :5176 (it proxies `/api` and `/ws`).
   - `npm run e2e -w apps/xiangqi/web` starts vite (:5177) and wrangler dev with a local D1.

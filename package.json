@@ -27,7 +27,8 @@
     "build:xiangqi": "npm run build -w apps/xiangqi/web && npm run build -w apps/xiangqi/worker",
     "deploy": "npm run deploy:makruk",
     "deploy:makruk": "npm run build -w apps/makruk/web && npm run deploy -w apps/makruk/worker",
-    "deploy:sittuyin": "npm run build -w apps/sittuyin/web && npm run deploy -w apps/sittuyin/worker"
+    "deploy:sittuyin": "npm run build -w apps/sittuyin/web && npm run deploy -w apps/sittuyin/worker",
+    "deploy:xiangqi": "npm run build -w apps/xiangqi/web && npm run deploy -w apps/xiangqi/worker"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

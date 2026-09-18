@@ -147,4 +147,5 @@ Fairy-Stockfish's `xiangqi` variant, the same "follow the Fairy-Stockfish varian
 - Sittuyin brand identity: its own design document with shared component primitives. Decided in sit-005.
 - Subdomain names (e.g. one per game under the current parent domain). Chosen at deploy time in sit-009, never hardcoded.
 - Xiangqi brand identity: its own design document, approved before styling. Decided in xq-004.
-- Xiangqi subdomain: chosen at deploy time in xq-008, never hardcoded.
+- Xiangqi subdomain: chosen by the owner in xq-008 (2026-09-18). It lives only in
+  `apps/xiangqi/web/site.config.ts` and the Xiangqi Worker's `routes`; never hardcoded elsewhere.

@@ -23,7 +23,7 @@ file.
 | D5 | Colour names | Red and Black. Red moves first and maps to the engine colour `w`. |
 | D6 | Move-list notation | Engine SAN first (e.g. `Che3`). Traditional/WXF notation can be a later display-only feature; moves stay UCI strings end to end. |
 | D7 | Design identity | Its own identity with a proposal document and screenshots, approved before styling — same gate as Sittuyin's "Daung" (`xq-004`). |
-| D8 | Subdomain | Owner chooses it at the deploy step (`xq-008`). Never written into code or docs before then. |
+| D8 | Subdomain | Chosen by the owner at the deploy step (`xq-008`) on 2026-09-18. It lives only in `apps/xiangqi/web/site.config.ts` and the Worker's `routes`; never written anywhere else. |
 | D9 | UI font | System CJK stack (`"PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif`) plus self-hosted Noto Sans for Latin text. Piece glyphs are SVG paths, not a loaded font, so the PWA never precaches multi-MB CJK font files. |
 | D10 | Bot personas | Six bots named after the pieces: 兵 Soldier, 士 Advisor, 相 Elephant, 傌 Horse, 炮 Cannon, 俥 Chariot. |
 

@@ -21,7 +21,6 @@ jobs:
       - run: npm run verify
       - run: npm run build
       - run: npm run build:sittuyin
-      # Xiangqi is not deployed yet (xq-008): build the web app and a dry run of its Worker.
       - run: npm run build:xiangqi
 
   # Each product deploys only when its own folders, a shared package or the dependency lock changed.
@@ -32,6 +31,7 @@ jobs:
     outputs:
       makruk: ${{ steps.filter.outputs.makruk }}
       sittuyin: ${{ steps.filter.outputs.sittuyin }}
+      xiangqi: ${{ steps.filter.outputs.xiangqi }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
@@ -63,6 +63,11 @@ jobs:
               - 'apps/sittuyin/**'
               - 'packages/sittuyin/**'
               - 'packages/sittuyin-ai/**'
+            xiangqi:
+              - *shared
+              - 'apps/xiangqi/**'
+              - 'packages/xiangqi/**'
+              - 'packages/xiangqi-ai/**'
 
   deploy:
     needs: [verify, changes]
@@ -109,6 +114,31 @@ jobs:
       - run: npm ci
       # `npm run deploy:sittuyin` applies pending D1 migrations before publishing the Worker.
       - run: npm run deploy:sittuyin
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          WRANGLER_SEND_METRICS: 'false'
+
+  deploy-xiangqi:
+    needs: [verify, changes]
+    if: needs.changes.outputs.xiangqi == 'true'
+    runs-on: ubuntu-latest
+    concurrency:
+      group: deploy-production-xiangqi
+      cancel-in-progress: false
+    environment:
+      name: production-xiangqi
+      url: https://cn-chess.beanroti.com
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm install -g npm@11
+      - run: npm ci
+      # `npm run deploy:xiangqi` applies pending D1 migrations before publishing the Worker.
+      - run: npm run deploy:xiangqi
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

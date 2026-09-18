@@ -12,6 +12,7 @@ coverage/
 # Playwright
 test-results/
 test-results-pwa/
+test-results-prod/
 playwright-report/
 blob-report/
 e2e-evidence/

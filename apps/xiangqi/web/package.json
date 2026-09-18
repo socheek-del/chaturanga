@@ -12,6 +12,7 @@
     "test": "vitest run",
     "e2e": "playwright test",
     "e2e:pwa": "playwright test -c playwright.pwa.config.ts",
+    "smoke:prod": "playwright test -c playwright.prod.config.ts",
     "icons": "node scripts/generate-icons.mjs",
     "glyphs": "node scripts/generate-glyphs.mjs",
     "capture:design": "node scripts/capture-design.mjs"

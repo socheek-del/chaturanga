@@ -76,3 +76,23 @@
 - Dev: `npm run dev:makruk` (Worker :8787) · `npm run dev:sittuyin` (Worker :8788)
 - Deep rules checks: `npm run test:deep -w packages/makruk` · `npm run test:deep -w packages/sittuyin`
 - Ladders: `gh workflow run strength.yml -f package=packages/ai|packages/sittuyin-ai -f pair=N -f games=20`
+
+## Changed Session 017 (2026-09-18) — Shogi
+
+- **Shogi is live** on its own subdomain (address only in `apps/shogi/web/site.config.ts` and the Worker's
+  `routes`). D1 `shogi` created and migrated, `AUTH_SECRET` set, CI deploys it like the other three.
+  Production smoke 13/13, including a two-browser online game and the family links on all four live sites.
+- **New packages:** `packages/shogi` (rules: 9x9, hands, drops, promotion, nifu, uchifuzume, sennichite;
+  127 tests against ffish) and `packages/shogi-ai` (six bots on ai-core).
+- **New product:** `apps/shogi/web` + `apps/shogi/worker` — pass-and-play, computer, 15 lessons, online
+  rooms, PWA, ja/en, SEO, Open Graph image, About page, both READMEs.
+- **Platform:** `plat-011` optional promotion (the move input asks instead of choosing), `plat-012`
+  `Variant.hasSetupPhase` so hands can be live during play, `plat-013` product coordinate labels. All three
+  are additive: no other game's files changed.
+- **Two documented divergences from Fairy-Stockfish** (`packages/shogi/RULES.md`): this engine forbids
+  uchifuzume, which Fairy-Stockfish does not implement, and neither adjudicates impasse. Tests pin both.
+- **Left open:** `sg-003` (the L6-vs-L5 ladder pair was still running), `sg-004` (owner must approve the
+  "Kaya" design; the live site is already styled on it), `sg-011` (native Japanese reviewer needed).
+- **Commands:** `npm run dev:shogi` (Worker :8790, web :5177) · `npm run e2e -w apps/shogi/web` ·
+  `npm run smoke:prod -w apps/shogi/web` · `npm run test:strength -w packages/shogi-ai` ·
+  `BASE_URL=<live site> npm run capture:readme -w apps/shogi/web`.

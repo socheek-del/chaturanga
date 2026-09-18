@@ -2,30 +2,33 @@ import type { Piece } from '@chaturanga/makruk';
 import { type ReactNode, useId } from 'react';
 
 /**
- * art-003: "traditional wood" set — the pieces of a physical Thai set, seen from the side.
- * The shapes follow a real turned set (reference: a Thai teak set photographed side by side):
- * Khun and Met are turned urns on a wide foot with a pointed finial, Khon is a squatter urn with a short
- * finial, Ruea is a low dome drawn up into a spiral point, Bia is a flat turned puck, and Ma is a carved
- * horse. Each solid of revolution is generated from its lathe profile, so the silhouette, the turning
- * grooves and the shading all agree. A promoted Bia is the puck turned over, showing its hollowed
- * underside, as it is on a real board.
- * Drawn on the same 100×100 grid as the other sets; the pieces stand on y = 87.
+ * art-003: "traditional wood" set — the pieces of a physical Thai set, drawn the way a real set reads on a
+ * board: flat carved silhouettes, not shaded 3D objects.
+ *
+ * Shapes and sizes are measured from the traditional set the owner chose as the reference (percentages of a
+ * square): Khun 50x81, Ma 50x81, Khon 41x70, Met 28x48, Ruea 66x50 — the widest and lowest piece — and the
+ * Bia a 53-wide disc of concentric turning rings, because a Bia lies on the board and is seen from above.
+ * Khun, Met and Khon are turned urns on a stepped plinth under a spire; Ruea is a broad low pot with a
+ * small knob; Ma is carved.
+ *
+ * A promoted Bia (Bia Ngai) is the same disc turned over, with the Met's spire cut into the middle.
+ * Drawn on a 100x100 grid. The turned pieces stand on y = 92.
  */
 export const TRADITIONAL_PALETTE = {
-  // The pale side of a Thai set: honey-coloured wood, kept lighter than the teak board.
-  w: { light: '#fff6e6', body: '#f4ddb6', shade: '#d3ac74', deep: '#ab8148', edge: '#5b3a18', mark: '#8a5a24' },
-  // The dark side: rosewood, oiled.
-  b: { light: '#9a5f36', body: '#65381f', shade: '#402011', edge: '#160a03', deep: '#2a1409', mark: '#d0a469' },
+  // Bone-pale wood with a carved dark line, the way the light side of a Thai set reads on a board.
+  w: { fill: '#f7e7c3', line: '#2f1d0c', detail: '#2f1d0c' },
+  // The dark side is near-black; its carved lines are pale so it still reads on a dark board.
+  b: { fill: '#241a13', line: '#c9a86f', detail: '#c9a86f' },
 } as const;
 
 type Palette = (typeof TRADITIONAL_PALETTE)[keyof typeof TRADITIONAL_PALETTE];
 
-/** A lathe profile: [half-width, y] from the foot upwards. x = 50 is the axis. */
+/** A lathe profile: [half-width, y] from the plinth upwards. x = 50 is the axis. */
 type Profile = readonly (readonly [number, number])[];
 
 /**
  * Outline through the given points. A lathe cuts both sharp steps and soft curves, so a vertex that turns
- * hard (a disc edge, a collar) stays a corner and a gentle one is rounded.
+ * hard (a plinth edge, a collar) stays a corner and a gentle one is rounded.
  */
 function outline(points: readonly (readonly [number, number])[]): string {
   const angle = (a: readonly [number, number], b: readonly [number, number]) => Math.atan2(b[1] - a[1], b[0] - a[0]);
@@ -36,7 +39,7 @@ function outline(points: readonly (readonly [number, number])[]): string {
     const next = points[i + 1]!;
     let turn = Math.abs(angle(prev, here) - angle(here, next));
     if (turn > Math.PI) turn = 2 * Math.PI - turn;
-    if (turn > 1.15) {
+    if (turn > 0.75) {
       d += ` L${here[0]} ${here[1]}`;
     } else {
       d += ` Q${here[0]} ${here[1]} ${(here[0] + next[0]) / 2} ${(here[1] + next[1]) / 2}`;
@@ -53,163 +56,124 @@ function turned(profile: Profile): string {
   return `${outline([...left, ...right])} Z`;
 }
 
-/** Half-width of the profile at y, so a turning groove follows the real body. */
-function widthAt(profile: Profile, y: number): number {
-  for (let i = 0; i < profile.length - 1; i++) {
-    const [w1, y1] = profile[i]!;
-    const [w2, y2] = profile[i + 1]!;
-    if ((y <= y1 && y >= y2) || (y >= y1 && y <= y2)) {
-      const t = y1 === y2 ? 0 : (y - y1) / (y2 - y1);
-      return w1 + (w2 - w1) * t;
-    }
-  }
-  return profile[profile.length - 1]![0];
-}
-
 interface Turned {
-  /** Lathe profile, foot first. */
+  /** Lathe profile, plinth first. */
   profile: Profile;
-  /** Heights of the turning grooves cut into the body. */
-  grooves: readonly number[];
+  /** Lines cut across the body: [y, half-width]. */
+  lines: readonly (readonly [number, number])[];
 }
 
-/**
- * The six turned profiles. Heights follow the real set: Khun tallest, then Met, Khon, Ruea, and the Bia
- * is a flat puck. (Ma is carved, not turned, and is drawn separately.)
- */
-export const TRADITIONAL_PROFILES: Record<Exclude<Piece['type'], 'n'>, Turned> = {
-  // Khun: the tallest turned piece — a flat foot disc, a pinched waist, a wide cap that overhangs the
-  // foot, a collar and a short ringed finial.
+/** The four turned pieces, at the reference set's sizes. (The Bia is a disc and the Ma is carved.) */
+export const TRADITIONAL_PROFILES: Record<'k' | 'm' | 's' | 'r', Turned> = {
+  // Khun: 50 wide, 81 tall — a two-step plinth, a bulging body and a long spire.
   k: {
     profile: [
-      [26, 87], [26, 84], [23, 82], [12, 79.5], [10, 76], [10.5, 72.5], [16, 69], [21.5, 65],
-      [24.5, 61], [25.5, 57], [25, 53.5], [22, 49.5], [17.5, 46], [12, 43], [7.5, 40.5],
-      [12, 37.5], [11.5, 36], [6, 34], [8.5, 30], [5, 26.5], [2.5, 22], [0, 17],
+      [25, 92], [25, 86], [19.5, 85], [19.5, 81], [10, 79.5], [9, 76], [11, 73], [17, 68.5],
+      [22.5, 63], [24.5, 57], [24, 51], [20.5, 45.5], [15, 41], [8.5, 38], [13, 35], [12.5, 33],
+      [6, 30.5], [8, 26], [4, 21], [2, 15], [0, 9],
     ],
-    grooves: [58, 53],
+    lines: [[86, 24], [81, 19], [57, 24], [50.5, 23], [33.5, 12]],
   },
-  // Met: the Khon's height, two thirds its width, and a longer finial.
+  // Met: 28 wide, 48 tall — the smallest turned piece.
   m: {
     profile: [
-      [17, 87], [17, 84.5], [15.5, 82.5], [8, 80.5], [6.5, 77.5], [7, 74.5], [10, 71.5], [13.5, 68],
-      [16, 64.5], [16.5, 61], [15.5, 57.5], [13, 54], [9.5, 50.5], [6.5, 48], [10, 45], [5, 42.5],
-      [7, 38.5], [3.5, 34.5], [0, 26],
+      [14, 92], [14, 88], [11, 87], [11, 84], [5.5, 82.5], [5, 80], [6.5, 77.5], [10, 73.5],
+      [13.5, 69], [14, 65], [13, 61], [10, 57.5], [5, 55], [8, 52.5], [7.5, 51], [3.5, 49],
+      [4.5, 47], [0, 43],
     ],
-    grooves: [62, 58],
+    lines: [[88, 13], [84, 10.5], [65, 13.5], [51, 7]],
   },
-  // Khon: the Met's height with a much wider cap and a stubby finial.
+  // Khon: 41 wide, 70 tall — the Khun's turning at three quarters the size, with a shorter spire.
   s: {
     profile: [
-      [21, 87], [21, 84.5], [19, 82.5], [10.5, 80.5], [9, 77.5], [9.5, 74.5], [13.5, 71.5], [18, 68],
-      [21, 64.5], [21.5, 61], [20.5, 57.5], [17.5, 54], [13, 50.5], [9, 48], [12.5, 45], [6.5, 42.5],
-      [8, 39], [4, 35.5], [0, 30],
+      [20.5, 92], [20.5, 87], [16, 86], [16, 82.5], [8, 81], [7.5, 78], [9.5, 75], [14, 70.5],
+      [18.5, 66], [20.5, 61], [20, 56], [17, 51], [12, 47], [6.5, 44.5], [10.5, 42], [10, 40],
+      [5, 38], [6.5, 34], [3, 29], [1.5, 25], [0, 22],
     ],
-    grooves: [62, 58],
+    lines: [[87, 19.5], [82.5, 15.5], [61, 20], [55, 19], [40.5, 9.5]],
   },
-  // Ruea: a round bun that keeps its belly low, cut off at the shoulder by a short turned cone.
+  // Ruea: 66 wide, 50 tall — the widest and lowest piece, a broad pot with a small knob.
   r: {
     profile: [
-      [23, 87], [25, 84], [25.5, 79.5], [25, 74.5], [23.5, 70], [21, 66], [14, 58], [8.5, 52.5],
-      [4, 47.5], [0, 43],
+      [23.5, 92], [23.5, 88], [28, 86.5], [31.5, 83], [33, 78], [32.5, 73], [30, 68.5],
+      [26.5, 65], [19, 63.5], [19, 60], [9, 58], [8.5, 55], [13, 52], [12.5, 50], [6, 47],
+      [4.5, 44], [0, 41],
     ],
-    grooves: [79, 73, 68],
-  },
-  // Bia: a thick turned puck — a flat face, a rounded rim, three times as wide as it is tall.
-  p: {
-    profile: [[19.5, 87], [20.5, 84], [20.5, 79], [18.5, 75], [14, 72.5], [8, 72], [0, 72]],
-    grooves: [80],
+    lines: [[88, 25], [78, 32], [69, 28.5], [63.5, 18.5], [50.5, 11]],
   },
 };
 
-/** Ma: carved, not turned — a horse's head and neck facing right, on the same foot as the rest. */
+/** Ma: carved, not turned — a horse's head and neck facing right on a plinth. 50 wide, 81 tall. */
 const MA_BODY =
-  'M33.7 87.0 C32.8 79.3 33.7 72.4 36.3 66.4 C32.0 58.7 31.1 49.2 35.4 40.6 C38.8 32.9 44.8 25.2 51.7 21.7 C55.2 20.0 58.6 19.2 61.2 20.0 L59.4 14.0 L68.9 20.0 ' +
-  'C73.2 24.3 74.0 32.0 70.6 38.0 C68.0 42.3 62.9 44.9 61.2 49.2 C59.4 53.5 60.3 58.7 62.0 63.8 C63.7 70.7 66.3 79.3 66.3 87.0 Z';
+  'M26 92 H74 V88 H70 C70 82 68 75 66 69 C64 63 63 57 65 52 C67 46 73 42 76 36 C80 28 78 19 73 14 ' +
+  'L61 7 L63 16 C60 15 56 16 52 18 C44 22 37 30 33 39 C29 48 30 58 35 66 C32 73 31 81 31 88 H26 Z';
 
 function MaDetails({ p }: { p: Palette }): ReactNode {
   return (
     <>
-      {/* Muzzle, eye and nostril, the mane ridge down the back of the neck, and the cut of the jaw. */}
-      <path d="M69.8 33.8 C74.0 34.6 75.8 38.9 73.2 42.3 C70.6 44.9 66.3 44.9 63.7 43.2" fill={p.shade} stroke={p.edge} strokeWidth="2" strokeLinejoin="round" />
-      <circle cx="59.4" cy="32.0" r="2.8" fill={p.edge} stroke="none" />
-      <path d="M72.3 38.9 C74.0 38.9 74.9 38.0 74.9 37.2" stroke={p.edge} strokeWidth="1.6" fill="none" />
-      <path d="M41.4 30.3 C36.3 38.9 35.4 49.2 38.8 58.7" stroke={p.deep} strokeWidth="2.4" fill="none" opacity="0.75" />
-      <path d="M48.3 24.3 C43.1 32.0 41.4 41.5 43.1 50.9" stroke={p.deep} strokeWidth="1.8" fill="none" opacity="0.45" />
-      <path d="M56.0 44.1 C59.4 46.6 63.7 47.5 67.2 45.8" stroke={p.deep} strokeWidth="2" fill="none" opacity="0.6" />
+      {/* Ear, eye, nostril, cheek, the mane down the back of the neck, and the line above the plinth. */}
+      <path d="M61 7 L63 16" stroke={p.detail} strokeWidth="2.4" fill="none" />
+      <circle cx="63" cy="25" r="2.6" fill={p.detail} stroke="none" />
+      <path d="M74 30 C77 31 78 29 77 27" stroke={p.detail} strokeWidth="2" fill="none" />
+      <path d="M56 22 C48 30 43 41 45 53" stroke={p.detail} strokeWidth="2.2" fill="none" />
+      <path d="M49 21 C42 29 38 40 40 52" stroke={p.detail} strokeWidth="1.8" fill="none" opacity="0.7" />
+      <path d="M59 44 C64 47 69 47 73 44" stroke={p.detail} strokeWidth="2" fill="none" />
+      <path d="M31 88 H70" stroke={p.detail} strokeWidth="2.2" fill="none" />
     </>
   );
 }
 
-/** A promoted Bia is the puck turned over: the hollowed underside and its turning rings face up. */
-function FlippedBia({ palette, id }: { palette: Palette; id: string }) {
-  const { profile } = TRADITIONAL_PROFILES.p;
+/** Bia: a cowrie lies on the board, so it is drawn from above — a disc of concentric turning rings. */
+const BIA_RINGS = [26.5, 21, 16, 11, 6] as const;
+
+function Bia({ palette, promoted }: { palette: Palette; promoted: boolean }) {
   return (
-    <>
-      <path d={turned(profile)} fill={`url(#${id}-wood)`} stroke={palette.edge} strokeWidth="2.2" strokeLinejoin="round" />
-      <path d={turned(profile)} fill={`url(#${id}-depth)`} stroke="none" />
-      <ellipse cx="50" cy="65" rx="13" ry="4.2" fill={palette.deep} stroke={palette.edge} strokeWidth="2" />
-      <ellipse cx="50" cy="65.4" rx="8" ry="2.6" fill={palette.shade} stroke="none" />
-      <ellipse cx="50" cy="65.4" rx="3.4" ry="1.1" fill={palette.mark} stroke="none" />
-    </>
+    <g stroke={palette.line} strokeWidth="2.6" strokeLinejoin="round" strokeLinecap="round">
+      <circle cx="50" cy="50" r={BIA_RINGS[0]} fill={palette.fill} />
+      {BIA_RINGS.slice(1, promoted ? 2 : undefined).map((r) => (
+        <circle key={r} cx="50" cy="50" r={r} fill="none" stroke={palette.detail} strokeWidth="2.2" />
+      ))}
+      {/* A promoted Bia is turned over: the Met's spire is cut into the middle, so it out-ranks a Bia. */}
+      {promoted && (
+        <>
+          <circle cx="50" cy="50" r="15" fill={palette.detail} stroke="none" />
+          <path d="M50 36 L54.5 46 L59 50 L54.5 54 L50 64 L45.5 54 L41 50 L45.5 46 Z" fill={palette.fill} stroke="none" />
+        </>
+      )}
+    </g>
   );
 }
 
 export function TraditionalPiece({ piece, className }: { piece: Piece; className?: string }) {
   const palette = TRADITIONAL_PALETTE[piece.color];
-  // React ids contain ':' — invalid in a CSS url() reference, so strip it for the gradient ids.
+  // React ids contain ':' — invalid in a CSS url() reference, so strip it for the clip-path id.
   const id = `mk-trad-${useId().replaceAll(':', '')}`;
-  const turnedShape = piece.type === 'n' ? undefined : TRADITIONAL_PROFILES[piece.type];
+  const type = piece.promoted ? 'p' : piece.type;
+  const shape = type === 'k' || type === 'm' || type === 's' || type === 'r' ? TRADITIONAL_PROFILES[type] : undefined;
 
   return (
     <svg viewBox="0 0 100 100" className={className} aria-hidden focusable="false" data-set="traditional" data-type={piece.promoted ? 'p~' : piece.type}>
-      <defs>
-        {/* A turned body is round: dark rim, a highlight left of the axis, then the shaded far side. */}
-        <linearGradient id={`${id}-wood`} x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0" stopColor={palette.deep} />
-          <stop offset="0.14" stopColor={palette.shade} />
-          <stop offset="0.36" stopColor={palette.light} />
-          <stop offset="0.66" stopColor={palette.body} />
-          <stop offset="0.9" stopColor={palette.shade} />
-          <stop offset="1" stopColor={palette.deep} />
-        </linearGradient>
-        {/* Wood is darker where it meets the board and where the light does not reach. */}
-        <linearGradient id={`${id}-depth`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor={palette.light} stopOpacity="0.35" />
-          <stop offset="0.45" stopColor={palette.light} stopOpacity="0" />
-          <stop offset="1" stopColor={palette.edge} stopOpacity="0.4" />
-        </linearGradient>
-      </defs>
-
-      {/* The set keeps the real proportions but is scaled up around the ground line to fill the square. */}
-      <g transform="translate(50 87) scale(1.12) translate(-50 -87)">
-        {/* The piece stands on the square, lit from the left. */}
-        <ellipse cx="54" cy="88" rx="28" ry="4.6" fill={palette.edge} opacity="0.26" />
-
-        {piece.promoted ? (
-          <FlippedBia palette={palette} id={id} />
-        ) : turnedShape ? (
-          <g stroke={palette.edge} strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round">
-            <path d={turned(turnedShape.profile)} fill={`url(#${id}-wood)`} />
-            <path d={turned(turnedShape.profile)} fill={`url(#${id}-depth)`} stroke="none" />
-            {turnedShape.grooves.map((y) => {
-              const w = widthAt(turnedShape.profile, y) - 0.8;
-              return (
-                <g key={y}>
-                  {/* A groove cut round the body, with the lit edge just below it. */}
-                  <path d={`M${50 - w} ${y} Q50 ${y + 3.4} ${50 + w} ${y}`} stroke={palette.deep} strokeWidth="1.8" fill="none" opacity="0.8" />
-                  <path d={`M${50 - w + 1.5} ${y + 2.2} Q50 ${y + 5.2} ${50 + w - 1.5} ${y + 2.2}`} stroke={palette.light} strokeWidth="1.4" fill="none" opacity="0.5" />
-                </g>
-              );
-            })}
+      {type === 'p' ? (
+        <Bia palette={palette} promoted={piece.promoted} />
+      ) : shape ? (
+        <g stroke={palette.line} strokeWidth="2.6" strokeLinejoin="round" strokeLinecap="round">
+          <clipPath id={`${id}-body`}>
+            <path d={turned(shape.profile)} />
+          </clipPath>
+          <path d={turned(shape.profile)} fill={palette.fill} />
+          {/* The turning lines stop at the silhouette, so they read as cuts in the wood. */}
+          <g clipPath={`url(#${id}-body)`} stroke={palette.detail} strokeWidth="2.2">
+            {shape.lines.map(([y, w]) => (
+              <path key={`${y}-${w}`} d={`M${50 - w} ${y} H${50 + w}`} />
+            ))}
           </g>
-        ) : (
-          <g stroke={palette.edge} strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round">
-            <path d={MA_BODY} fill={`url(#${id}-wood)`} />
-            <path d={MA_BODY} fill={`url(#${id}-depth)`} stroke="none" />
-            <MaDetails p={palette} />
-          </g>
-        )}
-      </g>
+        </g>
+      ) : (
+        <g stroke={palette.line} strokeWidth="2.6" strokeLinejoin="round" strokeLinecap="round">
+          <path d={MA_BODY} fill={palette.fill} />
+          <MaDetails p={palette} />
+        </g>
+      )}
     </svg>
   );
 }

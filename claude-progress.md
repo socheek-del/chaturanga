@@ -723,9 +723,15 @@ was appended to, not rewritten.
   Met 35x73, Ruea 51x55, Bia 41x30 — so Met and Khon are the same height, the Bia is a flat puck, and the Ma
   is the tallest piece. The raw rows could not be used directly (the photo is a 3/4 view, so every base read
   as a cylinder); the profiles were re-authored from the measured proportions instead.
-- How the art is built now: each turned piece is generated from a lathe profile ([half-width, y] from the
-  foot up) by `turned()`, with corner-aware smoothing so a disc edge stays sharp and a cap stays round;
-  grooves are placed by height and get their width from the profile; a depth gradient darkens the foot. Ma is
-  a hand-drawn carving. The whole set is scaled 1.12x about the ground line to fill the square.
+- Owner second follow-up 2026-09-18: the photo-realistic version was still too sleek. The owner supplied the
+  set they mean — the classic flat Makruk piece art — and asked for that language. The set is now flat: one
+  fill plus a carved line, no gradients and no 3D shading. Sizes measured from that reference (percent of a
+  square): Khun 50x81, Ma 50x81, Khon 41x70, Met 28x48, Ruea 66x50 (widest, lowest), Bia a 53-wide disc of
+  concentric rings — a Bia lies on the board, so it is drawn from above, which is the single biggest change.
+- How the art is built now: the four turned pieces are generated from lathe profiles ([half-width, y] from
+  the plinth up) by `turned()`, with corner-aware smoothing so a plinth edge stays sharp and a body stays
+  round; the turning lines are clipped to the silhouette so they read as cuts. Ma is a hand-drawn carving.
+  The pale side is bone with dark cuts, the dark side near-black with pale cuts so it survives the dark
+  board themes.
 - Next best step:
   - **Agent:** `xq-010`, then `plat-011`.

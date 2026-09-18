@@ -88,12 +88,15 @@ All art is made in-house as optimised SVG.
 - **Pieces:** silhouettes must read at 36px. White pieces use a light fill with a dark outline; black pieces a
   dark fill with a light inner highlight. Each type keeps its traditional Makruk shape (tall crowned Khun,
   rounded Met, pointed Khon, horse-head Ma, boat-hull Ruea, flat cowrie-shell Bia).
-- **Piece sets:** three, chosen in settings. "Classic carved" (default) and "Modern flat" are stylised.
-  "Traditional wood" (art-003) copies a physical Thai set, for players who find the stylised sets hard to
-  name: the shapes and their relative sizes are measured from a photograph of a real set (Khun a tall turned
-  urn on a stepped foot, Met the same urn narrow, Khon shorter with a wide cap, Ruea a low bun with a turned
-  point, Bia a flat puck, Ma a carved horse), each generated from its lathe profile so the silhouette, the
-  turning grooves and the shading agree. A promoted Bia is the puck turned over, as on a real board.
+- **Piece sets:** three, chosen in settings. "Classic carved" (default) and "Modern flat" are the stylised
+  sets. "Traditional wood" (art-003) is the opposite of sleek on purpose: it copies a physical Thai set for
+  players who cannot name the stylised pieces. Flat carved silhouettes, one fill and a carved line — no
+  gradients, no 3D shading. Sizes are measured from the owner's reference set, as a percentage of a square:
+  Khun 50x81, Ma 50x81, Khon 41x70, Met 28x48 (much smaller than the Khon), Ruea 66x50 — the widest and
+  lowest piece — and the Bia a 53-wide disc of concentric turning rings, because a Bia lies on the board and
+  is seen from above. The turned pieces are generated from lathe profiles; a promoted Bia is the disc turned
+  over with the Met's spire cut into it. The pale side is bone with dark cuts; the dark side is near-black
+  with pale cuts, so it still reads on the dark board themes.
 - **Boards:** Makruk boards are un-checkered — a single colour with grid lines. Themes vary material colour
   and line colour only.
 - **Marketing media:** screenshots, GIFs and social images must not show the site's domain (it may change).

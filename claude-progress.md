@@ -636,3 +636,38 @@ handoff; no agent updates it automatically.
   - **Agent, after the secret:** re-run `npm run smoke:prod -w apps/xiangqi/web` for 8/8, play one online
     room between two browsers in production, then move `xq-008` to passing. After that, `xq-010` (SEO,
     sitemap, Open Graph image, READMEs) is unblocked by the address.
+
+### Session 015 (planning only, parallel session)
+
+Planning session for the fourth product, **Shogi (将棋)**, run alongside another session that was finishing
+Xiangqi (`xq-008`, `xq-009`). No code was written and no other game's files were touched; every shared file
+was appended to, not rewritten.
+
+- `apps/shogi/docs/PLAN.md` written: proposed owner decisions D1-D12, architecture, the platform gap analysis,
+  a 14-step work breakdown, the Japanese terminology table and the risks.
+- `feature_list.json`: 14 features appended (76 to 90) — `plat-011..013` (M14 platform prep) and
+  `sg-001..011` (M14-M15 Shogi). All `not_started`, none marked done, nothing existing edited except the
+  header's project line and `last_updated`.
+- `docs/PLATFORM.md` and the root `AGENTS.md` now name Shogi as the fourth game and point at its plan.
+- Rules reference probed with ffish 0.7.10 (Fairy-Stockfish `shogi`), so the engine step starts from facts:
+  - start FEN `lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL[] w - - 0 1`, 30 legal moves.
+  - promotion is a `+` suffix on the move (`g8g9+`, SAN `Pxg9=G`); a pawn to the last rank is offered *only*
+    as the promoting move, so forced promotion falls out of move generation.
+  - drops are `S@a2`, the notation `rules-core` already documents.
+  - nifu is enforced by the reference: with a pawn in hand and a pawn on every file, 0 pawn drops.
+  - promoted pieces are written `+P` — a two-character square, which breaks the one-letter-per-square
+    assumption the three live engines share. Shogi writes its own FEN reader and writer.
+- Platform seams found by reading the code, each with a feature:
+  - `useMoveInput.play()` discards an optional promotion ("no supported game has both today") → `plat-011`.
+  - hands are modelled as a setup phase (`KEYS.md`: `play.placing` when `hasHands`) → `plat-012`.
+  - `BoardProps.showCoordinates` is a boolean and the labels are generated inside board-ui; Shogi needs
+    9→1 and 一→九 → `plat-013`.
+  - `FamilyLanguage` is a closed union, so `ja` means a Japanese name for every game → `sg-009`.
+  - already generic, checked not assumed: `hand()` + `HandTray` counts, drop notation through the protocol,
+    `SearchAdapter` and its `repetitionScore` hook, `server-kit`, `plat-008`, `plat-010`.
+- Nothing is verified beyond the ffish probe, because nothing was implemented. No feature changed state.
+- Next best step:
+  - **Owner:** confirm or redirect the Shogi decisions D1-D12, especially D7 (design identity) and D8 (the
+    subdomain). D11 (the 27-point impasse rule) is settled by a probe in `sg-002`, not by preference.
+  - **Agent:** Xiangqi first — `xq-008` and `xq-010` are still open in the parallel session. Then start
+    `plat-011`, which is the smallest of the three prep features and unblocks the Shogi app step.

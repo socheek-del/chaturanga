@@ -1,6 +1,6 @@
 {
-  "project": "Chaturanga — family of traditional chess games (Makruk live, Sittuyin in progress)",
-  "last_updated": "2026-09-16",
+  "project": "Chaturanga — family of traditional chess games (Makruk, Sittuyin and Xiangqi live; Shogi planned)",
+  "last_updated": "2026-09-18",
   "rules": {
     "single_active_feature": true,
     "passing_requires_evidence": true,
@@ -1625,6 +1625,249 @@
         "2026-09-17: apps/xiangqi/docs/i18n-review.md written in the sit-011 format: what to review (UI strings, lessons incl. the standard terms 蹩马腿/塞象眼/炮架, result reasons 困毙/长将/长捉, bots, online, About, manifest, design and board theme names), a 21-row terminology table (pieces in sentences vs the traditional board characters of D4, palace, river, check/checkmate, stalemate, perpetual check/chase, flying general, time categories, pass-and-play), how to submit corrections, and a sign-off table. SEO tags, the Open Graph image text and the family names are listed as not written yet (xq-009, xq-010) so the reviewer adds them when they exist."
       ],
       "notes": "BLOCKED on a human: the review needs a native Chinese speaker, which an agent cannot provide or fabricate. Hand apps/xiangqi/docs/i18n-review.md to a reviewer (ideally a Xiangqi player), apply their corrections and record the sign-off row. Re-open the sheet's 'not written yet' rows after xq-009 and xq-010."
+    },
+    {
+      "id": "plat-011",
+      "product": "platform",
+      "priority": 77,
+      "area": "play",
+      "milestone": "M14",
+      "title": "Optional promotion in the shared move input",
+      "user_visible_behavior": "In a game where a move may promote or not, the player is asked which they want, with the two piece faces shown; games with automatic or forced promotion are unchanged.",
+      "status": "not_started",
+      "verification": [
+        "board-ui unit tests: a forced promotion plays straight through, an optional promotion raises a pending choice instead of playing, a non-promoting move never asks.",
+        "game-shell unit test: the prompt renders both faces through the product's renderPiece, can be dismissed, and is reachable by keyboard.",
+        "Makruk and Sittuyin E2E unchanged (Makruk auto-promotes, Sittuyin promotes in place)."
+      ],
+      "evidence": [],
+      "notes": "useMoveInput.play() currently picks the non-promoting move with the comment 'no supported game has both today'. Shogi has both on most moves (apps/shogi/docs/PLAN.md, step 1). New shared keys play.promoteAsk/promoteYes/promoteNo go in packages/game-shell/KEYS.md as required only for variants with an optional promotion."
+    },
+    {
+      "id": "plat-012",
+      "product": "platform",
+      "priority": 78,
+      "area": "play",
+      "milestone": "M14",
+      "title": "Hands during play, separate from a setup phase",
+      "user_visible_behavior": "A game whose captured pieces can be dropped shows both sides' hands for the whole game, and a captured piece appears in the capturer's hand; Sittuyin's setup phase behaves exactly as before.",
+      "status": "not_started",
+      "verification": [
+        "rules-core: Variant gains hasSetupPhase (Sittuyin true, Shogi false); hasHands keeps its meaning; conformance suite covers both shapes.",
+        "game-shell unit tests: trays render for a hands-in-play variant with no setup phase, and the placement wording (play.placing) appears only during a setup phase.",
+        "Sittuyin E2E unchanged."
+      ],
+      "evidence": [],
+      "notes": "Today the game screen treats hands as a setup phase (KEYS.md: play.placing required 'when the variant has a setup phase (hasHands)'). HandTray itself already groups repeated types with a count badge and needs no change. apps/shogi/docs/PLAN.md, step 2."
+    },
+    {
+      "id": "plat-013",
+      "product": "platform",
+      "priority": 79,
+      "area": "play",
+      "milestone": "M14",
+      "title": "Product coordinate labels on the shared board",
+      "user_visible_behavior": "A product can label the board's files and ranks in its own script and order (Shogi: 9 to 1 and 一 to 九) while the engine keeps its own square names.",
+      "status": "not_started",
+      "verification": [
+        "board-ui unit test: custom fileLabels/rankLabels render in both orientations; omitting them keeps today's a1-style labels.",
+        "Makruk, Sittuyin and Xiangqi screenshots/E2E unchanged."
+      ],
+      "evidence": [],
+      "notes": "BoardProps has only showCoordinates today and generates labels internally. describeSquare keeps receiving the engine square name. apps/shogi/docs/PLAN.md, step 3."
+    },
+    {
+      "id": "sg-001",
+      "product": "shogi",
+      "priority": 80,
+      "area": "engine",
+      "milestone": "M14",
+      "title": "Shogi board, FEN, hands and move generation",
+      "user_visible_behavior": "packages/shogi models the 9x9 board, both hands and all 14 piece faces, and generates legal moves including drops and promotions, verified against Fairy-Stockfish.",
+      "status": "not_started",
+      "verification": [
+        "fen.test.ts: round-trip on 10+ ffish-generated positions (promoted pieces written '+P', hands in '[...]'); 10+ invalid FENs rejected.",
+        "movegen.test.ts: one test per base and promoted piece type, optional promotion, forced promotion (P/L on the last rank, N on the last two), and the drop restrictions (empty square, nifu, no dead drop, uchifuzume).",
+        "perft.test.ts against a ffish-generated reference; fast depths in verify, all depths with PERFT_DEEP=1.",
+        "reference.test.ts: lock-step random games vs ffish comparing sorted legal moves, SAN and FEN on every ply (60 games in verify, 400 with PERFT_DEEP=1).",
+        "describeVariantConformance(shogi, ...) passes."
+      ],
+      "evidence": [],
+      "notes": "Probed 2026-09-18 with ffish 0.7.10: start FEN 'lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL[] w - - 0 1', 30 legal moves; promotion move 'g8g9+' (SAN 'Pxg9=G'); drop 'S@a2'; a pawn to the last rank is offered only as the promoting move; with a pawn in hand and a pawn on every file ffish lists 0 pawn drops (nifu). Sente is the engine colour 'w'. Two-character squares ('+P') break the one-letter-per-square assumption the other engines share, so this package writes its own FEN reader and writer."
+    },
+    {
+      "id": "sg-002",
+      "product": "shogi",
+      "priority": 81,
+      "area": "engine",
+      "milestone": "M14",
+      "title": "Shogi game end: mate, stalemate loss, sennichite, perpetual check and impasse",
+      "user_visible_behavior": "A Shogi game ends with the right result and reason: checkmate, stalemate (a loss for the side to move), fourfold repetition as a draw, perpetual check as a loss for the checking side, and impasse per decision D11.",
+      "status": "not_started",
+      "verification": [
+        "A fixture per rule, each probed against ffish first; every hand-made FEN parsed with new Game(fen) before use.",
+        "A recorded perpetual-check line that ffish scores the same way.",
+        "Repetition keys include both hands and the side to move.",
+        "An explicit test for the impasse decision: parity with ffish, or a divergence written into packages/shogi/RULES.md."
+      ],
+      "evidence": [],
+      "notes": "Builds on plat-008 (decisive stalemate and perpetual results). D11 in apps/shogi/docs/PLAN.md: implement the 27-point jishogi declaration only if the probe shows Fairy-Stockfish agrees; otherwise ship without the declaration and record the divergence. Never diverge silently."
+    },
+    {
+      "id": "sg-003",
+      "product": "shogi",
+      "priority": 82,
+      "area": "ai",
+      "milestone": "M14",
+      "title": "Shogi computer opponent and bot ladder",
+      "user_visible_behavior": "Six Shogi bots of rising strength play a full game in a Web Worker without freezing the page.",
+      "status": "not_started",
+      "verification": [
+        "packages/shogi-ai on ai-core; repetitions judged by the real rules through SearchAdapter.repetitionScore.",
+        "A bundled Node ladder script (npm run test:strength -w packages/shogi-ai): each bot beats the one below it over a recorded match set.",
+        "A fixed-depth node-count and time budget recorded, so a later regression is visible."
+      ],
+      "evidence": [],
+      "notes": "Shogi's branching factor (about 80-120 moves, far more with a full hand) is several times Xiangqi's, so measure before setting ladder targets; order drops last and keep them out of quiescence unless they capture or check. Bots are named after the pieces (D10). If the strongest bot is too weak to be interesting, record that instead of loosening the ladder."
+    },
+    {
+      "id": "sg-004",
+      "product": "shogi",
+      "priority": 83,
+      "area": "design",
+      "milestone": "M15",
+      "title": "Shogi design identity and piece art (owner approval gate)",
+      "user_visible_behavior": "The Shogi site has its own look — board, palette, type and wedge-tile pieces — that is not any other family game's and not Duolingo's.",
+      "status": "not_started",
+      "verification": [
+        "apps/shogi/docs/design.md: palette in light and dark with every token listed in packages/ui/TOKENS.md, typography, board look, and all 14 faces x 2 sides as SVG paths.",
+        "Piece faces readable at 40px; promoted faces in red.",
+        "Showcase page plus light and dark screenshots at desktop and phone width.",
+        "Stays in_progress until the owner approves."
+      ],
+      "evidence": [],
+      "notes": "Same gate as sit-005 (Daung) and xq-004 (Mo). Kanji are drawn as SVG paths, not font text (D4), so the board never needs a Japanese font and the PWA never precaches one."
+    },
+    {
+      "id": "sg-005",
+      "product": "shogi",
+      "priority": 84,
+      "area": "play",
+      "milestone": "M15",
+      "title": "Shogi web app: pass-and-play, computer, PWA, languages",
+      "user_visible_behavior": "A visitor plays Shogi on one device or against the six bots, drops captured pieces, chooses whether to promote, and uses the site in Japanese or English, installed or offline.",
+      "status": "not_started",
+      "verification": [
+        "Playwright E2E: a full game, a drop from hand, an accepted and a declined promotion, an illegal nifu drop refused in the UI, history navigation, language switch.",
+        "e2e:pwa: installable and playable offline.",
+        "describeLocales: ja and en complete for shared and app namespaces.",
+        "Gote pieces rendered rotated 180 degrees, following the board orientation."
+      ],
+      "evidence": [],
+      "notes": "Depends on plat-011, plat-012, plat-013 and sg-004. The UI says 先手/後手 with ☗/☖, never black/white (D5); board coordinates follow D12."
+    },
+    {
+      "id": "sg-006",
+      "product": "shogi",
+      "priority": 85,
+      "area": "learn",
+      "milestone": "M15",
+      "title": "Shogi lessons",
+      "user_visible_behavior": "A beginner learns Shogi from about 14 interactive lessons in Japanese or English, with progress kept between visits.",
+      "status": "not_started",
+      "verification": [
+        "describeLessons passes for every lesson.",
+        "Every claim in a lesson checked against the engine.",
+        "An E2E completing one lesson in each language."
+      ],
+      "evidence": [],
+      "notes": "Planned set: the board and notation, pawn/lance/knight, silver, gold, king, rook, bishop, promotion, drops, nifu and uchifuzume, check and mate, sennichite and impasse, a guided first game."
+    },
+    {
+      "id": "sg-007",
+      "product": "shogi",
+      "priority": 86,
+      "area": "online",
+      "milestone": "M15",
+      "title": "Shogi online play",
+      "user_visible_behavior": "Two people play Shogi online by room code or quick match, with server-run clocks and no chat.",
+      "status": "not_started",
+      "verification": [
+        "apps/shogi/worker on server-kit (GameRoomBase, MatchmakerBase) with its own D1 and migration.",
+        "workerd tests: the server validates every move including drops and promotions, and stores a finished game in D1.",
+        "A recorded line the server scores as a perpetual check.",
+        "A two-browser E2E playing a game containing a drop and a promotion."
+      ],
+      "evidence": [],
+      "notes": "Own Worker port, own D1, no shared database with another game."
+    },
+    {
+      "id": "sg-008",
+      "product": "shogi",
+      "priority": 87,
+      "area": "infra",
+      "milestone": "M15",
+      "title": "Deploy Shogi on its own subdomain",
+      "user_visible_behavior": "The Shogi site is live over HTTPS on its own address, and /api/health returns ok.",
+      "status": "not_started",
+      "verification": [
+        "Owner confirms the subdomain (D8); it lives only in apps/shogi/web/site.config.ts and the Worker's routes.",
+        "D1 'shogi' created and migrations applied; AUTH_SECRET set.",
+        "Root scripts dev:shogi, build:shogi, deploy:shogi; CI changes filter and a deploy-shogi job.",
+        "A production smoke suite driving the live site in Japanese."
+      ],
+      "evidence": [],
+      "notes": "Never hardcode the domain anywhere else; screenshots and GIFs must not show it."
+    },
+    {
+      "id": "sg-009",
+      "product": "shogi",
+      "priority": 88,
+      "area": "platform",
+      "milestone": "M15",
+      "title": "Shogi joins the family links",
+      "user_visible_behavior": "Each of the four sites lists the other three in its 'more games' section, each named in the reader's language.",
+      "status": "not_started",
+      "verification": [
+        "packages/family: 'ja' added to FamilyLanguage, a Japanese name for every game, Shogi in GAMES and SITES.",
+        "packages/family tests: every game has a name in every site language.",
+        "A MoreGames test per app; all four sites link to the other three."
+      ],
+      "evidence": [],
+      "notes": "Only packages/family and each app's own MoreGames data change — no other game's product files. plat-010 already made the family tests independent of the number of games."
+    },
+    {
+      "id": "sg-010",
+      "product": "shogi",
+      "priority": 89,
+      "area": "docs",
+      "milestone": "M15",
+      "title": "Shogi SEO, About page and README",
+      "user_visible_behavior": "The Shogi site is findable and shareable, and its README shows the game.",
+      "status": "not_started",
+      "verification": [
+        "About page in ja and en with repository, CONTRIBUTING and new-issue links; an E2E for it.",
+        "SEO tags, hreflang, canonical, JSON-LD, sitemap and robots built from SITE_URL; an Open Graph image.",
+        "README.md and README.ja.md with media that never shows the domain; the root README lists Shogi."
+      ],
+      "evidence": [],
+      "notes": "Needs the site address from sg-008."
+    },
+    {
+      "id": "sg-011",
+      "product": "shogi",
+      "priority": 90,
+      "area": "polish",
+      "milestone": "M15",
+      "title": "Native Japanese review",
+      "user_visible_behavior": "A native Japanese speaker has reviewed every user-visible string, lesson, bot name and terminology choice.",
+      "status": "not_started",
+      "verification": [
+        "apps/shogi/docs/i18n-review.md written in the sit-011/xq-011 format: UI strings, lessons, bots, online, About, manifest, SEO and OG text, family names, and a terminology table.",
+        "Corrections applied and the sign-off row recorded."
+      ],
+      "evidence": [],
+      "notes": "Expected to become blocked: the review needs a human native speaker, which an agent cannot provide or fabricate."
     }
   ]
 }

@@ -88,15 +88,16 @@ All art is made in-house as optimised SVG.
 - **Pieces:** silhouettes must read at 36px. White pieces use a light fill with a dark outline; black pieces a
   dark fill with a light inner highlight. Each type keeps its traditional Makruk shape (tall crowned Khun,
   rounded Met, pointed Khon, horse-head Ma, boat-hull Ruea, flat cowrie-shell Bia).
-- **Piece sets:** three, chosen in settings. "Classic carved" (default) and "Modern flat" are the stylised
-  sets. "Traditional wood" (art-003) is the opposite of sleek on purpose: it copies a physical Thai set for
-  players who cannot name the stylised pieces. Flat carved silhouettes, one fill and a carved line — no
-  gradients, no 3D shading. Sizes are measured from the owner's reference set, as a percentage of a square:
-  Khun 50x81, Ma 50x81, Khon 41x70, Met 28x48 (much smaller than the Khon), Ruea 66x50 — the widest and
-  lowest piece — and the Bia a 53-wide disc of concentric turning rings, because a Bia lies on the board and
-  is seen from above. The turned pieces are generated from lathe profiles; a promoted Bia is the disc turned
-  over with the Met's spire cut into it. The pale side is bone with dark cuts; the dark side is near-black
-  with pale cuts, so it still reads on the dark board themes.
+- **Piece sets:** three, chosen in settings. "Classic carved" (default) and "Modern flat" are in-house and
+  stylised. "Traditional wood" (`ไม้แกะแบบดั้งเดิม`, art-003) is the traditional Makruk piece art itself,
+  for players who cannot name the stylised pieces — the one exception to "all art is made in-house". The
+  drawings are Yevrowl's Makruk pieces from Wikimedia Commons, CC BY-SA 4.0, stored verbatim in
+  `apps/makruk/web/src/features/board/pieces/traditional/` (see that folder's `CREDITS.md`) and re-downloaded
+  with `node scripts/import-traditional-pieces.mjs`. Each piece is two of those files stacked: the "black"
+  file is the filled silhouette, the "white" file the carved line art. Colours are supplied at render time
+  (bone body with dark cuts, or near-black body with pale cuts masked to the body) so the set works on every
+  board theme, but the drawings themselves are never edited. The About page carries the attribution, which
+  the licence requires.
 - **Boards:** Makruk boards are un-checkered — a single colour with grid lines. Themes vary material colour
   and line colour only.
 - **Marketing media:** screenshots, GIFs and social images must not show the site's domain (it may change).

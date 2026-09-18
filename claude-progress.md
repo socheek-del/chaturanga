@@ -728,7 +728,21 @@ was appended to, not rewritten.
   fill plus a carved line, no gradients and no 3D shading. Sizes measured from that reference (percent of a
   square): Khun 50x81, Ma 50x81, Khon 41x70, Met 28x48, Ruea 66x50 (widest, lowest), Bia a 53-wide disc of
   concentric rings — a Bia lies on the board, so it is drawn from above, which is the single biggest change.
-- How the art is built now: the four turned pieces are generated from lathe profiles ([half-width, y] from
+- Owner third follow-up 2026-09-18: "make the pieces the exact same as the original. No tweaking of any
+  sort." So the set is no longer a redrawing at all — it is the original art. The 14 files (7 pieces x 2
+  colours, including Bia Ngai for a promoted Bia) are Yevrowl's Makruk pieces from Wikimedia Commons,
+  **CC BY-SA 4.0**, downloaded verbatim by `apps/makruk/web/scripts/import-traditional-pieces.mjs` into
+  `src/features/board/pieces/traditional/` next to `CREDITS.md`. This is the one exception to "all art is
+  made in-house", and it carries obligations: attribution travels with the art (now on the About page in th
+  and en) and any modified version of the art stays CC BY-SA 4.0. CC BY-SA 4.0 is one-way compatible with
+  GPL-3.0, so it can ship inside this repo.
+- Rendering: each piece is two files stacked — the "black" file is the filled silhouette, the "white" file
+  the carved line art — with colours supplied at render time (bone body + dark cuts, or near-black body +
+  pale cuts). The pale cuts are masked to the silhouette so they do not halo it. Chromium ignores `mask` on
+  a nested `<svg>`, so the mask goes on a wrapping `<g>`; that cost an hour and is worth remembering.
+- Superseded: the in-house redraws (the photo-realistic one and the flat one) are gone from the product.
+  Their lathe-profile generator lives only in git history (`b8f7eca`, `29af7f1`).
+- How the earlier in-house art was built: the four turned pieces are generated from lathe profiles ([half-width, y] from
   the plinth up) by `turned()`, with corner-aware smoothing so a plinth edge stays sharp and a body stays
   round; the turning lines are clipped to the silhouette so they read as cuts. Ma is a hand-drawn carving.
   The pale side is bone with dark cuts, the dark side near-black with pale cuts so it survives the dark

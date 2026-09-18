@@ -19,7 +19,8 @@
     "contribute": "How to contribute",
     "reportBug": "Report a bug or suggest an idea",
     "translate": "Help review the Thai text",
-    "madeBy": "Made by {{name}}"
+    "madeBy": "Made by {{name}}",
+    "pieceArt": "Traditional piece art by <author>Yevrowl</author>, <licence>CC BY-SA 4.0</licence>."
   },
   "seo": {
     "home": {

@@ -19,7 +19,8 @@
     "contribute": "วิธีร่วมพัฒนา",
     "reportBug": "รายงานบั๊กหรือเสนอไอเดีย",
     "translate": "ช่วยตรวจภาษาไทย",
-    "madeBy": "สร้างโดย {{name}}"
+    "madeBy": "สร้างโดย {{name}}",
+    "pieceArt": "ภาพตัวหมากแบบดั้งเดิมโดย <author>Yevrowl</author> สัญญาอนุญาต <licence>CC BY-SA 4.0</licence>"
   },
   "seo": {
     "home": {

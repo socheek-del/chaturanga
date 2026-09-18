@@ -1,6 +1,6 @@
 import { BookOpen, Bug, Heart, Languages } from 'lucide-react';
 import type { ReactNode } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { buttonClasses, Card } from '@chaturanga/ui';
 import { Mascot } from '../features/learn/Mascot';
 
@@ -71,6 +71,16 @@ export function AboutPage() {
           </ExternalLink>
         </div>
       </Card>
+
+      <p className="text-center text-sm text-muted">
+        <Trans
+          i18nKey="about.pieceArt"
+          components={{
+            author: <a href="https://commons.wikimedia.org/wiki/Category:Makruk_pieces" target="_blank" rel="noopener noreferrer" className="font-bold text-secondary" />,
+            licence: <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer" className="font-bold text-secondary" />,
+          }}
+        />
+      </p>
 
       <p className="text-center text-sm text-muted">
         <a href={`https://github.com/${AUTHOR}`} target="_blank" rel="noopener noreferrer" className="font-extrabold text-secondary">

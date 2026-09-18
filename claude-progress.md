@@ -713,7 +713,7 @@ was appended to, not rewritten.
 - Evidence screenshots (gitignored): `apps/makruk/web/e2e-evidence/{settings-pieces,traditional-360,board-traditional}.png`.
 - Not touched: the Xiangqi `xq-010` work in progress in this same tree (`apps/xiangqi/web/package.json`,
   `scripts/capture-readme.mjs`) was left uncommitted for that session.
+- Owner decision 2026-09-18: the traditional set stays an option in settings only (default stays `classic`),
+  and the Thai name "ไม้แกะแบบดั้งเดิม" is confirmed. No code change followed — both were already true.
 - Next best step:
-  - **Owner:** say whether the traditional set should become the default, and whether the names read well in
-    Thai ("ไม้แกะแบบดั้งเดิม" vs "คลาสสิก (แกะสลัก)").
   - **Agent:** `xq-010`, then `plat-011`.

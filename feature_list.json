@@ -825,7 +825,7 @@
         "2026-09-18: screenshots settings-pieces.png, traditional-360.png and board-traditional.png reviewed — the set reads as turned wood on the teak board and the six types stay distinct at 44px.",
         "2026-09-18: npm run typecheck -w apps/makruk/web clean; npm run test -w apps/makruk/web 108 passed (locale completeness covers the new th/en names)."
       ],
-      "notes": "Owner request 2026-09-18: the stylised sets confuse some players. Default stays classic."
+      "notes": "Owner request 2026-09-18: the stylised sets confuse some players. Owner decision 2026-09-18: the traditional set stays an option only — the default stays classic — and the Thai name ไม้แกะแบบดั้งเดิม is confirmed."
     },
     {
       "id": "polish-001",

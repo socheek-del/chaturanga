@@ -847,13 +847,12 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
     their "more games" sections include it. The live family check passes for all five sites.
   - `ch-010` — SEO tags, sitemap, Open Graph image, PWA icons, `apps/chess/README.md`,
     `apps/chess/AGENTS.md`, and the root README now lists five games.
+  - `ch-003` — the bot ladder finished: L2>L1 +7-1=0, L3>L2 +7-1=0, L4>L3 +8-0=0, L5>L4 +8-0=0,
+    L6>L5 +5-0=3. The script exited 0, so every level wins its pair.
 - Still open:
-  - `ch-003` (bots) is **in_progress**: the ladder has L2>L1 +7-1, L3>L2 +7-1, L4>L3 +8-0, L5>L4 +8-0, and
-    L6 vs L5 is still playing (about 6 minutes a game). The feature moves to `passing` when that pair is in
-    `packages/chess-ai/strength-results.log`.
   - `ch-004` needs the owner to approve or change the identity.
   - `ch-011` (a second site language) is blocked on the owner naming one.
 - Next best step:
-  - **Agent:** finish the `ch-003` ladder and record it, then `sg-003`/`sg-004` for Shogi.
+  - **Agent:** `sg-003` / `sg-004` for Shogi, the last unfinished features besides the owner gates.
   - **Owner:** approve the chess design identity, and decide whether chess gets a second language.
 

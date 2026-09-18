@@ -2043,7 +2043,7 @@
       "milestone": "M16",
       "title": "Chess computer opponents on ai-core",
       "user_visible_behavior": "Six chess bots to play against, each clearly stronger than the one below, each moving inside the app’s time budget on a phone.",
-      "status": "in_progress",
+      "status": "passing",
       "verification": [
         "npm run test:strength -w packages/chess-ai: each persona beats the one below over a fixed match.",
         "A mate-in-N test set is solved.",
@@ -2051,11 +2051,11 @@
       ],
       "evidence": [
         "2026-09-18: packages/chess-ai on ai-core — ChessSearch adapter over the engine's own Position (make/unmake with the undo token, MVV-LVA ordering with promotions first, position keys for repetition), and an evaluation with material, piece-square tables tapered between opening and endgame, pawn structure (doubled, isolated, passed), the bishop pair, rook files and the seventh rank, king shield and slider mobility. The evaluation allocates nothing per call.",
-        "2026-09-18: generateLegalMoves now looks the king up once per position instead of once per move (packages/chess/src/movegen.ts); the bundled search runs at about 300-400k nodes/s on this machine (depth 5 from the start position in 0.33s, from a middlegame in 0.47s).",
+        "2026-09-18: generateLegalMoves now looks the king up once per position instead of once per move (packages/chess/src/movegen.ts); the bundled search runs at about 300-400k nodes/s on this machine (depth 5 from the start position in 0.33s / 94,917 nodes, from a middlegame in 0.47s / 196,613 nodes). The top persona's budget is 1.2M nodes with a 3s wall-clock cap, so on a phone the clock decides, not the node count.",
         "2026-09-18: ai.test.ts — 10 tests: mate in one, a mate in two played out to checkmate, taking a free queen, saving an attacked knight, every bot plays a legal first move, a 40-ply self-game with no illegal move, determinism for a seed, null when mated or stalemated, and the material/evaluation signs.",
-        "2026-09-18: ladder (STRENGTH_GAMES=8) — L2 knight beats L1 pawn +7-1=0, L3 bishop beats L2 knight +7-1=0, L4 rook beats L3 bishop +8-0=0, L5 queen beats L4 rook +8-0=0. L6 king vs L5 queen is still running."
+        "2026-09-18: ladder complete (npm run test:strength -w packages/chess-ai, STRENGTH_GAMES=8, node budgets only so it replays anywhere): L2 knight beats L1 pawn +7-1=0, L3 bishop beats L2 knight +7-1=0, L4 rook beats L3 bishop +8-0=0, L5 queen beats L4 rook +8-0=0, L6 king beats L5 queen +5-0=3. Every level wins its pair with no loss above L3; the script exited 0, which is its own pass condition."
       ],
-      "notes": "The last ladder pair (L6 vs L5) takes about 6 minutes per game and is still playing; the feature stays in_progress until it is recorded in packages/chess-ai/strength-results.log."
+      "notes": "Ladder logs are gitignored (*.log); the run above is recorded here and in claude-progress.md. Re-run with STRENGTH_GAMES=20 on CI (.github/workflows/strength.yml -f package=packages/chess-ai) for a wider sample."
     },
     {
       "id": "ch-004",

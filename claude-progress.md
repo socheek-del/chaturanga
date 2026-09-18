@@ -19,9 +19,18 @@ handoff; no agent updates it automatically.
 - Remaining: `polish-002` (native Thai review) and `seo-001` (Search Console submission) — both need the owner; `acct-002`/`acct-003` deferred (accounts removed from the product for now)
 - Multi-game platform (session 003): plan in `docs/PLATFORM.md` (repo → `chaturanga`, one product per game on its own subdomain, Sittuyin next in Burmese + English). `packages/sittuyin` engine complete (M9): sit-001 ✓ setup, sit-002 ✓ moves + promotion, sit-003 ✓ game end + ASEAN counting (`docs/sittuyin-rules.md`). plat-002: `packages/rules-core` holds the Variant interface and shared 8x8 code, and both engines pass its conformance suite. plat-003: the repo is renamed to chaturanga, Makruk lives in `apps/makruk`, and the scope is `@chaturanga/*`. plat-004 ✓ per-product languages (`@chaturanga/game-shell`). sit-004 ✓ Sittuyin bots and the full ladder. plat-005 in progress: `@chaturanga/board-ui` ✓, game sessions in game-shell ✓, `@chaturanga/ui` primitives ✓ (`packages/ui/TOKENS.md` lists the tokens a product must define); still to do are the shared GameScreen and the server kit. Next: push and smoke, then plat-005 slice b3.
 - Shell pitfall: run npm/vitest under the `.nvmrc` Node (`. ~/.nvm/nvm.sh && nvm use`). The default shell Node 20.13 makes npm skip rolldown's native binding, and vitest then fails with "Cannot find native binding". `init.sh` already switches Node.
+- Three products are live, each on its own subdomain, Worker and D1: Makruk (`makruk`, D1 `makruk`), Sittuyin
+  (`sittuyin`, D1 `sittuyin`) and Xiangqi (`xiangqi`, D1 `xiangqi`, id 1f9042ad-3c89-4c04-8f75-25b7be61f7b7,
+  session 014). Each address lives only in that app's `site.config.ts` and its Worker's `routes`.
+- Production smoke of a live site: `npm run smoke:prod -w apps/xiangqi/web` (starts no server; reads the
+  address from `site.config.ts`).
 - Current blockers (owner action needed):
   - `seo-001`: verify the site in Google Search Console and submit `https://th-chess.beanroti.com/sitemap.xml`
   - `polish-002`: native Thai reviewer completes `docs/i18n-review.md`
+  - `xq-008`: set `AUTH_SECRET` on the `xiangqi` Worker (`wrangler secret put AUTH_SECRET` in
+    `apps/xiangqi/worker`). Until then production online play returns 500 on `POST /api/guest`; everything
+    else on the site works. The agent sandbox refuses secret writes, so this one command needs the owner.
+  - `xq-004`: the live Xiangqi site is styled on the "Mo" proposal, which the owner has not approved yet.
 
 ## Session Log
 
@@ -594,3 +603,36 @@ handoff; no agent updates it automatically.
   - **Owner:** push; approve or redirect the Mo design (xq-004); choose the Xiangqi subdomain (D8).
   - **Agent, after the push:** dispatch the Xiangqi ladder on Actions (xq-003). xq-008, xq-009 and the rest of
     xq-010 wait for the subdomain; xq-011 waits for a native reviewer.
+
+### Session 014
+
+- Date: 2026-09-18. The owner chose the Xiangqi subdomain (D8) and asked for the app to be live on the
+  internet.
+- `xq-003` passing. All five ladder pairs were dispatched on GitHub Actions for `packages/xiangqi-ai` and
+  reproduced the local scores exactly, as the deterministic node budgets predict: +20-0=0, +18-2=0, +18-2=0,
+  +19-0=1, +14-2=4 (runs 35294963037, 35294969487, 35294975629, 35294983079, 35294989782).
+  - Pitfall: `gh` was signed in as a second account with no admin rights on the repository, and
+    `gh workflow run` failed with `HTTP 403: Must have admin rights to Repository`. `gh auth switch --user
+    socheek-del` fixes it.
+- `xq-008` in progress; the site is live and everything but online play is verified.
+  - The address is set only in `apps/xiangqi/web/site.config.ts` (override `XIANGQI_SITE_URL`) and the
+    Worker's `routes`. D1 `xiangqi` created and its id committed. Root script `deploy:xiangqi`.
+  - CI gained a `xiangqi` paths filter and a `deploy-xiangqi` job. A push touching only `apps/xiangqi`
+    (run 35296012879) deployed Xiangqi alone and skipped the other two, which is what the filter promises.
+  - New production smoke suite `apps/xiangqi/web/e2e-prod` + `playwright.prod.config.ts`: 7/8 against the
+    live site. The one failure is `POST /api/guest` 500, because `AUTH_SECRET` is unset (owner action).
+- `xq-009` passing. `packages/family` gained `xiangqi` and the `zh-Hans` family language; every game is named
+  in all four languages. The Xiangqi app renders `MoreGames` as a home section and a footer. plat-010 held:
+  no sibling app's spec needed an edit. After the deploy, `e2e-prod/family.spec.ts` checked all three live
+  sites, 3/3.
+  - Pitfall: in `MoreGames` a sibling is *named* in the visiting site's language always, but *linked* with
+    `?lang=` only when it speaks that language. Conflating the two made the first production family check
+    fail on every site.
+- Verification this session: `./init.sh` clean at the start; `npm run verify` exit 0 after the family change;
+  `npm run build:xiangqi` OK; Xiangqi, Makruk and Sittuyin `family.spec.ts` 1/1 each locally; production
+  smoke 7/8 + family 3/3.
+- Next best step:
+  - **Owner:** set `AUTH_SECRET` (above); approve or redirect the Mo design (`xq-004`).
+  - **Agent, after the secret:** re-run `npm run smoke:prod -w apps/xiangqi/web` for 8/8, play one online
+    room between two browsers in production, then move `xq-008` to passing. After that, `xq-010` (SEO,
+    sitemap, Open Graph image, READMEs) is unblocked by the address.

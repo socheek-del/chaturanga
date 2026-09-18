@@ -1531,15 +1531,20 @@
       "milestone": "M13",
       "title": "Deploy Xiangqi on its own subdomain",
       "user_visible_behavior": "Xiangqi is live in production on its own subdomain over HTTPS, with a path-filtered CI deploy that does not touch Makruk or Sittuyin.",
-      "status": "not_started",
+      "status": "in_progress",
       "verification": [
         "Owner-chosen address set in site.config.ts, wrangler.jsonc routes, and the deploy-xiangqi job's environment.url.",
         "D1 xiangqi created; AUTH_SECRET set on the xiangqi Worker.",
         "CI changes filter and deploy-xiangqi job added; gh run watch confirms a Xiangqi-only push deploys only Xiangqi.",
         "Production smoke: Chinese home page, computer game, online room between two browsers, PWA install."
       ],
-      "evidence": [],
-      "notes": "Needs the owner's subdomain choice (D8); never hardcode it."
+      "evidence": [
+        "2026-09-18: the owner chose the subdomain (D8). It is set in exactly two places, as for the siblings: the default in apps/xiangqi/web/site.config.ts (override XIANGQI_SITE_URL) and the custom-domain route in apps/xiangqi/worker/wrangler.jsonc. Recorded in docs/PLATFORM.md, apps/xiangqi/docs/PLAN.md (D8) and apps/xiangqi/AGENTS.md.",
+        "2026-09-18: production D1 'xiangqi' created (1f9042ad-3c89-4c04-8f75-25b7be61f7b7), replacing the placeholder id; root script deploy:xiangqi applies its migrations before publishing.",
+        "2026-09-18: CI. The changes filter gained a xiangqi entry (its own folders, packages/xiangqi, packages/xiangqi-ai, plus the shared list) and a deploy-xiangqi job on the production-xiangqi environment. Push 2439fb6 (which touched ci.yml, so shared) deployed all three: run 35295431640 deploy, deploy-sittuyin and deploy-xiangqi all success. Push 2e06402 (apps/xiangqi only) proved the filter: run 35296012879 deploy-xiangqi success, deploy-sittuyin skipped, deploy skipped.",
+        "2026-09-18: production smoke suite added (npm run smoke:prod -w apps/xiangqi/web; playwright.prod.config.ts reads the address from site.config.ts and starts no server). Against the live site: 7 passed, 1 failed — Chinese home page (html lang=zh-Hans, title 象棋), English at ?lang=en, /api/health {\"service\":\"xiangqi\"}, a level-1 computer game where the bot replies to h3e3, the lessons list, the About page, and the PWA manifest with all three icons 200. The failure is POST /api/guest 500: AUTH_SECRET is not set on the xiangqi Worker yet."
+      ],
+      "notes": "Remaining: the owner sets AUTH_SECRET on the xiangqi Worker (`wrangler secret put AUTH_SECRET` in apps/xiangqi/worker, 32 random bytes, stored nowhere else) — the agent's sandbox refuses secret writes. Then re-run npm run smoke:prod -w apps/xiangqi/web for 8/8 and play one online room between two browsers in production. Note the live site is styled on the Mo design, which xq-004 still lists as awaiting approval."
     },
     {
       "id": "plat-010",
@@ -1569,15 +1574,20 @@
       "milestone": "M13",
       "title": "Xiangqi joins the family links",
       "user_visible_behavior": "Xiangqi appears in the 'more games' section and footer on all three sites, and Makruk/Sittuyin gain a Xiangqi link in their own languages.",
-      "status": "not_started",
+      "status": "passing",
       "verification": [
         "packages/family/src/games.ts: 'xiangqi' added to GameId, the new FamilyLanguage added, every game named in every language.",
         "packages/family/src/sites.ts imports the Xiangqi PRODUCT and SITE_URL.",
         "apps/xiangqi/web/e2e/family.spec.ts written generically from the start (depends on plat-010).",
         "All three sites smoke-tested for correct 'more games' links after deploy."
       ],
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "2026-09-18: packages/family — GameId gained 'xiangqi' and FamilyLanguage gained 'zh-Hans', so all three games are now named in th, my, zh-Hans and en (泰国象棋 / 缅甸象棋 / 中国象棋; หมากรุกจีน; တရုတ်စစ်တုရင်; 'Xiangqi (Chinese chess)'). sites.ts reads the Xiangqi address and languages from that product's own site.config.ts and product.config.ts, one line like its siblings. family.test.ts 5/5.",
+        "2026-09-18: the Xiangqi app injects familyLinks('xiangqi') as __FAMILY__ in its vite.config and renders MoreGames as a home-page section and a footer on every page, with family.title in zh-Hans (更多游戏) and en. Its locales test (every declared language complete, every t() key present) passes 55/55.",
+        "2026-09-18: plat-010 held — apps/xiangqi/web/e2e/family.spec.ts loops over familyLinks() and names no sibling, and neither Makruk's nor Sittuyin's spec needed an edit when the family grew. All three specs pass locally, each showing two siblings.",
+        "2026-09-18: after the deploy of 02707e6 (run 35297968378: verify, deploy, deploy-sittuyin, deploy-xiangqi all success), apps/xiangqi/web/e2e-prod/family.spec.ts checked the three live sites and passed 3/3: each shows exactly two sibling links, named in its own default language, at the sibling's configured address, with ?lang= only when the sibling speaks that language."
+      ],
+      "notes": "The Chinese names of Makruk and Sittuyin, and Xiangqi's Thai and Burmese names, are plain descriptions until the native reviews (polish-002, sit-011, xq-011)."
     },
     {
       "id": "xq-010",

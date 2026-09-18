@@ -1,4 +1,5 @@
 import { resolveLocale, storageKey, type TimeControlChoice } from '@chaturanga/game-shell';
+import { DEFAULT_PIECE_SET, isPieceSet, type PieceSetId } from '../features/board/pieceSets';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { type Language, PRODUCT } from '../../product.config';
@@ -10,6 +11,8 @@ export interface Settings {
   language: Language;
   colorScheme: ColorScheme;
   boardTheme: string;
+  /** Which piece art to draw: the traditional Staunton set, or this site's own (ch-012). */
+  pieceSet: PieceSetId;
   showCoordinates: boolean;
   timeControl: TimeControlChoice;
   computerLevel: number;
@@ -26,6 +29,7 @@ export const DEFAULT_SETTINGS: Settings = {
   language: PRODUCT.defaultLocale,
   colorScheme: 'system',
   boardTheme: 'marble',
+  pieceSet: DEFAULT_PIECE_SET,
   showCoordinates: true,
   timeControl: { kind: 'none' },
   computerLevel: 2,
@@ -49,7 +53,11 @@ export const useSettings = create<SettingsState>()(
       partialize: ({ update: _update, ...settings }) => settings,
       migrate: (saved) => {
         const settings = { ...DEFAULT_SETTINGS, ...(saved as Partial<Settings>) };
-        return { ...settings, language: resolveLocale(PRODUCT, settings.language) };
+        return {
+          ...settings,
+          language: resolveLocale(PRODUCT, settings.language),
+          pieceSet: isPieceSet(settings.pieceSet) ? settings.pieceSet : DEFAULT_PIECE_SET,
+        };
       },
     },
   ),

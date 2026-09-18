@@ -52,18 +52,23 @@ the move list speaks in it (`Nf3`, `O-O`, `exd6`, `e8=Q`).
 
 ## The pieces
 
-Staunton shapes, drawn as SVG paths in `src/features/board/PieceSvg.tsx`:
+Two sets, chosen in settings (ch-012). **Traditional** is the default: the Staunton set Wikipedia's chess
+articles use, by Cburnett on Wikimedia Commons, triple-licensed GPLv2+/BSD/CC BY-SA 3.0 and shipped here
+under the GPL. It is the shape a chess player already has in their head, so it is what a new visitor sees.
+The files are stored verbatim with their licence in
+`src/features/board/pieces/traditional/CREDITS.md`, and the app credits the author on its About page.
 
-- The 1849 Staunton *design* is not anyone's copyright, but the well-known SVG sets on the web are licensed
-  work. These are our own drawings, as the Makruk traditional set's credits (`art-003`) show how carefully
-  the repository treats borrowed art.
+**Marble** is this site's own set, drawn as SVG paths in `src/features/board/PieceSvg.tsx`:
+
+- The 1849 Staunton *design* is not anyone's copyright; these are our own drawings of it, so the site has a
+  set that belongs to it even when the traditional one is switched off.
 - Every piece stands on the same plinth and collar, so the set reads as one set.
 - A solid body with a drawn edge: on the Night board a dark piece still has a visible outline, and on light
   squares a white piece still has a shape. Checked at 32 px, which is about a square on a phone.
 - Details are single marks, not decoration: the bishop's mitre cut, the rook's belt, the queen's and king's
   bands, the knight's eye.
-- The king is also the site's mark: the favicon, the PWA icons and the Open Graph image all draw the same
-  paths (`src/features/board/logo.ts`).
+- The king is also the site's mark: the favicon and the PWA icons draw the same paths
+  (`src/features/board/logo.ts`), so the icon stays the site's own whichever set is on the board.
 
 ## Type
 

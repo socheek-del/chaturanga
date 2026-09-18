@@ -58,8 +58,8 @@ accounts, and all the code is open source.
       <h3>🏛️ Its own look</h3>
       <img src="docs/media/mobile.png" alt="Home, the lesson path and a game in dark mode on a phone" width="100%" />
       <p>"Marble": cool stone squares, slate blue for what you press and brass for what is worth noticing.
-      The Staunton set is drawn for this site as SVG paths — not borrowed from anywhere — and there are
-      three boards and a full dark mode.</p>
+      Play with the <b>traditional</b> Staunton pieces you already know, or switch to the set drawn for this
+      site. Three boards and a full dark mode.</p>
     </td>
   </tr>
 </table>
@@ -160,8 +160,11 @@ with [**CONTRIBUTING.md**](../../CONTRIBUTING.md), or:
 
 ## License
 
-[GPL-3.0-or-later](../../LICENSE) © Chaturanga contributors. The piece art was drawn for this project and is
-covered by the same license.
+[GPL-3.0-or-later](../../LICENSE) © Chaturanga contributors. The "Marble" piece set was drawn for this
+project and is covered by the same license. The default **traditional** set is by
+[Cburnett](https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces) on Wikimedia Commons, triple-licensed
+GPLv2-or-later / BSD / CC BY-SA 3.0 and shipped here under the GPL; the files are stored verbatim with their
+credits in [`web/src/features/board/pieces/traditional/CREDITS.md`](web/src/features/board/pieces/traditional/CREDITS.md).
 
 <!-- The live site address is defined once here. -->
 [play]: https://chess.beanroti.com

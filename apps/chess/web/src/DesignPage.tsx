@@ -76,12 +76,22 @@ function Showcase({ theme }: { theme: 'light' | 'dark' }) {
         <section>
           <h3 className="mb-2 font-bold">{t('design.pieces')}</h3>
           <Card className="flex flex-col gap-3">
+            <p className="text-sm text-muted">{t('settings.piecesHint')}</p>
             <div className="flex flex-wrap items-end gap-x-3 gap-y-1">
-              <span className="w-24 text-sm text-muted">{t('colors.w')}</span>
+              <span className="w-24 text-sm text-muted">{t('settings.pieceSet.traditional')}</span>
+              {TYPES.map((type) => (
+                <span key={type} className="flex flex-col items-center">
+                  <PieceSvg piece={{ color: 'w', type, promoted: false } as Piece} theme={boardTheme('marble')} set="traditional" className="h-10 w-10" />
+                  <span className="text-[0.65rem] text-muted">{t(`pieces.${type}`)}</span>
+                </span>
+              ))}
+            </div>
+            <div className="flex flex-wrap items-end gap-x-3 gap-y-1">
+              <span className="w-24 text-sm text-muted">{t('settings.pieceSet.marble')}</span>
               {TYPES.map((type) => (
                 <span key={type} className="flex flex-col items-center">
                   {/* 40px is about a square on a phone board: a piece must stay legible here. */}
-                  <PieceSvg piece={{ color: 'w', type, promoted: false } as Piece} theme={boardTheme('marble')} className="h-10 w-10" />
+                  <PieceSvg piece={{ color: 'w', type, promoted: false } as Piece} theme={boardTheme('marble')} set="marble" className="h-10 w-10" />
                   <span className="text-[0.65rem] text-muted">{t(`pieces.${type}`)}</span>
                 </span>
               ))}
@@ -89,7 +99,7 @@ function Showcase({ theme }: { theme: 'light' | 'dark' }) {
             <div className="flex flex-wrap items-end gap-x-3 gap-y-1">
               <span className="w-24 text-sm text-muted">{t('colors.b')}</span>
               {TYPES.map((type) => (
-                <PieceSvg key={type} piece={{ color: 'b', type, promoted: false } as Piece} theme={boardTheme('marble')} className="h-10 w-10" />
+                <PieceSvg key={type} piece={{ color: 'b', type, promoted: false } as Piece} theme={boardTheme('marble')} set="marble" className="h-10 w-10" />
               ))}
             </div>
           </Card>

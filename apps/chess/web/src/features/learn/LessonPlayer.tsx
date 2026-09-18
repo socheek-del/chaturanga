@@ -19,6 +19,7 @@ export function LessonPlayer(props: LessonPlayerProps) {
   const translate = useL10n();
   const theme = boardTheme(useSettings((s) => s.boardTheme));
   const showCoordinates = useSettings((s) => s.showCoordinates);
+  const pieceSet = useSettings((s) => s.pieceSet);
   const pieceName = (piece: Piece) => t('board.pieceName', { piece: t(`pieces.${piece.type}`), color: t(`colors.${piece.color}`) });
 
   return (
@@ -28,7 +29,7 @@ export function LessonPlayer(props: LessonPlayerProps) {
       translate={translate}
       theme={theme}
       showCoordinates={showCoordinates}
-      renderPiece={(piece, className) => <PieceSvg piece={piece as Piece} theme={theme} className={className} />}
+      renderPiece={(piece, className) => <PieceSvg piece={piece as Piece} theme={theme} set={pieceSet} className={className} />}
       boardLabel={t('board.label')}
       describeSquare={(square, piece) =>
         piece ? t('board.squareWithPiece', { square, piece: pieceName(piece as Piece) }) : t('board.emptySquare', { square })

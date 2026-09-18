@@ -143,6 +143,12 @@
     "light": "Light",
     "dark": "Dark",
     "board": "Board",
+    "pieces": "Pieces",
+    "piecesHint": "The traditional set is the one you know from books and Wikipedia. Marble is the set drawn for this site.",
+    "pieceSet": {
+      "traditional": "Traditional",
+      "marble": "Marble"
+    },
     "play": "Play",
     "coordinates": "Show coordinates"
   },
@@ -219,6 +225,9 @@
     "whatBody": "Chess is played on eight ranks and eight files by two armies of sixteen pieces. White moves first. Each piece moves its own way — the queen anywhere in a line, the knight in its L, the pawn straight ahead but capturing across — and the game ends when a king is attacked and cannot get out of it. Three moves are special: castling, where the king and a rook move together; the capture in passing, where a pawn takes another that has just stepped two squares; and promotion, where a pawn that reaches the far side becomes a queen, rook, bishop or knight. A game can also end in a draw: stalemate, too little material to mate, the same position three times, or fifty moves without a capture or a pawn move.",
     "openSource": "Open source",
     "licence": "The code is public under the GPL-3.0 licence. Anyone can help: report bugs, improve lessons or write code.",
+    "artTitle": "Piece art",
+    "artBody": "The traditional set is by Cburnett on Wikimedia Commons, used under the GPL (it is also offered under BSD and CC BY-SA 3.0). The Marble set was drawn for this site and is covered by the same GPL-3.0 licence as the code.",
+    "artSource": "The traditional set on Wikimedia Commons",
     "source": "View the source",
     "contribute": "How to contribute",
     "reportBug": "Report a bug or suggest an idea",

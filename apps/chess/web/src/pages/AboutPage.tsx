@@ -1,10 +1,12 @@
 import { buttonClasses, Card } from '@chaturanga/ui';
-import { BookOpen, Bug, Heart } from 'lucide-react';
+import { BookOpen, Brush, Bug, Heart } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export const REPO_URL = 'https://github.com/socheek-del/chaturanga';
 const AUTHOR = 'socheek-del';
+/** Where the traditional piece set comes from; its licence travels with the files (CREDITS.md). */
+const PIECE_ART_URL = 'https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces';
 
 function ExternalLink({ href, children, variant = 'outline' }: { href: string; children: ReactNode; variant?: 'primary' | 'outline' }) {
   return (
@@ -34,6 +36,22 @@ export function AboutPage() {
           {t('about.whatTitle')}
         </h2>
         <p className="text-muted">{t('about.whatBody')}</p>
+      </Card>
+
+      <Card className="flex flex-col gap-2" data-testid="art-credit">
+        <h2 className="flex items-center gap-2 text-lg font-bold">
+          <Brush aria-hidden className="h-5 w-5 text-secondary" />
+          {t('about.artTitle')}
+        </h2>
+        <p className="text-muted">{t('about.artBody')}</p>
+        <a
+          href={PIECE_ART_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-semibold text-secondary underline underline-offset-4"
+        >
+          {t('about.artSource')}
+        </a>
       </Card>
 
       <Card className="flex flex-col gap-3" data-testid="contribute">

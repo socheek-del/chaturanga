@@ -2056,9 +2056,9 @@
       ],
       "evidence": [
         "2026-09-18: packages/chess-ai on ai-core — ChessSearch adapter over the engine's own Position (make/unmake with the undo token, MVV-LVA ordering with promotions first, position keys for repetition), and an evaluation with material, piece-square tables tapered between opening and endgame, pawn structure (doubled, isolated, passed), the bishop pair, rook files and the seventh rank, king shield and slider mobility. The evaluation allocates nothing per call.",
-        "2026-09-18: generateLegalMoves now looks the king up once per position instead of once per move (packages/chess/src/movegen.ts); the bundled search runs at about 300-400k nodes/s on this machine (depth 5 from the start position in 0.33s / 94,917 nodes, from a middlegame in 0.47s / 196,613 nodes). The top persona's budget is 1.2M nodes with a 3s wall-clock cap, so on a phone the clock decides, not the node count.",
+        "2026-09-18: generateLegalMoves looks the king up once per position instead of once per move (packages/chess/src/movegen.ts); the bundled search runs at about 300-400k nodes/s on this machine (depth 5 from the start position in 0.33s / 94,917 nodes, from a middlegame in 0.47s / 196,613 nodes). The top persona's budget is 1.2M nodes with a 3s wall-clock cap, so on a phone the clock decides, not the node count.",
         "2026-09-18: ai.test.ts — 10 tests: mate in one, a mate in two played out to checkmate, taking a free queen, saving an attacked knight, every bot plays a legal first move, a 40-ply self-game with no illegal move, determinism for a seed, null when mated or stalemated, and the material/evaluation signs.",
-        "2026-09-18: ladder complete (npm run test:strength -w packages/chess-ai, STRENGTH_GAMES=8, node budgets only so it replays anywhere): L2 knight beats L1 pawn +7-1=0, L3 bishop beats L2 knight +7-1=0, L4 rook beats L3 bishop +8-0=0, L5 queen beats L4 rook +8-0=0, L6 king beats L5 queen +5-0=3. Every level wins its pair with no loss above L3; the script exited 0, which is its own pass condition."
+        "2026-09-18: ladder run twice — once before and once after the insufficient-material fix, with the log cleared in between so every game was replayed on the corrected engine. Both runs agree: L2 knight beats L1 pawn +7-1=0, L3 bishop beats L2 knight +7-1=0, L4 rook beats L3 bishop +8-0=0, L5 queen beats L4 rook +8-0=0, L6 king beats L5 queen +5-0=3 (8 games each, node budgets only, script exit 0)."
       ],
       "notes": "Ladder logs are gitignored (*.log); the run above is recorded here and in claude-progress.md. Re-run with STRENGTH_GAMES=20 on CI (.github/workflows/strength.yml -f package=packages/chess-ai) for a wider sample."
     },
@@ -2282,6 +2282,30 @@
         "2026-09-18: pieceSets.test.ts probes each piece from a point where nothing blocks it and compares the diagram with the engine both ways — 8 tests. App unit tests 73 passed, e2e 25 passed."
       ],
       "notes": "No tint toggle here: Red and Black are already different colours, which Shogi's single-colour set cannot do."
+    },
+    {
+      "id": "ch-012",
+      "product": "chess",
+      "priority": 103,
+      "area": "design",
+      "milestone": "M17",
+      "title": "The traditional piece set, as the default",
+      "user_visible_behavior": "A new visitor sees the Staunton pieces they already know from books and Wikipedia; the set drawn for this site stays one tap away in settings.",
+      "status": "passing",
+      "verification": [
+        "The traditional art is imported verbatim by a script, with its licence and author recorded next to the files and credited in the app.",
+        "Settings offers both sets, the traditional one is the default, and a saved choice survives a reload.",
+        "Unit tests: every piece type of both colours has traditional art, each colour comes from its own file, and an unknown saved value falls back to the default.",
+        "E2E: a new visitor gets the traditional set, switching to Marble changes the board, and switching back restores it."
+      ],
+      "evidence": [
+        "2026-09-18 (owner request): apps/chess/web/scripts/import-traditional-pieces.mjs downloads Cburnett's Staunton set (Chess_klt45.svg … Chess_pdt45.svg) from Wikimedia Commons, resolving each URL through the Commons API rather than guessing a hashed path, and stores the 12 files verbatim in src/features/board/pieces/traditional/ next to CREDITS.md. The set is triple-licensed GPLv2-or-later / BSD / CC BY-SA 3.0 and ships here under the GPL, which is what the repository already is.",
+        "2026-09-18: src/features/board/pieceSets.ts holds the two sets and the default; PieceSvg draws the imported file as an img element for the 'traditional' set (nothing is recoloured, so the drawings are untouched) and its own paths for 'marble'. The choice is a persisted setting with a migration that repairs an unknown value, and it reaches the game screen, the lesson player, the board wrapper and the design page.",
+        "2026-09-18: the About page gained a 'Piece art' card crediting Cburnett with a link to the Commons category, so the attribution travels with the art.",
+        "2026-09-18: tests — apps/chess/web unit tests 90 passed (4 new in pieceSets.test.ts); Playwright 24 passed including the new ch-012 case; npm run verify exits 0.",
+        "2026-09-18: deployed (version e3aa1869-89fd-43a8-b633-2c788b434413); npm run smoke:prod -w apps/chess/web 13 passed. The Open Graph image, the README media and the design screenshots were re-captured with the traditional set on the board."
+      ],
+      "notes": "The Marble set stays the site’s own identity and its king is still the favicon and PWA icon (apps/chess/docs/design.md)."
     }
   ]
 }

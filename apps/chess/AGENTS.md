@@ -35,9 +35,12 @@ The product plan is `apps/chess/docs/PLAN.md`. The platform rules in the root `A
     (`plat-014`), so under-promotion is reachable.
   - The en passant square goes into a FEN whenever an enemy pawn attacks it, even when the capture itself
     would be illegal — that is what Fairy-Stockfish writes.
-- **Art:** the piece set is drawn in this repository as SVG paths (`src/features/board/PieceSvg.tsx`), and
-  the king doubles as the site's mark (`src/features/board/logo.ts`). No third-party chess set is used;
-  the well-known SVG sets on the web carry licences this app does not want.
+- **Art:** two piece sets (ch-012). The default is **traditional** — Cburnett's Staunton set from Wikimedia
+  Commons, stored verbatim in `src/features/board/pieces/traditional/` with `CREDITS.md`, re-downloaded by
+  `npm run pieces -w apps/chess/web`, triple-licensed GPLv2+/BSD/CC BY-SA 3.0 and shipped under the GPL, with
+  the author credited on the About page. The other is **marble**, drawn in this repository as SVG paths
+  (`src/features/board/PieceSvg.tsx`); the king of that set is the site's mark (`logo.ts`). Never edit a file
+  in `pieces/traditional/` by hand.
 - **Board:** the squares are transparent and the chequer is one SVG underlay (`Chequer.tsx`), so no
   chess-only idea leaked into `@chaturanga/board-ui`.
 

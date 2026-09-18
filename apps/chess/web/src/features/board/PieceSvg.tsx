@@ -1,4 +1,5 @@
 import type { Piece } from '@chaturanga/chess';
+import { type PieceSetId, TRADITIONAL_PIECES } from './pieceSets';
 import type { BoardTheme } from './themes';
 
 /**
@@ -62,11 +63,17 @@ const SHAPES: Readonly<Record<string, readonly Shape[]>> = {
 export interface PieceSvgProps {
   piece: Piece;
   theme: BoardTheme;
+  /** Which set to draw: the traditional Staunton art, or this site's own "Marble" set (ch-012). */
+  set?: PieceSetId;
   className?: string;
 }
 
-/** One piece, in the colour its side owns. */
-export function PieceSvg({ piece, theme, className }: PieceSvgProps) {
+/** One piece, in the colour its side owns, in the chosen set. */
+export function PieceSvg({ piece, theme, set = 'traditional', className }: PieceSvgProps) {
+  if (set === 'traditional') {
+    // The imported files carry their own two colours, so they are shown exactly as downloaded.
+    return <img src={TRADITIONAL_PIECES[piece.color][piece.type]} alt="" aria-hidden="true" className={className} draggable={false} />;
+  }
   const white = piece.color === 'w';
   const body = white ? theme.whitePiece : theme.blackPiece;
   const edge = white ? theme.whiteEdge : theme.blackEdge;

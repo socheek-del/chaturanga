@@ -105,3 +105,23 @@ test('a finished game can be reviewed and played again (ch-005)', async ({ page 
   await page.getByRole('button', { name: 'Back to the game' }).click();
   await expect(pieceOn(page, 'd8')).toHaveAttribute('data-piece', 'wr');
 });
+
+test('the traditional set is what a new visitor sees, and Marble is one tap away (ch-012)', async ({ page }) => {
+  await startLocalGame(page);
+  // The traditional set is drawn from the imported files, which Vite inlines, so assert the shape not the URL.
+  const white = pieceOn(page, 'e1').locator('img');
+  const black = pieceOn(page, 'e8').locator('img');
+  await expect(white).toBeVisible();
+  expect(await white.getAttribute('src')).not.toBe(await black.getAttribute('src'));
+
+  await page.goto('/settings');
+  await page.locator('[data-piece-set-option="marble"]').click();
+  await page.goto('/play/local');
+  await expect(pieceOn(page, 'e1').locator('svg')).toBeVisible();
+  await expect(pieceOn(page, 'e1').locator('img')).toHaveCount(0);
+
+  await page.goto('/settings');
+  await page.locator('[data-piece-set-option="traditional"]').click();
+  await page.goto('/play/local');
+  await expect(pieceOn(page, 'e1').locator('img')).toBeVisible();
+});

@@ -58,7 +58,7 @@ No site address is hardcoded in the apps. To move the Makruk site, or run your o
    data, `robots.txt`, `sitemap.xml` and the other family sites' "more games" links are all generated from it.
 2. In `apps/makruk/worker/wrangler.jsonc`, set `routes` (custom domain) and `PUBLIC_ORIGIN`.
 3. In `apps/makruk/README.md` and `README.th.md`, update the `[play]` link definition at the bottom of each
-   file.
+   file, and in the root [`README.md`](README.md) the matching definition in the block at the bottom.
 4. Deploy, then submit `https://<your-domain>/sitemap.xml` in Google Search Console.
 
 ## License

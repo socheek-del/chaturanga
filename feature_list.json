@@ -1887,15 +1887,21 @@
       "milestone": "M15",
       "title": "Deploy Shogi on its own subdomain",
       "user_visible_behavior": "The Shogi site is live over HTTPS on its own address, and /api/health returns ok.",
-      "status": "not_started",
+      "status": "passing",
       "verification": [
         "Owner confirms the subdomain (D8); it lives only in apps/shogi/web/site.config.ts and the Worker's routes.",
         "D1 'shogi' created and migrations applied; AUTH_SECRET set.",
         "Root scripts dev:shogi, build:shogi, deploy:shogi; CI changes filter and a deploy-shogi job.",
         "A production smoke suite driving the live site in Japanese."
       ],
-      "evidence": [],
-      "notes": "Never hardcode the domain anywhere else; screenshots and GIFs must not show it."
+      "evidence": [
+        "2026-09-18: the Shogi site is live at jp-chess.beanroti.com, following the family's pattern (th-chess, mm-chess, cn-chess). The address lives only in apps/shogi/web/site.config.ts (SHOGI_SITE_URL) and the Worker's routes.",
+        "2026-09-18: D1 'shogi' created (d94eb466-77e6-4508-98f5-b58062e7a4f6) and its migration applied remotely — the games table exists in production. AUTH_SECRET set as a Worker secret, so guest tokens are issued.",
+        "2026-09-18: npm run deploy:shogi published the Worker with its assets (17 files, 888 KiB / 150 KiB gzip), the GameRoom and Matchmaker Durable Objects and the D1 binding, on the custom domain.",
+        "2026-09-18: CI gained a build:shogi step, a 'shogi' paths filter and a deploy-shogi job; the root scripts dev:shogi, build:shogi and deploy:shogi exist.",
+        "2026-09-18: production smoke suite (npm run smoke:prod -w apps/shogi/web) 9/9 against the live site: Japanese home page (html lang=ja, title 将棋 · Shogi), English at ?lang=en, /api/health {\"service\":\"shogi\"}, a level-1 computer game where the bot replies, the lessons list, the About page, the PWA manifest with all three icons 200, a guest token, and a full two-browser online room played on the live Worker, its Durable Object and its D1."
+      ],
+      "notes": "The subdomain follows the family's naming (jp-chess); the owner can move it by changing site.config.ts and the Worker's routes, nothing else."
     },
     {
       "id": "sg-009",

@@ -22,8 +22,8 @@
     {
       "binding": "DB",
       "database_name": "shogi",
-      // Filled in when the production database is created (sg-008); local dev and tests use a local one.
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      // Production database, created 2026-09-18 (sg-008). Local dev and tests use a local database.
+      "database_id": "d94eb466-77e6-4508-98f5-b58062e7a4f6",
       "migrations_dir": "migrations"
     }
   ],

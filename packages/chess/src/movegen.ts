@@ -190,11 +190,6 @@ export function epCaptureExists(pos: Position, square: Square): boolean {
   return false;
 }
 
-function inCheckAfter(pos: Position, mover: ColorIndex): boolean {
-  const king = findKing(pos.board, mover);
-  return king >= 0 && isAttacked(pos.board, king, opposite(mover));
-}
-
 function pushPawnMove(out: number[], from: Square, to: Square, us: ColorIndex): void {
   if (rankOf(to) === promotionRank(us)) {
     for (const type of PROMOTION_TYPES) out.push(encodeMove(from, to, type));
@@ -294,21 +289,34 @@ export function generateMoves(pos: Position, out: number[] = []): number[] {
 
 /** True when `m` leaves the mover's own king safe. */
 export function isLegal(pos: Position, m: number): boolean {
+  return legalWithKing(pos, m, findKing(pos.board, pos.turn));
+}
+
+/**
+ * The same test with the king's square already known. Finding the king is a scan of the whole board, and
+ * the search asks this once per move, so the caller looks it up once per position instead.
+ */
+function legalWithKing(pos: Position, m: number, king: Square): boolean {
   const mover = pos.turn;
   const undo = makeRaw(pos, m);
-  const legal = !inCheckAfter(pos, mover);
+  const square = moveFrom(m) === king ? moveTo(m) : king;
+  const safe = square < 0 || !isAttacked(pos.board, square, opposite(mover));
   unmakeRaw(pos, m, undo);
-  return legal;
+  return safe;
 }
 
 /** Every legal move of the side to move. */
 export function generateLegalMoves(pos: Position): number[] {
-  return generateMoves(pos).filter((m) => isLegal(pos, m));
+  const king = findKing(pos.board, pos.turn);
+  const out: number[] = [];
+  for (const m of generateMoves(pos)) if (legalWithKing(pos, m, king)) out.push(m);
+  return out;
 }
 
 /** A legal move exists; cheaper than generating them all. */
 export function hasLegalMove(pos: Position): boolean {
-  return generateMoves(pos).some((m) => isLegal(pos, m));
+  const king = findKing(pos.board, pos.turn);
+  return generateMoves(pos).some((m) => legalWithKing(pos, m, king));
 }
 
 /** Moves worth searching in quiescence: captures (including in passing) and promotions. */

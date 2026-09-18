@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="%DEFAULT_LOCALE%">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#2f3a44" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <title>Chess Online — Play Free vs Computer &amp; Friends</title>
+    <meta
+      name="description"
+      content="Play chess online free, no sign-up. Six computer levels, a friend by room code or on one device, and fifteen lessons from the pieces to checkmate."
+    />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="%SITE_URL%/" />
+    <link rel="alternate" hreflang="en" href="%SITE_URL%/" />
+    <link rel="alternate" hreflang="x-default" href="%SITE_URL%/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Chess" />
+    <meta property="og:title" content="Chess Online — Play Free vs Computer &amp; Friends" />
+    <meta
+      property="og:description"
+      content="Play chess online free, no sign-up: six computer levels, a friend by room code, pass-and-play, and lessons from the pieces to checkmate."
+    />
+    <meta property="og:url" content="%SITE_URL%/" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image" content="%SITE_URL%/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Chess — a marble board with a Staunton set" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Chess Online — Play Free vs Computer &amp; Friends" />
+    <meta name="twitter:description" content="Play chess online free: computer, friends, pass-and-play and lessons." />
+    <meta name="twitter:image" content="%SITE_URL%/og-image.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "%SITE_URL%/#website",
+            "url": "%SITE_URL%/",
+            "name": "Chess",
+            "alternateName": ["Chess", "International chess", "Play chess online"],
+            "inLanguage": ["en"]
+          },
+          {
+            "@type": ["VideoGame", "WebApplication"],
+            "@id": "%SITE_URL%/#game",
+            "name": "Chess",
+            "alternateName": ["International chess", "Play chess online"],
+            "url": "%SITE_URL%/",
+            "description": "Play chess online for free: against the computer at 6 levels, with friends by room code, pass-and-play on one device, plus 16 interactive lessons for beginners.",
+            "image": "%SITE_URL%/og-image.png",
+            "genre": ["Board game", "Chess", "Strategy"],
+            "gamePlatform": ["Web browser", "Android", "iOS"],
+            "applicationCategory": "GameApplication",
+            "operatingSystem": "Any",
+            "playMode": ["SinglePlayer", "MultiPlayer"],
+            "numberOfPlayers": { "@type": "QuantitativeValue", "minValue": 1, "maxValue": 2 },
+            "inLanguage": ["en"],
+            "isAccessibleForFree": true,
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+            "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+            "codeRepository": "https://github.com/socheek-del/chaturanga"
+          }
+        ]
+      }
+    </script>
+    <script>
+      // Apply the saved colour scheme and language before first paint (avoids a light flash in dark mode).
+      try {
+        // %SETTINGS_KEY% and %LOCALES_JSON% come from product.config.ts (see vite.config.ts).
+        var saved = (JSON.parse(localStorage.getItem('%SETTINGS_KEY%') || '{}').state) || {};
+        var scheme = saved.colorScheme || 'system';
+        var dark = scheme === 'dark' || (scheme === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        var locales = %LOCALES_JSON%;
+        var urlLang = new URLSearchParams(location.search).get('lang');
+        var lang = locales.indexOf(urlLang) >= 0 ? urlLang : locales.indexOf(saved.language) >= 0 ? saved.language : null;
+        if (lang) document.documentElement.lang = lang;
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

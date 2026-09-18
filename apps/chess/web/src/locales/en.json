@@ -1,0 +1,261 @@
+{
+  "brand": "Chess",
+  "app": {
+    "name": "Chess",
+    "seal": "K"
+  },
+  "family": {
+    "title": "More games"
+  },
+  "nav": {
+    "label": "Main",
+    "back": "Back",
+    "play": "Play",
+    "settings": "Settings",
+    "learn": "Learn",
+    "about": "About"
+  },
+  "colors": {
+    "w": "White",
+    "b": "Black"
+  },
+  "pieces": {
+    "k": "King",
+    "q": "Queen",
+    "r": "Rook",
+    "b": "Bishop",
+    "n": "Knight",
+    "p": "Pawn"
+  },
+  "board": {
+    "label": "Chess board",
+    "pieceName": "{{color}} {{piece}}",
+    "squareWithPiece": "{{square}}, {{piece}}",
+    "emptySquare": "{{square}}, empty"
+  },
+  "modes": {
+    "single": "Play the computer",
+    "local": "Two players, one device",
+    "online": "Play online"
+  },
+  "home": {
+    "tagline": "Play chess free on any device.",
+    "singleDesc": "Six opponents named after the pieces, from beginner to strong.",
+    "localDesc": "Pass the device back and forth.",
+    "aboutGame": "About chess",
+    "traditional": "Classic",
+    "intro": "Chess is the game the world shares. Two armies, sixty-four squares, and one rule that decides everything: trap the king and the game is over.",
+    "learn": "Learn chess",
+    "learnDesc": "Fifteen short lessons: every piece, castling, capture in passing, promotion, and the tactics and endings that win games.",
+    "onlineDesc": "Invite a friend with a code, or get matched."
+  },
+  "play": {
+    "start": "Start",
+    "turn": "{{color}} to move",
+    "check": "Check",
+    "captured": "Captured pieces",
+    "clockOf": "{{color}}'s clock",
+    "moves": "Moves",
+    "noMoves": "No moves yet",
+    "first": "First move",
+    "back": "Previous move",
+    "forward": "Next move",
+    "last": "Latest move",
+    "flip": "Flip the board",
+    "undo": "Take back",
+    "resign": "Resign",
+    "backToLive": "Back to the game",
+    "newGame": "New game",
+    "rematch": "Play again",
+    "review": "Look at the board",
+    "cancel": "Cancel",
+    "resignConfirm": "Resign for {{color}}?",
+    "promoteTo": "Promote the pawn to",
+    "timeControl": "Time",
+    "noClock": "No clock",
+    "custom": "Custom",
+    "minutes": "Minutes",
+    "increment": "Increment (s)",
+    "categories": {
+      "bullet": "Bullet",
+      "blitz": "Blitz",
+      "rapid": "Rapid",
+      "classical": "Classical"
+    },
+    "result": {
+      "whiteWins": "White wins",
+      "blackWins": "Black wins",
+      "draw": "Draw"
+    },
+    "reason": {
+      "checkmate": "Checkmate",
+      "stalemate": "Stalemate: no legal move, and the king is not in check",
+      "repetition": "Draw: the same position three times",
+      "fifty-move": "Draw: fifty moves without a capture or a pawn move",
+      "insufficient-material": "Draw: neither side can checkmate",
+      "timeout": "Out of time",
+      "resign": "Resigned",
+      "agreement": "Draw agreed",
+      "abandon": "Opponent left"
+    }
+  },
+  "computer": {
+    "chooseBot": "Choose an opponent",
+    "level": "Level {{level}}",
+    "side": "Your side",
+    "sideWhite": "White",
+    "sideBlack": "Black",
+    "sideRandom": "Random",
+    "you": "You",
+    "thinking": "{{name}} is thinking",
+    "hint": "Hint"
+  },
+  "bots": {
+    "pawn": {
+      "name": "Pawn",
+      "desc": "Just learning. Plays quickly and loosely."
+    },
+    "knight": {
+      "name": "Knight",
+      "desc": "Sees captures one move ahead."
+    },
+    "bishop": {
+      "name": "Bishop",
+      "desc": "Steady and careful."
+    },
+    "rook": {
+      "name": "Rook",
+      "desc": "Quick to punish a mistake."
+    },
+    "queen": {
+      "name": "Queen",
+      "desc": "Plans several moves ahead."
+    },
+    "king": {
+      "name": "King",
+      "desc": "The strongest. Expect no gifts."
+    }
+  },
+  "settings": {
+    "language": "Language",
+    "appearance": "Appearance",
+    "system": "System",
+    "light": "Light",
+    "dark": "Dark",
+    "board": "Board",
+    "play": "Play",
+    "coordinates": "Show coordinates"
+  },
+  "design": {
+    "title": "Design",
+    "intro": "The chess site's own look: marble squares, brass highlights and a Staunton set drawn for this site.",
+    "swatches": "Colours",
+    "buttons": "Buttons",
+    "pieces": "Pieces",
+    "typography": "Typography",
+    "typographySample": "Chess is the game the world shares.",
+    "cards": "Cards",
+    "controls": "Controls",
+    "boards": "Boards",
+    "board": {
+      "marble": "Marble",
+      "olive": "Olive",
+      "night": "Night"
+    },
+    "sample": "Sample"
+  },
+  "learn": {
+    "title": "Lessons",
+    "exit": "Leave lesson",
+    "progress": "Lesson progress",
+    "check": "Check",
+    "continue": "Continue",
+    "correct": "Correct!",
+    "wrong": "Not quite",
+    "tryAgain": "Try again",
+    "complete": "Lesson complete!",
+    "stars": "Stars: {{count}}",
+    "unit": "Unit {{number}}",
+    "start": "Start",
+    "xpLabel": "Experience points",
+    "hint": "Hint"
+  },
+  "online": {
+    "opponent": "Opponent",
+    "quickTitle": "Quick match",
+    "quickHint": "Pick a time control and we'll find you an opponent.",
+    "searching": "Finding an opponent ({{pool}})…",
+    "createTitle": "Create a private room",
+    "color": "Your side",
+    "create": "Create room",
+    "joinTitle": "Join with a code",
+    "codeLabel": "Room code",
+    "join": "Join",
+    "invalidCode": "Room codes have 6 characters",
+    "notFound": "Room not found",
+    "serverError": "Couldn't reach the server. Please try again.",
+    "connecting": "Connecting…",
+    "reconnecting": "Connection lost, reconnecting…",
+    "waitingTitle": "Your room is ready",
+    "shareHint": "Send this code or link to a friend to start playing.",
+    "copyLink": "Copy link",
+    "copied": "Copied",
+    "qrAlt": "QR code to join the room",
+    "waitingFor": "Waiting for your friend to join…",
+    "spectating": "You are watching this game",
+    "offerDraw": "Offer a draw",
+    "drawOffered": "Draw offered",
+    "drawOfferReceived": "Your opponent offers a draw",
+    "accept": "Accept",
+    "decline": "Decline",
+    "opponentDisconnected": "Your opponent disconnected — you win if they are not back in {{seconds}}s",
+    "rematchOffered": "Waiting for your opponent to accept the rematch…",
+    "rematchReceived": "Your opponent wants a rematch. Press \"Play again\" to accept."
+  },
+  "about": {
+    "what": "This is a free site for playing chess. No account, no ads.",
+    "free": "Play the computer, play a friend online or on one device, and learn the rules with lessons.",
+    "whatTitle": "What is chess?",
+    "whatBody": "Chess is played on eight ranks and eight files by two armies of sixteen pieces. White moves first. Each piece moves its own way — the queen anywhere in a line, the knight in its L, the pawn straight ahead but capturing across — and the game ends when a king is attacked and cannot get out of it. Three moves are special: castling, where the king and a rook move together; the capture in passing, where a pawn takes another that has just stepped two squares; and promotion, where a pawn that reaches the far side becomes a queen, rook, bishop or knight. A game can also end in a draw: stalemate, too little material to mate, the same position three times, or fifty moves without a capture or a pawn move.",
+    "openSource": "Open source",
+    "licence": "The code is public under the GPL-3.0 licence. Anyone can help: report bugs, improve lessons or write code.",
+    "source": "View the source",
+    "contribute": "How to contribute",
+    "reportBug": "Report a bug or suggest an idea",
+    "madeBy": "Made by {{name}}"
+  },
+  "seo": {
+    "home": {
+      "title": "Chess Online — Play Free vs Computer & Friends",
+      "description": "Play chess online for free, no sign-up. Face 6 computer levels, invite a friend by room code or pass-and-play, and learn the rules step by step."
+    },
+    "computer": {
+      "title": "Play Chess vs Computer — 6 Levels",
+      "description": "Practise chess against bots from beginner to strong, with hints and takebacks. Free, instant, and works on phones and desktops."
+    },
+    "online": {
+      "title": "Play Chess Online with Friends",
+      "description": "Quick-match chess games at 3+2, 5+0 or 10+0, or create a room and send the code to a friend. Free, no account needed."
+    },
+    "room": {
+      "title": "Online Chess Room",
+      "description": "Join an online chess game with a friend."
+    },
+    "local": {
+      "title": "Two-Player Chess on One Device",
+      "description": "Pass the phone back and forth and play chess with someone next to you. Free, no account, works offline."
+    },
+    "learn": {
+      "title": "Learn Chess — 15 Free Lessons",
+      "description": "Learn chess from scratch: every piece, castling, capture in passing, promotion, checkmate patterns, basic tactics and two simple endings. Fifteen short interactive lessons."
+    },
+    "about": {
+      "title": "About This Free Chess Site",
+      "description": "A free, open-source chess site: no account, no ads. Play the computer or a friend, and learn the rules."
+    },
+    "settings": {
+      "title": "Settings | Chess",
+      "description": "Language, appearance, board and clock settings for the chess site."
+    }
+  }
+}

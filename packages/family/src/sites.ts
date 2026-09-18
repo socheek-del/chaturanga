@@ -5,6 +5,8 @@
  * a config but not workspace packages) and injects the result as `__FAMILY__`. Browser code never imports
  * it, because `site.config.ts` reads `process.env`.
  */
+import { PRODUCT as CHESS } from '../../../apps/chess/web/product.config';
+import { SITE_URL as CHESS_URL } from '../../../apps/chess/web/site.config';
 import { PRODUCT as MAKRUK } from '../../../apps/makruk/web/product.config';
 import { SITE_URL as MAKRUK_URL } from '../../../apps/makruk/web/site.config';
 import { PRODUCT as SHOGI } from '../../../apps/shogi/web/product.config';
@@ -31,6 +33,7 @@ export const SITES: Readonly<Record<GameId, { url: string; locales: readonly str
   sittuyin: { url: SITTUYIN_URL, locales: SITTUYIN.locales, defaultLocale: SITTUYIN.defaultLocale },
   xiangqi: { url: XIANGQI_URL, locales: XIANGQI.locales, defaultLocale: XIANGQI.defaultLocale },
   shogi: { url: SHOGI_URL, locales: SHOGI.locales, defaultLocale: SHOGI.defaultLocale },
+  chess: { url: CHESS_URL, locales: CHESS.locales, defaultLocale: CHESS.defaultLocale },
 };
 
 /** Every declared language of every family site, for checking that each game has a name in it. */

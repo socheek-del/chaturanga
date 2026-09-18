@@ -1,0 +1,168 @@
+@import 'tailwindcss';
+/* Shared UI packages live outside this app folder; let Tailwind see their classes. */
+@source '../../../../packages/board-ui/src';
+@source '../../../../packages/game-shell/src/ui';
+@source '../../../../packages/ui/src';
+
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/*
+ * "Marble" design tokens (apps/chess/docs/design.md): cool stone and paper for the interface, slate blue
+ * for what you press and brass for what is worth noticing. Light is the default; `-shadow` = the stronger
+ * shade a pressed control uses.
+ */
+:root,
+[data-theme='light'] {
+  --canvas: #f2f0ec;
+  --surface: #fffefb;
+  --surface-2: #e5e2db;
+  --line: #d2cec5;
+  --ink: #1c2126;
+  --muted: #55606a;
+  --subtle: #8b949c;
+
+  --primary: #33505f;
+  --primary-shadow: #243a46;
+  --primary-soft: #dde6ea;
+  --secondary: #8a5a1c;
+  --secondary-shadow: #6b4514;
+  --secondary-soft: #f3e7d4;
+  --danger: #a32a3a;
+  --danger-shadow: #7e202d;
+  --danger-soft: #f6dee1;
+  --warning: #a6791a;
+  --warning-shadow: #815d14;
+  --warning-soft: #f5ead1;
+  --gold: #bf892f;
+  --gold-shadow: #996d25;
+  --on-accent: #fbfaf7;
+  --on-warning: #241b06;
+  --on-gold: #1b1712;
+  --scrim: #0c1013;
+
+  --card-shadow: 0 1px 2px rgb(22 27 31 / 0.08), 0 8px 24px -12px rgb(22 27 31 / 0.22);
+
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  --canvas: #12171b;
+  --surface: #1a2026;
+  --surface-2: #252d34;
+  --line: #333c44;
+  --ink: #eef1f4;
+  --muted: #a8b2ba;
+  --subtle: #76818a;
+
+  --primary: #9ec2d6;
+  --primary-shadow: #7ba4bb;
+  --primary-soft: #233039;
+  --secondary: #d9a65c;
+  --secondary-shadow: #b8853f;
+  --secondary-soft: #38291a;
+  --danger: #ef7d8e;
+  --danger-shadow: #cf6073;
+  --danger-soft: #3b1d23;
+  --warning: #e3b55a;
+  --warning-shadow: #c1963f;
+  --warning-soft: #342a13;
+  --gold: #d6a44a;
+  --gold-shadow: #b68838;
+  --on-accent: #101519;
+  --on-warning: #241b06;
+  --on-gold: #14110d;
+  --scrim: #04070a;
+
+  --card-shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 10px 28px -14px rgb(0 0 0 / 0.7);
+
+  color-scheme: dark;
+}
+
+@theme inline {
+  /* D9: the self-hosted Noto Sans this repository already ships; the site is Latin-only. */
+  --font-sans: 'Noto Sans', ui-sans-serif, system-ui, sans-serif;
+  --shadow-card: var(--card-shadow);
+
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-primary: var(--primary);
+  --color-primary-shadow: var(--primary-shadow);
+  --color-primary-soft: var(--primary-soft);
+  --color-secondary: var(--secondary);
+  --color-secondary-shadow: var(--secondary-shadow);
+  --color-secondary-soft: var(--secondary-soft);
+  --color-danger: var(--danger);
+  --color-danger-shadow: var(--danger-shadow);
+  --color-danger-soft: var(--danger-soft);
+  --color-warning: var(--warning);
+  --color-warning-shadow: var(--warning-shadow);
+  --color-warning-soft: var(--warning-soft);
+  --color-gold: var(--gold);
+  --color-gold-shadow: var(--gold-shadow);
+  --color-on-accent: var(--on-accent);
+  --color-on-warning: var(--on-warning);
+  --color-on-gold: var(--on-gold);
+  --color-scrim: var(--scrim);
+}
+
+html,
+body {
+  background: var(--canvas);
+  color: var(--ink);
+}
+
+body {
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Marble motif for hero areas: soft veins across stone. Needs `relative overflow-hidden`. */
+.motif-marble::after {
+  content: '';
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: 55%;
+  pointer-events: none;
+  background:
+    linear-gradient(118deg, transparent 38%, rgb(255 255 255 / 0.13) 40%, transparent 43%),
+    linear-gradient(103deg, transparent 62%, rgb(255 255 255 / 0.09) 64%, transparent 68%),
+    radial-gradient(ellipse at 80% 20%, rgb(255 255 255 / 0.12), transparent 62%);
+  mask-image: linear-gradient(to left, black 20%, transparent);
+}
+
+.seal {
+  display: inline-grid;
+  place-items: center;
+  border: 2px solid currentColor;
+  border-radius: 0.35rem;
+  color: var(--gold);
+}
+
+/* The moved piece slides in from its origin point. */
+@keyframes piece-slide {
+  from {
+    transform: translate(var(--dx), var(--dy));
+  }
+  to {
+    transform: translate(0, 0);
+  }
+}
+
+.piece-slide {
+  animation: piece-slide 170ms cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

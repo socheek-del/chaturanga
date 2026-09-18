@@ -23,8 +23,9 @@ on one device.
 |---|---|---|---|
 | [**หมากรุกไทย · Makruk**](apps/makruk/README.md) | Thai chess | ✅ Live: computer, online, pass-and-play, lessons | Thai, English |
 | [**စစ်တုရင် · Sittuyin**](apps/sittuyin/README.md) | Burmese chess | ✅ Live: computer, online, pass-and-play, lessons | Burmese, English |
+| [**象棋 · Xiangqi**](apps/xiangqi/README.md) | Chinese chess | ✅ Live: computer, online, pass-and-play, lessons | Chinese, English |
 
-More games (Shogi, Xiangqi…) may follow. See the [platform plan](docs/PLATFORM.md).
+More games (Shogi…) may follow. See the [platform plan](docs/PLATFORM.md).
 
 <img src="apps/makruk/docs/media/mobile.png" alt="Makruk on a phone: home, lessons and a game" width="100%" />
 
@@ -38,8 +39,9 @@ belongs to one game. The shared packages hold what every game needs.
 | [`packages/rules-core`](packages/rules-core) | The `Variant` interface every rules engine implements, the shared 8×8 board and attacks, and a conformance test suite |
 | [`packages/makruk`](packages/makruk) | Makruk rules, verified move-for-move against [Fairy-Stockfish](https://github.com/fairy-stockfish/Fairy-Stockfish) |
 | [`packages/sittuyin`](packages/sittuyin) | Sittuyin rules (setup phase, promotion, counting), verified the same way |
+| [`packages/xiangqi`](packages/xiangqi) | Xiangqi rules (9×10 point board, palace and river, perpetual check and chase), verified the same way |
 | [`packages/ai-core`](packages/ai-core) | Game-independent alpha-beta search and bot personas |
-| [`packages/ai`](packages/ai), [`packages/sittuyin-ai`](packages/sittuyin-ai) | Computer opponents for Makruk and Sittuyin |
+| [`packages/ai`](packages/ai), [`packages/sittuyin-ai`](packages/sittuyin-ai), [`packages/xiangqi-ai`](packages/xiangqi-ai) | Computer opponents for Makruk, Sittuyin and Xiangqi |
 | [`packages/ui`](packages/ui), [`packages/board-ui`](packages/board-ui) | Palette-free component primitives; a board of any size with pieces in hand |
 | [`packages/game-shell`](packages/game-shell) | Game screen, lesson player, online lobby and room, languages and search tags for every site |
 | [`packages/server-kit`](packages/server-kit) | Online rooms, clocks and matchmaking as Durable Objects, driven by a rules `Variant` |
@@ -47,6 +49,7 @@ belongs to one game. The shared packages hold what every game needs.
 | [`packages/protocol`](packages/protocol) | Message schemas shared by browsers and servers |
 | [`apps/makruk`](apps/makruk) | The Makruk product: React PWA (`web`) and Cloudflare Worker (`worker`) |
 | [`apps/sittuyin`](apps/sittuyin) | The Sittuyin product: React PWA (`web`) and Cloudflare Worker (`worker`) |
+| [`apps/xiangqi`](apps/xiangqi) | The Xiangqi product: React PWA (`web`) and Cloudflare Worker (`worker`) |
 
 ## Run it locally
 
@@ -57,6 +60,7 @@ nvm use          # Node 22
 ./init.sh        # install dependencies and run all checks
 npm run dev:makruk     # Makruk web on http://localhost:5173, API + online play on :8787
 npm run dev:sittuyin   # Sittuyin web on http://localhost:5174, API + online play on :8788
+npm run dev:xiangqi    # Xiangqi web on http://localhost:5176, API + online play on :8789
 ```
 
 ## Contributing

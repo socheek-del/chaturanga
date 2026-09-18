@@ -40,6 +40,10 @@ The product plan is `apps/xiangqi/docs/PLAN.md`. The platform rules in the root 
   - `npm run e2e:pwa -w apps/xiangqi/web` checks installability and offline play on a production build.
   - `npm run capture:design -w apps/xiangqi/web` re-takes the design screenshots against `vite preview`.
   - `npm run icons -w apps/xiangqi/web` re-renders the PWA icons from the 帥 glyph.
+  - `npm run smoke:prod -w apps/xiangqi/web` drives the live site (no server of its own).
+  - `BASE_URL=<live site> npm run capture:readme -w apps/xiangqi/web` re-takes the README media (needs ffmpeg
+    and ImageMagick). It must never film the address bar or the waiting room's share link: no domain may be
+    visible in the media.
   - `npm run test:strength -w packages/xiangqi-ai` runs the bot ladder as a bundled Node script (STRENGTH_PAIR,
     STRENGTH_GAMES, STRENGTH_SHARD).
 - **Fixtures:**

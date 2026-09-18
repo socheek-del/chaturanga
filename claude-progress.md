@@ -642,12 +642,20 @@ handoff; no agent updates it automatically.
   `git commit` from either one would have swept up the other's. It committed its own paths as `6394f16`; the
   Xiangqi work went in separately. Two sessions in one repository need separate git worktrees, or one must
   wait.
+- `xq-010` README half done (the owner asked for the README). `apps/xiangqi/README.md` and
+  `README.zh-Hans.md` follow the Sittuyin pair's shape, with the live address only in a `[play]` link
+  definition at the bottom of each. New `apps/xiangqi/web/scripts/capture-readme.mjs`
+  (`BASE_URL=<live site> npm run capture:readme -w apps/xiangqi/web`, needs ffmpeg and ImageMagick) captured
+  `docs/media/{play-computer,online,lesson}.gif` and `mobile.png` from production; sampled frames of all
+  three GIFs and the collage were reviewed and show no address bar, domain or room share link. The root
+  README lists Xiangqi as live.
 - Next best step:
   - **Owner:** `xq-011` needs a native Chinese reviewer. The Shogi plan (`6394f16`) proposes decisions
     D1-D12 that are still unconfirmed.
-  - **Agent:** `xq-010` is the last open Xiangqi feature and is now unblocked by the address — SEO tags,
-    hreflang, canonical, JSON-LD, sitemap/robots, the Open Graph image, and `README.md` +
-    `README.zh-Hans.md` with media captured from production (no domain visible).
+  - **Agent:** finish `xq-010` — the SEO half: per-language titles and descriptions, hreflang, canonical,
+    JSON-LD, sitemap/robots from `SITE_URL`, and an Open Graph image. Xiangqi's OG image needs its CJK
+    wordmark as outlines, because the app deliberately loads no CJK font (D9); `generate-glyphs.mjs` shows
+    how to fetch outlines for named characters.
 
 ### Session 015 (planning only, parallel session)
 

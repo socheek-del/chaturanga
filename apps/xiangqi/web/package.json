@@ -15,7 +15,8 @@
     "smoke:prod": "playwright test -c playwright.prod.config.ts",
     "icons": "node scripts/generate-icons.mjs",
     "glyphs": "node scripts/generate-glyphs.mjs",
-    "capture:design": "node scripts/capture-design.mjs"
+    "capture:design": "node scripts/capture-design.mjs",
+    "capture:readme": "node scripts/capture-readme.mjs"
   },
   "dependencies": {
     "@chaturanga/board-ui": "*",

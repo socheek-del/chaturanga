@@ -1,5 +1,13 @@
 import { Board, type BoardHandle, type BoardTheme, HandTray, parseUci, useMoveInput } from '@chaturanga/board-ui';
-import { type Color, type Piece, type Square, timesAt, type Variant, type VariantGame } from '@chaturanga/rules-core';
+import {
+  type Color,
+  type Piece,
+  type Square,
+  timesAt,
+  usesSetupPhase,
+  type Variant,
+  type VariantGame,
+} from '@chaturanga/rules-core';
 import { Button, Card, Modal } from '@chaturanga/ui';
 import { type CSSProperties, type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -170,9 +178,12 @@ export function GameScreen<G extends VariantGame>({
     />
   );
 
+  // A game that drops captured pieces (Shogi) keeps both stands on screen even while they are empty, so the
+  // board never jumps as pieces come and go. A setup phase (Sittuyin) shows a tray only while it holds pieces.
+  const alwaysShowTrays = variant.hasHands && !usesSetupPhase(variant);
   const tray = (color: Color) => {
     const pieces = game.hand(color);
-    if (!pieces.length || !handLabel || !describeHandPiece) return null;
+    if ((!pieces.length && !alwaysShowTrays) || !handLabel || !describeHandPiece) return null;
     return (
       <HandTray
         color={color}

@@ -56,7 +56,7 @@
     "traditional": "Traditional",
     "intro": "Shogi is the chess of Japan. A captured piece changes sides and comes back into play, dropped anywhere on the board, so no position is ever quiet for long. Deep in enemy ground a piece may turn over and promote.",
     "learn": "Learn Shogi",
-    "learnDesc": "Fourteen short lessons: the board, every piece, promotion, drops and the rules that catch beginners out.",
+    "learnDesc": "Fifteen short lessons: the board, every piece, promotion, drops and the rules that catch beginners out.",
     "onlineDesc": "Invite a friend with a code, or get matched."
   },
   "play": {
@@ -236,5 +236,39 @@
     "contribute": "How to contribute",
     "reportBug": "Report a bug or suggest an idea",
     "madeBy": "Made by {{name}}"
+  },
+  "seo": {
+    "home": {
+      "title": "Shogi Online — Play Japanese Chess Free vs Computer & Friends",
+      "description": "Play Shogi (Japanese chess) online for free, no sign-up. Face 6 computer levels, invite a friend by room code or pass-and-play, and learn the rules step by step."
+    },
+    "computer": {
+      "title": "Play Shogi vs Computer — 6 Levels | Japanese Chess",
+      "description": "Practise Shogi against bots from beginner to strong, with hints and takebacks. Free, instant, and works on phones and desktops."
+    },
+    "online": {
+      "title": "Play Shogi Online with Friends | Japanese Chess",
+      "description": "Quick-match Shogi games at 3+2, 5+0 or 10+0, or create a room and send the code to a friend. Free, no account needed."
+    },
+    "room": {
+      "title": "Online Shogi Room | Japanese Chess",
+      "description": "Join an online Shogi (Japanese chess) game with a friend."
+    },
+    "local": {
+      "title": "Two-Player Shogi on One Device | Japanese Chess",
+      "description": "Pass the phone back and forth and play Shogi with someone next to you. Free, no account, works offline."
+    },
+    "learn": {
+      "title": "Learn Shogi — 15 Free Lessons | Japanese Chess",
+      "description": "Learn Shogi from scratch: the board, every piece, promotion, drops, nifu and uchifuzume, and how to finish a game. Fifteen short interactive lessons."
+    },
+    "about": {
+      "title": "About This Free Shogi Site | Japanese Chess",
+      "description": "A free, open-source Shogi site: no account, no ads. Play the computer or a friend, and learn the rules."
+    },
+    "settings": {
+      "title": "Settings | Shogi",
+      "description": "Language, appearance, board and clock settings for the Shogi site."
+    }
   }
 }

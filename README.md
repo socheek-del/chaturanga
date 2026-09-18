@@ -4,7 +4,7 @@
 
 **Traditional chess games from across Asia. Free, no sign-up, in your own language.**
 
-[**หมากรุกไทย · Makruk**][makruk] · [**စစ်တုရင် · Sittuyin**][sittuyin] · [**象棋 · Xiangqi**][xiangqi]
+[**หมากรุกไทย · Makruk**][makruk] · [**စစ်တုရင် · Sittuyin**][sittuyin] · [**象棋 · Xiangqi**][xiangqi] · [**将棋 · Shogi**][shogi]
 
 [![License: GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-1cb0f6)](LICENSE)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-ff9600)](CONTRIBUTING.md)
@@ -14,7 +14,7 @@
 ---
 
 Chaturanga, the ancient Indian game, is the common ancestor of chess, Makruk, Sittuyin, Shogi and Xiangqi.
-Its descendants are still played every day across Asia, and this project brings three of them to any phone or
+Its descendants are still played every day across Asia, and this project brings four of them to any phone or
 computer: **learn the rules from zero**, **practise against the computer**, and **play friends online** or on
 one device.
 
@@ -24,24 +24,31 @@ Each game has its own site, look and language. No ads, no accounts, and nothing 
 
 <table>
   <tr>
-    <td width="33%" valign="top" align="center">
+    <td width="25%" valign="top" align="center">
       <h3><a href="https://th-chess.beanroti.com">หมากรุกไทย · Makruk</a></h3>
       <a href="https://th-chess.beanroti.com"><img src="apps/makruk/docs/media/mobile.png" alt="Makruk on a phone: home, lessons and a game" width="100%" /></a>
       <p><b>Thai chess.</b> Pawns promote in the middle of the board, and a bare king starts the count.<br />
       Thai · English — <a href="apps/makruk/README.md">about this game</a></p>
     </td>
-    <td width="33%" valign="top" align="center">
+    <td width="25%" valign="top" align="center">
       <h3><a href="https://my-chess.beanroti.com">စစ်တုရင် · Sittuyin</a></h3>
       <a href="https://my-chess.beanroti.com"><img src="apps/sittuyin/docs/media/mobile.png" alt="Sittuyin on a phone: home, lessons and a game" width="100%" /></a>
       <p><b>Burmese chess.</b> You arrange your own army before the first move, so no two games open alike.<br />
       Burmese · English — <a href="apps/sittuyin/README.md">about this game</a></p>
     </td>
-    <td width="33%" valign="top" align="center">
+    <td width="25%" valign="top" align="center">
       <h3><a href="https://cn-chess.beanroti.com">象棋 · Xiangqi</a></h3>
       <a href="https://cn-chess.beanroti.com"><img src="apps/xiangqi/docs/media/mobile.png" alt="Xiangqi on a phone: home, lessons and a game" width="100%" /></a>
       <p><b>Chinese chess.</b> Pieces stand on the lines, a river splits the board, and the general never
       leaves his palace.<br />
       Chinese · English — <a href="apps/xiangqi/README.md">about this game</a></p>
+    </td>
+    <td width="25%" valign="top" align="center">
+      <h3><a href="https://jp-chess.beanroti.com">将棋 · Shogi</a></h3>
+      <a href="https://jp-chess.beanroti.com"><img src="apps/shogi/docs/media/mobile.png" alt="Shogi on a phone: home, lessons and a game" width="100%" /></a>
+      <p><b>Japanese chess.</b> Captured pieces change sides and come back, dropped almost anywhere on the
+      board.<br />
+      Japanese · English — <a href="apps/shogi/README.md">about this game</a></p>
     </td>
   </tr>
 </table>
@@ -57,7 +64,7 @@ More games may follow.
 - 🌐 **Play friends online.** Quick match, or share a room code. No chat, on purpose.
 - 👥 **Pass and play** on one device, with a clock or without.
 - 📱 **Install it like an app.** Once installed, lessons, pass-and-play and the computer work offline.
-- 🗣️ **Your language first.** Thai, Burmese and Chinese are the default on their own sites, with English
+- 🗣️ **Your language first.** Thai, Burmese, Chinese and Japanese are the default on their own sites, with English
   alongside.
 - 🆓 **Free and open source.** No ads, no accounts, and nobody selling your games.
 
@@ -88,3 +95,4 @@ this project and are covered by the same license.
 [makruk]: https://th-chess.beanroti.com
 [sittuyin]: https://my-chess.beanroti.com
 [xiangqi]: https://cn-chess.beanroti.com
+[shogi]: https://jp-chess.beanroti.com

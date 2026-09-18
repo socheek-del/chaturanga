@@ -6,16 +6,44 @@ import { defineConfig } from 'vitest/config';
 // Relative path on purpose: Vite bundles a config's relative imports, not workspace packages.
 import { familyLinks } from '../../../packages/family/src/sites';
 import { PRODUCT } from './product.config';
+import { SITE_URL } from './site.config';
+import { buildRobots, buildSitemap } from './src/features/seo/sitemap';
 
-/** Puts the product's languages and settings key into index.html (the pre-paint theme and language script). */
+/**
+ * sg-010: puts the configured site address and the product's languages and settings key into index.html,
+ * and serves and emits robots.txt and sitemap.xml.
+ */
 function productHtml(): Plugin {
+  const files: Record<string, { type: string; body: () => string }> = {
+    '/robots.txt': { type: 'text/plain; charset=utf-8', body: () => buildRobots(SITE_URL) },
+    '/sitemap.xml': { type: 'application/xml; charset=utf-8', body: () => buildSitemap(SITE_URL) },
+  };
+  // Must return nothing: Vite treats a function returned from configureServer as a post-middleware hook.
+  const serve = (server: {
+    middlewares: { use: (fn: (req: { url?: string }, res: import('node:http').ServerResponse, next: () => void) => void) => unknown };
+  }): void => {
+    server.middlewares.use((req, res, next) => {
+      const file = files[(req.url ?? '').split('?')[0]!];
+      if (!file) return next();
+      res.setHeader('content-type', file.type);
+      res.end(file.body());
+    });
+  };
   return {
     name: 'product-html',
     transformIndexHtml: (html) =>
       html
+        .replaceAll('%SITE_URL%', SITE_URL)
         .replaceAll('%DEFAULT_LOCALE%', PRODUCT.defaultLocale)
         .replaceAll('%LOCALES_JSON%', JSON.stringify(PRODUCT.locales))
         .replaceAll('%SETTINGS_KEY%', `${PRODUCT.storagePrefix}settings`),
+    configureServer: serve,
+    configurePreviewServer: serve,
+    generateBundle() {
+      for (const [path, file] of Object.entries(files)) {
+        this.emitFile({ type: 'asset', fileName: path.slice(1), source: file.body() });
+      }
+    },
   };
 }
 
@@ -24,7 +52,7 @@ function productHtml(): Plugin {
  * comes later.
  */
 export default defineConfig({
-  define: { __FAMILY__: JSON.stringify(familyLinks('shogi')) },
+  define: { __SITE_URL__: JSON.stringify(SITE_URL), __FAMILY__: JSON.stringify(familyLinks('shogi')) },
   plugins: [
     react(),
     tailwindcss(),
@@ -54,7 +82,7 @@ export default defineConfig({
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,woff,woff2}'],
         navigateFallback: '/index.html',
-        navigateFallbackDenylist: [/^\/api\//, /^\/ws\//],
+        navigateFallbackDenylist: [/^\/api\//, /^\/ws\//, /^\/robots\.txt$/, /^\/sitemap\.xml$/],
         maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
       },
     }),

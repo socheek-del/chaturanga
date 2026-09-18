@@ -239,13 +239,21 @@ describe('GameScreen with Shogi, where hands fill during play (plat-011, plat-01
     describeHandPiece: (type: string, count: number) => `${type} x${count}`,
   };
 
+  it('keeps both piece stands on screen even when they are empty', () => {
+    const useSession = createGameSession(shogi);
+    useSession.getState().start(null);
+    const view = render(<GameScreen {...shogiProps} useSession={useSession} />);
+
+    expect(view.container.querySelectorAll('[data-hand]').length).toBe(2);
+  });
+
   it('says whose turn it is, not that a piece is being placed, even with a full hand', () => {
     const useSession = createGameSession(shogi);
     useSession.getState().start(null, '2k6/9/9/9/9/9/9/9/2K6[GNLPSRB] w - - 0 1');
     const view = render(<GameScreen {...shogiProps} useSession={useSession} />);
 
     expect(view.getByTestId('turn-banner').textContent).toBe('White to move');
-    expect(view.container.querySelectorAll('[data-hand]').length).toBe(1);
+    expect(view.container.querySelectorAll('[data-hand]').length).toBe(2);
   });
 
   it('drops a piece from hand in the middle of a game', () => {

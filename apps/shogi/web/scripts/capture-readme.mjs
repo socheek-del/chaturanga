@@ -21,7 +21,7 @@ const browser = await chromium.launch();
 
 const PHONE = { width: 390, height: 844 };
 const plies = (page) => page.getByTestId('move-list').locator('[data-ply]');
-const tap = async (page, point) => page.locator(`[data-square="${point}"]`).click();
+const tap = async (page, square) => page.locator(`[data-square="${square}"]`).click();
 const pause = (page, ms) => page.waitForTimeout(ms);
 
 /** Records one scene; returns the video path once the context has flushed it. */
@@ -52,12 +52,12 @@ const computer = await record({ width: 1280, height: 800 }, async (page) => {
   await page.goto(`${BASE}/play/computer`);
   await page.locator('[data-bot-level="3"]').click();
   await pause(page, 600);
-  await page.getByRole('radio', { name: '红方', exact: true }).click();
-  await page.getByRole('button', { name: '开始' }).click();
+  await page.getByRole('radio', { name: '先手', exact: true }).click();
+  await page.getByRole('button', { name: '開始' }).click();
   await pause(page, 900);
   for (const [from, to, total] of [
-    ['h3', 'e3', 2],
-    ['h1', 'g3', 4],
+    ['g3', 'g4', 2],
+    ['h2', 'g2', 4],
   ]) {
     await tap(page, from);
     await pause(page, 400);
@@ -74,10 +74,10 @@ gif([computer], 'play-computer.gif', { width: 760, fps: 8 });
 const creator = await browser.newContext();
 const creatorPage = await creator.newPage();
 await creatorPage.goto(`${BASE}/play/online`);
-const create = creatorPage.getByRole('button', { name: '创建房间' });
+const create = creatorPage.getByRole('button', { name: '部屋を作る' });
 await expect(create).toBeEnabled({ timeout: 15_000 });
 await creatorPage.locator('[data-time-control="5+0"]').click();
-await creatorPage.getByRole('radio', { name: '红方', exact: true }).click();
+await creatorPage.getByRole('radio', { name: '先手', exact: true }).click();
 await create.click();
 const code = (await creatorPage.getByTestId('room-code').textContent()).trim();
 const hostState = await creator.storageState();
@@ -93,10 +93,10 @@ await expect(host.getByRole('grid')).toBeVisible({ timeout: 15_000 });
 await expect(friend.getByRole('grid')).toBeVisible({ timeout: 15_000 });
 await pause(host, 1200);
 for (const [page, other, from, to, total] of [
-  [host, friend, 'h3', 'e3', 1],
-  [friend, host, 'h10', 'g8', 2],
-  [host, friend, 'h1', 'g3', 3],
-  [friend, host, 'i10', 'h10', 4],
+  [host, friend, 'g3', 'g4', 1],
+  [friend, host, 'c7', 'c6', 2],
+  [host, friend, 'h2', 'g2', 3],
+  [friend, host, 'b8', 'c8', 4],
 ]) {
   await tap(page, from);
   await pause(page, 350);
@@ -109,25 +109,21 @@ await hostContext.close();
 await friendContext.close();
 gif([await host.video().path(), await friend.video().path()], 'online.gif', { width: 720, fps: 8 });
 
-// 3. A lesson on a phone: the Chariot's lines, then capturing with it.
+// 3. A lesson on a phone: the Gold's moves, then the drop lesson's piece from hand.
 const lesson = await record(PHONE, async (page) => {
   await page.goto(`${BASE}/learn`);
   await pause(page, 1200);
-  await page.locator('[data-lesson="chariot"] a').click();
+  await page.locator('[data-lesson="gold"] a').click();
   await pause(page, 1800);
-  for (const name of ['a2', 'b1', 'c1']) {
+  for (const name of ['d5', 'd6', 'e4', 'e6', 'f5', 'f6']) {
     await tap(page, name);
-    await pause(page, 350);
+    await pause(page, 300);
   }
-  await page.getByRole('button', { name: '检查', exact: true }).click();
+  await page.getByRole('button', { name: '答え合わせ', exact: true }).click();
   await pause(page, 1600);
-  await page.getByRole('button', { name: '继续', exact: true }).click();
-  await pause(page, 1400);
-  await tap(page, 'e5');
-  await pause(page, 500);
-  await tap(page, 'b5');
-  await pause(page, 1800);
-  await page.getByRole('button', { name: '继续', exact: true }).click();
+  await page.getByRole('button', { name: 'つづける', exact: true }).click();
+  await pause(page, 2000);
+  await page.getByRole('button', { name: 'つづける', exact: true }).click();
   await pause(page, 2500);
 });
 gif([lesson], 'lesson.gif', { width: 360, fps: 10 });
@@ -150,16 +146,16 @@ await phoneShot(
   'game',
   async (page) => {
     await page.goto(`${BASE}/play/local`);
-    await page.getByRole('button', { name: '开始' }).click();
-    await tap(page, 'h3');
-    await tap(page, 'e3');
-    await tap(page, 'h10');
-    await tap(page, 'g8');
+    await page.getByRole('button', { name: '開始' }).click();
+    await tap(page, 'g3');
+    await tap(page, 'g4');
+    await tap(page, 'c7');
+    await tap(page, 'c6');
     await expect(plies(page)).toHaveCount(2);
   },
   'dark',
 );
-execFileSync('magick', [...shots, '-bordercolor', '#2a2622', '-border', '24', '+append', '-resize', '1600x', join(media, 'mobile.png')]);
+execFileSync('magick', [...shots, '-bordercolor', '#1f3d5c', '-border', '24', '+append', '-resize', '1600x', join(media, 'mobile.png')]);
 console.log('wrote docs/media/mobile.png');
 
 await browser.close();

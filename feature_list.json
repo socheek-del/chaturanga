@@ -1931,13 +1931,19 @@
       "milestone": "M15",
       "title": "Shogi SEO, About page and README",
       "user_visible_behavior": "The Shogi site is findable and shareable, and its README shows the game.",
-      "status": "not_started",
+      "status": "passing",
       "verification": [
         "About page in ja and en with repository, CONTRIBUTING and new-issue links; an E2E for it.",
         "SEO tags, hreflang, canonical, JSON-LD, sitemap and robots built from SITE_URL; an Open Graph image.",
         "README.md and README.ja.md with media that never shows the domain; the root README lists Shogi."
       ],
-      "evidence": [],
+      "evidence": [
+        "2026-09-18: SEO ported into apps/shogi/web/src/features/seo (page map, canonical, hreflang ja/en/x-default, Open Graph and Twitter tags, JSON-LD for WebSite and VideoGame), with robots.txt and sitemap.xml generated from site.config.ts at build time and served in dev. The SeoController rewrites the head on every navigation; seo.test.ts (6 tests) covers the page map, the URLs, the head tags and the generated files.",
+        "2026-09-18: Open Graph image at public/og-image.png (1200x630), composed by scripts/generate-og-image.mjs from a board the app itself renders, so it cannot drift from the site; nothing in it shows the address.",
+        "2026-09-18: About page in both languages with repository, CONTRIBUTING and new-issue links (e2e about.spec 1/1).",
+        "2026-09-18: apps/shogi/README.md and README.ja.md written, with media captured from the live site (npm run capture:readme): three GIFs and a phone collage, none showing the address. The root README now lists Shogi as the fourth game.",
+        "2026-09-18: verified live — /robots.txt and /sitemap.xml 200 with the right address, /og-image.png 200, canonical and hreflang correct on the home page, and the JSON-LD names the game."
+      ],
       "notes": "Needs the site address from sg-008."
     },
     {
@@ -1948,13 +1954,15 @@
       "milestone": "M15",
       "title": "Native Japanese review",
       "user_visible_behavior": "A native Japanese speaker has reviewed every user-visible string, lesson, bot name and terminology choice.",
-      "status": "not_started",
+      "status": "blocked",
       "verification": [
         "apps/shogi/docs/i18n-review.md written in the sit-011/xq-011 format: UI strings, lessons, bots, online, About, manifest, SEO and OG text, family names, and a terminology table.",
         "Corrections applied and the sign-off row recorded."
       ],
-      "evidence": [],
-      "notes": "Expected to become blocked: the review needs a human native speaker, which an agent cannot provide or fabricate."
+      "evidence": [
+        "2026-09-18: apps/shogi/docs/i18n-review.md written in the sit-011/xq-011 format: what to review (UI strings, all 15 lessons, result reasons, sides, bots, online, About, manifest, SEO and the Open Graph text, design and board names, the family game names, the Japanese README), a 25-row terminology table, how to send corrections, and a sign-off table."
+      ],
+      "notes": "BLOCKED on a human: the review needs a native Japanese speaker, which an agent cannot provide or fabricate. Hand apps/shogi/docs/i18n-review.md to a reviewer (ideally a Shogi player), apply the corrections and record the sign-off row."
     }
   ]
 }

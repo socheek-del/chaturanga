@@ -146,7 +146,14 @@
     "dark": "深色",
     "board": "棋盘",
     "play": "对局",
-    "coordinates": "显示坐标"
+    "coordinates": "显示坐标",
+    "pieces": "棋子",
+    "piecesHint": "汉字是真实棋具的样子。另外两种是给不认识汉字的棋友用的。",
+    "pieceSet": {
+      "characters": "汉字",
+      "symbols": "走法",
+      "letters": "字母"
+    }
   },
   "design": {
     "title": "设计",

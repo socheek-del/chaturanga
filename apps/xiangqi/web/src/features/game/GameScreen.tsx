@@ -29,6 +29,7 @@ export function GameScreen(props: GameScreenProps) {
   const { t } = useTranslation();
   const theme = boardTheme(useSettings((st) => st.boardTheme));
   const showCoordinates = useSettings((st) => st.showCoordinates);
+  const pieceSet = useSettings((st) => st.pieceSet);
   const pieceName = (piece: Piece) => t('board.pieceName', { piece: t(`pieces.${piece.type}`), color: t(`colors.${piece.color}`) });
 
   return (
@@ -37,7 +38,7 @@ export function GameScreen(props: GameScreenProps) {
       variant={xiangqi}
       theme={theme}
       showCoordinates={showCoordinates}
-      renderPiece={(piece, className) => <PieceSvg piece={piece as Piece} className={className} />}
+      renderPiece={(piece, className) => <PieceSvg piece={piece as Piece} set={pieceSet} className={className} />}
       boardLabel={t('board.label')}
       describeSquare={(point, piece) =>
         piece ? t('board.pointWithPiece', { point, piece: pieceName(piece as Piece) }) : t('board.emptyPoint', { point })

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { type Language, PRODUCT } from '../../product.config';
 import { BoardLines } from '../features/board/BoardLines';
 import { PieceSvg } from '../features/board/PieceSvg';
+import { PIECE_SETS } from '../features/board/pieceSets';
 import { BOARD_THEMES, type BoardTheme } from '../features/board/themes';
 import { type ColorScheme, useSettings } from '../stores/settings';
 
@@ -69,6 +70,38 @@ export function SettingsPage() {
               >
                 <BoardSwatch theme={theme} />
                 <span className="mt-1 block text-xs font-semibold">{t(`design.board.${theme.id}`)}</span>
+              </button>
+            );
+          })}
+        </div>
+      </Card>
+
+      <Card className="flex flex-col gap-3">
+        <h2 className="text-lg font-bold">{t('settings.pieces')}</h2>
+        <p className="text-sm text-muted">{t('settings.piecesHint')}</p>
+        <div role="radiogroup" aria-label={t('settings.pieces')} className="grid grid-cols-3 gap-3">
+          {PIECE_SETS.map((id) => {
+            const checked = id === settings.pieceSet;
+            return (
+              <button
+                key={id}
+                type="button"
+                role="radio"
+                aria-checked={checked}
+                aria-label={t(`settings.pieceSet.${id}`)}
+                data-piece-set-option={id}
+                onClick={() => update({ pieceSet: id })}
+                className={cn(
+                  'flex flex-col items-center gap-1 rounded-xl p-2 transition-colors',
+                  checked ? 'bg-primary-soft ring-2 ring-primary' : 'hover:bg-surface-2',
+                )}
+              >
+                <span className="flex gap-1">
+                  {(['r', 'n', 'p'] as const).map((type) => (
+                    <PieceSvg key={type} piece={{ color: 'w', type, promoted: false }} set={id} className="h-10 w-10" />
+                  ))}
+                </span>
+                <span className="text-xs font-semibold">{t(`settings.pieceSet.${id}`)}</span>
               </button>
             );
           })}

@@ -43,6 +43,16 @@ describe('Xiangqi lesson content (xq-006)', () => {
     for (const type of xiangqi.pieceTypes) expect(icons.has(type), type).toBe(true);
   });
 
+  it('every question carries a hint, and every lesson shows the moves before it asks for them', () => {
+    for (const lesson of ALL_LESSONS) {
+      lesson.steps.forEach((step, index) => {
+        if (step.kind !== 'info') expect(filled(step.hint ?? { en: '' }), `${lesson.id} step ${index + 1}`).toBe(true);
+        // A question is never the first thing a lesson says (xq-006, after a player got stuck).
+        if (index === 0) expect(step.kind, lesson.id).toBe('info');
+      });
+    }
+  });
+
   it('every squares step names the piece whose moves it asks for, so the engine checks the answer', () => {
     const squares = ALL_LESSONS.flatMap((l) => l.steps).filter((s) => s.kind === 'squares' && l10nIsAboutMoves(s.text));
     for (const step of squares) if (step.kind === 'squares') expect(step.targetsOf, step.text.en).toBeTruthy();

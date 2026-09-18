@@ -83,6 +83,15 @@ const advisor: Lesson = {
   xp: 10,
   steps: [
     {
+      kind: 'info',
+      fen: '5k3/9/9/9/9/9/9/9/4A4/3K5 w - - 0 1',
+      highlight: ['d3', 'f1', 'f3'],
+      text: {
+        'zh-Hans': '仕沿九宫的斜线走一步，只能在九宫里。亮着的点就是这个仕能去的地方（d1 上是自己的帅）。',
+        en: 'The Advisor steps one point along the palace diagonals and never leaves the palace. The lit points are where this one can go — d1 is taken by your own General.',
+      },
+    },
+    {
       kind: 'squares',
       fen: '5k3/9/9/9/9/9/9/9/4A4/3K5 w - - 0 1',
       targetsOf: 'e2',
@@ -104,6 +113,15 @@ const elephant: Lesson = {
   xp: 10,
   steps: [
     {
+      kind: 'info',
+      fen: '5k3/9/9/9/9/9/9/4B4/9/3K5 w - - 0 1',
+      highlight: ['c1', 'c5', 'g1', 'g5'],
+      text: {
+        'zh-Hans': '相斜着走两步，走“田”字，四个方向。亮着的四个点就是它能去的地方。',
+        en: 'The Elephant moves exactly two points diagonally, in any of the four directions — the four lit points.',
+      },
+    },
+    {
       kind: 'squares',
       fen: '5k3/9/9/9/9/9/9/4B4/9/3K5 w - - 0 1',
       targetsOf: 'e3',
@@ -112,6 +130,7 @@ const elephant: Lesson = {
         'zh-Hans': '相斜着走两步（走“田”字）。点出这个相可以走到的点。',
         en: 'The Elephant moves exactly two points diagonally. Tap every point this Elephant can reach.',
       },
+      hint: { 'zh-Hans': '四个斜方向，每个方向两步。', en: 'Four diagonal directions, two points in each.' },
     },
     {
       kind: 'squares',
@@ -129,6 +148,7 @@ const elephant: Lesson = {
       text: { 'zh-Hans': '相可以过河吗？', en: 'May an Elephant cross the river?' },
       choices: [NO, YES],
       correct: 0,
+      hint: { 'zh-Hans': '相守在自己一边，永远不过河。', en: 'The Elephant defends its own half and never crosses.' },
     },
   ],
 };
@@ -141,6 +161,15 @@ const horse: Lesson = {
   xp: 15,
   steps: [
     {
+      kind: 'info',
+      fen: '5k3/9/9/9/9/4N4/9/9/9/3K5 w - - 0 1',
+      highlight: ['c4', 'c6', 'd3', 'd7', 'f3', 'f7', 'g4', 'g6'],
+      text: {
+        'zh-Hans': '马先直走一步，再斜走一步，走“日”字。空旷时它有八个落点，都亮着。',
+        en: 'The Horse moves one point straight, then one diagonally outward: eight landing points in the open, all lit here.',
+      },
+    },
+    {
       kind: 'squares',
       fen: '5k3/9/9/9/9/4N4/9/9/9/3K5 w - - 0 1',
       targetsOf: 'e5',
@@ -149,6 +178,7 @@ const horse: Lesson = {
         'zh-Hans': '马先直走一步，再斜走一步（走“日”字）。点出这匹马可以走到的点。',
         en: 'The Horse moves one point straight, then one diagonally outward. Tap every point this Horse can reach.',
       },
+      hint: { 'zh-Hans': '空旷的马有八个落点。', en: 'A Horse in the open has eight landing points.' },
     },
     {
       kind: 'squares',
@@ -172,6 +202,15 @@ const chariot: Lesson = {
   xp: 10,
   steps: [
     {
+      kind: 'info',
+      fen: '5k3/9/9/9/9/9/9/P8/9/R2K5 w - - 0 1',
+      highlight: ['a2', 'b1', 'c1'],
+      text: {
+        'zh-Hans': '车沿直线走任意步，但不能跳过棋子。这个车被 a3 的兵和 d1 的帅挡住，只剩亮着的三个点。',
+        en: 'The Chariot slides any distance along a line but never jumps. This one is boxed in by its own Soldier on a3 and General on d1, so only the three lit points are left.',
+      },
+    },
+    {
       kind: 'squares',
       fen: '5k3/9/9/9/9/9/9/P8/9/R2K5 w - - 0 1',
       targetsOf: 'a1',
@@ -180,12 +219,14 @@ const chariot: Lesson = {
         'zh-Hans': '车沿直线走任意步，但不能跳过棋子。点出这个车可以走到的点。',
         en: 'The Chariot moves any distance along a line but cannot jump. Tap every point this Chariot can reach.',
       },
+      hint: { 'zh-Hans': '自己的兵和帅挡住了其余的路。', en: 'Its own Soldier and General block everything else.' },
     },
     {
       kind: 'move',
       fen: '5k3/9/9/9/9/1n2R4/9/9/9/3K5 w - - 0 1',
       solutions: ['e5b5'],
       text: { 'zh-Hans': '用车吃掉黑方的马。', en: "Capture Black's Horse with the Chariot." },
+      hint: { 'zh-Hans': '先点 e5 的车，再点 b5 的马。', en: 'Tap the Chariot on e5, then the Horse on b5.' },
       success: { 'zh-Hans': '好！车是最强的棋子。', en: 'Well done: the Chariot is the strongest piece.' },
     },
   ],
@@ -212,12 +253,14 @@ const cannon: Lesson = {
       fen: '5k3/9/4n4/9/9/4P4/9/4C4/9/3K5 w - - 0 1',
       solutions: ['e3e8'],
       text: { 'zh-Hans': '隔着 e5 的兵，用炮吃掉黑马。', en: "Jump the Soldier on e5 and capture Black's Horse." },
+      hint: { 'zh-Hans': '先点 e3 的炮，再点 e8 的黑马。', en: 'Tap the Cannon on e3, then the Horse on e8.' },
     },
     {
       kind: 'quiz',
       text: { 'zh-Hans': '炮可以隔着两个棋子吃子吗？', en: 'May a Cannon capture by jumping two pieces?' },
       choices: [NO, YES],
       correct: 0,
+      hint: { 'zh-Hans': '炮架只能是一个子，不多不少。', en: 'The screen is exactly one piece, no more and no less.' },
     },
   ],
 };
@@ -230,6 +273,15 @@ const soldier: Lesson = {
   xp: 10,
   steps: [
     {
+      kind: 'info',
+      fen: '5k3/9/9/9/9/9/4P4/9/9/3K5 w - - 0 1',
+      highlight: ['e5'],
+      text: {
+        'zh-Hans': '没过河的兵只能向前走一步，就是亮着的那个点。兵永远不能后退。',
+        en: 'Before the river a Soldier only steps forward — the single lit point. A Soldier never moves backwards.',
+      },
+    },
+    {
       kind: 'squares',
       fen: '5k3/9/9/9/9/9/4P4/9/9/3K5 w - - 0 1',
       targetsOf: 'e4',
@@ -238,6 +290,7 @@ const soldier: Lesson = {
         'zh-Hans': '没过河的兵只能向前走一步。点出这个兵可以走到的点。',
         en: 'Before the river a Soldier only steps forward. Tap every point this Soldier can reach.',
       },
+      hint: { 'zh-Hans': '只有正前方的一个点。', en: 'Just the one point straight ahead.' },
     },
     {
       kind: 'squares',
@@ -248,6 +301,7 @@ const soldier: Lesson = {
         'zh-Hans': '过了河的兵还可以横走，但永远不能后退。现在它能走到哪里？',
         en: 'Across the river it may also step sideways, but never back. Where can it go now?',
       },
+      hint: { 'zh-Hans': '前面一个点，左右各一个点。', en: 'One point forward and one to each side.' },
     },
   ],
 };
@@ -259,6 +313,15 @@ const flying: Lesson = {
   summary: { 'zh-Hans': '同一条线上中间必须有子', en: 'Something must always stand between the Generals' },
   xp: 15,
   steps: [
+    {
+      kind: 'info',
+      fen: '3k5/9/9/9/9/9/9/9/9/4K4 w - - 0 1',
+      highlight: ['e2', 'f1'],
+      text: {
+        'zh-Hans': '将和帅不能在同一条空竖线上对面。所以这个帅只能去亮着的两个点：走到 d1 就和黑将对面了。',
+        en: 'The two Generals may never face each other down an empty file. So this General has only the two lit points: stepping to d1 would put it face to face with the black General.',
+      },
+    },
     {
       kind: 'squares',
       fen: '3k5/9/9/9/9/9/9/9/9/4K4 w - - 0 1',
@@ -323,6 +386,15 @@ const stalemate: Lesson = {
   xp: 15,
   steps: [
     {
+      kind: 'info',
+      fen: '3k5/9/8R/9/9/9/9/9/9/4K4 w - - 0 1',
+      highlight: ['d9', 'e10'],
+      text: {
+        'zh-Hans': '黑将现在只有两个亮着的点可去：d9 和 e10，而 e10 正对着红帅，其实去不了。所以只要封住 d9，黑方就无子可走。',
+        en: 'The black General has only the two lit points: d9, and e10 — which it cannot really use, because your General faces it there. Close d9 and Black has no move at all.',
+      },
+    },
+    {
       kind: 'move',
       fen: '3k5/9/8R/9/9/9/9/9/9/4K4 w - - 0 1',
       solutions: ['i8i9'],
@@ -344,6 +416,7 @@ const stalemate: Lesson = {
         { 'zh-Hans': '和棋', en: 'Draws' },
       ],
       correct: 0,
+      hint: { 'zh-Hans': '象棋和国际象棋不同：无子可走就判负。', en: 'Xiangqi is not chess here: no legal move is a loss.' },
     },
   ],
 };
@@ -356,6 +429,14 @@ const repetition: Lesson = {
   xp: 15,
   steps: [
     {
+      kind: 'info',
+      fen: 'rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR w - - 0 1',
+      text: {
+        'zh-Hans': '同一局面重复三次就要判定。谁都不将不捉，是和棋；一直将军（长将）或一直捉子（长捉）的一方判负。下面三题就是这三种情形。',
+        en: 'When the same position comes up a third time the game is decided: nobody checking or chasing is a draw, but a side that keeps checking (perpetual check) or keeps chasing (perpetual chase) loses. The next three questions are exactly those three cases.',
+      },
+    },
+    {
       kind: 'quiz',
       fen: 'rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR w - - 0 1',
       text: {
@@ -367,6 +448,7 @@ const repetition: Lesson = {
         { 'zh-Hans': '先走的一方输', en: 'A loss for whoever started' },
       ],
       correct: 0,
+      hint: { 'zh-Hans': '没有人将军，也没有人捉子。', en: 'Nobody checked and nobody chased.' },
       verify: {
         fen: 'rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR w - - 0 1',
         moves: ['b1c3', 'b10c8', 'c3b1', 'c8b10', 'b1c3', 'b10c8', 'c3b1', 'c8b10'],
@@ -385,6 +467,7 @@ const repetition: Lesson = {
         { 'zh-Hans': '长将的红方输', en: 'Red loses for perpetual check' },
       ],
       correct: 1,
+      hint: { 'zh-Hans': '一直将军的一方要负责任。', en: 'The side doing the checking is the one held responsible.' },
       verify: {
         fen: '3k5/R8/9/9/9/9/9/9/9/4K4 w - - 0 1',
         moves: ['a9a10', 'd10d9', 'a10a9', 'd9d10', 'a9a10', 'd10d9', 'a10a9', 'd9d10'],
@@ -404,6 +487,7 @@ const repetition: Lesson = {
         { 'zh-Hans': '长捉的红方输', en: 'Red loses for perpetual chase' },
       ],
       correct: 1,
+      hint: { 'zh-Hans': '长捉和长将一样判负。', en: 'A perpetual chase is punished just like a perpetual check.' },
       verify: {
         fen: '3k5/9/9/9/c8/9/9/9/9/1R2K4 w - - 0 1',
         moves: ['b1a1', 'a6b6', 'a1b1', 'b6a6', 'b1a1', 'a6b6', 'a1b1', 'b6a6'],
@@ -421,6 +505,15 @@ const mates: Lesson = {
   summary: { 'zh-Hans': '马后炮、车帅配合', en: 'Cannon behind Horse, Chariot with General' },
   xp: 20,
   steps: [
+    {
+      kind: 'info',
+      fen: '4k4/9/4N4/9/9/9/9/C8/9/3K5 w - - 0 1',
+      highlight: ['d10', 'f10'],
+      text: {
+        'zh-Hans': 'e8 的马已经守住了将的两个逃点（亮着的 d10 和 f10）。剩下的只是把炮摆到 e 线上将军。',
+        en: "The Horse on e8 already guards the General's two escape points, lit here. All that is left is to check down the e-file with the Cannon.",
+      },
+    },
     {
       kind: 'move',
       fen: '4k4/9/4N4/9/9/9/9/C8/9/3K5 w - - 0 1',

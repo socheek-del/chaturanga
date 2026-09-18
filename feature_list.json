@@ -1527,7 +1527,8 @@
       "evidence": [
         "2026-09-17: apps/xiangqi/web/src/features/learn/lessons.ts: 13 lessons in 4 units, every text in zh-Hans and en. The board: points, river, palaces, tap the five Soldiers. The pieces: General (incl. why f2 is refused by the flying general), Advisor, Elephant (and a blocked eye, and no crossing the river), Horse (and hobbled), Chariot (targets and a capture), Cannon (screen capture, never over two), Soldier (before and after the river). Special rules: flying general (targets + the lone screen may not move), check and checkmate, stalemate loses, repetition (idle draw, perpetual check loses, perpetual chase loses). Basic mates: cannon behind horse, chariot with the General controlling the file. LessonPlayer on grid='points' with the BoardLines underlay, LearnPage with seal-shaped lesson markers in the Mo palette, LessonPage, a progress store under the xiangqi. prefix, a /learn route, a Learn nav entry and a home card.",
         "2026-09-17: lessons.test.ts (55 unit tests with the rest of the app): describeLessons(PRODUCT, xiangqi, ALL_LESSONS), so every FEN parses, every move solution is legal, every squares answer with targetsOf equals the engine's legal destinations (10 such steps) and both languages are filled. Plus: every unit and quiz choice in both languages; the exact unit and lesson list; every piece type has its own lesson; every squares step asking where a piece can go names targetsOf; every mate solution (a1a10, a1d1, a3e3, h2d2) is checkmate for Red; every ending claim (stalemate i8i9 wins for Red, idle horse shuffle draws, a9/a10 perpetual check loses for Red, chariot-follows-cannon perpetual chase loses for Red) replays through Game.status() exactly. The first run caught two bad fixtures in the flying-general lesson (both generals on an open file, and an empty squares answer), fixed.",
-        "2026-09-17: e2e/learn.spec.ts 3/3: the path lists 13 lessons in 4 units at 0 XP; the Advisor lesson completed in Chinese with a wrong answer first (+10 XP, marked completed on the path); the Chariot lesson completed in English (squares step, capture move with its success text, 3 stars). Full Xiangqi E2E 19/19; npm run verify (whole repo) exit 0."
+        "2026-09-17: e2e/learn.spec.ts 3/3: the path lists 13 lessons in 4 units at 0 XP; the Advisor lesson completed in Chinese with a wrong answer first (+10 XP, marked completed on the path); the Chariot lesson completed in English (squares step, capture move with its success text, 3 stars). Full Xiangqi E2E 19/19; npm run verify (whole repo) exit 0.",
+        "2026-09-18: same rework as Shogi (sg-006): teach-before-ask steps added to the Advisor, Elephant, Horse, Chariot, Soldier, flying-General, stalemate, repetition and mates lessons, hints on every question, and a test that refuses a lesson starting with a question. Xiangqi app tests 73 passed, e2e 25 passed."
       ],
       "notes": ""
     },
@@ -1853,7 +1854,8 @@
       ],
       "evidence": [
         "2026-09-18: 15 lessons in four units — the board; the eight pieces one by one; promotion, drops, nifu and uchifuzume, check and checkmate, sennichite; and finishing with two mates. Every claim is checked against the engine by describeLessons plus the app's own tests: positions parse, move solutions are legal,each squares answer equals the engine's legal destinations, both mates really mate, and the four ending claims (checkmate, stalemate, sennichite draw, perpetual check) match status().",
-        "2026-09-18: app unit tests 64 passed including the lesson suite; e2e learn.spec 3/3 — the path lists 15 lessons, the Gold lesson completed in Japanese with a wrong answer on the way, and the drops lesson completed in English by dropping a gold from the hand tray."
+        "2026-09-18: app unit tests 64 passed including the lesson suite; e2e learn.spec 3/3 — the path lists 15 lessons, the Gold lesson completed in Japanese with a wrong answer on the way, and the drops lesson completed in English by dropping a gold from the hand tray.",
+        "2026-09-18: reworked after a player said the lessons asked for moves they had never shown. Every piece lesson now lights up the moves and explains them before the question, every question carries a hint (plat-014), and the tests refuse a lesson that asks first or a question without a hint."
       ],
       "notes": "The lesson player needed the hand trays wired up (handLabel/describeHandPiece) so a drop lesson can be played."
     },
@@ -1972,14 +1974,19 @@
       "milestone": "M16",
       "title": "Promotion with a choice of pieces in the shared move input",
       "user_visible_behavior": "In a game where a pawn may promote to more than one piece, the player picks which piece, with every choice drawn in the product’s own art; games with automatic, forced or yes/no promotion are unchanged.",
-      "status": "not_started",
+      "status": "passing",
       "verification": [
         "board-ui unit tests: four promotion moves on the same from-to pair raise a pending choice and each choice plays its own move; a single promotion plays straight through; Shogi’s two-choice case and Makruk’s automatic promotion are unchanged.",
         "game-shell unit test: the prompt renders one button per choice through the product’s renderPiece, is keyboard reachable and can be dismissed.",
         "Makruk, Sittuyin and Shogi E2E unchanged."
       ],
-      "evidence": [],
-      "notes": "useMoveInput.play() today splits candidates into one plain and one promoting move; with four promotions and no plain move it silently auto-queens and under-promotion is unreachable (apps/chess/docs/PLAN.md, step 1). Touches packages/board-ui/src/useMoveInput.ts and packages/game-shell/src/ui/GameScreen.tsx — do not start while a parallel Shogi session has GameScreen.tsx open. New shared keys go in packages/game-shell/KEYS.md."
+      "evidence": [
+        "2026-09-18: packages/board-ui/src/useMoveInput.ts now holds every way a from-to pair can be played as `pendingPromotion.choices` ({uci, promotion}) and plays one by its move string (`choosePromotion(uci)`). A single legal move on the pair still plays straight through; Shogi's promote-or-not pair is the two-choice case of the same code.",
+        "2026-09-18: packages/board-ui/src/coords.ts now carries the promotion suffix itself (`promotion: string | null`) instead of a boolean, so a game with four promotions can tell them apart.",
+        "2026-09-18: GameScreen renders the yes/no prompt when one choice is the plain move (Shogi) and one button per piece otherwise (chess), each drawn with the product's renderPiece and named by the new optional `describePromotion` prop, behind the new key play.promoteTo (packages/game-shell/KEYS.md).",
+        "2026-09-18: tests — board-ui 37 passed (6 new chess cases: asks instead of queening, each of the four choices plays, an unknown choice plays nothing, drag and cancel, single promotion straight through, promotion targets); game-shell 42 passed (3 new chess cases: the four-piece prompt, an under-promotion to a knight, castling moving the rook). Makruk, Sittuyin and Shogi cases unchanged and green."
+      ],
+      "notes": "Verified with the real chess variant (ch-001), which is the only variant with more than two ways to play one from-to pair."
     },
     {
       "id": "ch-001",
@@ -1989,7 +1996,7 @@
       "milestone": "M16",
       "title": "Chess board, FEN and move generation",
       "user_visible_behavior": "packages/chess models the 8x8 board, castling rights and the en-passant square, and generates legal moves including castling, en passant and all four promotions, verified against Fairy-Stockfish.",
-      "status": "not_started",
+      "status": "passing",
       "verification": [
         "fen.test.ts: round-trip on 10+ ffish-generated positions; 10+ invalid FENs rejected (bad castling field, impossible en-passant square, two kings, the side not to move in check).",
         "movegen.test.ts: one test per piece type, castling legal and blocked (through check, out of check, rights lost), en passant including the pinned case, and all four promotions.",
@@ -1997,7 +2004,14 @@
         "reference.test.ts: lock-step random games vs ffish comparing sorted legal moves, SAN and FEN on every ply.",
         "describeVariantConformance(chess, ...) passes."
       ],
-      "evidence": [],
+      "evidence": [
+        "2026-09-18: packages/chess (@chaturanga/chess) written on the Shogi/Xiangqi package pattern: its own piece codes on the shared 8x8 geometry from rules-core, which gained BISHOP_RAYS (the Makruk family has no diagonal slider). Moves are integers (from | to<<6 | promotion<<12); makeRaw returns one undo token holding the captured piece, the square it stood on, the castling rights and the en passant square, so an en passant capture and a castling rook both unmake exactly.",
+        "2026-09-18: perft.test.ts — the standard suite passes at every depth: start position to 4,865,609 (depth 5), Kiwipete to 4,085,603 (depth 4), position 3 to 674,624 (depth 5), positions 4, 5 and 6 to depth 4. 26 passed with PERFT_DEEP=1 in 15.4s; the shallow depths run in npm run verify.",
+        "2026-09-18: reference.test.ts — 60 seeded games in lock-step with ffish 0.7.10 from four openings (start, empty back ranks with all four castling rights, Kiwipete, both sides one move from promoting) compare sorted legal moves, SAN and FEN on every ply; captures, promotions and castling all occur.",
+        "2026-09-18: movegen.test.ts — 15 tests: one per piece, castling on both sides and every way it is forbidden, the queenside b-file exception, the rook moving with the king, capture in passing including the one-move window and the pin that forbids it, all four promotions, a pinned piece, rejected moves and undo of castling, promotion and a double step.",
+        "2026-09-18: fen.test.ts — 30 tests: 11 positions round-trip, 16 invalid FENs rejected, castling rights dropped when the king or rook has moved, the en passant square written only when a pawn stands ready to take, and every position of 20 seeded ffish games round-trips (900+ positions).",
+        "2026-09-18: describeVariantConformance(chess, ...) passes. Package total: 96 passed, 7 deep perft skipped in the normal run."
+      ],
       "notes": "Needs a diagonal-slider attack table in packages/rules-core (the Makruk family has no bishop or queen). Castling rights, the en-passant square and the halfmove clock stay inside packages/chess."
     },
     {
@@ -2008,12 +2022,17 @@
       "milestone": "M16",
       "title": "Chess game end",
       "user_visible_behavior": "A chess game ends with checkmate, stalemate (a draw), insufficient material, threefold repetition or the fifty-move rule, and the result dialog names which.",
-      "status": "not_started",
+      "status": "passing",
       "verification": [
         "status.test.ts: a mate, a stalemate, each insufficient-material combination Fairy-Stockfish recognises, a threefold line and a fifty-move line, each compared with ffish result(claimDraw).",
         "packages/chess/RULES.md states how threefold and the fifty-move rule end a game and matches the code."
       ],
-      "evidence": [],
+      "evidence": [
+        "2026-09-18: status() reports checkmate, stalemate (a draw, no winner), insufficient material, threefold repetition and the fifty-move rule. Repetition keys are placement + side to move + castling rights + en passant square; the fifty-move count is the halfmove clock.",
+        "2026-09-18: owner decision D11 implemented as accepted — threefold and the fifty-move rule end the game here, with no claim button and no new online message. packages/chess/RULES.md records the divergence from the FIDE claim procedure and that fivefold and the 75-move rule therefore cannot be reached.",
+        "2026-09-18: the insufficient-material rule was probed against ffish rather than assumed: a bare king, a single minor, or bishops all on one colour against a bare king are draws; bishops on both colours, two knights, and any position where both sides still have a piece are not. gameEnd.test.ts checks all ten cases against ffish's own answer.",
+        "2026-09-18: gameEnd.test.ts — 17 tests (mate, stalemate, the ten material cases, a third repetition, a second repetition still ongoing, the fiftieth move, the count restarting). reference.test.ts asserts that the 60 lock-step games actually reached checkmate, stalemate, repetition and insufficient material, and that every ply agreed with ffish's result(claimDraw)."
+      ],
       "notes": "Owner decision D11 (apps/chess/docs/PLAN.md): the probe shows ffish reports threefold and fifty-move as claimable (isGameOver() false, result() \"*\"; claimDraw true gives 1/2-1/2). Proposal is to end the game automatically, with no claim button and no new online message, and to write the divergence from the FIDE claim procedure into RULES.md."
     },
     {
@@ -2161,6 +2180,69 @@
       ],
       "evidence": [],
       "notes": "BLOCKED on owner decision D1 (apps/chess/docs/PLAN.md): chess has no single home language, and each declared language becomes a FamilyLanguage that needs a name for every game. Launch is English only."
+    },
+    {
+      "id": "plat-014",
+      "product": "platform",
+      "priority": 103,
+      "area": "learn",
+      "milestone": "M16",
+      "title": "A hint on every lesson question",
+      "user_visible_behavior": "A learner who is stuck can press for a hint before answering, and the board points at what the hint is about.",
+      "status": "passing",
+      "verification": [
+        "The lesson player offers the hint on a button while a question is unanswered, not only after a wrong try.",
+        "A squares question lights up its answer; a move question points at the piece to play; a quiz shows the text alone.",
+        "The shared key learn.hint is documented in KEYS.md and filled in every product.",
+        "E2E in at least two products."
+      ],
+      "evidence": [
+        "2026-09-18: packages/game-shell/src/ui/LessonPlayer.tsx gained a HintPanel used by every question step, and packages/board-ui's Board gained `hintSquares` so a lesson can mark several squares the way a hint is marked. learn.hint added to Makruk (th/en), Sittuyin (my/en), Xiangqi (zh-Hans/en) and Shogi (ja/en).",
+        "2026-09-18: e2e — Shogi 'a hint is one press away, and points at the answer' (the knight lesson: hint text, two marked squares, then the right answer) and Xiangqi's Chariot lesson now takes the hint before answering. Makruk 9, Sittuyin 6 and Xiangqi 3 lesson e2e unchanged and green."
+      ],
+      "notes": "Came from a player: \"I won't know that\" — the lessons asked for moves they had never shown, and a stuck learner had nowhere to go."
+    },
+    {
+      "id": "sg-012",
+      "product": "shogi",
+      "priority": 104,
+      "area": "design",
+      "milestone": "M16",
+      "title": "Piece sets for players who do not read Japanese",
+      "user_visible_behavior": "A player can write the pieces in kanji, as a diagram of each piece's moves, or as Latin letters, and can tint the opponent's pieces.",
+      "status": "passing",
+      "verification": [
+        "Three sets in settings, kanji by default; the choice is remembered.",
+        "The symbol diagrams are compared with the engine's own move generation, so they cannot show a move the piece lacks.",
+        "A toggle gives the far player's tiles their own wood.",
+        "E2E: switch the set and see the board change."
+      ],
+      "evidence": [
+        "2026-09-18: apps/shogi/web/src/features/board/pieceSets.ts holds the move tables and the letters; PieceSvg draws kanji, a dot-and-arrow diagram or a letter on the same wooden tile. themes.ts gained tileAlt/tileEdgeAlt for the tint.",
+        "2026-09-18: pieceSets.test.ts puts each of the 14 faces alone on a board and compares the diagram with the engine's legal moves in both directions — 16 tests. App unit tests 95 passed.",
+        "2026-09-18: e2e 'the piece set can be switched, and the opponent tinted' — letters render K and R on the board, symbols switch the face, and the tinted wood differs between the two sides."
+      ],
+      "notes": "Kanji stays the default because that is what a real set uses; the other two are the conventions non-Japanese players use (symbol diagrams as on 81Dojo/lishogi, and the Latin letters of Western Shogi books). The art is drawn here, not copied from any existing set."
+    },
+    {
+      "id": "xq-012",
+      "product": "xiangqi",
+      "priority": 105,
+      "area": "design",
+      "milestone": "M16",
+      "title": "Piece sets for players who do not read Chinese",
+      "user_visible_behavior": "A player can write the pieces as the traditional characters, as a diagram of each piece's moves, or as Latin letters.",
+      "status": "passing",
+      "verification": [
+        "Three sets in settings, the characters by default; the choice is remembered.",
+        "The symbol diagrams are compared with the engine's own move generation.",
+        "E2E: switch the set and see the board change."
+      ],
+      "evidence": [
+        "2026-09-18: apps/xiangqi/web/src/features/board/pieceSets.ts and PieceSvg draw the character, a dot-arrow-ring diagram (the ring is the cannon's screen) or the letter K A E H R C P, which is what the move list already uses.",
+        "2026-09-18: pieceSets.test.ts probes each piece from a point where nothing blocks it and compares the diagram with the engine both ways — 8 tests. App unit tests 73 passed, e2e 25 passed."
+      ],
+      "notes": "No tint toggle here: Red and Black are already different colours, which Shogi's single-colour set cannot do."
     }
   ]
 }

@@ -40,8 +40,13 @@ test('Xiangqi links to every sibling game at its configured address, in the site
   await expect(page.getByTestId('family-footer').getByRole('link')).toHaveCount(siblings.length);
   const body = (await page.locator('body').textContent()) ?? '';
   for (const site of siblings) {
+    const shown = PRODUCT.locales.map((locale) => site.names[locale]).filter(Boolean) as string[];
     for (const [language, name] of Object.entries(site.names)) {
-      if (!(PRODUCT.locales as readonly string[]).includes(language)) expect(body, `${site.id} in ${language}`).not.toContain(name);
+      if ((PRODUCT.locales as readonly string[]).includes(language)) continue;
+      // Some names contain another: Shogi is 将棋 in Japanese and 日本将棋 in Chinese. Only a name that is
+      // not part of one this site does show counts as a leak.
+      if (shown.some((visible) => visible.includes(name) || name.includes(visible))) continue;
+      expect(body, `${site.id} in ${language}`).not.toContain(name);
     }
   }
   await page.setViewportSize({ width: 390, height: 844 });

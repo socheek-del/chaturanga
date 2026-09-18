@@ -146,7 +146,14 @@
     "dark": "Dark",
     "board": "Board",
     "play": "Play",
-    "coordinates": "Show coordinates"
+    "coordinates": "Show coordinates",
+    "pieces": "Pieces",
+    "piecesHint": "The traditional characters are what a real set uses. The other two are for players who do not read Chinese.",
+    "pieceSet": {
+      "characters": "Characters",
+      "symbols": "Moves",
+      "letters": "Letters"
+    }
   },
   "design": {
     "title": "Design",

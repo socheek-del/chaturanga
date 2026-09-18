@@ -1,4 +1,5 @@
 import { resolveLocale, storageKey, type TimeControlChoice } from '@chaturanga/game-shell';
+import type { PieceSetId } from '../features/board/pieceSets';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { type Language, PRODUCT } from '../../product.config';
@@ -10,6 +11,8 @@ export interface Settings {
   language: Language;
   colorScheme: ColorScheme;
   boardTheme: string;
+  /** What is written on a piece: its character, a diagram of its moves, or a Latin letter (xq-012). */
+  pieceSet: PieceSetId;
   showCoordinates: boolean;
   timeControl: TimeControlChoice;
   computerLevel: number;
@@ -26,6 +29,7 @@ export const DEFAULT_SETTINGS: Settings = {
   language: PRODUCT.defaultLocale,
   colorScheme: 'system',
   boardTheme: 'maple',
+  pieceSet: 'characters',
   showCoordinates: false,
   timeControl: { kind: 'none' },
   computerLevel: 2,

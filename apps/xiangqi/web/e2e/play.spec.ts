@@ -94,3 +94,19 @@ test('a refresh restores the local game (xq-005)', async ({ page }) => {
   await expect(pieceOn(page, 'g8')).toHaveAttribute('data-piece', 'bn');
   await expect(page.getByTestId('turn-banner')).toHaveText('轮到红方');
 });
+
+test('the piece set can be switched for players who do not read Chinese (xq-012)', async ({ page }) => {
+  await page.goto('/settings');
+  await page.locator('[data-piece-set-option="letters"]').click();
+  await startLocalGame(page);
+  await expect(pieceOn(page, 'e1').locator('svg')).toHaveAttribute('data-piece-set', 'letters');
+  await expect(pieceOn(page, 'e1')).toContainText('K');
+  await expect(pieceOn(page, 'a1')).toContainText('R');
+  await expect(pieceOn(page, 'b3')).toContainText('C');
+
+  await page.goto('/settings');
+  await page.locator('[data-piece-set-option="symbols"]').click();
+  await page.goto('/play/local');
+  await expect(pieceOn(page, 'e1').locator('svg')).toHaveAttribute('data-piece-set', 'symbols');
+  await expect(pieceOn(page, 'e1')).not.toContainText('K');
+});

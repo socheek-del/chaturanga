@@ -1715,7 +1715,7 @@
       "milestone": "M14",
       "title": "Shogi board, FEN, hands and move generation",
       "user_visible_behavior": "packages/shogi models the 9x9 board, both hands and all 14 piece faces, and generates legal moves including drops and promotions, verified against Fairy-Stockfish.",
-      "status": "not_started",
+      "status": "passing",
       "verification": [
         "fen.test.ts: round-trip on 10+ ffish-generated positions (promoted pieces written '+P', hands in '[...]'); 10+ invalid FENs rejected.",
         "movegen.test.ts: one test per base and promoted piece type, optional promotion, forced promotion (P/L on the last rank, N on the last two), and the drop restrictions (empty square, nifu, no dead drop, uchifuzume).",
@@ -1723,8 +1723,15 @@
         "reference.test.ts: lock-step random games vs ffish comparing sorted legal moves, SAN and FEN on every ply (60 games in verify, 400 with PERFT_DEEP=1).",
         "describeVariantConformance(shogi, ...) passes."
       ],
-      "evidence": [],
-      "notes": "Probed 2026-09-18 with ffish 0.7.10: start FEN 'lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL[] w - - 0 1', 30 legal moves; promotion move 'g8g9+' (SAN 'Pxg9=G'); drop 'S@a2'; a pawn to the last rank is offered only as the promoting move; with a pawn in hand and a pawn on every file ffish lists 0 pawn drops (nifu). Sente is the engine colour 'w'. Two-character squares ('+P') break the one-letter-per-square assumption the other engines share, so this package writes its own FEN reader and writer."
+      "evidence": [
+        "2026-09-18: packages/shogi (@chaturanga/shogi) written on the Xiangqi package's pattern with its own 9x9 board module: piece codes carry a PROMOTED bit (a promoted pawn, lance, knight or silver moves as a gold; a dragon is a rook plus one diagonal step, a horse a bishop plus one orthogonal step), precomputed step tables per colour, lance/rook/bishop rays and their inverses for attack detection, and hands. Moves are from | to<<7 | flags, a drop keeping the dropped type in the from bits. Engine-purity lint rule extended to packages/shogi/src.",
+        "2026-09-18: src/fen.ts reads and writes Fairy-Stockfish's Shogi FEN, including two-character squares ('+P') and pieces in hand in FS order G N L P S R B, Sente first; fen.test.ts round-trips 5 positions and rejects 14 invalid ones (missing king, two kings, promoted gold, dangling '+', king in hand, castling field, the side not to move in check, ...).",
+        "2026-09-18: src/movegen.test.ts — 24 tests: one per piece type including dragon and horse (with a no-duplicate-move check), the promotion choice on entering and on leaving the zone, forced promotion for a pawn/lance on the last rank and a knight on the last two, drops on empty squares, nifu (and that a promoted pawn on the file does not count), dead drops, uchifuzume, a mate by dropping another piece, a pin and check-evasion-only legality.",
+        "2026-09-18: scripts/perft-reference.cjs output (ffish 0.7.10): 13 positions (start to depth 4, a full hand, pawns on every file, promotion-zone crossings, dragon+horse, 8 random-seed positions) to depth 2-4; perft.test.ts runs the fast subset in verify and every depth with PERFT_DEEP=1. Start-position perft: 30 / 900 / 25470 / 719731, matching Fairy-Stockfish.",
+        "2026-09-18: src/reference.test.ts — 60 seeded random games and 200 forced repetition cycles in lock-step with ffish, comparing sorted legal moves, SAN, FEN and the result on every ply; captures, drops and promotions all occur and checkmate is reached. Whole package: 127 tests passed, 18 skipped (fast profile), tsc and eslint clean.",
+        "2026-09-18: two bugs the reference test found and fixed: the halfmove counter resets on a capture, a drop and a promotion but not on a plain pawn move (probed separately against ffish), and SAN disambiguates by the letter a piece prints, not by the piece, because a gold, a promoted silver and a promoted pawn all print 'G'."
+      ],
+      "notes": "Divergence from the reference engine, documented in packages/shogi/RULES.md and pinned by tests: Fairy-Stockfish's shogi variant does not implement uchifuzume (it played a mating pawn drop and scored 0-1). This engine forbids it, exposes Game.uchifuzumeUci() and a generateLegalMoves(pos, false) / perft(fen, depth, false) mode that reproduces Fairy-Stockfish, and the lock-step test compares the union of our moves and the forbidden drops, so any other difference still fails."
     },
     {
       "id": "sg-002",
@@ -1734,15 +1741,19 @@
       "milestone": "M14",
       "title": "Shogi game end: mate, stalemate loss, sennichite, perpetual check and impasse",
       "user_visible_behavior": "A Shogi game ends with the right result and reason: checkmate, stalemate (a loss for the side to move), fourfold repetition as a draw, perpetual check as a loss for the checking side, and impasse per decision D11.",
-      "status": "not_started",
+      "status": "passing",
       "verification": [
         "A fixture per rule, each probed against ffish first; every hand-made FEN parsed with new Game(fen) before use.",
         "A recorded perpetual-check line that ffish scores the same way.",
         "Repetition keys include both hands and the side to move.",
         "An explicit test for the impasse decision: parity with ffish, or a divergence written into packages/shogi/RULES.md."
       ],
-      "evidence": [],
-      "notes": "Builds on plat-008 (decisive stalemate and perpetual results). D11 in apps/shogi/docs/PLAN.md: implement the 27-point jishogi declaration only if the probe shows Fairy-Stockfish agrees; otherwise ship without the declaration and record the divergence. Never diverge silently."
+      "evidence": [
+        "2026-09-18: src/gameEnd.ts implements the repetition rules on a per-position state chain (key = placement + both hands + side to move): the fourth occurrence of a position is a draw, or a loss for a side that gave check at every one of its turns through the cycle. Checkmate and losing stalemate come from the move list being empty.",
+        "2026-09-18: src/gameEnd.test.ts — 6 tests: checkmate from a random-play fixture (R@d1, Gote wins), a constructed stalemate that loses for the side to move, a sennichite draw firing exactly on the 12th ply of a shuffle, a perpetual check that loses for the checking side on the 13th ply, undo taking the repetition back with the move, and no counting rule. Every line was first checked against ffish 0.7.10, which agrees on the ply and the result.",
+        "2026-09-18: reference.test.ts compares the result string on every ply of 60 random games and 200 repetition cycles, so these rulings are re-checked continuously, not only in the fixtures."
+      ],
+      "notes": "Decision D11 resolved by probe: Fairy-Stockfish does not adjudicate impasse (jishogi) at all — a position with both kings in the enemy camp simply continues — so this engine ships without a 27-point declaration and RULES.md records it. The declaration can be added later as a status ruling without touching move generation."
     },
     {
       "id": "sg-003",

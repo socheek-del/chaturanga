@@ -1,0 +1,23 @@
+{
+  "name": "@chaturanga/shogi",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "GPL-3.0-or-later",
+  "exports": {
+    ".": "./src/index.ts",
+    "./core": "./src/core.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:deep": "PERFT_DEEP=1 vitest run",
+    "perft:reference": "node scripts/perft-reference.cjs"
+  },
+  "dependencies": {
+    "@chaturanga/rules-core": "*"
+  },
+  "devDependencies": {
+    "ffish": "^0.7.10"
+  }
+}

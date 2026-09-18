@@ -1,0 +1,70 @@
+{
+  "generator": "ffish@0.7.10 (Fairy-Stockfish)",
+  "positions": [
+    {
+      "name": "start",
+      "fen": "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL[] w - - 0 1",
+      "perft": [30, 900, 25470, 719731]
+    },
+    {
+      "name": "a hand full of every droppable piece",
+      "fen": "4k4/9/9/9/9/9/9/9/4K4[GNLPSRBgnlpsrb] w - - 0 1",
+      "perft": [525, 251422]
+    },
+    {
+      "name": "pawns on every file, so no pawn may be dropped",
+      "fen": "4k4/9/ppppppppp/9/9/9/PPPPPPPPP/9/4K4[Pp] w - - 0 1",
+      "perft": [14, 196, 2744]
+    },
+    {
+      "name": "promotion zone crossings",
+      "fen": "4k4/9/1P1L3R1/9/2B6/9/9/9/4K4[] w - - 0 1",
+      "perft": [50, 99, 4691]
+    },
+    {
+      "name": "dragon and horse",
+      "fen": "4k4/9/9/3+R5/9/5+B3/9/9/4K4[] w - - 0 1",
+      "perft": [39, 129, 5129]
+    },
+    {
+      "name": "random seed 1",
+      "fen": "ln3gknl/rs1g2sb1/pp1p1p1pp/4p1p2/2p4P1/1P2PPP1P/P1PP2N1L/1BS1K1S1R/LN1G1G3[] w - - 26 14",
+      "perft": [29, 867, 25968]
+    },
+    {
+      "name": "random seed 2",
+      "fen": "1n2kg1nl/1s1g1r1b1/npppppp1p/6sp1/9/5PPP1/LPPPP3P/3SG3R/B3KGSNL[LPp] w - - 2 17",
+      "perft": [73, 2303, 120103]
+    },
+    {
+      "name": "random seed 3",
+      "fen": "1n1gk3l/2rsgs1b1/l1p2p3/1p1pp2pp/p4G3/4PP2P/PG1P2PP1/1SP1K2RL/LN4SN1[Pnpb] w - - 0 20",
+      "perft": [37, 4472, 156790]
+    },
+    {
+      "name": "random seed 4",
+      "fen": "lns3snl/1r1kg1s2/p1p2g+Bpp/4p4/1p1p5/2P3PPP/PPSKPP+b2/L3GG1R1/1N5NL[PPP] w - - 1 23",
+      "perft": [45, 1764, 82702]
+    },
+    {
+      "name": "random seed 5",
+      "fen": "ln1kg4/1r1g2sP1/pp1ppp3/2p6/5P3/1P3s3/P2GP3l/L2G4L/1N2K1SN1[PBBnppppppsr] w - - 0 26",
+      "perft": [100, 19459, 1826997]
+    },
+    {
+      "name": "random seed 6",
+      "fen": "1n1g1ksn1/4sb3/2p1pP2l/3p3pp/9/2P1PK3/+lPRP3PP/L4S2R/1gSG3NL[PPPBgnppp] w - - 0 29",
+      "perft": [96, 12556, 855590]
+    },
+    {
+      "name": "random seed 7",
+      "fen": "3gs2n1/5kgrl/1pnpp2pp/PsB3p2/1P3p1nP/2P4P1/+lG1PP1P1B/L3K4/3RSGSNL[Ppp] w - - 0 32",
+      "perft": [44, 1943, 92826]
+    },
+    {
+      "name": "random seed 8",
+      "fen": "1n2g4/ls1k1sl2/3np1pp1/p2p4p/2p3P2/PR3n1GP/L1PP2RP1/2S1KSG1L/1NB2B3[PPgppp] w - - 0 35",
+      "perft": [7, 593, 36545]
+    }
+  ]
+}

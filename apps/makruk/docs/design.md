@@ -88,6 +88,10 @@ All art is made in-house as optimised SVG.
 - **Pieces:** silhouettes must read at 36px. White pieces use a light fill with a dark outline; black pieces a
   dark fill with a light inner highlight. Each type keeps its traditional Makruk shape (tall crowned Khun,
   rounded Met, pointed Khon, horse-head Ma, boat-hull Ruea, flat cowrie-shell Bia).
+- **Piece sets:** three, chosen in settings. "Classic carved" (default) and "Modern flat" are stylised.
+  "Traditional wood" (art-003) draws the lathe-turned pieces of a physical Thai set in side view — wood
+  gradient, collar rings, cast shadow, and a promoted Bia shown as the cowrie turned over — for players who
+  find the stylised sets hard to name.
 - **Boards:** Makruk boards are un-checkered — a single colour with grid lines. Themes vary material colour
   and line colour only.
 - **Marketing media:** screenshots, GIFs and social images must not show the site's domain (it may change).

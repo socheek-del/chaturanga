@@ -267,6 +267,7 @@
     },
     "pieceSet": "Piece set",
     "pieceSets": {
+      "traditional": "Traditional wood",
       "classic": "Classic carved",
       "flat": "Modern flat"
     },

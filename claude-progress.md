@@ -683,3 +683,29 @@ was appended to, not rewritten.
     subdomain). D11 (the 27-point impasse rule) is settled by a probe in `sg-002`, not by preference.
   - **Agent:** Xiangqi first — `xq-008` and `xq-010` are still open in the parallel session. Then start
     `plat-011`, which is the smallest of the three prep features and unblocks the Shogi app step.
+
+### Session 016 (Makruk piece art, parallel session)
+
+- Date: 2026-09-18
+- Goal (owner request): the stylised Makruk pieces confuse some players — add a piece set that looks like a
+  real Thai set.
+- Done: `art-003` **passing**.
+  - `apps/makruk/web/src/features/board/pieces/traditional.tsx`: a third set, "ไม้แกะแบบดั้งเดิม" /
+    "Traditional wood". Each piece is the lathe-turned side profile of the physical piece — chedi Khun with a
+    finial, round lotus-bud Met, blunt flared Khon (no spire, so it never reads as a Khun), carved Ma head,
+    cleft Ruea hull, cowrie Bia — over a wood gradient with collar rings and a cast shadow. A promoted Bia is
+    the cowrie turned over, showing its toothed aperture, as on a real board.
+  - Gradient ids come from `useId()` (with `:` stripped, invalid in `url()`), so the 32 pieces on a board do
+    not share one another's gradients.
+  - Registered in `PIECE_SETS`; `th`/`en` names added; `apps/makruk/docs/design.md` records the three sets.
+  - The default is still `classic` — nothing changes for existing players until they pick the new set.
+- Verified: `art.spec.ts` 4 passed (theme-002 now asserts 3 sets × 7 preview SVGs; art-003 checks persistence,
+  all 12 crafted squares at 360px and 32 pieces in a new game); `typecheck` clean; `test -w apps/makruk/web`
+  108 passed; eslint clean on the changed paths; `./init.sh` green before the work started.
+- Evidence screenshots (gitignored): `apps/makruk/web/e2e-evidence/{settings-pieces,traditional-360,board-traditional}.png`.
+- Not touched: the Xiangqi `xq-010` work in progress in this same tree (`apps/xiangqi/web/package.json`,
+  `scripts/capture-readme.mjs`) was left uncommitted for that session.
+- Next best step:
+  - **Owner:** say whether the traditional set should become the default, and whether the names read well in
+    Thai ("ไม้แกะแบบดั้งเดิม" vs "คลาสสิก (แกะสลัก)").
+  - **Agent:** `xq-010`, then `plat-011`.

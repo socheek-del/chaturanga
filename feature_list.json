@@ -805,6 +805,29 @@
       "notes": ""
     },
     {
+      "id": "art-003",
+      "product": "makruk",
+      "priority": 91,
+      "area": "art",
+      "milestone": "M7",
+      "title": "Traditional wooden piece set",
+      "user_visible_behavior": "Settings offer a third piece set that looks like a real carved Thai set, for players who find the stylised sets hard to name; the choice persists and applies to every board.",
+      "status": "passing",
+      "verification": [
+        "A third piece set appears in settings with a 7-piece preview.",
+        "All 6 types plus the promoted Bia render in both colours at a 360px board width.",
+        "The choice persists over a reload and applies to the game board."
+      ],
+      "evidence": [
+        "2026-09-18: apps/makruk/web/src/features/board/pieces/traditional.tsx — lathe-turned side profiles of a physical Thai set (chedi Khun, lotus-bud Met, blunt-cone Khon, carved Ma head, cleft Ruea hull, cowrie Bia; promoted Bia is the cowrie turned over showing its toothed aperture), each with a wood gradient, collar rings and a cast shadow. Gradient ids come from useId() so many pieces on one board do not collide.",
+        "2026-09-18: apps/makruk/web/e2e/art.spec.ts (art-003) passed at 360px: choosing ไม้แกะแบบดั้งเดิม persists over a reload (aria-checked), the crafted FEN renders svg[data-set=traditional] with the expected data-type on all 12 squares (r, n, s, m, k, p~ in both colours), and a new game renders 32 traditional pieces.",
+        "2026-09-18: art.spec.ts (theme-002) updated and passed: settings now show 6 board themes and 3 piece sets, each preview 7 SVGs. 4 passed in apps/makruk/web/e2e/art.spec.ts.",
+        "2026-09-18: screenshots settings-pieces.png, traditional-360.png and board-traditional.png reviewed — the set reads as turned wood on the teak board and the six types stay distinct at 44px.",
+        "2026-09-18: npm run typecheck -w apps/makruk/web clean; npm run test -w apps/makruk/web 108 passed (locale completeness covers the new th/en names)."
+      ],
+      "notes": "Owner request 2026-09-18: the stylised sets confuse some players. Default stays classic."
+    },
+    {
       "id": "polish-001",
       "product": "makruk",
       "priority": 37,

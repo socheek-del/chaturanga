@@ -2,9 +2,11 @@ import type { Piece } from '@chaturanga/makruk';
 import { useSettings } from '../../stores/settings';
 import { ClassicPiece } from './pieces/classic';
 import { FlatPiece } from './pieces/flat';
+import { TraditionalPiece } from './pieces/traditional';
 
 export const PIECE_SETS = {
   classic: ClassicPiece,
+  traditional: TraditionalPiece,
   flat: FlatPiece,
 } as const;
 

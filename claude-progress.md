@@ -750,7 +750,7 @@ was appended to, not rewritten.
 - Next best step:
   - **Agent:** `xq-010`, then `plat-011`.
 
-### Session 016 (Shogi, built and deployed)
+### Session 017 (Shogi, built and deployed)
 
 Implemented the Shogi plan written in session 015. The site is live and every feature but two is `passing`.
 

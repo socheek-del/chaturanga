@@ -4,8 +4,8 @@ Chaturanga is a family of traditional chess games. Each game is its own web PWA 
 
 - **Makruk** (Thai chess): live.
 - **Sittuyin** (Burmese chess): live.
-- **Xiangqi** (Chinese chess): built, not deployed yet (`apps/xiangqi/docs/PLAN.md`). Its design ("Mo") awaits owner
-  approval (`apps/xiangqi/docs/design.md`).
+- **Xiangqi** (Chinese chess): live (`apps/xiangqi/docs/PLAN.md`). Its design ("Mo") still awaits owner
+  approval (`apps/xiangqi/docs/design.md`), so the live site is styled on an unapproved proposal.
 - Shogi and others may follow.
 
 Owner decisions, target layout and order of work are in `docs/PLATFORM.md`. Facts about a single game live next
@@ -89,8 +89,9 @@ broken starting state.
     rules through ai-core's optional `SearchAdapter.repetitionScore` hook. The ladder is a bundled Node script
     (`npm run test:strength -w packages/xiangqi-ai`), about 4x faster than under vitest.
   - `apps/xiangqi/web`, `apps/xiangqi/worker`: the Xiangqi product. It has pass-and-play, computer, 13 lessons,
-    online rooms, PWA and zh-Hans/en, on board-ui's `grid="points"`. The Worker runs on :8789. It has no site
-    address, family link, SEO or deploy yet (xq-008..010).
+    online rooms, PWA and zh-Hans/en, on board-ui's `grid="points"`. The Worker runs on :8789, deploys on its
+    own subdomain and D1 (xq-008), and links to its siblings (xq-009). SEO and the READMEs are still to come
+    (xq-010). `npm run smoke:prod -w apps/xiangqi/web` drives the live site.
   - `packages/ai-core` (`@chaturanga/ai-core`): game-independent alpha-beta search over a `SearchAdapter`,
     bot personas and root-move picking.
   - `packages/ai` (`@chaturanga/makruk-ai`): Makruk computer opponents, run in a Web Worker. It keeps its own
@@ -101,8 +102,8 @@ broken starting state.
   - `packages/family` (`@chaturanga/family`): the family's game list with names in every site language.
     `src/sites.ts` reads each game's address and languages from its own `site.config.ts` and
     `product.config.ts`, and each app's vite.config injects its siblings as `__FAMILY__` for `MoreGames`.
-    A site address is overridden per product (`MAKRUK_SITE_URL`, `SITTUYIN_SITE_URL`), never with a shared
-    variable.
+    A site address is overridden per product (`MAKRUK_SITE_URL`, `SITTUYIN_SITE_URL`, `XIANGQI_SITE_URL`),
+    never with a shared variable.
   - `packages/ui` (`@chaturanga/ui`): React primitives (Badge, Button, Card, Modal, ProgressBar,
     SegmentedControl, Switch, `cn`). They carry shape, state and accessibility but no palette: every
     colour is a Tailwind token the product defines, listed in `packages/ui/TOKENS.md`. Apps must list it

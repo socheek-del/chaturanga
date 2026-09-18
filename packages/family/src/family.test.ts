@@ -5,6 +5,8 @@ import { PRODUCT as MAKRUK } from '../../../apps/makruk/web/product.config';
 import { SITE_URL as MAKRUK_URL } from '../../../apps/makruk/web/site.config';
 import { PRODUCT as SITTUYIN } from '../../../apps/sittuyin/web/product.config';
 import { SITE_URL as SITTUYIN_URL } from '../../../apps/sittuyin/web/site.config';
+import { PRODUCT as XIANGQI } from '../../../apps/xiangqi/web/product.config';
+import { SITE_URL as XIANGQI_URL } from '../../../apps/xiangqi/web/site.config';
 import { GAMES } from './games';
 import { familyLinks, SITE_LANGUAGES, SITES } from './sites';
 
@@ -27,6 +29,7 @@ describe('family (plat-006, plat-010)', () => {
     // One line per game: the only part of this file a new game adds to.
     expect(SITES.makruk).toEqual({ url: MAKRUK_URL, locales: MAKRUK.locales, defaultLocale: MAKRUK.defaultLocale });
     expect(SITES.sittuyin).toEqual({ url: SITTUYIN_URL, locales: SITTUYIN.locales, defaultLocale: SITTUYIN.defaultLocale });
+    expect(SITES.xiangqi).toEqual({ url: XIANGQI_URL, locales: XIANGQI.locales, defaultLocale: XIANGQI.defaultLocale });
   });
 
   it('links each site to every sibling and never to itself, however many games there are', () => {

@@ -9,6 +9,8 @@ import { PRODUCT as MAKRUK } from '../../../apps/makruk/web/product.config';
 import { SITE_URL as MAKRUK_URL } from '../../../apps/makruk/web/site.config';
 import { PRODUCT as SITTUYIN } from '../../../apps/sittuyin/web/product.config';
 import { SITE_URL as SITTUYIN_URL } from '../../../apps/sittuyin/web/site.config';
+import { PRODUCT as XIANGQI } from '../../../apps/xiangqi/web/product.config';
+import { SITE_URL as XIANGQI_URL } from '../../../apps/xiangqi/web/site.config';
 import { type GameId, GAMES } from './games';
 
 /** A link from one site to a sibling, with what the linking site needs to pick the right language. */
@@ -25,6 +27,7 @@ export interface FamilyLink {
 export const SITES: Readonly<Record<GameId, { url: string; locales: readonly string[]; defaultLocale: string }>> = {
   makruk: { url: MAKRUK_URL, locales: MAKRUK.locales, defaultLocale: MAKRUK.defaultLocale },
   sittuyin: { url: SITTUYIN_URL, locales: SITTUYIN.locales, defaultLocale: SITTUYIN.defaultLocale },
+  xiangqi: { url: XIANGQI_URL, locales: XIANGQI.locales, defaultLocale: XIANGQI.defaultLocale },
 };
 
 /** Every declared language of every family site, for checking that each game has a name in it. */

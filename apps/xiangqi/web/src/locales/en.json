@@ -4,6 +4,9 @@
     "name": "Xiangqi",
     "seal": "象"
   },
+  "family": {
+    "title": "More games"
+  },
   "nav": {
     "label": "Main",
     "back": "Back",

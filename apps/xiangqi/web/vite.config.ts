@@ -3,6 +3,8 @@ import react from '@vitejs/plugin-react';
 import type { Plugin } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import { defineConfig } from 'vitest/config';
+// Relative path on purpose: Vite bundles a config's relative imports, not workspace packages.
+import { familyLinks } from '../../../packages/family/src/sites';
 import { PRODUCT } from './product.config';
 
 /** Puts the product's languages and settings key into index.html (the pre-paint theme and language script). */
@@ -18,10 +20,11 @@ function productHtml(): Plugin {
 }
 
 /**
- * Local play, the computer and lessons work offline; online play (xq-007) needs the Worker. The site address,
- * SEO (xq-010) and family links (xq-009) come later.
+ * Local play, the computer and lessons work offline; online play (xq-007) needs the Worker. SEO (xq-010)
+ * comes later.
  */
 export default defineConfig({
+  define: { __FAMILY__: JSON.stringify(familyLinks('xiangqi')) },
   plugins: [
     react(),
     tailwindcss(),

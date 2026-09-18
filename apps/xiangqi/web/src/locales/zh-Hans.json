@@ -4,6 +4,9 @@
     "name": "象棋",
     "seal": "象"
   },
+  "family": {
+    "title": "更多游戏"
+  },
   "nav": {
     "label": "主菜单",
     "back": "返回",

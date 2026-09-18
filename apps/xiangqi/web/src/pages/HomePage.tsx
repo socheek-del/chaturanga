@@ -1,7 +1,10 @@
+import { resolveLocale } from '@chaturanga/game-shell';
+import { MoreGames } from '@chaturanga/game-shell/ui';
 import { Badge, Card } from '@chaturanga/ui';
 import { Cpu, Globe, GraduationCap, Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
+import { PRODUCT } from '../../product.config';
 
 const MODES = [
   { to: '/play/computer', key: 'modes.single', desc: 'home.singleDesc', icon: Cpu },
@@ -11,7 +14,7 @@ const MODES = [
 ];
 
 export function HomePage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   return (
     <div className="flex flex-col gap-6">
       <header className="motif-mo relative overflow-hidden rounded-2xl bg-primary p-6 text-on-accent">
@@ -42,6 +45,8 @@ export function HomePage() {
         </div>
         <p className="text-muted">{t('home.intro')}</p>
       </Card>
+
+      <MoreGames sites={__FAMILY__} locale={resolveLocale(PRODUCT, i18n.language)} />
     </div>
   );
 }

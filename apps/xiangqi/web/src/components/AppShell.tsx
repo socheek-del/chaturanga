@@ -1,8 +1,10 @@
-import { useFocusModeProvider } from '@chaturanga/game-shell/ui';
+import { resolveLocale } from '@chaturanga/game-shell';
+import { MoreGames, useFocusModeProvider } from '@chaturanga/game-shell/ui';
 import { cn } from '@chaturanga/ui';
 import { ArrowLeft, GraduationCap, Info, type LucideIcon, Settings, Swords } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link, NavLink, Outlet } from 'react-router';
+import { PRODUCT } from '../../product.config';
 import { ThemeController } from './ThemeController';
 
 const NAV: ReadonlyArray<{ to: string; key: string; icon: LucideIcon; end?: boolean }> = [
@@ -13,7 +15,7 @@ const NAV: ReadonlyArray<{ to: string; key: string; icon: LucideIcon; end?: bool
 ];
 
 export function AppShell() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   // Games get the whole phone screen: no bottom nav, a back link instead (polish-003).
   const { focus, FocusProvider } = useFocusModeProvider();
   return (
@@ -68,6 +70,7 @@ export function AppShell() {
         <FocusProvider>
           <Outlet />
         </FocusProvider>
+        {!focus && <MoreGames sites={__FAMILY__} locale={resolveLocale(PRODUCT, i18n.language)} variant="footer" />}
       </main>
     </div>
   );

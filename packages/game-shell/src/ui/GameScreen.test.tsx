@@ -1,6 +1,7 @@
 // @vitest-environment happy-dom
 import { makruk } from '@chaturanga/makruk';
 import type { Piece } from '@chaturanga/rules-core';
+import { shogi } from '@chaturanga/shogi';
 import { sittuyin } from '@chaturanga/sittuyin';
 import { cleanup, fireEvent, render, type RenderResult } from '@testing-library/react';
 import i18n from 'i18next';
@@ -17,6 +18,9 @@ const KEYS = {
   'play.placing': '{{color}} places a piece',
   'play.check': 'Check',
   'play.promote': 'Promote',
+  'play.promoteAsk': 'Promote?',
+  'play.promoteYes': 'Promote',
+  'play.promoteNo': 'Keep',
   'play.captured': 'Captured',
   'play.clockOf': "{{color}}'s clock",
   'play.moves': 'Moves',
@@ -223,6 +227,76 @@ describe('GameScreen with Sittuyin', () => {
     fireEvent.click(square(view, 'd5'));
     fireEvent.click(view.getByTestId('promote-in-place'));
     expect(useSession.getState().game.moves().map((m) => m.uci)).toEqual(['d5d5f']);
+  });
+});
+
+describe('GameScreen with Shogi, where hands fill during play (plat-011, plat-012, plat-013)', () => {
+  const shogiProps = {
+    ...play,
+    ...identity,
+    variant: shogi,
+    handLabel: (color: string) => `${color} hand`,
+    describeHandPiece: (type: string, count: number) => `${type} x${count}`,
+  };
+
+  it('says whose turn it is, not that a piece is being placed, even with a full hand', () => {
+    const useSession = createGameSession(shogi);
+    useSession.getState().start(null, '2k6/9/9/9/9/9/9/9/2K6[GNLPSRB] w - - 0 1');
+    const view = render(<GameScreen {...shogiProps} useSession={useSession} />);
+
+    expect(view.getByTestId('turn-banner').textContent).toBe('White to move');
+    expect(view.container.querySelectorAll('[data-hand]').length).toBe(1);
+  });
+
+  it('drops a piece from hand in the middle of a game', () => {
+    const useSession = createGameSession(shogi);
+    useSession.getState().start(null, '2k6/9/9/9/9/9/9/9/2K6[S] w - - 0 1');
+    const view = render(<GameScreen {...shogiProps} useSession={useSession} />);
+
+    fireEvent.click(view.container.querySelector('[data-hand="w"] [data-hand-piece="s"]') as HTMLElement);
+    fireEvent.click(square(view, 'e5'));
+    expect(useSession.getState().game.moves().map((m) => m.uci)).toEqual(['S@e5']);
+    expect(useSession.getState().game.hand('w')).toEqual([]);
+  });
+
+  it('asks whether to promote, and plays the answer', () => {
+    const useSession = createGameSession(shogi);
+    useSession.getState().start(null, '2k6/9/9/4S4/9/9/9/9/2K6[] w - - 0 1');
+    const view = render(<GameScreen {...shogiProps} useSession={useSession} />);
+
+    fireEvent.click(square(view, 'e6'));
+    fireEvent.click(square(view, 'e7'));
+    expect(useSession.getState().game.moves()).toEqual([]);
+    fireEvent.click(view.getByTestId('promote-yes'));
+    expect(useSession.getState().game.moves().map((m) => m.uci)).toEqual(['e6e7+']);
+  });
+
+  it('keeps the piece unpromoted when the player declines', () => {
+    const useSession = createGameSession(shogi);
+    useSession.getState().start(null, '2k6/9/9/4S4/9/9/9/9/2K6[] w - - 0 1');
+    const view = render(<GameScreen {...shogiProps} useSession={useSession} />);
+
+    fireEvent.click(square(view, 'e6'));
+    fireEvent.click(square(view, 'e7'));
+    fireEvent.click(view.getByTestId('promote-no'));
+    expect(useSession.getState().game.moves().map((m) => m.uci)).toEqual(['e6e7']);
+  });
+
+  it('writes the coordinates the product asks for', () => {
+    const useSession = createGameSession(shogi);
+    useSession.getState().start(null);
+    const view = render(
+      <GameScreen
+        {...shogiProps}
+        useSession={useSession}
+        showCoordinates
+        fileLabels={['9', '8', '7', '6', '5', '4', '3', '2', '1']}
+        rankLabels={['\u4e00', '\u4e8c', '\u4e09', '\u56db', '\u4e94', '\u516d', '\u4e03', '\u516b', '\u4e5d']}
+      />,
+    );
+
+    expect(square(view, 'a1').textContent).toContain('9');
+    expect(square(view, 'a1').textContent).toContain('\u4e00');
   });
 });
 

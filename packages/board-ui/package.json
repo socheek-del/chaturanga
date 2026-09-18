@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@chaturanga/makruk": "*",
+    "@chaturanga/shogi": "*",
     "@chaturanga/sittuyin": "*"
   }
 }

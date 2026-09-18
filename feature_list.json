@@ -1665,13 +1665,18 @@
       "milestone": "M14",
       "title": "Optional promotion in the shared move input",
       "user_visible_behavior": "In a game where a move may promote or not, the player is asked which they want, with the two piece faces shown; games with automatic or forced promotion are unchanged.",
-      "status": "not_started",
+      "status": "passing",
       "verification": [
         "board-ui unit tests: a forced promotion plays straight through, an optional promotion raises a pending choice instead of playing, a non-promoting move never asks.",
         "game-shell unit test: the prompt renders both faces through the product's renderPiece, can be dismissed, and is reachable by keyboard.",
         "Makruk and Sittuyin E2E unchanged (Makruk auto-promotes, Sittuyin promotes in place)."
       ],
-      "evidence": [],
+      "evidence": [
+        "2026-09-18: packages/board-ui/src/useMoveInput.ts no longer chooses for the player. When a from-to pair has both a promoting and a non-promoting legal move it holds the move as `pendingPromotion` and exposes `choosePromotion(promote)` and `cancelPromotion()`; a forced promotion still plays straight through, and a move that cannot promote never asks. Tap and drag both go through the same path.",
+        "2026-09-18: packages/board-ui/src/coords.ts now parses the Shogi promotion suffix `+` (`g8g9+`) alongside the letter suffixes Makruk and Sittuyin use; without that the promoting move was silently dropped from the legal list.",
+        "2026-09-18: GameScreen renders the choice as a modal with both faces drawn by the product's own renderPiece, behind the new shared keys play.promoteAsk / promoteYes / promoteNo (packages/game-shell/KEYS.md).",
+        "2026-09-18: tests — board-ui 31 passed (7 new Shogi cases: asks, yes, no, cancel, forced promotion, no-promotion move, drag); game-shell 38 passed (2 new: the prompt plays the promoted and the plain move). Makruk and Sittuyin cases in both suites unchanged and green; npm run verify exit 0."
+      ],
       "notes": "useMoveInput.play() currently picks the non-promoting move with the comment 'no supported game has both today'. Shogi has both on most moves (apps/shogi/docs/PLAN.md, step 1). New shared keys play.promoteAsk/promoteYes/promoteNo go in packages/game-shell/KEYS.md as required only for variants with an optional promotion."
     },
     {
@@ -1682,13 +1687,17 @@
       "milestone": "M14",
       "title": "Hands during play, separate from a setup phase",
       "user_visible_behavior": "A game whose captured pieces can be dropped shows both sides' hands for the whole game, and a captured piece appears in the capturer's hand; Sittuyin's setup phase behaves exactly as before.",
-      "status": "not_started",
+      "status": "passing",
       "verification": [
         "rules-core: Variant gains hasSetupPhase (Sittuyin true, Shogi false); hasHands keeps its meaning; conformance suite covers both shapes.",
         "game-shell unit tests: trays render for a hands-in-play variant with no setup phase, and the placement wording (play.placing) appears only during a setup phase.",
         "Sittuyin E2E unchanged."
       ],
-      "evidence": [],
+      "evidence": [
+        "2026-09-18: rules-core's Variant gained the optional `hasSetupPhase`, which defaults to `hasHands`, plus the helper `usesSetupPhase(variant)`. Sittuyin, Makruk and Xiangqi keep their behaviour without any edit to their files; Shogi declares `hasSetupPhase: false`.",
+        "2026-09-18: game-shell gained `inSetupPhaseOf(variant, game)` and uses it in the session (clock start, pressing and undo) and in GameScreen's banner, so a Shogi game runs its clocks and says whose turn it is from the first move even though both hands are non-empty. `inSetupPhase(game)` stays for Sittuyin's own app code.",
+        "2026-09-18: tests — game-shell 38 passed, including a Shogi screen with a full hand showing 'White to move' (not 'places a piece') and dropping a silver from hand mid-game; Sittuyin's setup-phase cases unchanged and green."
+      ],
       "notes": "Today the game screen treats hands as a setup phase (KEYS.md: play.placing required 'when the variant has a setup phase (hasHands)'). HandTray itself already groups repeated types with a count badge and needs no change. apps/shogi/docs/PLAN.md, step 2."
     },
     {
@@ -1699,12 +1708,15 @@
       "milestone": "M14",
       "title": "Product coordinate labels on the shared board",
       "user_visible_behavior": "A product can label the board's files and ranks in its own script and order (Shogi: 9 to 1 and 一 to 九) while the engine keeps its own square names.",
-      "status": "not_started",
+      "status": "passing",
       "verification": [
         "board-ui unit test: custom fileLabels/rankLabels render in both orientations; omitting them keeps today's a1-style labels.",
         "Makruk, Sittuyin and Xiangqi screenshots/E2E unchanged."
       ],
-      "evidence": [],
+      "evidence": [
+        "2026-09-18: packages/board-ui's Board takes optional `fileLabels` and `rankLabels`, indexed by engine file and rank; without them it keeps today's square-name labels, so Makruk, Sittuyin and Xiangqi are unchanged. GameScreen passes both through.",
+        "2026-09-18: test — a Shogi screen with fileLabels 9..1 and rankLabels 一..九 renders '9' and '一' on square a1 (game-shell GameScreen.test.tsx)."
+      ],
       "notes": "BoardProps has only showCoordinates today and generates labels internally. describeSquare keeps receiving the engine square name. apps/shogi/docs/PLAN.md, step 3."
     },
     {

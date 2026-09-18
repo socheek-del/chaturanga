@@ -11,3 +11,4 @@ export * from './errors';
 export * from './result';
 export type * from './types';
 export type * from './variant';
+export { usesSetupPhase } from './variant';

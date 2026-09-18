@@ -7,6 +7,7 @@ import {
   pressClock,
   runFor,
   stopClock,
+  usesSetupPhase,
   type Variant,
   type VariantGame,
 } from '@chaturanga/rules-core';
@@ -48,6 +49,14 @@ export function inSetupPhase(game: VariantGame): boolean {
   return game.hand('w').length + game.hand('b').length > 0;
 }
 
+/**
+ * The same question for a variant whose hands fill from captures: Shogi has hands all game long but no
+ * setup phase, so its clocks run and its banner names the side to move from the first ply.
+ */
+export function inSetupPhaseOf(variant: Pick<Variant, 'hasHands' | 'hasSetupPhase'>, game: VariantGame): boolean {
+  return usesSetupPhase(variant) && inSetupPhase(game);
+}
+
 /** What survives a page reload: the game is rebuilt by replaying the moves. */
 interface SavedSession {
   phase: GameSessionState['phase'];
@@ -78,7 +87,7 @@ function sessionCreator<G extends VariantGame>(variant: Variant<G>): StateCreato
     start: (timeControl, fen = variant.startFen, now = Date.now()) => {
       const game = variant.createGame(fen); // throws FenError for invalid positions
       let clock = timeControl ? createClock(timeControl.initialMs, now, game.turn) : null;
-      if (clock && inSetupPhase(game)) clock = stopClock(clock, now);
+      if (clock && inSetupPhaseOf(variant, game)) clock = stopClock(clock, now);
       set((s) => ({
         phase: 'playing',
         game,
@@ -96,7 +105,7 @@ function sessionCreator<G extends VariantGame>(variant: Variant<G>): StateCreato
       const { game, result, viewPly, clock, timeControl } = get();
       if (result || viewPly !== null) return null;
       const mover = game.turn;
-      const placing = inSetupPhase(game);
+      const placing = inSetupPhaseOf(variant, game);
       let record: MoveRecordOf<G>;
       try {
         record = game.move(move) as MoveRecordOf<G>;
@@ -108,7 +117,7 @@ function sessionCreator<G extends VariantGame>(variant: Variant<G>): StateCreato
       let nextClock = clock;
       if (clock && timeControl) {
         if (!placing) nextClock = pressClock(clock, mover, now, timeControl.incrementMs);
-        else if (!inSetupPhase(game)) nextClock = runFor(clock, game.turn, now);
+        else if (!inSetupPhaseOf(variant, game)) nextClock = runFor(clock, game.turn, now);
       }
       if (nextClock && nextResult) nextClock = stopClock(nextClock, now);
       set((s) => ({ result: nextResult, clock: nextClock, version: s.version + 1 }));
@@ -121,7 +130,7 @@ function sessionCreator<G extends VariantGame>(variant: Variant<G>): StateCreato
       game.undo();
       set((s) => ({
         result: resultFromStatus(game.status()),
-        clock: clock ? (inSetupPhase(game) ? stopClock(clock, now) : runFor(clock, game.turn, now)) : null,
+        clock: clock ? (inSetupPhaseOf(variant, game) ? stopClock(clock, now) : runFor(clock, game.turn, now)) : null,
         viewPly: null,
         version: s.version + 1,
       }));

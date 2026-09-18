@@ -37,6 +37,13 @@ export interface BoardProps {
   grid?: 'squares' | 'points';
   orientation?: Color;
   showCoordinates?: boolean;
+  /**
+   * What the coordinates read, indexed by engine file and rank. Without them the board falls back to the
+   * square's own name (`a`..`h`, `1`..`8`); Shogi passes 9..1 and 一..九, which is what a player sees on a real
+   * board while the engine keeps its own square names.
+   */
+  fileLabels?: readonly string[];
+  rankLabels?: readonly string[];
   selected?: Square | null;
   targets?: ReadonlyArray<Square>;
   /** Targets reached by promoting; marked with a badge. */
@@ -110,6 +117,8 @@ export function Board({
   grid = 'squares',
   orientation = 'w',
   showCoordinates = true,
+  fileLabels,
+  rankLabels,
   selected = null,
   targets = [],
   promotionTargets = [],
@@ -253,7 +262,7 @@ export function Board({
               className="absolute left-0.5 top-0 text-[clamp(8px,2.2vw,12px)] font-bold leading-none"
               style={{ color: theme.coordinate }}
             >
-              {name.slice(1)}
+              {rankLabels?.[Math.floor(square / files)] ?? name.slice(1)}
             </span>
           )}
           {showCoordinates && row === ranks - 1 && (
@@ -261,7 +270,7 @@ export function Board({
               className="absolute bottom-0 right-0.5 text-[clamp(8px,2.2vw,12px)] font-bold leading-none"
               style={{ color: theme.coordinate }}
             >
-              {name[0]}
+              {fileLabels?.[square % files] ?? name[0]}
             </span>
           )}
           {piece && (

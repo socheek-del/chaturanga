@@ -4,7 +4,7 @@ import { Button, Card, Modal } from '@chaturanga/ui';
 import { type CSSProperties, type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { capturedBy, type GameResult, isUndoableResult, materialBalance } from '../result';
-import { type GameSessionStore, inSetupPhase } from '../session';
+import { type GameSessionStore, inSetupPhaseOf } from '../session';
 import { type GameSound, soundForMove } from './format';
 import { GameControls } from './GameControls';
 import { useFittedBoard } from './fittedBoard';
@@ -56,6 +56,9 @@ export interface GameScreenProps<G extends VariantGame> {
   boardOverlay?: ReactNode;
   /** `points` puts pieces on line intersections (Xiangqi); the product then draws the lines in `boardUnderlay`. */
   boardGrid?: 'squares' | 'points';
+  /** Coordinates as the product writes them, indexed by engine file and rank (Shogi: 9..1 and 一..九). */
+  fileLabels?: readonly string[];
+  rankLabels?: readonly string[];
   /** Drawn under the pieces, such as a Xiangqi board's lines, river and palaces. */
   boardUnderlay?: ReactNode;
 }
@@ -89,6 +92,8 @@ export function GameScreen<G extends VariantGame>({
   boardOverlay,
   boardGrid,
   boardUnderlay,
+  fileLabels,
+  rankLabels,
 }: GameScreenProps<G>) {
   const { t } = useTranslation();
   const s = useSession();
@@ -128,7 +133,7 @@ export function GameScreen<G extends VariantGame>({
     [game, shownPly, livePly, startFen, version, variant], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
-  const placing = inSetupPhase(game);
+  const placing = inSetupPhaseOf(variant, game);
   const aspect = variant.files / variant.ranks;
   const fit = useFittedBoard(aspect);
   const input = useMoveInput({
@@ -138,6 +143,9 @@ export function GameScreen<G extends VariantGame>({
     onMove: (m) => s.move(m),
     files: variant.files,
   });
+
+  // The piece being moved, so the promotion prompt can show both faces in the product's own art.
+  const promotionPiece = input.pendingPromotion ? game.pieceAt(input.pendingPromotion.from) : null;
 
   const top: Color = orientation === 'w' ? 'b' : 'w';
   const times = clock ? timesAt(clock, now) : null;
@@ -210,6 +218,8 @@ export function GameScreen<G extends VariantGame>({
           ranks={variant.ranks}
           orientation={orientation}
           showCoordinates={showCoordinates}
+          fileLabels={fileLabels}
+          rankLabels={rankLabels}
           lastMove={last ? { from: last.from, to: last.to } : null}
           checkSquare={shown.checkedKingSquare()}
           hint={viewPly === null ? hint : null}
@@ -292,6 +302,29 @@ export function GameScreen<G extends VariantGame>({
           onNewGame={s.exitToSetup}
         />
       )}
+      {/* Games where the same move can be played promoted or not (Shogi) ask before playing it. */}
+      <Modal open={!!input.pendingPromotion} onClose={input.cancelPromotion} title={t('play.promoteAsk')}>
+        <div className="grid grid-cols-2 gap-3">
+          <Button
+            variant="warning"
+            data-testid="promote-yes"
+            className="flex items-center justify-center gap-2"
+            onClick={() => input.choosePromotion(true)}
+          >
+            {promotionPiece && renderPiece({ ...promotionPiece, promoted: true }, 'h-8 w-8')}
+            {t('play.promoteYes')}
+          </Button>
+          <Button
+            variant="outline"
+            data-testid="promote-no"
+            className="flex items-center justify-center gap-2"
+            onClick={() => input.choosePromotion(false)}
+          >
+            {promotionPiece && renderPiece({ ...promotionPiece, promoted: false }, 'h-8 w-8')}
+            {t('play.promoteNo')}
+          </Button>
+        </div>
+      </Modal>
       <Modal
         open={confirmResign}
         onClose={() => setConfirmResign(false)}

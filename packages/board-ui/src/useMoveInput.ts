@@ -22,6 +22,15 @@ export interface MoveInputOptions {
 export interface MoveInput {
   /** Selected board square. */
   selected: Square | null;
+  /**
+   * A move the player started that can be played promoted or unpromoted, waiting for the choice. Games
+   * where promotion is automatic (Makruk) or a move of its own (Sittuyin) never set it.
+   */
+  pendingPromotion: { from: Square; to: Square } | null;
+  /** Plays the pending move, promoted or not; does nothing when nothing is pending. */
+  choosePromotion: (promote: boolean) => void;
+  /** Drops the pending move without playing it. */
+  cancelPromotion: () => void;
   /** Selected piece type in the side-to-move's hand. */
   selectedHand: string | null;
   /** Squares the selection can move or be placed to. */
@@ -42,6 +51,7 @@ export interface MoveInput {
 }
 
 type Selection = { version: number } & ({ kind: 'square'; square: Square } | { kind: 'hand'; type: string });
+type Pending = { version: number; from: Square; to: Square };
 type BoardMove = Extract<ParsedMove, { kind: 'move' }>;
 type DropMove = Extract<ParsedMove, { kind: 'drop' }>;
 
@@ -50,6 +60,7 @@ const unique = (squares: Square[]) => [...new Set(squares)];
 /** Tap-tap and drag-and-drop move entry, including drops from hand and promotions, backed by the engine's legal moves. */
 export function useMoveInput({ game, version, canMove, onMove, files = 8 }: MoveInputOptions): MoveInput {
   const [selection, setSelection] = useState<Selection | null>(null);
+  const [pending, setPending] = useState<Pending | null>(null);
   const legal = useMemo(
     () => (canMove ? game.legalUci().flatMap((uci) => parseUci(uci, files) ?? []) : []),
     [game, version, canMove, files], // eslint-disable-line react-hooks/exhaustive-deps
@@ -58,6 +69,7 @@ export function useMoveInput({ game, version, canMove, onMove, files = 8 }: Move
   const drops = legal.filter((m): m is DropMove => m.kind === 'drop');
 
   const current = selection && selection.version === version ? selection : null;
+  const pendingPromotion = pending && pending.version === version ? { from: pending.from, to: pending.to } : null;
   const selected = current?.kind === 'square' ? current.square : null;
   const selectedHand = current?.kind === 'hand' ? current.type : null;
 
@@ -80,12 +92,28 @@ export function useMoveInput({ game, version, canMove, onMove, files = 8 }: Move
   const play = (from: Square, to: Square): boolean => {
     const candidates = boardMoves.filter((m) => m.from === from && m.to === to);
     if (candidates.length === 0) return false;
-    // A plain move wins over an optional promotion on the same squares; no supported game has both today.
-    const move = candidates.find((m) => !m.promotion) ?? candidates[0]!;
+    const plain = candidates.find((m) => !m.promotion);
+    const promoting = candidates.find((m) => m.promotion);
     setSelection(null);
-    onMove(move.uci);
+    // Both on the same squares (Shogi): the player chooses, so the move waits until they do.
+    if (plain && promoting) {
+      setPending({ version, from, to });
+      return true;
+    }
+    onMove((plain ?? promoting)!.uci);
     return true;
   };
+
+  const choosePromotion = (promote: boolean) => {
+    if (!pendingPromotion) return;
+    const move = boardMoves.find(
+      (m) => m.from === pendingPromotion.from && m.to === pendingPromotion.to && !!m.promotion === promote,
+    );
+    setPending(null);
+    if (move) onMove(move.uci);
+  };
+
+  const cancelPromotion = () => setPending(null);
 
   const place = (type: string, to: Square): boolean => {
     const move = drops.find((m) => m.type === type && m.to === to);
@@ -96,7 +124,7 @@ export function useMoveInput({ game, version, canMove, onMove, files = 8 }: Move
   };
 
   const onSquareClick = (square: Square) => {
-    if (!canMove) return;
+    if (!canMove || pendingPromotion) return;
     if (selectedHand !== null) {
       if (place(selectedHand, square)) return;
     } else if (selected !== null) {
@@ -107,7 +135,7 @@ export function useMoveInput({ game, version, canMove, onMove, files = 8 }: Move
   };
 
   const onHandSelect = (type: string) => {
-    if (!canMove) return;
+    if (!canMove || pendingPromotion) return;
     setSelection(selectedHand === type || !canSelectHand(type) ? null : { version, kind: 'hand', type });
   };
 
@@ -121,6 +149,9 @@ export function useMoveInput({ game, version, canMove, onMove, files = 8 }: Move
   return {
     selected,
     selectedHand,
+    pendingPromotion,
+    choosePromotion,
+    cancelPromotion,
     targets,
     promotionTargets,
     canPromoteInPlace: !!inPlace,

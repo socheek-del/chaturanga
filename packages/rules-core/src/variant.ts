@@ -50,6 +50,17 @@ export interface Variant<G extends VariantGame = VariantGame> {
   readonly pieceTypes: readonly string[];
   /** True when pieces can be held in hand and placed (Sittuyin setup, Shogi drops). */
   readonly hasHands: boolean;
+  /**
+   * True when a non-empty hand means the game has not started yet, as in Sittuyin, where both sides place
+   * their pieces before the first move. False for a game whose hands fill from captures during play
+   * (Shogi). Left out it follows `hasHands`, which is what the first games with hands meant.
+   */
+  readonly hasSetupPhase?: boolean;
   /** Creates a game from a FEN, by default the start position; throws FenError. */
   createGame(fen?: string): G;
+}
+
+/** Whether a non-empty hand in this variant means a setup phase rather than pieces to drop in play. */
+export function usesSetupPhase(variant: Pick<Variant, 'hasHands' | 'hasSetupPhase'>): boolean {
+  return variant.hasSetupPhase ?? variant.hasHands;
 }

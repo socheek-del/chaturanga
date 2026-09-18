@@ -39,8 +39,9 @@ not in a separate reason string.
 
 | Key | Required when |
 | --- | --- |
-| `play.placing` (`{{color}}`) | The variant has a setup phase (`hasHands`), e.g. Sittuyin |
+| `play.placing` (`{{color}}`) | The variant has a setup phase (`hasSetupPhase`, which defaults to `hasHands`), e.g. Sittuyin. Shogi's hands fill from captures, so it sets `hasSetupPhase: false` and never shows this. |
 | `play.promote` | The variant allows promotion in place, e.g. Sittuyin |
+| `play.promoteAsk`, `play.promoteYes`, `play.promoteNo` | The variant has an **optional** promotion, so the same move can be played promoted or not, e.g. Shogi |
 
 The hand trays take their names as props (`handLabel`, `describeHandPiece`) rather than keys, because a
 tray is named after the game's own pieces.

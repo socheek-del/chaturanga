@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "@chaturanga/makruk": "*",
+    "@chaturanga/shogi": "*",
     "@chaturanga/sittuyin": "*",
     "@types/qrcode": "^1.5.6"
   }

@@ -10,5 +10,7 @@ export const shogi = {
   startFen: START_FEN,
   pieceTypes: ['k', 'r', 'b', 'g', 's', 'n', 'l', 'p'],
   hasHands: true,
+  // Hands fill from captures during play, so a non-empty hand never means a setup phase (plat-012).
+  hasSetupPhase: false,
   createGame: (fen?: string) => new Game(fen),
 } satisfies Variant<Game>;

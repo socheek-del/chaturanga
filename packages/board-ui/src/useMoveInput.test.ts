@@ -1,5 +1,6 @@
 // @vitest-environment happy-dom
 import { Game as MakrukGame, parseSquare as sq } from '@chaturanga/makruk';
+import { Game as ShogiGame } from '@chaturanga/shogi';
 import { Game as SittuyinGame } from '@chaturanga/sittuyin';
 import { act, renderHook } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
@@ -148,5 +149,90 @@ describe('useMoveInput with Sittuyin: hands and promotion (plat-005a)', () => {
     act(() => hook.result.current.onSquareClick(sq('d5')));
     expect(hook.result.current.selected).toBe(sq('d5'));
     expect(hook.result.current.canPromoteInPlace).toBe(true);
+  });
+});
+
+/** Square index on the 9x9 Shogi board, which the hook is told about through `files`. */
+const shogiSquare = (name: string): number => (Number(name[1]) - 1) * 9 + (name.charCodeAt(0) - 97);
+
+const SILVER_OUTSIDE_ZONE = '2k6/9/9/4S4/9/9/9/9/2K6[] w - - 0 1';
+
+function setupShogi(fen: string) {
+  const game = new ShogiGame(fen);
+  let version = 0;
+  const onMove = vi.fn((uci: string) => {
+    game.move(uci);
+    version++;
+  });
+  const hook = renderHook(() => useMoveInput({ game, version, canMove: true, onMove, files: 9 }));
+  return { game, onMove, hook };
+}
+
+describe('useMoveInput with Shogi, where a move may promote or not (plat-011)', () => {
+  it('asks which one the player wants instead of choosing for them', () => {
+    const { hook, onMove } = setupShogi(SILVER_OUTSIDE_ZONE);
+    act(() => hook.result.current.onSquareClick(shogiSquare('e6')));
+    act(() => hook.result.current.onSquareClick(shogiSquare('e7')));
+    expect(onMove).not.toHaveBeenCalled();
+    expect(hook.result.current.pendingPromotion).toEqual({ from: shogiSquare('e6'), to: shogiSquare('e7') });
+  });
+
+  it('plays the promoting move when the player says yes', () => {
+    const { hook, onMove } = setupShogi(SILVER_OUTSIDE_ZONE);
+    act(() => hook.result.current.onSquareClick(shogiSquare('e6')));
+    act(() => hook.result.current.onSquareClick(shogiSquare('e7')));
+    act(() => hook.result.current.choosePromotion(true));
+    expect(onMove).toHaveBeenCalledWith('e6e7+');
+    expect(hook.result.current.pendingPromotion).toBeNull();
+  });
+
+  it('plays the plain move when the player says no', () => {
+    const { hook, onMove } = setupShogi(SILVER_OUTSIDE_ZONE);
+    act(() => hook.result.current.onSquareClick(shogiSquare('e6')));
+    act(() => hook.result.current.onSquareClick(shogiSquare('e7')));
+    act(() => hook.result.current.choosePromotion(false));
+    expect(onMove).toHaveBeenCalledWith('e6e7');
+  });
+
+  it('cancelling leaves the position alone', () => {
+    const { hook, onMove } = setupShogi(SILVER_OUTSIDE_ZONE);
+    act(() => hook.result.current.onSquareClick(shogiSquare('e6')));
+    act(() => hook.result.current.onSquareClick(shogiSquare('e7')));
+    act(() => hook.result.current.cancelPromotion());
+    expect(onMove).not.toHaveBeenCalled();
+    expect(hook.result.current.pendingPromotion).toBeNull();
+  });
+
+  it('a forced promotion is played straight through, with no question', () => {
+    const { hook, onMove } = setupShogi('2k6/4P4/9/9/9/9/9/9/2K6[] w - - 0 1');
+    act(() => hook.result.current.onSquareClick(shogiSquare('e8')));
+    act(() => hook.result.current.onSquareClick(shogiSquare('e9')));
+    expect(onMove).toHaveBeenCalledWith('e8e9+');
+    expect(hook.result.current.pendingPromotion).toBeNull();
+  });
+
+  it('a move that cannot promote never asks', () => {
+    const { hook, onMove } = setupShogi('2k6/9/9/9/4S4/9/9/9/2K6[] w - - 0 1');
+    act(() => hook.result.current.onSquareClick(shogiSquare('e5')));
+    act(() => hook.result.current.onSquareClick(shogiSquare('e6')));
+    expect(onMove).toHaveBeenCalledWith('e5e6');
+    expect(hook.result.current.pendingPromotion).toBeNull();
+  });
+
+  it('a drag onto a square with both moves asks as well', () => {
+    const { hook, onMove } = setupShogi(SILVER_OUTSIDE_ZONE);
+    act(() => {
+      hook.result.current.onDrop(shogiSquare('e6'), shogiSquare('e7'));
+    });
+    expect(onMove).not.toHaveBeenCalled();
+    expect(hook.result.current.pendingPromotion).not.toBeNull();
+  });
+
+  it('a piece can be dropped from hand while the game is in play', () => {
+    const { hook, onMove } = setupShogi('2k6/9/9/9/9/9/9/9/2K6[S] w - - 0 1');
+    act(() => hook.result.current.onHandSelect('s'));
+    expect(hook.result.current.selectedHand).toBe('s');
+    act(() => hook.result.current.onSquareClick(shogiSquare('e5')));
+    expect(onMove).toHaveBeenCalledWith('S@e5');
   });
 });

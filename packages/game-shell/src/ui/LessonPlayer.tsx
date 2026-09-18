@@ -192,6 +192,15 @@ function StepLayout({ prompt, board, below, actions }: { prompt: ReactNode; boar
   );
 }
 
+/** The squares a step's solutions start from: a drop has none, so only board moves are pointed at. */
+function solutionOrigins(solutions: readonly string[], files: number): Square[] {
+  const squares = solutions.flatMap((uci) => {
+    const parsed = parseUci(uci, files);
+    return parsed?.kind === 'move' ? [parsed.from] : [];
+  });
+  return [...new Set(squares)];
+}
+
 /** The lesson board never animates: every step starts from its own FEN and is played once. */
 function StepBoard<G extends VariantGame, Verify>({
   props,
@@ -202,6 +211,7 @@ function StepBoard<G extends VariantGame, Verify>({
   game: G;
   targets?: Square[];
   promotionTargets?: Square[];
+  hintSquares?: Square[];
   selected?: Square | null;
   lastMove?: { from?: Square | null; to: Square } | null;
   checkSquare?: Square | null;
@@ -228,6 +238,33 @@ function StepBoard<G extends VariantGame, Verify>({
   );
 }
 
+/** The hint: one press to read it, and the board points at what it is about (plat-014). */
+function HintPanel({
+  hint,
+  shown,
+  onShow,
+  translate,
+}: {
+  hint: L10n;
+  shown: boolean;
+  onShow: () => void;
+  translate: (text: L10n) => string;
+}) {
+  const { t } = useTranslation();
+  if (shown) {
+    return (
+      <Card tone="secondary" role="status" data-testid="lesson-hint" className="py-2 text-center font-medium">
+        {translate(hint)}
+      </Card>
+    );
+  }
+  return (
+    <Button block variant="ghost" data-testid="show-hint" onClick={onShow}>
+      {t('learn.hint')}
+    </Button>
+  );
+}
+
 function Footer({
   feedback,
   onCheck,
@@ -235,6 +272,8 @@ function Footer({
   onContinue,
   onRetry,
   hint,
+  onHint,
+  hintShown = false,
   success,
   translate,
 }: {
@@ -244,6 +283,9 @@ function Footer({
   onContinue: () => void;
   onRetry: () => void;
   hint?: L10n;
+  /** Given when the step can point at the answer; the button only shows then (plat-014). */
+  onHint?: () => void;
+  hintShown?: boolean;
   success?: L10n;
   translate: (text: L10n) => string;
 }) {
@@ -276,14 +318,22 @@ function Footer({
       </Card>
     );
   }
-  return onCheck ? (
-    <Button block size="lg" onClick={onCheck} disabled={!canCheck}>
-      {t('learn.check')}
-    </Button>
-  ) : (
-    <Button block size="lg" onClick={onContinue}>
-      {t('learn.continue')}
-    </Button>
+  return (
+    <div className="flex flex-col gap-2">
+      {/* Nobody should be stuck on a lesson: the hint is one press away, and costs nothing. */}
+      {hint && onHint && (hintShown || feedback === null) && (
+        <HintPanel hint={hint} shown={hintShown} onShow={onHint} translate={translate} />
+      )}
+      {onCheck ? (
+        <Button block size="lg" onClick={onCheck} disabled={!canCheck}>
+          {t('learn.check')}
+        </Button>
+      ) : (
+        <Button block size="lg" onClick={onContinue}>
+          {t('learn.continue')}
+        </Button>
+      )}
+    </div>
   );
 }
 
@@ -321,6 +371,7 @@ function MoveStep<G extends VariantGame, Verify>(props: StepProps<G, Verify, Ext
   const { t } = useTranslation();
   const [game] = useState(() => props.variant.createGame(step.fen));
   const [version, setVersion] = useState(0);
+  const [hintShown, setHintShown] = useState(false);
   const boardHandle = useRef<BoardHandle | null>(null);
   const input = useMoveInput({
     game,
@@ -353,6 +404,8 @@ function MoveStep<G extends VariantGame, Verify>(props: StepProps<G, Verify, Ext
           selected={input.selected}
           targets={input.targets}
           promotionTargets={input.promotionTargets}
+          // The hint points at the piece to play, not at where it goes: it nudges without answering.
+          hintSquares={hintShown ? solutionOrigins(step.solutions, props.variant.files) : undefined}
           onSquareClick={input.onSquareClick}
           canDrag={input.canDrag}
           onDrop={input.onDrop}
@@ -393,6 +446,9 @@ function MoveStep<G extends VariantGame, Verify>(props: StepProps<G, Verify, Ext
               translate={props.translate}
             />
           )}
+          {feedback === null && step.hint && (
+            <HintPanel hint={step.hint} shown={hintShown} onShow={() => setHintShown(true)} translate={props.translate} />
+          )}
         </>
       }
     />
@@ -403,6 +459,7 @@ function SquaresStep<G extends VariantGame, Verify>(props: StepProps<G, Verify, 
   const { step, feedback, onAnswer } = props;
   const [game] = useState(() => props.variant.createGame(step.fen));
   const [picked, setPicked] = useState<string[]>([]);
+  const [hintShown, setHintShown] = useState(false);
   const toggle = (square: Square) => {
     if (feedback !== null) return;
     const name = squareNameOf(square, props.variant.files);
@@ -416,6 +473,7 @@ function SquaresStep<G extends VariantGame, Verify>(props: StepProps<G, Verify, 
           props={props}
           game={game}
           targets={picked.map((s) => squareOf(s, props.variant.files) ?? -1)}
+          hintSquares={hintShown ? step.answer.map((s) => squareOf(s, props.variant.files) ?? -1) : undefined}
           onSquareClick={toggle}
         />
       }
@@ -427,6 +485,8 @@ function SquaresStep<G extends VariantGame, Verify>(props: StepProps<G, Verify, 
           onContinue={props.onContinue}
           onRetry={props.onRetry}
           hint={step.hint}
+          onHint={() => setHintShown(true)}
+          hintShown={hintShown}
           translate={props.translate}
         />
       }
@@ -438,6 +498,7 @@ function QuizStep<G extends VariantGame, Verify>(props: StepProps<G, Verify, Ext
   const { step, feedback, onAnswer, translate } = props;
   const [game] = useState(() => (step.fen ? props.variant.createGame(step.fen) : null));
   const [choice, setChoice] = useState<number | null>(null);
+  const [hintShown, setHintShown] = useState(false);
   return (
     <StepLayout
       prompt={<Prompt text={step.text} mood={moodFor(step.kind, feedback)} translate={translate} renderMascot={props.renderMascot} />}
@@ -471,6 +532,8 @@ function QuizStep<G extends VariantGame, Verify>(props: StepProps<G, Verify, Ext
           onContinue={props.onContinue}
           onRetry={props.onRetry}
           hint={step.hint}
+          onHint={() => setHintShown(true)}
+          hintShown={hintShown}
           translate={translate}
         />
       }

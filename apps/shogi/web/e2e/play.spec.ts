@@ -88,3 +88,24 @@ test('a saved game survives a reload (sg-005)', async ({ page }) => {
   await expect(pieceOn(page, 'g4')).toHaveAttribute('data-piece', 'wp');
   await expect(page.getByTestId('move-list')).toContainText('Pg4');
 });
+
+test('the piece set can be switched, and the opponent tinted (sg-012)', async ({ page }) => {
+  await page.goto('/settings');
+  await page.locator('[data-piece-set-option="letters"]').click();
+  await startLocalGame(page);
+  await expect(pieceOn(page, 'e1').locator('svg')).toHaveAttribute('data-piece-set', 'letters');
+  await expect(pieceOn(page, 'e1')).toContainText('K');
+  await expect(pieceOn(page, 'h2')).toContainText('R');
+  await expect(pieceOn(page, 'e9')).toContainText('K');
+
+  await page.goto('/settings');
+  await page.locator('[data-piece-set-option="symbols"]').click();
+  await page.getByLabel('相手の駒に色をつける', { exact: true }).click();
+  await page.goto('/play/local');
+  await expect(pieceOn(page, 'e1').locator('svg')).toHaveAttribute('data-piece-set', 'symbols');
+  // The far player's tiles are drawn in the tinted wood, the near player's are not.
+  const fills = await page
+    .locator('[data-square="e1"] svg path, [data-square="e9"] svg path')
+    .evaluateAll((els) => els.map((el) => el.getAttribute('fill')).filter(Boolean));
+  expect(new Set(fills).size).toBeGreaterThan(1);
+});

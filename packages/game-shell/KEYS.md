@@ -52,6 +52,7 @@ Only a product with lessons needs these.
 
 | Key | Used for |
 | --- | --- |
+| `learn.hint` | The button that reveals a step's hint, and nothing else (plat-014) |
 | `learn.exit` | Accessible name of the leave-lesson button |
 | `learn.progress` | Accessible name of the step progress bar |
 | `learn.check` | Checks a squares or quiz answer |

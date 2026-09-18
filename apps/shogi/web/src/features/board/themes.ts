@@ -7,6 +7,9 @@ export interface BoardTheme extends SharedBoardTheme {
   /** Face of a piece tile, and the ink on it. */
   tile: string;
   tileEdge: string;
+  /** The far player's tile, when the "tint the other side" setting is on (sg-012). */
+  tileAlt: string;
+  tileEdgeAlt: string;
   ink: string;
   /** Ink of a promoted face, which is red on a real set. */
   promotedInk: string;
@@ -25,6 +28,8 @@ export const BOARD_THEMES: readonly BoardTheme[] = [
     coordinate: '#6b4a1f',
     tile: '#f6e2b4',
     tileEdge: '#b98d47',
+    tileAlt: '#e3d3c6',
+    tileEdgeAlt: '#8c6f5e',
     ink: '#241a0e',
     promotedInk: '#a8231f',
     selected: 'rgba(168, 35, 31, 0.32)',
@@ -40,6 +45,8 @@ export const BOARD_THEMES: readonly BoardTheme[] = [
     coordinate: '#6d5734',
     tile: '#fbf0d4',
     tileEdge: '#c9a063',
+    tileAlt: '#ebe2dc',
+    tileEdgeAlt: '#9a8277',
     ink: '#2b2118',
     promotedInk: '#b02a26',
     selected: 'rgba(176, 42, 38, 0.28)',
@@ -55,6 +62,8 @@ export const BOARD_THEMES: readonly BoardTheme[] = [
     coordinate: '#b09a6e',
     tile: '#e4cf9f',
     tileEdge: '#8c7444',
+    tileAlt: '#cbc0b6',
+    tileEdgeAlt: '#6f6054',
     ink: '#241a0e',
     promotedInk: '#9e2420',
     selected: 'rgba(230, 140, 110, 0.38)',

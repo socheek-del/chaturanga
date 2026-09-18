@@ -158,7 +158,15 @@
     "dark": "Dark",
     "board": "Board",
     "play": "Play",
-    "coordinates": "Show coordinates"
+    "coordinates": "Show coordinates",
+    "pieces": "Pieces",
+    "piecesHint": "Kanji is what a real set uses. The other two are for players who do not read Japanese.",
+    "pieceSet": {
+      "kanji": "Kanji",
+      "symbols": "Moves",
+      "letters": "Letters"
+    },
+    "tintGote": "Tint the opponent's pieces"
   },
   "design": {
     "title": "Design",
@@ -191,7 +199,8 @@
     "stars": "Stars: {{count}}",
     "unit": "Unit {{number}}",
     "start": "Start",
-    "xpLabel": "Experience points"
+    "xpLabel": "Experience points",
+    "hint": "Hint"
   },
   "online": {
     "opponent": "Opponent",

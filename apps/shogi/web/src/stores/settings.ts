@@ -1,4 +1,5 @@
 import { resolveLocale, storageKey, type TimeControlChoice } from '@chaturanga/game-shell';
+import type { PieceSetId } from '../features/board/pieceSets';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { type Language, PRODUCT } from '../../product.config';
@@ -10,6 +11,10 @@ export interface Settings {
   language: Language;
   colorScheme: ColorScheme;
   boardTheme: string;
+  /** What is written on a piece: kanji, a diagram of its moves, or a Latin letter (sg-012). */
+  pieceSet: PieceSetId;
+  /** Give the far player's pieces their own wood, for players who read the rotation slowly. */
+  tintGote: boolean;
   showCoordinates: boolean;
   timeControl: TimeControlChoice;
   computerLevel: number;
@@ -26,6 +31,8 @@ export const DEFAULT_SETTINGS: Settings = {
   language: PRODUCT.defaultLocale,
   colorScheme: 'system',
   boardTheme: 'kaya',
+  pieceSet: 'kanji',
+  tintGote: false,
   showCoordinates: false,
   timeControl: { kind: 'none' },
   computerLevel: 2,

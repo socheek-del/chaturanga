@@ -45,6 +45,16 @@ describe('Shogi lesson content (sg-006)', () => {
     for (const type of shogi.pieceTypes) expect(icons.has(type), type).toBe(true);
   });
 
+  it('every question carries a hint, and every piece lesson shows the moves before it asks for them', () => {
+    for (const lesson of ALL_LESSONS) {
+      lesson.steps.forEach((step, index) => {
+        if (step.kind !== 'info') expect(filled(step.hint ?? { en: '' }), `${lesson.id} step ${index + 1}`).toBe(true);
+        // A question is never the first thing a lesson says.
+        if (step.kind === 'squares') expect(index, `${lesson.id} step ${index + 1}`).toBeGreaterThan(0);
+      });
+    }
+  });
+
   it('every squares step names the piece whose moves it asks for, so the engine checks the answer', () => {
     const squares = ALL_LESSONS.flatMap((l) => l.steps).filter((s) => s.kind === 'squares' && l10nIsAboutMoves(s.text));
     for (const step of squares) if (step.kind === 'squares') expect(step.targetsOf, step.text.en).toBeTruthy();

@@ -36,6 +36,8 @@ export function GameScreen(props: GameScreenProps) {
   const { t } = useTranslation();
   const theme = boardTheme(useSettings((st) => st.boardTheme));
   const showCoordinates = useSettings((st) => st.showCoordinates);
+  const pieceSet = useSettings((st) => st.pieceSet);
+  const tintGote = useSettings((st) => st.tintGote);
   const pieceName = (piece: Piece) =>
     t('board.pieceName', { piece: t(`pieces.${piece.promoted ? `+${piece.type}` : piece.type}`), color: t(`colors.${piece.color}`) });
 
@@ -51,6 +53,8 @@ export function GameScreen(props: GameScreenProps) {
           piece={piece as Piece}
           theme={theme}
           upsideDown={(piece as Piece).color !== props.orientation}
+          set={pieceSet}
+          tint={tintGote}
           className={className}
         />
       )}

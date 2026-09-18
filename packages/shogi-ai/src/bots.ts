@@ -15,8 +15,11 @@ export const BOTS: readonly ShogiBot[] = [
   { id: 2, key: 'keima', maxDepth: 1, maxNodes: 10_000, timeMs: 500, noise: 60, blunderRate: 0.12 },
   { id: 3, key: 'gin', maxDepth: 2, maxNodes: 40_000, timeMs: 800, noise: 40, blunderRate: 0.06 },
   { id: 4, key: 'kin', maxDepth: 3, maxNodes: 150_000, timeMs: 1_200, noise: 30, blunderRate: 0.02 },
-  { id: 5, key: 'kaku', maxDepth: 4, maxNodes: 500_000, timeMs: 2_000, noise: 0, blunderRate: 0 },
-  { id: 6, key: 'hisha', maxDepth: 8, maxNodes: 900_000, timeMs: 3_500, noise: 0, blunderRate: 0 },
+  { id: 5, key: 'kaku', maxDepth: 4, maxNodes: 400_000, timeMs: 2_000, noise: 0, blunderRate: 0 },
+  // A first ladder run had L6 on 900k nodes and it only drew the pair 3-3: in Shogi that budget buys the
+  // same depth L5 already reaches. The gap has to be a whole ply, so L6 gets several times the nodes; in a
+  // browser its 3.5s clock still binds first, so the player waits no longer than before.
+  { id: 6, key: 'hisha', maxDepth: 8, maxNodes: 3_000_000, timeMs: 3_500, noise: 0, blunderRate: 0 },
 ];
 
 export function botById(id: number): ShogiBot {

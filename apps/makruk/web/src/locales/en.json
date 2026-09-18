@@ -180,7 +180,8 @@
     "stars": "Stars: {{count}}",
     "unit": "Unit {{number}}",
     "start": "Start",
-    "xpLabel": "Experience points"
+    "xpLabel": "Experience points",
+    "hint": "Hint"
   },
   "coach": {
     "title": "Coach Khun",

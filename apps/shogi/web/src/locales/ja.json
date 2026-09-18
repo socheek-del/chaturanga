@@ -158,7 +158,15 @@
     "dark": "暗い",
     "board": "盤",
     "play": "対局",
-    "coordinates": "座標を表示"
+    "coordinates": "座標を表示",
+    "pieces": "駒",
+    "piecesHint": "本物の駒は漢字です。ほかの二つは、日本語を読まない人のためのものです。",
+    "pieceSet": {
+      "kanji": "漢字",
+      "symbols": "動き",
+      "letters": "アルファベット"
+    },
+    "tintGote": "相手の駒に色をつける"
   },
   "design": {
     "title": "デザイン",
@@ -191,7 +199,8 @@
     "stars": "星：{{count}}",
     "unit": "第{{number}}章",
     "start": "はじめる",
-    "xpLabel": "経験値"
+    "xpLabel": "経験値",
+    "hint": "ヒント"
   },
   "online": {
     "opponent": "相手",

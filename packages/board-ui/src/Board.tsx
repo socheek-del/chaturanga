@@ -53,6 +53,8 @@ export interface BoardProps {
   checkSquare?: Square | null;
   /** Suggested move from the hint engine. */
   hint?: { from?: Square | null; to: Square } | null;
+  /** Squares a lesson is pointing at, marked the same way as a hint (plat-014). */
+  hintSquares?: readonly Square[];
   /** Slide the piece that just moved; `key` changes once per move. Drops and in-place moves do not slide. */
   animate?: { from?: Square | null; to: Square; key: string } | null;
   onSquareClick?: (square: Square) => void;
@@ -125,6 +127,7 @@ export function Board({
   lastMove = null,
   checkSquare = null,
   hint = null,
+  hintSquares,
   animate = null,
   onSquareClick,
   canDrag,
@@ -176,6 +179,7 @@ export function Board({
       : null;
   const bySquare = new Map(pieces.map((p) => [p.square, p.piece]));
   const targetSet = new Set(targets);
+  const hintSet = new Set(hintSquares ?? []);
   const promotionSet = new Set(promotionTargets);
 
   const startDrag = (square: Square, e: ReactPointerEvent) => {
@@ -226,7 +230,7 @@ export function Board({
       const isTarget = targetSet.has(square);
       const isPromotion = promotionSet.has(square);
       const isLast = marks(lastMove, square);
-      const isHint = marks(hint, square);
+      const isHint = marks(hint, square) || hintSet.has(square);
       const highlight = square === selected ? theme.selected : isLast ? theme.lastMove : undefined;
       const dragging = drag?.active && drag.from === square;
 

@@ -179,7 +179,8 @@
     "stars": "{{count}} 颗星",
     "unit": "第 {{number}} 单元",
     "start": "开始",
-    "xpLabel": "经验值"
+    "xpLabel": "经验值",
+    "hint": "提示"
   },
   "online": {
     "opponent": "对手",

@@ -2,8 +2,9 @@ import { Card, cn, SegmentedControl, Switch } from '@chaturanga/ui';
 import { useTranslation } from 'react-i18next';
 import { type Language, PRODUCT } from '../../product.config';
 import { PieceSvg } from '../features/board/PieceSvg';
+import { type PieceSetId, PIECE_SETS } from '../features/board/pieceSets';
 import { StarPoints } from '../features/board/StarPoints';
-import { BOARD_THEMES, type BoardTheme } from '../features/board/themes';
+import { boardTheme, BOARD_THEMES, type BoardTheme } from '../features/board/themes';
 import { type ColorScheme, useSettings } from '../stores/settings';
 
 /** A small corner of the board: the theme's wood and star points, with one tile standing on it. */
@@ -77,6 +78,48 @@ export function SettingsPage() {
             );
           })}
         </div>
+      </Card>
+
+      <Card className="flex flex-col gap-3">
+        <h2 className="text-lg font-bold">{t('settings.pieces')}</h2>
+        <p className="text-sm text-muted">{t('settings.piecesHint')}</p>
+        <div role="radiogroup" aria-label={t('settings.pieces')} className="grid grid-cols-3 gap-3">
+          {PIECE_SETS.map((id) => {
+            const checked = id === settings.pieceSet;
+            return (
+              <button
+                key={id}
+                type="button"
+                role="radio"
+                aria-checked={checked}
+                aria-label={t(`settings.pieceSet.${id}`)}
+                data-piece-set-option={id}
+                onClick={() => update({ pieceSet: id as PieceSetId })}
+                className={cn(
+                  'flex flex-col items-center gap-1 rounded-xl p-2 transition-colors',
+                  checked ? 'bg-primary-soft ring-2 ring-primary' : 'hover:bg-surface-2',
+                )}
+              >
+                <span className="flex gap-1">
+                  {(['r', 'n', 'p'] as const).map((type) => (
+                    <PieceSvg
+                      key={type}
+                      piece={{ color: 'w', type, promoted: false }}
+                      theme={boardTheme(settings.boardTheme)}
+                      set={id}
+                      className="h-10 w-10"
+                    />
+                  ))}
+                </span>
+                <span className="text-xs font-semibold">{t(`settings.pieceSet.${id}`)}</span>
+              </button>
+            );
+          })}
+        </div>
+        <label className="flex items-center justify-between gap-3">
+          <span className="font-semibold">{t('settings.tintGote')}</span>
+          <Switch checked={settings.tintGote} onChange={(tintGote) => update({ tintGote })} label={t('settings.tintGote')} />
+        </label>
       </Card>
 
       <Card className="flex flex-col gap-4">

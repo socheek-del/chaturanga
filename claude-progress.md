@@ -27,10 +27,8 @@ handoff; no agent updates it automatically.
 - Current blockers (owner action needed):
   - `seo-001`: verify the site in Google Search Console and submit `https://th-chess.beanroti.com/sitemap.xml`
   - `polish-002`: native Thai reviewer completes `docs/i18n-review.md`
-  - `xq-008`: set `AUTH_SECRET` on the `xiangqi` Worker (`wrangler secret put AUTH_SECRET` in
-    `apps/xiangqi/worker`). Until then production online play returns 500 on `POST /api/guest`; everything
-    else on the site works. The agent sandbox refuses secret writes, so this one command needs the owner.
-  - `xq-004`: the live Xiangqi site is styled on the "Mo" proposal, which the owner has not approved yet.
+  - `xq-011`: native Chinese reviewer completes `apps/xiangqi/docs/i18n-review.md`
+  - `sit-011`: native Burmese reviewer completes `apps/sittuyin/docs/i18n-review.md`
 
 ## Session Log
 
@@ -631,11 +629,25 @@ handoff; no agent updates it automatically.
 - Verification this session: `./init.sh` clean at the start; `npm run verify` exit 0 after the family change;
   `npm run build:xiangqi` OK; Xiangqi, Makruk and Sittuyin `family.spec.ts` 1/1 each locally; production
   smoke 7/8 + family 3/3.
+- Later in session 014, the owner set `AUTH_SECRET` and approved the "Mo" design.
+  - `xq-008` passing. `npm run smoke:prod -w apps/xiangqi/web` 11/11, including `POST /api/guest` issuing a
+    token, and `e2e-prod/online.spec.ts` played a room on the live Worker: a 5+0 room created, joined by code
+    from a second browser, seats w and b, two moves reaching both boards with identical move lists, no chat.
+  - `xq-004` passing. The approval covers the shipped defaults: maple board, Noto Serif TC Black piece
+    outlines. Recorded in `apps/xiangqi/docs/design.md` and the four docs that called it unapproved.
+  - `xq-005` passing. Re-verified after the family links joined the home page and shell: Xiangqi E2E 24/24,
+    e2e:pwa 2/2.
+- **Parallel session warning.** Session 015 (Shogi planning) ran in this same working tree at the same time
+  and staged its files in the shared index, so `git status` mixed both sessions' work and a plain
+  `git commit` from either one would have swept up the other's. It committed its own paths as `6394f16`; the
+  Xiangqi work went in separately. Two sessions in one repository need separate git worktrees, or one must
+  wait.
 - Next best step:
-  - **Owner:** set `AUTH_SECRET` (above); approve or redirect the Mo design (`xq-004`).
-  - **Agent, after the secret:** re-run `npm run smoke:prod -w apps/xiangqi/web` for 8/8, play one online
-    room between two browsers in production, then move `xq-008` to passing. After that, `xq-010` (SEO,
-    sitemap, Open Graph image, READMEs) is unblocked by the address.
+  - **Owner:** `xq-011` needs a native Chinese reviewer. The Shogi plan (`6394f16`) proposes decisions
+    D1-D12 that are still unconfirmed.
+  - **Agent:** `xq-010` is the last open Xiangqi feature and is now unblocked by the address — SEO tags,
+    hreflang, canonical, JSON-LD, sitemap/robots, the Open Graph image, and `README.md` +
+    `README.zh-Hans.md` with media captured from production (no domain visible).
 
 ### Session 015 (planning only, parallel session)
 

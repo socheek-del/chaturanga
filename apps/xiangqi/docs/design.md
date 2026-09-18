@@ -6,7 +6,9 @@ owner decision made for legal reasons). It uses the same component primitives (`
 `@chaturanga/board-ui`). Those carry shape, state and accessibility but no palette, so the whole identity lives
 in this app's tokens, board drawing and piece art.
 
-**Status: proposed, awaiting owner approval.** xq-005 builds the web app on this direction once approved.
+**Status: approved by the owner on 2026-09-18 (xq-004).** The live site is built on it. Changing the identity
+now means changing this document first, then `index.css` tokens, the board themes, `BoardLines` and `PieceSvg`,
+and re-running the E2E and PWA suites.
 
 The showcase page (`apps/xiangqi/web/src/DesignPage.tsx`, currently the whole site) renders everything below
 in both colour schemes. Screenshots are in `evidence/`:
@@ -138,8 +140,10 @@ Each piece is a disc with a darker edge offset downward (a carved thickness) and
 colour. The character is cinnabar `#b3261e` for Red and ink `#1f1a17` for Black. Red and Black differ in two
 ways, colour and the character itself, so colour-blind players can still tell them apart.
 
-## Open questions for the owner
+## Owner decisions (2026-09-18)
 
-1. **Direction:** ink and seal on paper, with a maple board. Approve, or ask for another direction?
-2. **Default board:** maple, or xuan paper?
-3. **Piece characters:** Noto Serif TC Black, or a more calligraphic face at the cost of small-size legibility?
+The owner approved the Mo direction after seeing the live site, so the shipped defaults stand:
+
+1. **Direction:** ink and seal on paper, with a maple board. Approved.
+2. **Default board:** maple (xuan paper and ink night stay as the other two themes).
+3. **Piece characters:** Noto Serif TC Black outlines, chosen for legibility at 28px.

@@ -1441,7 +1441,7 @@
       "milestone": "M13",
       "title": "Xiangqi design identity and piece art (owner approval gate)",
       "user_visible_behavior": "Xiangqi has its own visual identity (not Makruk's Wat, not Sittuyin's Daung, not Duolingo) with SVG-path piece characters, approved by the owner.",
-      "status": "in_progress",
+      "status": "passing",
       "verification": [
         "apps/xiangqi/docs/design.md written: palette (light+dark, every token listed in packages/ui/TOKENS.md), typography, board look, and a piece set for all 7 types x 2 colors.",
         "DesignPage.tsx showcase plus a capture-design.mjs script; screenshots at 390/1280px, light+dark, saved to apps/xiangqi/docs/evidence/.",
@@ -1451,9 +1451,10 @@
         "2026-09-17: apps/xiangqi/docs/design.md proposes 'Mo' (墨, ink): ink primary and seal-vermilion secondary on xuan paper, maple board, carved-disc pieces. It lists every TOKENS.md colour for light and dark, typography per D9 (system CJK stack plus self-hosted Noto Sans latin 400/600), the three board themes (maple default, xuan paper, ink night), the piece set, a comparison table against Makruk 'Wat' and Sittuyin 'Daung', and three open questions for the owner. Contrast figures in the doc were computed, not estimated (muted 7.2:1 on surface, paper-white on vermilion 5.6:1, ink on canvas 15.2:1, on-warning 4.3:1 for button labels only).",
         "2026-09-17: minimal apps/xiangqi/web (showcase only; xq-005 adds router, PWA, family links and site address): product.config.ts (zh-Hans default + en, storage prefix xiangqi.), i18n from ?lang, zh-Hans/en locales with a key-parity test, index.css tokens, board-ui points grid with BoardLines underlay (frame, ranks, files broken at the river, palace diagonals, cannon/soldier point brackets, 楚河 漢界 as glyph paths), PieceSvg, three board themes, DesignPage with both colour schemes and a legal engine-played sample position (selection targets taken from legalMoves).",
         "2026-09-17: piece set for all 7 types x 2 colours per D4 as SVG paths, no font at runtime. scripts/generate-glyphs.mjs (npm run glyphs) fetches a Google Fonts subset of exactly those 14 characters plus 楚河漢界 from Noto Serif TC Black, parses it with opentype.js (devDependency) and writes centred outlines to src/features/board/glyphs.ts (committed). The OFL 1.1 text with the font's own copyright line (© 2017-2024 Adobe, read from the font's name table) is in src/features/board/OFL.txt. glyphs.test.ts checks the D4 characters for both colours and that every outline is inside the 100x100 box. LXGW WenKai TC was compared in a scratch render and was less legible at 40px.",
-        "2026-09-17: screenshots by scripts/capture-design.mjs (npm run capture:design) against vite preview: apps/xiangqi/docs/evidence/design-{light,dark}-{390,1280}.png plus design-{light,dark}-1280-en.png. Reviewed by eye: pieces legible at 40px and 28px, boards fit at 390px in both schemes, river text and palace lines render in all three themes. npm run verify (whole repo, now including @chaturanga/xiangqi-web typecheck + 3 tests) exit 0; eslint clean."
+        "2026-09-17: screenshots by scripts/capture-design.mjs (npm run capture:design) against vite preview: apps/xiangqi/docs/evidence/design-{light,dark}-{390,1280}.png plus design-{light,dark}-1280-en.png. Reviewed by eye: pieces legible at 40px and 28px, boards fit at 390px in both schemes, river text and palace lines render in all three themes. npm run verify (whole repo, now including @chaturanga/xiangqi-web typecheck + 3 tests) exit 0; eslint clean.",
+        "2026-09-18: the owner approved the Mo direction after seeing the live site, and with it the two remaining questions as shipped: maple is the default board (xuan paper and ink night stay as the other two themes) and the piece characters are Noto Serif TC Black outlines. apps/xiangqi/docs/design.md now records the approval and the decisions; docs/PLATFORM.md, apps/xiangqi/docs/PLAN.md (D7), apps/xiangqi/AGENTS.md and the root AGENTS.md no longer call the identity unapproved."
       ],
-      "notes": "Stays in_progress until the owner signs off, the same pattern as sit-005. Awaiting the owner on: the Mo direction, the default board (maple or xuan paper), and the piece typeface. Screens to review: apps/xiangqi/docs/evidence/design-light-1280.png and design-dark-390.png."
+      "notes": "Approved 2026-09-18. Changing the identity now means this document first, then index.css tokens, the board themes, BoardLines and PieceSvg, then re-running the E2E and PWA suites."
     },
     {
       "id": "xq-005",
@@ -1463,7 +1464,7 @@
       "milestone": "M13",
       "title": "Xiangqi web app: pass-and-play, computer, PWA, languages",
       "user_visible_behavior": "A user plays Xiangqi locally or vs computer on an installable, offline-capable PWA in Simplified Chinese (default) or English.",
-      "status": "in_progress",
+      "status": "passing",
       "verification": [
         "play.spec.ts: tap/drag moves; illegal targets refused (horse leg, elephant across the river, a flying-general move not offered); undo; board flips for Black.",
         "computer.spec.ts: the bot replies as both colors; a hint shows.",
@@ -1476,9 +1477,10 @@
       "evidence": [
         "2026-09-17: apps/xiangqi/web grows from the xq-004 showcase into the playable site, adapted from apps/sittuyin/web: router (home, play/local, play/computer, settings, design), AppShell with focus mode (Learn/About join with xq-006/xq-010), ThemeController, persisted settings (language, colour scheme, board theme maple/xuan/night, coordinates, time control, bot level and side), local and computer sessions saved in localStorage, the shared GameScreen on grid='points' with BoardLines underlay and carved-disc pieces, TimeControlPicker, six bots from @chaturanga/xiangqi-ai in a Web Worker. The worker receives the start FEN and the move list and rebuilds a Game, so bots see the whole history and avoid losing perpetual checks/chases (xq-003 hook). Hint button. Installable PWA (vite-plugin-pwa, manifest lang zh-Hans, icons generated from the 帥 glyph by scripts/generate-icons.mjs), pre-paint theme/language script. zh-Hans and en locales, complete per describeLocales, including play.reason.perpetual-check/perpetual-chase and a stalemate reason that says it loses.",
         "2026-09-17: E2E (npx playwright test, vite only, no Worker yet) 16/16: play.spec 9 (points board of 90 with 32 pieces and the underlay; tapped move, SAN Che3 and undo; dragged move; hobbled horse b1 offered only a3/c3; elephant on c5 offered only a3/e3, never across the river; the lone horse screen between the generals on e5 is offered nothing while the general gets d1/e2/f1; flip to Black; stalemate i8i9 shows the dialog '红方胜' with reason '困毙：无子可走判负'; refresh restores the game), computer.spec 3 (bot replies as Black; bot opens as Red with the board flipped; hint marks two points), i18n.spec 3 (html lang zh-Hans by default; ?lang=en persists after reload; English chosen in settings persists after reload), mobile.spec 1 (390x844: whole 9x10 board inside the viewport at a 10/9 height ratio, nav hidden, no horizontal scroll; e2e-evidence/play-390.png reviewed). e2e:pwa 2/2 (installable with no installability errors; offline computer game and local game).",
-        "2026-09-17: npm run verify (whole repo) exit 0; npm run build:xiangqi OK (593 kB js / 35 kB css, precache 19 entries 784 KiB, Noto Sans latin only, no CJK font file); root scripts dev:xiangqi and build:xiangqi; CI verify job now also runs npm run build:xiangqi."
+        "2026-09-17: npm run verify (whole repo) exit 0; npm run build:xiangqi OK (593 kB js / 35 kB css, precache 19 entries 784 KiB, Noto Sans latin only, no CJK font file); root scripts dev:xiangqi and build:xiangqi; CI verify job now also runs npm run build:xiangqi.",
+        "2026-09-18: unblocked by the owner's approval of the Mo design (xq-004), and re-verified after the family links joined the home page and the shell (xq-009): npm run e2e -w apps/xiangqi/web 24/24 (play 9, computer 3, i18n 3, mobile 1, learn, about, family, online) and npm run e2e:pwa -w apps/xiangqi/web 2/2 (installable; offline computer and local games)."
       ],
-      "notes": "Depends on xq-004's approved art/theme. D1-D10 owner decisions accepted 2026-09-15 (see docs/PLATFORM.md). Every verification step passes, but the site is styled on the 'Mo' proposal, which the owner has not approved yet, so this stays in_progress until xq-004 is approved. A different direction only changes index.css tokens, board themes, BoardLines and PieceSvg; re-run the E2E and PWA suites after restyling."
+      "notes": "Passing. D1-D10 owner decisions accepted 2026-09-15; the Mo design approved 2026-09-18."
     },
     {
       "id": "xq-006",
@@ -1531,7 +1533,7 @@
       "milestone": "M13",
       "title": "Deploy Xiangqi on its own subdomain",
       "user_visible_behavior": "Xiangqi is live in production on its own subdomain over HTTPS, with a path-filtered CI deploy that does not touch Makruk or Sittuyin.",
-      "status": "in_progress",
+      "status": "passing",
       "verification": [
         "Owner-chosen address set in site.config.ts, wrangler.jsonc routes, and the deploy-xiangqi job's environment.url.",
         "D1 xiangqi created; AUTH_SECRET set on the xiangqi Worker.",
@@ -1542,9 +1544,10 @@
         "2026-09-18: the owner chose the subdomain (D8). It is set in exactly two places, as for the siblings: the default in apps/xiangqi/web/site.config.ts (override XIANGQI_SITE_URL) and the custom-domain route in apps/xiangqi/worker/wrangler.jsonc. Recorded in docs/PLATFORM.md, apps/xiangqi/docs/PLAN.md (D8) and apps/xiangqi/AGENTS.md.",
         "2026-09-18: production D1 'xiangqi' created (1f9042ad-3c89-4c04-8f75-25b7be61f7b7), replacing the placeholder id; root script deploy:xiangqi applies its migrations before publishing.",
         "2026-09-18: CI. The changes filter gained a xiangqi entry (its own folders, packages/xiangqi, packages/xiangqi-ai, plus the shared list) and a deploy-xiangqi job on the production-xiangqi environment. Push 2439fb6 (which touched ci.yml, so shared) deployed all three: run 35295431640 deploy, deploy-sittuyin and deploy-xiangqi all success. Push 2e06402 (apps/xiangqi only) proved the filter: run 35296012879 deploy-xiangqi success, deploy-sittuyin skipped, deploy skipped.",
-        "2026-09-18: production smoke suite added (npm run smoke:prod -w apps/xiangqi/web; playwright.prod.config.ts reads the address from site.config.ts and starts no server). Against the live site: 7 passed, 1 failed — Chinese home page (html lang=zh-Hans, title 象棋), English at ?lang=en, /api/health {\"service\":\"xiangqi\"}, a level-1 computer game where the bot replies to h3e3, the lessons list, the About page, and the PWA manifest with all three icons 200. The failure is POST /api/guest 500: AUTH_SECRET is not set on the xiangqi Worker yet."
+        "2026-09-18: production smoke suite added (npm run smoke:prod -w apps/xiangqi/web; playwright.prod.config.ts reads the address from site.config.ts and starts no server). Against the live site: 7 passed, 1 failed — Chinese home page (html lang=zh-Hans, title 象棋), English at ?lang=en, /api/health {\"service\":\"xiangqi\"}, a level-1 computer game where the bot replies to h3e3, the lessons list, the About page, and the PWA manifest with all three icons 200. The failure is POST /api/guest 500: AUTH_SECRET is not set on the xiangqi Worker yet.",
+        "2026-09-18: the owner set AUTH_SECRET on the xiangqi Worker. npm run smoke:prod -w apps/xiangqi/web now passes 11/11 (8 site checks incl. POST /api/guest issuing a token, plus the 3 family checks), and e2e-prod/online.spec.ts played a room on the live Worker: host creates a 5+0 room, the code matches /^[A-HJ-NP-Z2-9]{6}$/, a second browser joins by code, seats are w and b, h3e3 and h10g8 reach both boards with identical move lists, and neither page has a textbox (no chat)."
       ],
-      "notes": "Remaining: the owner sets AUTH_SECRET on the xiangqi Worker (`wrangler secret put AUTH_SECRET` in apps/xiangqi/worker, 32 random bytes, stored nowhere else) — the agent's sandbox refuses secret writes. Then re-run npm run smoke:prod -w apps/xiangqi/web for 8/8 and play one online room between two browsers in production. Note the live site is styled on the Mo design, which xq-004 still lists as awaiting approval."
+      "notes": "Complete. Production checks live in apps/xiangqi/web/e2e-prod (npm run smoke:prod -w apps/xiangqi/web); they start no server and read the address from site.config.ts."
     },
     {
       "id": "plat-010",

@@ -4,8 +4,8 @@ Chaturanga is a family of traditional chess games. Each game is its own web PWA 
 
 - **Makruk** (Thai chess): live.
 - **Sittuyin** (Burmese chess): live.
-- **Xiangqi** (Chinese chess): live (`apps/xiangqi/docs/PLAN.md`). Its design ("Mo") still awaits owner
-  approval (`apps/xiangqi/docs/design.md`), so the live site is styled on an unapproved proposal.
+- **Xiangqi** (Chinese chess): live (`apps/xiangqi/docs/PLAN.md`). Its design is "Mo"
+  (`apps/xiangqi/docs/design.md`), approved by the owner on 2026-09-18.
 - **Shogi** (Japanese chess): planned, not built. The plan is `apps/shogi/docs/PLAN.md`; its features are
   `plat-011..013` (platform prep) and `sg-001..011`. Owner decisions D1-D12 in that plan are proposed defaults
   awaiting confirmation.

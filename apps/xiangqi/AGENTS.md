@@ -6,7 +6,7 @@ Xiangqi (象棋, Chinese chess) is a web PWA. It offers:
 - pass-and-play
 - online play by room code or quick match
 - 13 interactive lessons
-- its own "Mo" (墨, ink) design identity, **proposed and awaiting owner approval** (`apps/xiangqi/docs/design.md`)
+- its own "Mo" (墨, ink) design identity, approved by the owner on 2026-09-18 (`apps/xiangqi/docs/design.md`)
 
 The product plan is `apps/xiangqi/docs/PLAN.md`. The platform rules in the root `AGENTS.md` apply here too.
 **Not deployed yet:** there is no site address, family link, SEO or README (xq-008, xq-009, xq-010).

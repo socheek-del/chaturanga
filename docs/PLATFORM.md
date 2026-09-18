@@ -163,7 +163,8 @@ drop (`S@a2`) and nifu behaviour were probed with ffish 0.7.10 on 2026-09-18.
 
 - Sittuyin brand identity: its own design document with shared component primitives. Decided in sit-005.
 - Subdomain names (e.g. one per game under the current parent domain). Chosen at deploy time in sit-009, never hardcoded.
-- Xiangqi brand identity: its own design document, approved before styling. Decided in xq-004.
+- Xiangqi brand identity: "Mo" (墨, ink), `apps/xiangqi/docs/design.md`. Approved by the owner on 2026-09-18
+  (xq-004).
 - Xiangqi subdomain: chosen by the owner in xq-008 (2026-09-18). It lives only in
   `apps/xiangqi/web/site.config.ts` and the Xiangqi Worker's `routes`; never hardcoded elsewhere.
 - Shogi owner decisions D1-D12 (`apps/shogi/docs/PLAN.md`): proposed defaults, to confirm before `sg-001`.

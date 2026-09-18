@@ -1777,14 +1777,19 @@
       "milestone": "M14",
       "title": "Shogi computer opponent and bot ladder",
       "user_visible_behavior": "Six Shogi bots of rising strength play a full game in a Web Worker without freezing the page.",
-      "status": "not_started",
+      "status": "in_progress",
       "verification": [
         "packages/shogi-ai on ai-core; repetitions judged by the real rules through SearchAdapter.repetitionScore.",
         "A bundled Node ladder script (npm run test:strength -w packages/shogi-ai): each bot beats the one below it over a recorded match set.",
         "A fixed-depth node-count and time budget recorded, so a later regression is visible."
       ],
-      "evidence": [],
-      "notes": "Shogi's branching factor (about 80-120 moves, far more with a full hand) is several times Xiangqi's, so measure before setting ladder targets; order drops last and keep them out of quiescence unless they capture or check. Bots are named after the pieces (D10). If the strongest bot is too weak to be interesting, record that instead of loosening the ladder."
+      "evidence": [
+        "2026-09-18: packages/shogi-ai (@chaturanga/shogi-ai) on ai-core, built like the Xiangqi bots: ShogiSearch walks a Position (board, both hands, side to move), evaluation is material including hands (a piece in hand is worth 1.1x the same piece on the board), a small advance bonus, and king safety on both sides; drops are ordered last and are not tactical in quiescence, which is what keeps the tree from exploding. Repetitions are judged by the real rules through SearchAdapter.repetitionScore, so a perpetual check is scored as a loss rather than a draw.",
+        "2026-09-18: six bots named after the pieces (D10): 1 歩 fu, 2 桂 keima, 3 銀 gin, 4 金 kin, 5 角 kaku, 6 飛 hisha. Measured search speed on this machine, bundled under plain Node: 34,237 nodes in 115 ms at depth 4 from the start position (about 300k nodes/s), which is what the node budgets are set from.",
+        "2026-09-18: src/ai.test.ts — 17 tests: mate in one, mate by dropping from hand, taking a hanging rook, a promoted piece and a piece in hand each valued above the alternative, a perpetual check scored as a loss only when the search is given the game history (and the game left untouched), every bot playing a legal opening move, determinism for a seed, a drop chosen as the best move, null with no legal move, conversion mode, and the guard against a game that is not on the given position.",
+        "2026-09-18: ladder (npm run test:strength -w packages/shogi-ai), 6 games per pair locally: L2 keima vs L1 fu +6 -0 =0; L3 gin vs L2 keima +5 -1 =0; L4 kin vs L3 gin +5 -1 =0. Every game ended in checkmate. Pairs 4 and 5 are CPU-heavy and run on GitHub Actions (strength.yml now offers packages/shogi-ai)."
+      ],
+      "notes": "Pairs 1-3 verified locally with 6 games each. Still to do for passing: pairs 4 (L5 kaku vs L4 kin) and 5 (L6 hisha vs L5 kaku) over 20 games on the Actions ladder, recorded here."
     },
     {
       "id": "sg-004",

@@ -4,7 +4,7 @@
  */
 export * from './board';
 export { findKing, inCheck, isAttacked } from './attacks';
-export { parseFen, type PositionData, serializeFen } from './fen';
+export { handsOf, parseFen, placementOf, type PositionData, serializeFen } from './fen';
 export { encodedToUci } from './game';
 export {
   dropType,

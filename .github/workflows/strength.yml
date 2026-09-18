@@ -1,6 +1,6 @@
 name: Bot strength ladder
 
-# ai-002 (Makruk), sit-004 (Sittuyin) and xq-003 (Xiangqi) evidence. The ladder is CPU-heavy (Makruk L6 vs L5 ≈ 15 min per
+# ai-002 (Makruk), sit-004 (Sittuyin), xq-003 (Xiangqi) and sg-003 (Shogi) evidence. The ladder is CPU-heavy (Makruk L6 vs L5 ≈ 15 min per
 # game on one core), so it runs on demand across parallel runners instead of on a laptop. Games are
 # deterministic (node-limited search, fixed seeds), so results match a local
 # `npm run test:strength -w <package>`.
@@ -17,6 +17,7 @@ on:
           - packages/ai
           - packages/sittuyin-ai
           - packages/xiangqi-ai
+          - packages/shogi-ai
       pair:
         description: 'Pair n = level n+1 vs level n (1–5)'
         required: true

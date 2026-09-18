@@ -8,7 +8,7 @@ Owner decisions, 2026-09-14:
 - **Sittuyin (Burmese chess)** is the second game. Its languages are Burmese (default) and English. Makruk stays Thai (default) and English.
 - **Xiangqi (Chinese chess)** is the third game, planned 2026-09-15. Its languages are Simplified Chinese (default) and English. Full plan: `apps/xiangqi/docs/PLAN.md`. It is the first game to break the 8x8-board and pieces-on-squares assumptions the platform code carried from Makruk and Sittuyin (9x10 board, pieces on intersections); the platform-prep features `plat-007..010` remove those assumptions generically before Xiangqi's own features (`xq-001..011`) build on them.
 - **Shogi (Japanese chess)** is the fourth game, built and deployed 2026-09-18. Its languages are Japanese (default) and English. Full plan: `apps/shogi/docs/PLAN.md`. It is the first game where captured pieces come back (hands stay live for the whole game and a captured piece changes owner) and the first with an **optional** promotion, so the same from→to pair is two legal moves; the platform-prep features `plat-011..013` remove those assumptions — plus the board's fixed coordinate labels — before Shogi's own features (`sg-001..011`) build on them.
-- **International chess** is the fifth game, planned 2026-09-18. Its language is English at launch (a second language is an open question, because each declared language becomes a family language that needs a name for every game). Full plan: `apps/chess/docs/PLAN.md`. It is the first game with castling, with en passant and with a promotion that offers a choice of four pieces; only the last of those needs a platform change (`plat-014`), before chess's own features (`ch-001..011`).
+- **International chess** is the fifth game, built and deployed 2026-09-18. Its language is English at launch (a second language is an open question, because each declared language becomes a family language that needs a name for every game). Full plan: `apps/chess/docs/PLAN.md`. It is the first game with castling, with en passant and with a promotion that offers a choice of four pieces; only the last of those needs a platform change (`plat-014`), before chess's own features (`ch-001..011`).
 - Other games may come later.
 
 ## The one rule
@@ -194,4 +194,5 @@ Fairy-Stockfish's `chess` variant, the same rule as the other four games; castli
   and the fifty-move rule end the game automatically, and the divergence from the FIDE claim procedure is
   written into `packages/chess/RULES.md`; **D7** the design identity is proposed in
   `apps/chess/docs/design.md`, the site ships on it and the owner approves after screenshots.
-- Chess brand identity: its own design document, approved before styling. Decided in ch-004.
+- Chess brand identity: "Marble", `apps/chess/docs/design.md`. **Still awaiting owner approval** (ch-004);
+  the live site is already styled on it, which is what D7 asked for.

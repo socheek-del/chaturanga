@@ -1,5 +1,5 @@
 /**
- * Captures the README media from the live site (sg-010): three GIFs and a phone collage.
+ * Captures the README media from the live site (ch-010): three GIFs and a phone collage.
  *   BASE_URL=https://<live site> npm run capture:readme -w apps/chess/web
  * Needs ffmpeg and ImageMagick (`magick`) on the PATH. Nothing captured shows the site address: the online
  * scene joins the room directly instead of filming the waiting room, whose share link names it.
@@ -47,17 +47,17 @@ function gif(inputs, out, { width, fps = 10, trim = 1 }) {
   console.log(`wrote docs/media/${out}`);
 }
 
-// 1. Against the computer: a cannon to the centre file, a horse out, then a hint.
+// 1. Against the computer: two opening moves, then a hint.
 const computer = await record({ width: 1280, height: 800 }, async (page) => {
   await page.goto(`${BASE}/play/computer`);
   await page.locator('[data-bot-level="3"]').click();
   await pause(page, 600);
-  await page.getByRole('radio', { name: '先手', exact: true }).click();
-  await page.getByRole('button', { name: '開始' }).click();
+  await page.getByRole('radio', { name: 'White', exact: true }).click();
+  await page.getByRole('button', { name: 'Start' }).click();
   await pause(page, 900);
   for (const [from, to, total] of [
-    ['g3', 'g4', 2],
-    ['h2', 'g2', 4],
+    ['e2', 'e4', 2],
+    ['g1', 'f3', 4],
   ]) {
     await tap(page, from);
     await pause(page, 400);
@@ -74,10 +74,10 @@ gif([computer], 'play-computer.gif', { width: 760, fps: 8 });
 const creator = await browser.newContext();
 const creatorPage = await creator.newPage();
 await creatorPage.goto(`${BASE}/play/online`);
-const create = creatorPage.getByRole('button', { name: '部屋を作る' });
+const create = creatorPage.getByRole('button', { name: 'Create room' });
 await expect(create).toBeEnabled({ timeout: 15_000 });
 await creatorPage.locator('[data-time-control="5+0"]').click();
-await creatorPage.getByRole('radio', { name: '先手', exact: true }).click();
+await creatorPage.getByRole('radio', { name: 'White', exact: true }).click();
 await create.click();
 const code = (await creatorPage.getByTestId('room-code').textContent()).trim();
 const hostState = await creator.storageState();
@@ -93,10 +93,10 @@ await expect(host.getByRole('grid')).toBeVisible({ timeout: 15_000 });
 await expect(friend.getByRole('grid')).toBeVisible({ timeout: 15_000 });
 await pause(host, 1200);
 for (const [page, other, from, to, total] of [
-  [host, friend, 'g3', 'g4', 1],
-  [friend, host, 'c7', 'c6', 2],
-  [host, friend, 'h2', 'g2', 3],
-  [friend, host, 'b8', 'c8', 4],
+  [host, friend, 'e2', 'e4', 1],
+  [friend, host, 'e7', 'e5', 2],
+  [host, friend, 'g1', 'f3', 3],
+  [friend, host, 'b8', 'c6', 4],
 ]) {
   await tap(page, from);
   await pause(page, 350);
@@ -109,22 +109,22 @@ await hostContext.close();
 await friendContext.close();
 gif([await host.video().path(), await friend.video().path()], 'online.gif', { width: 720, fps: 8 });
 
-// 3. A lesson on a phone: the Gold's moves, then the drop lesson's piece from hand.
+// 3. A lesson on a phone: the knight's moves, answered and checked.
 const lesson = await record(PHONE, async (page) => {
   await page.goto(`${BASE}/learn`);
   await pause(page, 1200);
-  await page.locator('[data-lesson="gold"] a').click();
+  await page.locator('[data-lesson="knight"] a').click();
   await pause(page, 1800);
-  for (const name of ['d5', 'd6', 'e4', 'e6', 'f5', 'f6']) {
+  await page.getByRole('button', { name: 'Continue', exact: true }).click();
+  await pause(page, 1200);
+  for (const name of ['d7', 'f7', 'c6', 'g6', 'c4', 'g4', 'd3', 'f3']) {
     await tap(page, name);
-    await pause(page, 300);
+    await pause(page, 250);
   }
-  await page.getByRole('button', { name: '答え合わせ', exact: true }).click();
-  await pause(page, 1600);
-  await page.getByRole('button', { name: 'つづける', exact: true }).click();
+  await page.getByRole('button', { name: 'Check', exact: true }).click();
+  await pause(page, 1800);
+  await page.getByRole('button', { name: 'Continue', exact: true }).click();
   await pause(page, 2000);
-  await page.getByRole('button', { name: 'つづける', exact: true }).click();
-  await pause(page, 2500);
 });
 gif([lesson], 'lesson.gif', { width: 360, fps: 10 });
 
@@ -146,16 +146,16 @@ await phoneShot(
   'game',
   async (page) => {
     await page.goto(`${BASE}/play/local`);
-    await page.getByRole('button', { name: '開始' }).click();
-    await tap(page, 'g3');
-    await tap(page, 'g4');
-    await tap(page, 'c7');
-    await tap(page, 'c6');
+    await page.getByRole('button', { name: 'Start' }).click();
+    await tap(page, 'e2');
+    await tap(page, 'e4');
+    await tap(page, 'e7');
+    await tap(page, 'e5');
     await expect(plies(page)).toHaveCount(2);
   },
   'dark',
 );
-execFileSync('magick', [...shots, '-bordercolor', '#1f3d5c', '-border', '24', '+append', '-resize', '1600x', join(media, 'mobile.png')]);
+execFileSync('magick', [...shots, '-bordercolor', '#33505f', '-border', '24', '+append', '-resize', '1600x', join(media, 'mobile.png')]);
 console.log('wrote docs/media/mobile.png');
 
 await browser.close();

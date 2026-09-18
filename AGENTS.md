@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Chaturanga is a family of traditional chess games. Each game is its own web PWA product:
+Chaturanga is a family of chess games. Each game is its own web PWA product:
 
 - **Makruk** (Thai chess): live.
 - **Sittuyin** (Burmese chess): live.
@@ -10,9 +10,9 @@ Chaturanga is a family of traditional chess games. Each game is its own web PWA 
   approval (`apps/shogi/docs/design.md`), so the live site is styled on an unapproved proposal. It is the
   first game with pieces in hand during play and an optional promotion; the platform-prep features
   `plat-011..013` made both generic.
-- **Chess** (international chess): planned, not built. The plan is `apps/chess/docs/PLAN.md`; its features are
-  `plat-014` (platform prep) and `ch-001..011`. Owner decisions D1-D12 in that plan are proposed defaults awaiting
-  confirmation.
+- **Chess** (international chess): live (`apps/chess/docs/PLAN.md`). Its design is "Marble"
+  (`apps/chess/docs/design.md`), proposed and awaiting owner approval. English only; a second language is
+  `ch-011`.
 - Others may follow.
 
 Owner decisions, target layout and order of work are in `docs/PLATFORM.md`. Facts about a single game live next
@@ -144,6 +144,13 @@ broken starting state.
     token, rooms, quick match, room socket), and the `GameRoomBase` and `MatchmakerBase` Durable Objects,
     all driven by a `Variant`. A product subclasses `GameRoomBase`, names its variant, and stores finished
     games in its own D1.
+  - `packages/chess` (`@chaturanga/chess`): pure chess rules (`RULES.md`) — castling, capture in passing,
+    promotion to a choice of four pieces, and the drawn endings. `/core` is the raw API for search code.
+  - `packages/chess-ai` (`@chaturanga/chess-ai`): chess bots on ai-core with a real chess evaluation; the
+    ladder is a bundled Node script (`npm run test:strength -w packages/chess-ai`).
+  - `apps/chess/web`, `apps/chess/worker`: the chess product (`apps/chess/AGENTS.md`). English only, the
+    "Marble" identity, 16 lessons, online rooms, PWA. The Worker runs on :8791 and deploys on its own
+    subdomain and D1 (ch-008).
   - `apps/makruk/web`, `apps/makruk/worker`: the Makruk product (`apps/makruk/AGENTS.md`).
 - **Commands:**
   - `npm run verify`: lint, typecheck and unit tests in every workspace.

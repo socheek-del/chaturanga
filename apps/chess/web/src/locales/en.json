@@ -46,7 +46,7 @@
     "traditional": "Classic",
     "intro": "Chess is the game the world shares. Two armies, sixty-four squares, and one rule that decides everything: trap the king and the game is over.",
     "learn": "Learn chess",
-    "learnDesc": "Fifteen short lessons: every piece, castling, capture in passing, promotion, and the tactics and endings that win games.",
+    "learnDesc": "Sixteen short lessons: every piece, castling, capture in passing, promotion, and the tactics and endings that win games.",
     "onlineDesc": "Invite a friend with a code, or get matched."
   },
   "play": {
@@ -246,8 +246,8 @@
       "description": "Pass the phone back and forth and play chess with someone next to you. Free, no account, works offline."
     },
     "learn": {
-      "title": "Learn Chess — 15 Free Lessons",
-      "description": "Learn chess from scratch: every piece, castling, capture in passing, promotion, checkmate patterns, basic tactics and two simple endings. Fifteen short interactive lessons."
+      "title": "Learn Chess — 16 Free Lessons",
+      "description": "Learn chess from scratch: every piece, castling, capture in passing, promotion, checkmate patterns, basic tactics and two simple endings. Sixteen short interactive lessons."
     },
     "about": {
       "title": "About This Free Chess Site",

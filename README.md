@@ -2,9 +2,9 @@
 
 # Chaturanga
 
-**Traditional chess games from across Asia. Free, no sign-up, in your own language.**
+**The chess family, from international chess to its cousins across Asia. Free, no sign-up, in your own language.**
 
-[**หมากรุกไทย · Makruk**][makruk] · [**စစ်တုရင် · Sittuyin**][sittuyin] · [**象棋 · Xiangqi**][xiangqi] · [**将棋 · Shogi**][shogi]
+[**Chess**][chess] · [**หมากรุกไทย · Makruk**][makruk] · [**စစ်တုရင် · Sittuyin**][sittuyin] · [**象棋 · Xiangqi**][xiangqi] · [**将棋 · Shogi**][shogi]
 
 [![License: GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-1cb0f6)](LICENSE)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-ff9600)](CONTRIBUTING.md)
@@ -14,9 +14,9 @@
 ---
 
 Chaturanga, the ancient Indian game, is the common ancestor of chess, Makruk, Sittuyin, Shogi and Xiangqi.
-Its descendants are still played every day across Asia, and this project brings four of them to any phone or
-computer: **learn the rules from zero**, **practise against the computer**, and **play friends online** or on
-one device.
+Its descendants are still played every day around the world, and this project brings five of them to any
+phone or computer: **learn the rules from zero**, **practise against the computer**, and **play friends
+online** or on one device.
 
 Each game has its own site, look and language. No ads, no accounts, and nothing to install unless you want to.
 
@@ -24,26 +24,33 @@ Each game has its own site, look and language. No ads, no accounts, and nothing 
 
 <table>
   <tr>
-    <td width="25%" valign="top" align="center">
+    <td width="20%" valign="top" align="center">
+      <h3><a href="https://chess.beanroti.com">Chess</a></h3>
+      <a href="https://chess.beanroti.com"><img src="apps/chess/docs/media/mobile.png" alt="Chess on a phone: home, lessons and a game" width="100%" /></a>
+      <p><b>International chess.</b> The game the world shares, with castling, the capture in passing and a
+      promotion you choose.<br />
+      English — <a href="apps/chess/README.md">about this game</a></p>
+    </td>
+    <td width="20%" valign="top" align="center">
       <h3><a href="https://th-chess.beanroti.com">หมากรุกไทย · Makruk</a></h3>
       <a href="https://th-chess.beanroti.com"><img src="apps/makruk/docs/media/mobile.png" alt="Makruk on a phone: home, lessons and a game" width="100%" /></a>
       <p><b>Thai chess.</b> Pawns promote in the middle of the board, and a bare king starts the count.<br />
       Thai · English — <a href="apps/makruk/README.md">about this game</a></p>
     </td>
-    <td width="25%" valign="top" align="center">
+    <td width="20%" valign="top" align="center">
       <h3><a href="https://my-chess.beanroti.com">စစ်တုရင် · Sittuyin</a></h3>
       <a href="https://my-chess.beanroti.com"><img src="apps/sittuyin/docs/media/mobile.png" alt="Sittuyin on a phone: home, lessons and a game" width="100%" /></a>
       <p><b>Burmese chess.</b> You arrange your own army before the first move, so no two games open alike.<br />
       Burmese · English — <a href="apps/sittuyin/README.md">about this game</a></p>
     </td>
-    <td width="25%" valign="top" align="center">
+    <td width="20%" valign="top" align="center">
       <h3><a href="https://cn-chess.beanroti.com">象棋 · Xiangqi</a></h3>
       <a href="https://cn-chess.beanroti.com"><img src="apps/xiangqi/docs/media/mobile.png" alt="Xiangqi on a phone: home, lessons and a game" width="100%" /></a>
       <p><b>Chinese chess.</b> Pieces stand on the lines, a river splits the board, and the general never
       leaves his palace.<br />
       Chinese · English — <a href="apps/xiangqi/README.md">about this game</a></p>
     </td>
-    <td width="25%" valign="top" align="center">
+    <td width="20%" valign="top" align="center">
       <h3><a href="https://jp-chess.beanroti.com">将棋 · Shogi</a></h3>
       <a href="https://jp-chess.beanroti.com"><img src="apps/shogi/docs/media/mobile.png" alt="Shogi on a phone: home, lessons and a game" width="100%" /></a>
       <p><b>Japanese chess.</b> Captured pieces change sides and come back, dropped almost anywhere on the
@@ -96,3 +103,4 @@ this project and are covered by the same license.
 [sittuyin]: https://my-chess.beanroti.com
 [xiangqi]: https://cn-chess.beanroti.com
 [shogi]: https://jp-chess.beanroti.com
+[chess]: https://chess.beanroti.com

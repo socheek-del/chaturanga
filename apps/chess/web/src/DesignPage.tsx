@@ -58,7 +58,7 @@ function Showcase({ theme }: { theme: 'light' | 'dark' }) {
           <Card className="flex flex-col gap-1">
             <p className="text-2xl font-bold">{t('design.typographySample')}</p>
             <p className="text-base">{t('design.typographySample')}</p>
-            <p className="text-sm text-muted">Chess · 将棋 · 0123456789</p>
+            <p className="text-sm text-muted">Chess · Nf3 · O-O · e8=Q · 0123456789</p>
           </Card>
         </section>
 

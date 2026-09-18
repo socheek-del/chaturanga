@@ -819,3 +819,41 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
   - **Owner:** confirm D1 (English only at launch), D7 (design identity gate) and D11 (threefold and
     fifty-move end the game automatically).
   - **Agent:** finish the open Shogi features (`sg-003`, `sg-004`), then `plat-014`, then `ch-001`.
+
+### Session 019 (chess, built and deployed)
+
+- Date: 2026-09-18
+- Goal: execute `apps/chess/docs/PLAN.md` and put the site on the internet.
+- Owner decisions taken at the start: D1 English only, D8 `chess.beanroti.com`, D11 threefold and the
+  fifty-move rule end the game automatically, D7 propose-then-ship for the design identity.
+- Done and verified:
+  - `plat-014` — `useMoveInput` holds every way a from-to pair can be played and plays one by its move
+    string; `GameScreen` renders the yes/no prompt for Shogi and one button per piece for chess. 37 board-ui
+    and 42 game-shell tests pass.
+  - `ch-001`, `ch-002` — `packages/chess`, proven against ffish 0.7.10: the full standard perft suite
+    (start position depth 5 = 4,865,609; Kiwipete depth 4; positions 3-6), 60 lock-step random games from
+    four openings comparing legal moves, SAN, FEN and the result on every ply, and the ten
+    insufficient-material cases. `packages/chess/RULES.md` records the two probed behaviours that are not
+    obvious: draws are not claimed here (D11), and the en passant square is written into a FEN whenever an
+    enemy pawn attacks it, even when the capture would be illegal.
+  - `ch-004` — the "Marble" identity, its own Staunton set drawn as SVG paths, screenshots in
+    `apps/chess/docs/evidence/`. **Owner approval still outstanding.**
+  - `ch-005`, `ch-006`, `ch-007` — the web app (86 unit tests, 23 Playwright tests), 16 lessons (80 tests),
+    and online play on its own Worker (10 workerd tests plus a two-browser room).
+  - `ch-008` — live on `chess.beanroti.com`: Worker `chess`, D1 `chess`, custom domain.
+    `npm run smoke:prod -w apps/chess/web` is 13/13 against the live site, including two browsers playing
+    a game through the deployed Worker.
+  - `ch-009` — chess joined the family list, and all four sibling sites were rebuilt and redeployed so
+    their "more games" sections include it. The live family check passes for all five sites.
+  - `ch-010` — SEO tags, sitemap, Open Graph image, PWA icons, `apps/chess/README.md`,
+    `apps/chess/AGENTS.md`, and the root README now lists five games.
+- Still open:
+  - `ch-003` (bots) is **in_progress**: the ladder has L2>L1 +7-1, L3>L2 +7-1, L4>L3 +8-0, L5>L4 +8-0, and
+    L6 vs L5 is still playing (about 6 minutes a game). The feature moves to `passing` when that pair is in
+    `packages/chess-ai/strength-results.log`.
+  - `ch-004` needs the owner to approve or change the identity.
+  - `ch-011` (a second site language) is blocked on the owner naming one.
+- Next best step:
+  - **Agent:** finish the `ch-003` ladder and record it, then `sg-003`/`sg-004` for Shogi.
+  - **Owner:** approve the chess design identity, and decide whether chess gets a second language.
+

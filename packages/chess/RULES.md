@@ -50,14 +50,16 @@ repetition and the 75-move rule can never be reached. The lock-step test against
 
 ### Insufficient material follows Fairy-Stockfish, not the FIDE wording
 
-The FIDE laws end a game only when no legal series of moves can lead to mate. Fairy-Stockfish judges each
-side separately, and this engine copies its answers exactly (probed against ffish 0.7.10):
+The FIDE laws end a game only when no legal series of moves can lead to mate. Fairy-Stockfish uses a simpler
+board-wide test, and this engine copies its answers exactly (probed against ffish 0.7.10, and checked case by
+case in `src/gameEnd.test.ts`):
 
-- a bare king, one bishop or one knight against a bare king is a draw;
-- any number of bishops on squares of **one** colour against a bare king is a draw;
-- bishops on **both** colours, or two knights, are not — those are playable positions there;
-- while each side still has a piece of its own, the position is playable, so `KB vs KB` and `KN vs KN` are
-  not draws even though neither side can force mate.
+- a pawn, a rook or a queen on the board always means the game goes on;
+- one minor piece is not enough: king and bishop, or king and knight, against a bare king is a draw;
+- bishops alone, all standing on squares of **one** colour, can never mate however many there are and
+  whoever owns them — so `KB vs KB` on one colour is a draw, and on opposite colours it is not;
+- a knight next to another minor keeps the game alive: two knights, or a knight and a bishop, are playable
+  positions there.
 
 ## FEN
 

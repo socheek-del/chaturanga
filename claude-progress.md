@@ -856,3 +856,35 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
   - **Agent:** `sg-003` / `sg-004` for Shogi, the last unfinished features besides the owner gates.
   - **Owner:** approve the chess design identity, and decide whether chess gets a second language.
 
+
+### Session 020
+
+- Date: 2026-09-21
+- Goal: finish `sg-003`, the last agent-actionable feature (session 019's next step).
+- Baseline on entry: working tree clean, `./init.sh` exit 0, 8 commits on local `main` not yet pushed.
+- `sg-003` is now `passing`. The two heavy ladder pairs had been left running in the background at the end
+  of the previous session; both finished with exit code 0.
+  - Final ladder, all five pairs, under the budgets committed in `packages/shogi-ai/src/bots.ts`:
+    L2 keima > L1 fu +6-0=0 (6 games), L3 gin > L2 keima +5-1=0 (6), L4 kin > L3 gin +5-1=0 (6),
+    L5 kaku > L4 kin +8-0=0 (8), L6 hisha > L5 kaku +6-2=0 (8). Every game ended in checkmate.
+  - The first attempt at pair 5 had failed, and the fix is recorded rather than hidden: with L6 at
+    `maxNodes` 900,000 and L5 at 500,000 the pair was +3-3=0, so the budgets were retuned (L5 down to
+    400,000, L6 up to 3,000,000) and both heavy pairs were replayed from scratch. `strength-games.log`
+    stores the bot signature with every game, which is how the failing run and the passing run were told
+    apart — the log is gitignored, so the numbers live in `feature_list.json`.
+  - Owner decision this session: accept the local 8-game runs for pairs 4 and 5 instead of the 20-game
+    Actions ladder the old note planned. An L6-L5 game takes about 1,400 s here, so 20 games a pair is
+    roughly 8 h of compute, and dispatching `strength.yml` would have required pushing the 8 waiting
+    commits (which deploy the products they touch). `strength.yml` already lists `packages/shogi-ai`, so a
+    wider ladder needs no code change later.
+- Also corrected the stale `project` line in `feature_list.json`: chess is live, not planned.
+- Nothing else in `feature_list.json` is agent-actionable. Every remaining item waits on a person:
+  `sg-004` (Kaya design approval) and `ch-004` follow-ups, `polish-002` (Thai), `sit-011` (Burmese),
+  `xq-011` (Chinese), `sg-011` (Japanese) reviews, `ch-011` (a second chess language), and
+  `acct-002`/`acct-003` (deferred by the owner).
+- Next best step:
+  - **Owner:** approve or redirect the Shogi "Kaya" design (`sg-004`) and the chess "Marble" design
+    (`ch-004` evidence); name a second chess language (`ch-011`); find native reviewers for the four
+    translation reviews; decide whether to push the 8 waiting commits, which redeploy the touched products.
+  - **Agent:** nothing is unblocked. If the owner wants the wider Shogi ladder, push and dispatch
+    `strength.yml` for `packages/shogi-ai` pairs 4 and 5.

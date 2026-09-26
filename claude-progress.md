@@ -937,7 +937,11 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
   passes.
 - Known issue, not from this work: `e2e-pwa/offline.spec.ts` "the app is installable" fails on `main` too —
   it expects manifest `lang: 'ja'` (copied from Shogi) while chess declares `en`.
-- Not merged or pushed: the branch waits for the owner. Merging will conflict with the other session only in
-  `feature_list.json` and this log (both append-only here).
+- Merged and deployed (owner go-ahead): rebased onto `origin/main` as one commit `ae7913e`, verify and chess
+  e2e (33) green again, pushed; CI green and redeployed the four sibling sites (shared `game-shell`
+  changed). Chess has no CI deploy job, so it was deployed by hand with `npm run deploy:chess` (version
+  eead9d75-c2dd-477c-ab7a-4094901c2fe8). `npm run smoke:prod -w apps/chess/web` 14 passed, including a new
+  `e2e-prod/review.spec.ts` that reviews a game on the live site.
+- Note for the next session: CI does not deploy chess on push; `npm run deploy:chess` is still manual.
 - Next best step: owner tries the review on a phone (analysis speed on a slow device is the open question;
-  `REVIEW_LIMITS` in `features/review/engine.ts` is the knob), then merge `feat/chess-review` and deploy.
+  `REVIEW_LIMITS` in `features/review/engine.ts` is the knob); consider a `deploy-chess` CI job.

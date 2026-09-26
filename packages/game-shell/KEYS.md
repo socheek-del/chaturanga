@@ -140,3 +140,12 @@ The review screens colour each label and the evaluation bar with CSS variables t
 themes, next to its other tokens: `--grade-brilliant`, `--grade-great`, `--grade-best`,
 `--grade-excellent`, `--grade-good`, `--grade-book`, `--grade-inaccuracy`, `--grade-mistake`,
 `--grade-miss`, `--grade-blunder`, and `--eval-white`, `--eval-black` for the two sides of the bar and graph.
+
+# Feedback link
+
+Every product renders `FeedbackLink` in its footer (plat-018). It needs:
+
+| Key | Used for |
+| --- | --- |
+| `feedback.link` | The footer link |
+| `feedback.<key>` for each key in `FEEDBACK_STRING_KEYS` | The feedback-hub panel and its hand-off page: `title`, `close`, `type`, `bug`, `idea`, `details`, `placeholder`, `note`, `publicNote`, `owner`, `send`, `sending`, `sent`, `failed`, `rateLimited`, `network`, `queued`, `challengeFailed`, `continue`, `handoff`, `handedOff`, `closeTab` |

@@ -3,6 +3,31 @@
   "family": {
     "title": "More games"
   },
+  "feedback": {
+    "link": "Send feedback",
+    "title": "Send feedback",
+    "close": "Close",
+    "type": "Type",
+    "bug": "Problem",
+    "idea": "Idea",
+    "details": "Details",
+    "placeholder": "What happened, or what would make this better?",
+    "note": "Also sends the page address, screen size and browser.",
+    "publicNote": "Reports are posted publicly on GitHub, so leave out personal details.",
+    "owner": "Owner mode: reports go straight to the agent queue.",
+    "send": "Send",
+    "sending": "Sending…",
+    "sent": "Thanks! Your report was sent.",
+    "failed": "Could not send. Please try again.",
+    "rateLimited": "Too many reports for now. Please try again later.",
+    "network": "Could not reach the server. Check your connection and try again.",
+    "queued": "You're offline. Saved, and it will send when you're back online.",
+    "challengeFailed": "The bot check could not load. Please try again later.",
+    "continue": "Continue",
+    "handoff": "A new tab opens for a quick bot check, then your report is sent.",
+    "handedOff": "Finish sending in the new tab.",
+    "closeTab": "You can close this tab now."
+  },
   "app": {
     "name": "Sittuyin"
   },

@@ -965,3 +965,6 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
 - Verification: `npm run verify` exit 0; chess e2e 33, Makruk e2e 74, Makruk PWA 3, chess PWA 3 passed.
 - Open: native Thai review of the new strings (polish-002); production isolation headers must be checked on
   the live site after deploy (the `_headers` file is the Cloudflare static-assets mechanism).
+- Deployed: CI green on `dde7e46` (Makruk and siblings); chess by hand (version 7f8a609d). Live checks:
+  chess `smoke:prod` 14 passed; new Makruk `smoke:prod` 2 passed (isolation headers live, engine served,
+  review works). Remaining open item: native Thai review of the new strings (polish-002).

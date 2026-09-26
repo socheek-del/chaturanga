@@ -982,4 +982,4 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
   with it. Makruk's e2e now expects the idle line to be hidden rather than absent.
 - Verification: `npm run verify` exit 0; chess mobile + computer e2e 5 passed; makruk/shogi/sittuyin/xiangqi
   computer e2e all passed.
-- Chess still needs a manual `npm run deploy:chess`; CI deploys the other four on push.
+- Deployed: CI green on `a1eb86a` (the other four sites); chess by hand (version 4693c4b1), chess `smoke:prod` 14 passed.

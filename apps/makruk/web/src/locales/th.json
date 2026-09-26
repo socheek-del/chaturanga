@@ -106,6 +106,9 @@
     "emptySquare": "{{square}} ว่าง"
   },
   "play": {
+    "attackMap": "แผนที่การโจมตี",
+    "attackMapOwn": "ช่องที่คุณโจมตี",
+    "attackMapEnemy": "ช่องที่ฝ่ายตรงข้ามโจมตี",
     "timeControl": "เวลา",
     "noClock": "ไม่จับเวลา",
     "custom": "กำหนดเอง",

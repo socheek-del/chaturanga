@@ -1,6 +1,6 @@
 {
   "project": "Chaturanga — family of traditional chess games (Makruk, Sittuyin, Xiangqi, Shogi and international chess live)",
-  "last_updated": "2026-09-21",
+  "last_updated": "2026-09-26",
   "rules": {
     "single_active_feature": true,
     "passing_requires_evidence": true,
@@ -2308,6 +2308,29 @@
         "2026-09-18: deployed (version e3aa1869-89fd-43a8-b633-2c788b434413); npm run smoke:prod -w apps/chess/web 13 passed. The Open Graph image, the README media and the design screenshots were re-captured with the traditional set on the board."
       ],
       "notes": "The Marble set stays the site’s own identity and its king is still the favicon and PWA icon (apps/chess/docs/design.md)."
+    },
+    {
+      "id": "plat-015",
+      "product": "platform",
+      "priority": 106,
+      "area": "play",
+      "milestone": "M18",
+      "title": "Attack map: a switch that tints the squares each side attacks",
+      "user_visible_behavior": "On any game screen (pass-and-play, computer, online) in every game, a switch shows an attack map: green on every square the side at the bottom of the board attacks, red on every square the other side attacks, split green/red where both do. The choice is remembered per site.",
+      "status": "passing",
+      "verification": [
+        "Every engine implements VariantGame.attackedSquares(color), and the rules-core conformance suite checks it on seeded playouts: sorted, on the board, containing every capture's target and the checked king.",
+        "Per-engine spot tests: diagonal pawn attacks (Makruk, Sittuyin, chess), the Khon's forward step, Shogi pieces in hand attack nothing, Xiangqi advisors, elephants (blocked eye), and the cannon past its screen.",
+        "board-ui and game-shell unit tests: own/enemy/both tints, a ring over an attacked piece on a points board, the switch off by default and absent unless the product passes it, perspective follows orientation.",
+        "E2E in every app: the switch tints the expected squares; Makruk and chess also check that the choice survives a reload."
+      ],
+      "evidence": [
+        "2026-09-26 (owner request, answers: red = every square the enemy attacks, green = every square I attack, allowed everywhere including online): rules-core collectAttacked + VariantGame.attackedSquares; xiangqi/src/attacks.ts attackedPoints covers the pieces its check test skips (isAttacked now reuses the shared mover scan); board-ui Board attackMap prop with optional theme.attackOwn/attackEnemy; game-shell GameScreen attackMap switch and legend (keys play.attackMap, play.attackMapOwn, play.attackMapEnemy in KEYS.md); each app stores showAttackMap in its settings and injects it in features/game/GameScreen.tsx.",
+        "2026-09-26: npm run verify exits 0. Conformance suites pass for all five engines; board-ui 39 tests; game-shell GameScreen 22 tests.",
+        "2026-09-26: Playwright: e2e/attackmap.spec.ts passes in makruk, sittuyin, xiangqi, shogi and chess. Full suites: chess 25/25; sittuyin 34/35, xiangqi 26/27, shogi 25/26, makruk 68/69 when re-run serially — the one failure in each is family.spec.ts (getByRole link 'Chess' matches every sibling whose name contains 'Chess'), which fails identically with this change stashed.",
+        "2026-09-26: screenshots at 390px and 1280px checked (Makruk squares, Xiangqi points with rings over pieces, Shogi)."
+      ],
+      "notes": "Not in lessons: the lesson player has its own board and was left out on purpose. Translations of the three new keys await the native reviews already open (polish-002, sit-011, xq-011, sg-011). The site perspective is the board's bottom side, so flipping the board swaps the colours."
     }
   ]
 }

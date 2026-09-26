@@ -54,6 +54,16 @@ export function isAttacked(board: Board, sq: Square, by: ColorIndex): boolean {
   return false;
 }
 
+/**
+ * Every square of a board with `size` squares for which `attacked` holds, in ascending order. Each engine
+ * passes its own attack test; this keeps the attack-map contract (`VariantGame.attackedSquares`) in one place.
+ */
+export function collectAttacked(size: number, attacked: (sq: Square) => boolean): Square[] {
+  const squares: Square[] = [];
+  for (let sq = 0; sq < size; sq++) if (attacked(sq)) squares.push(sq);
+  return squares;
+}
+
 /** True if colour `c` has its king on the board and it is attacked. */
 export function inCheck(board: Board, c: ColorIndex): boolean {
   const king = findKing(board, c);

@@ -7,6 +7,7 @@ import { sittuyin } from '@chaturanga/sittuyin';
 import { cleanup, fireEvent, render, type RenderResult } from '@testing-library/react';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import { useState } from 'react';
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 import { createGameSession } from '../session';
 import { GameScreen, undoAllowed } from './GameScreen';
@@ -44,6 +45,9 @@ const KEYS = {
   'play.result.blackWins': 'Black wins',
   'play.result.draw': 'Draw',
   'play.reason.checkmate': 'Checkmate',
+  'play.attackMap': 'Attack map',
+  'play.attackMapOwn': 'You attack',
+  'play.attackMapEnemy': 'Exposed',
 };
 
 const theme = {
@@ -110,6 +114,47 @@ describe('GameScreen with Makruk', () => {
     expect(useSession.getState().game.moves().map((m) => m.uci)).toEqual(['e3e4']);
     expect(view.getByTestId('turn-banner').textContent).toBe('Black to move');
     expect(view.getByTestId('move-list').textContent).toContain('e4');
+  });
+
+  it('tints the attack map from the bottom side only while the switch is on (plat-015)', () => {
+    const useSession = createGameSession(makruk);
+    useSession.getState().start(null);
+    function WithSwitch({ orientation }: { orientation: 'w' | 'b' }) {
+      const [on, setOn] = useState(false);
+      return (
+        <GameScreen
+          {...play}
+          {...identity}
+          orientation={orientation}
+          variant={makruk}
+          useSession={useSession}
+          attackMap={{ on, onToggle: setOn }}
+        />
+      );
+    }
+    const view = render(<WithSwitch orientation="w" />);
+    expect(view.container.querySelector('[data-attack]')).toBeNull();
+    expect(view.queryByText('Exposed')).toBeNull();
+
+    fireEvent.click(view.getByRole('switch', { name: 'Attack map' }));
+    // White's pawns on rank 3 hit rank 4; Black's pawns on rank 6 hit rank 5.
+    expect(square(view, 'e4').dataset.attack).toBe('own');
+    expect(square(view, 'e5').dataset.attack).toBe('enemy');
+    expect(square(view, 'e1').dataset.attack).toBe('own');
+    expect(view.getByText('Exposed')).toBeTruthy();
+
+    cleanup();
+    const flipped = render(<WithSwitch orientation="b" />);
+    fireEvent.click(flipped.getByRole('switch', { name: 'Attack map' }));
+    expect(square(flipped, 'e5').dataset.attack).toBe('own');
+    expect(square(flipped, 'e4').dataset.attack).toBe('enemy');
+  });
+
+  it('shows no attack-map switch unless the product passes one', () => {
+    const useSession = createGameSession(makruk);
+    useSession.getState().start(null);
+    const view = render(<GameScreen {...play} {...identity} variant={makruk} useSession={useSession} />);
+    expect(view.queryByTestId('attack-map')).toBeNull();
   });
 
   it('asks for a sound once per move and once when the game ends', () => {

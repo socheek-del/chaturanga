@@ -51,6 +51,9 @@
     "onlineDesc": "用房间号邀请朋友，或快速匹配。"
   },
   "play": {
+    "attackMap": "攻击范围",
+    "attackMapOwn": "你攻击的位置",
+    "attackMapEnemy": "对方攻击的位置",
     "start": "开始",
     "turn": "轮到{{color}}",
     "check": "将军",

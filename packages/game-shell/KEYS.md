@@ -43,6 +43,7 @@ not in a separate reason string.
 | `play.promote` | The variant allows promotion in place, e.g. Sittuyin |
 | `play.promoteAsk`, `play.promoteYes`, `play.promoteNo` | The variant has an **optional** promotion, so the same move can be played promoted or not, e.g. Shogi |
 | `play.promoteTo` | A promotion offers a **choice of pieces**, e.g. chess. The prompt draws one button per piece through `renderPiece`, and the product also passes `describePromotion` to name each one |
+| `play.attackMap`, `play.attackMapOwn`, `play.attackMapEnemy` | The product passes `attackMap` to `GameScreen` (plat-015): the switch's name, and the legend for the green (squares you attack) and red (squares the opponent attacks) tints |
 
 The hand trays take their names as props (`handLabel`, `describeHandPiece`) rather than keys, because a
 tray is named after the game's own pieces.

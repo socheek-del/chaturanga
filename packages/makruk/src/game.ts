@@ -21,13 +21,14 @@ import {
   encodeMove,
   generateLegalMoves,
   inCheck,
+  isAttacked,
   isPromotion,
   makeRaw,
   moveFrom,
   moveTo,
   unmakeRaw,
 } from './movegen';
-import { IllegalMoveError } from '@chaturanga/rules-core';
+import { collectAttacked, IllegalMoveError, toColorIndex } from '@chaturanga/rules-core';
 import type { Color, CountingState, GameStatus, Move, MoveRecord, Piece, PieceType, Square } from './types';
 
 export { IllegalMoveError };
@@ -204,6 +205,10 @@ export class Game {
     if (!this.inCheck()) return null;
     const code = KING | (this.turnIndex ? BLACK : 0);
     return this.board.findIndex((p) => p === code);
+  }
+
+  attackedSquares(color: Color): Square[] {
+    return collectAttacked(64, (sq) => isAttacked(this.board, sq, toColorIndex(color)));
   }
 
   moves(): MoveRecord[] {

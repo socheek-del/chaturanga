@@ -36,6 +36,12 @@ export interface VariantGame {
   inCheck(): boolean;
   /** Square of the side-to-move's king if it is in check, otherwise null. */
   checkedKingSquare(): Square | null;
+  /**
+   * Every square a piece of `color` on the board attacks: where it could capture an enemy piece standing
+   * there, ignoring pins and whose turn it is. Squares holding `color`'s own pieces count (they are
+   * defended). Pieces in hand attack nothing. Drives the attack-map overlay (plat-015).
+   */
+  attackedSquares(color: Color): Square[];
   /** Running count of a counting rule, in plies; null when no count is running. */
   counting(): { limitPlies: number; plies: number } | null;
 }

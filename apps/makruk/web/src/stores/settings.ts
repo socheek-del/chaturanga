@@ -17,6 +17,8 @@ export interface Settings {
   sound: boolean;
   haptics: boolean;
   showCoordinates: boolean;
+  /** Tint the squares each side attacks on the game screen (plat-015). */
+  showAttackMap: boolean;
   passAndPlayView: PassAndPlayView;
   timeControl: TimeControlChoice;
   computerLevel: number;
@@ -37,6 +39,7 @@ export const DEFAULT_SETTINGS: Settings = {
   sound: true,
   haptics: true,
   showCoordinates: true,
+  showAttackMap: false,
   passAndPlayView: 'fixed',
   timeControl: { kind: 'none' },
   computerLevel: 2,

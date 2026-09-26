@@ -106,6 +106,9 @@
     "emptySquare": "{{square}} empty"
   },
   "play": {
+    "attackMap": "Attack map",
+    "attackMapOwn": "You attack",
+    "attackMapEnemy": "Opponent attacks",
     "timeControl": "Time control",
     "noClock": "No clock",
     "custom": "Custom",

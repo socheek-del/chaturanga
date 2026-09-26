@@ -14,6 +14,7 @@ type Injected =
   | 'variant'
   | 'theme'
   | 'showCoordinates'
+  | 'attackMap'
   | 'renderPiece'
   | 'boardLabel'
   | 'describeSquare'
@@ -32,6 +33,8 @@ export function GameScreen(props: GameScreenProps) {
   const { t } = useTranslation();
   const theme = boardTheme(useSettings((st) => st.boardTheme));
   const showCoordinates = useSettings((st) => st.showCoordinates);
+  const showAttackMap = useSettings((st) => st.showAttackMap);
+  const updateSettings = useSettings((st) => st.update);
 
   const pieceName = (piece: Piece) =>
     t('board.pieceName', {
@@ -45,6 +48,7 @@ export function GameScreen(props: GameScreenProps) {
       variant={sittuyin}
       theme={theme}
       showCoordinates={showCoordinates}
+      attackMap={{ on: showAttackMap, onToggle: (on) => updateSettings({ showAttackMap: on }) }}
       renderPiece={(piece, className) => <PieceSvg piece={piece as Piece} className={className} />}
       boardLabel={t('board.label')}
       describeSquare={(square, piece) =>

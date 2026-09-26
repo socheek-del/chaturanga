@@ -60,6 +60,9 @@
     "onlineDesc": "合言葉で友達を招くか、相手を探します。"
   },
   "play": {
+    "attackMap": "利きを表示",
+    "attackMapOwn": "自分の利き",
+    "attackMapEnemy": "相手の利き",
     "start": "開始",
     "turn": "{{color}}の番",
     "check": "王手",

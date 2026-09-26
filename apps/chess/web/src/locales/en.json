@@ -50,6 +50,9 @@
     "onlineDesc": "Invite a friend with a code, or get matched."
   },
   "play": {
+    "attackMap": "Attack map",
+    "attackMapOwn": "You attack",
+    "attackMapEnemy": "Opponent attacks",
     "start": "Start",
     "turn": "{{color}} to move",
     "check": "Check",

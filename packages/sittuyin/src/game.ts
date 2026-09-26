@@ -2,11 +2,13 @@ import {
   BLACK,
   type Board,
   type ColorIndex,
+  collectAttacked,
   colorBits,
   FERZ,
   fileOf,
   IllegalMoveError,
   inCheck,
+  isAttacked,
   KING,
   KNIGHT,
   parseSquare,
@@ -16,6 +18,7 @@ import {
   SILVER,
   squareName,
   toColor,
+  toColorIndex,
   TYPE_MASK,
 } from '@chaturanga/rules-core';
 import { codeToPiece, HAND_ORDER, handCount, typeFromChar } from './board';
@@ -195,6 +198,10 @@ export class Game {
   checkedKingSquare(): Square | null {
     if (!this.inCheck()) return null;
     return this.pos.board.findIndex((p) => p === (KING | colorBits(this.pos.turn)));
+  }
+
+  attackedSquares(color: Color): Square[] {
+    return collectAttacked(64, (sq) => isAttacked(this.pos.board, sq, toColorIndex(color)));
   }
 
   moves(): MoveRecord[] {

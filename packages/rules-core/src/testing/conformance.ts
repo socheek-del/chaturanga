@@ -3,7 +3,7 @@
  * can rely on the same behaviour from any game.
  */
 import { describe, expect, it } from 'vitest';
-import { squareNameOf } from '../coords';
+import { squareNameOf, squareOf } from '../coords';
 import { FenError, IllegalMoveError } from '../errors';
 import type { Color } from '../types';
 import type { Variant, VariantGame } from '../variant';
@@ -98,6 +98,33 @@ export function describeVariantConformance<G extends VariantGame>(
         }
         expect(game.fen()).toBe(fens[0]);
         expect(game.undo()).toBeNull();
+      }
+    });
+
+    it('attackedSquares covers every capture and every check, on the board only (plat-015)', () => {
+      const boardSize = variant.files * variant.ranks;
+      for (let seed = 1; seed <= PLAYOUT_SEEDS; seed++) {
+        const rand = mulberry32(seed);
+        const game = variant.createGame();
+        while (!game.isGameOver() && game.moves().length < PLAYOUT_PLIES) {
+          const side = game.turn;
+          const own = game.attackedSquares(side);
+          const enemy = game.attackedSquares(side === 'w' ? 'b' : 'w');
+          for (const squares of [own, enemy]) {
+            expect(squares).toEqual([...new Set(squares)].sort((a, b) => a - b));
+            for (const sq of squares) expect(sq >= 0 && sq < boardSize).toBe(true);
+          }
+          const checked = game.checkedKingSquare();
+          if (checked !== null) expect(enemy, `seed ${seed}: check is an attack`).toContain(checked);
+          const legal = game.legalUci();
+          for (const uci of legal) {
+            if (uci.includes('@')) continue;
+            const to = squareOf(uci.match(/[a-p]\d{1,2}/g)!.at(-1)!, variant.files)!;
+            const target = game.pieceAt(to);
+            if (target && target.color !== side) expect(own, `seed ${seed}: ${uci} captures`).toContain(to);
+          }
+          game.move(legal[Math.floor(rand() * legal.length)]!);
+        }
       }
     });
 

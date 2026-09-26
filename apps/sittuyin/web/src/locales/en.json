@@ -57,6 +57,9 @@
     "placingBot": "{{name}} is placing a piece"
   },
   "play": {
+    "attackMap": "Attack map",
+    "attackMapOwn": "You attack",
+    "attackMapEnemy": "Opponent attacks",
     "white": "White",
     "black": "Black",
     "start": "Start",

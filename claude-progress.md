@@ -888,3 +888,26 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
     translation reviews; decide whether to push the 8 waiting commits, which redeploy the touched products.
   - **Agent:** nothing is unblocked. If the owner wants the wider Shogi ladder, push and dispatch
     `strength.yml` for `packages/shogi-ai` pairs 4 and 5.
+
+### Session 021
+
+- Date: 2026-09-26
+- Goal: owner request, an attack-map switch in every game (`plat-015`).
+- Baseline on entry: working tree clean, `./init.sh` exit 0.
+- Owner answers before building: red is every square the opponent attacks, green is every square the
+  player attacks, a square in both is split, and the switch is allowed everywhere, online included.
+- `plat-015` is `passing`:
+  - `VariantGame.attackedSquares(color)` in all five engines, checked by the rules-core conformance suite
+    and by spot tests per engine. Xiangqi needed its own scan (`attackedPoints`), because its check test
+    skips advisors, elephants and general steps.
+  - `board-ui` draws the tints (a ring over the art for a piece on a points board), `game-shell` shows the
+    switch and legend, and each app remembers `showAttackMap` in its settings.
+- Known issue found, not caused by this work: `e2e/family.spec.ts` fails in makruk, sittuyin, xiangqi and
+  shogi, because the link name 'Chess' now matches several siblings. It fails the same with the change
+  stashed. Online and clock specs failed once under parallel load and passed when re-run serially.
+- Not pushed: pushing to `main` redeploys every product, so that stays the owner's call (the earlier
+  unpushed commits are still waiting too).
+- Next best step:
+  - **Agent:** fix the `family.spec.ts` locator (exact link names).
+  - **Owner:** try the switch, then push to deploy. The native reviewers should also check the new
+    `play.attackMap*` strings.

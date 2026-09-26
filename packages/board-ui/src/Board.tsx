@@ -10,7 +10,7 @@ import {
   useSyncExternalStore,
 } from 'react';
 import { squareNameOf } from './coords';
-import type { BoardTheme } from './theme';
+import { type BoardTheme, DEFAULT_ATTACK_ENEMY, DEFAULT_ATTACK_OWN } from './theme';
 
 export interface BoardHandle {
   /** Square under a viewport point, or null outside the board (used to drop pieces dragged from a hand tray). */
@@ -55,6 +55,11 @@ export interface BoardProps {
   hint?: { from?: Square | null; to: Square } | null;
   /** Squares a lesson is pointing at, marked the same way as a hint (plat-014). */
   hintSquares?: readonly Square[];
+  /**
+   * Attack map (plat-015): `own` squares are tinted green (the viewer's reach), `enemy` squares red (where the
+   * viewer is exposed), and a square in both is split between the two colours. Drawn under the pieces.
+   */
+  attackMap?: { own: readonly Square[]; enemy: readonly Square[] } | null;
   /** Slide the piece that just moved; `key` changes once per move. Drops and in-place moves do not slide. */
   animate?: { from?: Square | null; to: Square; key: string } | null;
   onSquareClick?: (square: Square) => void;
@@ -74,6 +79,19 @@ export interface BoardProps {
   underlay?: ReactNode;
   className?: string;
 }
+
+const RING_MASK = 'radial-gradient(farthest-side, transparent calc(100% - 14%), #000 calc(100% - 13%))';
+
+/** Fill of an attack-map mark; a ring is drawn opaque so it stays visible over the piece art. */
+function attackFill(attack: 'own' | 'enemy' | 'both', own: string, enemy: string, ring = false): string {
+  const [o, e] = ring ? [opaque(own), opaque(enemy)] : [own, enemy];
+  if (attack === 'own') return o;
+  if (attack === 'enemy') return e;
+  return ring ? `conic-gradient(${o} 0 50%, ${e} 50% 100%)` : `linear-gradient(135deg, ${o} 50%, ${e} 50%)`;
+}
+
+/** Drops the alpha of an `rgba()` colour; any other colour passes through. */
+const opaque = (color: string) => color.replace(/^rgba\((\s*[\d.]+\s*,\s*[\d.]+\s*,\s*[\d.]+\s*),\s*[\d.]+\s*\)$/, 'rgb($1)');
 
 interface DragState {
   from: Square;
@@ -128,6 +146,7 @@ export function Board({
   checkSquare = null,
   hint = null,
   hintSquares,
+  attackMap = null,
   animate = null,
   onSquareClick,
   canDrag,
@@ -181,6 +200,10 @@ export function Board({
   const targetSet = new Set(targets);
   const hintSet = new Set(hintSquares ?? []);
   const promotionSet = new Set(promotionTargets);
+  const attackOwn = new Set(attackMap?.own ?? []);
+  const attackEnemy = new Set(attackMap?.enemy ?? []);
+  const ownTint = theme.attackOwn ?? DEFAULT_ATTACK_OWN;
+  const enemyTint = theme.attackEnemy ?? DEFAULT_ATTACK_ENEMY;
 
   const startDrag = (square: Square, e: ReactPointerEvent) => {
     const piece = bySquare.get(square);
@@ -233,6 +256,13 @@ export function Board({
       const isHint = marks(hint, square) || hintSet.has(square);
       const highlight = square === selected ? theme.selected : isLast ? theme.lastMove : undefined;
       const dragging = drag?.active && drag.from === square;
+      const attack = attackOwn.has(square)
+        ? attackEnemy.has(square)
+          ? 'both'
+          : 'own'
+        : attackEnemy.has(square)
+          ? 'enemy'
+          : undefined;
 
       cells.push(
         <button
@@ -245,6 +275,7 @@ export function Board({
           data-last-move={isLast || undefined}
           data-check={square === checkSquare || undefined}
           data-hint={isHint || undefined}
+          data-attack={attack}
           aria-label={describeSquare(name, piece ?? null)}
           aria-selected={square === selected}
           onPointerDown={(e) => startDrag(square, e)}
@@ -252,6 +283,9 @@ export function Board({
           className="relative min-h-0 min-w-0 select-none focus-visible:z-10 focus-visible:outline-3 focus-visible:outline-secondary"
           style={points ? undefined : { background: theme.board }}
         >
+          {attack && !(points && piece) && (
+            <span aria-hidden className={mark} style={{ background: attackFill(attack, ownTint, enemyTint) }} />
+          )}
           {highlight && <span className={mark} style={{ background: highlight }} />}
           {hovered === square && <span className={cx(mark, 'border-4')} style={{ borderColor: theme.selected }} />}
           {isHint && <span className={cx(mark, 'animate-pulse border-4 border-gold bg-gold/25')} />}
@@ -291,6 +325,15 @@ export function Board({
             >
               {renderPiece(piece, 'h-full w-full drop-shadow-sm')}
             </span>
+          )}
+          {/* A piece on a point covers the whole disc, so an attacked piece there gets a ring over its art. */}
+          {attack && points && piece && (
+            <span
+              aria-hidden
+              data-attack-ring
+              className="absolute inset-[1%] rounded-full"
+              style={{ background: attackFill(attack, ownTint, enemyTint, true), mask: RING_MASK, WebkitMask: RING_MASK }}
+            />
           )}
           {isTarget &&
             (piece && !isPromotion ? (

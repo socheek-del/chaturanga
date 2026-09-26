@@ -132,6 +132,30 @@ describe('Board (plat-005a)', () => {
     expect(view.container.querySelectorAll('[data-hint]')).toHaveLength(1);
   });
 
+  it('tints the attack map: own green, enemy red, both split, none without a map (plat-015)', () => {
+    const view = render(<Board {...base} pieces={[]} attackMap={{ own: [0, 1], enemy: [1, 2] }} />);
+    const at = (name: string) => view.container.querySelector<HTMLElement>(`[data-square="${name}"]`)!;
+    expect(at('a1').dataset.attack).toBe('own');
+    expect(at('b1').dataset.attack).toBe('both');
+    expect(at('c1').dataset.attack).toBe('enemy');
+    expect(at('d1').dataset.attack).toBeUndefined();
+    expect(at('b1').querySelector('span')!.style.background).toContain('linear-gradient');
+    cleanup();
+    const plain = render(<Board {...base} pieces={[]} />);
+    expect(plain.container.querySelector('[data-attack]')).toBeNull();
+  });
+
+  it('rings an attacked piece on a points board, where the piece would hide a disc (plat-015)', () => {
+    const pieces = [{ square: 0, piece: { color: 'w', type: 'r', promoted: false } as Piece }];
+    const view = render(
+      <Board {...base} pieces={pieces} files={9} ranks={10} grid="points" attackMap={{ own: [], enemy: [0, 1] }} />,
+    );
+    const at = (name: string) => view.container.querySelector<HTMLElement>(`[data-square="${name}"]`)!;
+    expect(at('a1').querySelector('[data-attack-ring]')).not.toBeNull();
+    expect(at('b1').querySelector('[data-attack-ring]')).toBeNull();
+    expect(at('b1').dataset.attack).toBe('enemy');
+  });
+
   it('reports square taps and maps viewport points to squares through its handle', () => {
     const onSquareClick = vi.fn();
     const handle = createRef<BoardHandle>();

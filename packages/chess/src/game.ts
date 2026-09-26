@@ -1,5 +1,5 @@
-import { IllegalMoveError } from '@chaturanga/rules-core';
-import { findKing, inCheck } from './attacks';
+import { collectAttacked, IllegalMoveError } from '@chaturanga/rules-core';
+import { findKing, inCheck, isAttacked } from './attacks';
 import {
   BLACK,
   codeToPiece,
@@ -13,6 +13,7 @@ import {
   sanLetter,
   squareName,
   toColor,
+  toColorIndex,
   TYPE_MASK,
   typeFromChar,
 } from './board';
@@ -115,6 +116,10 @@ export class Game {
     if (!this.inCheck()) return null;
     const square = findKing(this.pos.board, this.pos.turn);
     return square >= 0 ? square : null;
+  }
+
+  attackedSquares(color: Color): Square[] {
+    return collectAttacked(64, (sq) => isAttacked(this.pos.board, sq, toColorIndex(color)));
   }
 
   moves(): MoveRecord[] {

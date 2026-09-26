@@ -1,6 +1,6 @@
 import { type Board, type ColorIndex, IllegalMoveError, squareNameOf, squareOf, toColor } from '@chaturanga/rules-core';
-import { BLACK, codeToPiece, fileOf, FILES, rankOf, SAN_LETTER, TYPE_MASK } from './board';
-import { findGeneral, inCheck } from './attacks';
+import { BLACK, codeToPiece, fileOf, FILES, rankOf, SAN_LETTER, toColorIndex, TYPE_MASK } from './board';
+import { attackedPoints, findGeneral, inCheck } from './attacks';
 import { parseFen, serializeFen, START_FEN } from './fen';
 import { encodeMove, generateLegalMoves, makeRaw, moveFrom, moveTo, unmakeRaw } from './movegen';
 import { type GameState, isInsufficientMaterial, nextState, optionalGameEnd, rootState } from './gameEnd';
@@ -79,6 +79,10 @@ export class Game {
     if (!this.inCheck()) return null;
     const square = findGeneral(this.board, this.side);
     return square >= 0 ? square : null;
+  }
+
+  attackedSquares(color: Color): Square[] {
+    return attackedPoints(this.board, toColorIndex(color));
   }
 
   moves(): MoveRecord[] {

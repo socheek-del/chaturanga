@@ -14,6 +14,8 @@ export interface Settings {
   /** What is written on a piece: its character, a diagram of its moves, or a Latin letter (xq-012). */
   pieceSet: PieceSetId;
   showCoordinates: boolean;
+  /** Tint the squares each side attacks on the game screen (plat-015). */
+  showAttackMap: boolean;
   timeControl: TimeControlChoice;
   computerLevel: number;
   computerSide: 'w' | 'b' | 'random';
@@ -31,6 +33,7 @@ export const DEFAULT_SETTINGS: Settings = {
   boardTheme: 'maple',
   pieceSet: 'characters',
   showCoordinates: false,
+  showAttackMap: false,
   timeControl: { kind: 'none' },
   computerLevel: 2,
   computerSide: 'w',

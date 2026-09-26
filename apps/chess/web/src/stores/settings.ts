@@ -14,6 +14,8 @@ export interface Settings {
   /** Which piece art to draw: the traditional Staunton set, or this site's own (ch-012). */
   pieceSet: PieceSetId;
   showCoordinates: boolean;
+  /** Tint the squares each side attacks on the game screen (plat-015). */
+  showAttackMap: boolean;
   timeControl: TimeControlChoice;
   computerLevel: number;
   computerSide: 'w' | 'b' | 'random';
@@ -31,6 +33,7 @@ export const DEFAULT_SETTINGS: Settings = {
   boardTheme: 'marble',
   pieceSet: DEFAULT_PIECE_SET,
   showCoordinates: true,
+  showAttackMap: false,
   timeControl: { kind: 'none' },
   computerLevel: 2,
   computerSide: 'w',

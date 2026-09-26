@@ -1,4 +1,4 @@
-import { IllegalMoveError, squareNameOf, squareOf } from '@chaturanga/rules-core';
+import { collectAttacked, IllegalMoveError, squareNameOf, squareOf } from '@chaturanga/rules-core';
 import {
   BLACK,
   codeToPiece,
@@ -13,7 +13,7 @@ import {
   toColorIndex,
   typeFromChar,
 } from './board';
-import { findKing, inCheck } from './attacks';
+import { findKing, inCheck, isAttacked } from './attacks';
 import { handsOf, parseFen, placementOf, serializeFen, START_FEN } from './fen';
 import {
   dropType,
@@ -123,6 +123,10 @@ export class Game {
     if (!this.inCheck()) return null;
     const square = findKing(this.pos.board, this.pos.turn);
     return square >= 0 ? square : null;
+  }
+
+  attackedSquares(color: Color): Square[] {
+    return collectAttacked(this.pos.board.length, (sq) => isAttacked(this.pos.board, sq, toColorIndex(color)));
   }
 
   moves(): MoveRecord[] {

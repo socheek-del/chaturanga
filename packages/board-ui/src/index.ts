@@ -6,7 +6,7 @@
 export { Board, type BoardHandle, type BoardProps, pieceCode } from './Board';
 export { type ParsedMove, parseUci, squareNameOf, squareOf } from './coords';
 export { HandTray, type HandTrayProps } from './HandTray';
-export type { BoardTheme } from './theme';
+export { type BoardTheme, DEFAULT_ATTACK_ENEMY, DEFAULT_ATTACK_OWN } from './theme';
 export {
   type MoveInput,
   type MoveInputOptions,

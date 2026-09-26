@@ -16,6 +16,8 @@ export interface Settings {
   /** Give the far player's pieces their own wood, for players who read the rotation slowly. */
   tintGote: boolean;
   showCoordinates: boolean;
+  /** Tint the squares each side attacks on the game screen (plat-015). */
+  showAttackMap: boolean;
   timeControl: TimeControlChoice;
   computerLevel: number;
   computerSide: 'w' | 'b' | 'random';
@@ -34,6 +36,7 @@ export const DEFAULT_SETTINGS: Settings = {
   pieceSet: 'kanji',
   tintGote: false,
   showCoordinates: false,
+  showAttackMap: false,
   timeControl: { kind: 'none' },
   computerLevel: 2,
   computerSide: 'w',

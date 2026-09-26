@@ -1,4 +1,13 @@
-import { Board, type BoardHandle, type BoardTheme, HandTray, parseUci, useMoveInput } from '@chaturanga/board-ui';
+import {
+  Board,
+  type BoardHandle,
+  type BoardTheme,
+  DEFAULT_ATTACK_ENEMY as ATTACK_ENEMY,
+  DEFAULT_ATTACK_OWN as ATTACK_OWN,
+  HandTray,
+  parseUci,
+  useMoveInput,
+} from '@chaturanga/board-ui';
 import {
   type Color,
   type Piece,
@@ -8,7 +17,7 @@ import {
   type Variant,
   type VariantGame,
 } from '@chaturanga/rules-core';
-import { Button, Card, Modal } from '@chaturanga/ui';
+import { Button, Card, Modal, Switch } from '@chaturanga/ui';
 import { type CSSProperties, type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { capturedBy, type GameResult, isUndoableResult, materialBalance } from '../result';
@@ -71,6 +80,11 @@ export interface GameScreenProps<G extends VariantGame> {
   rankLabels?: readonly string[];
   /** Drawn under the pieces, such as a Xiangqi board's lines, river and palaces. */
   boardUnderlay?: ReactNode;
+  /**
+   * The attack-map switch (plat-015). When given, the screen shows a switch; while it is on, the board tints
+   * every square the side at the bottom attacks green and every square the other side attacks red.
+   */
+  attackMap?: { on: boolean; onToggle: (on: boolean) => void };
 }
 
 export function GameScreen<G extends VariantGame>({
@@ -105,6 +119,7 @@ export function GameScreen<G extends VariantGame>({
   boardUnderlay,
   fileLabels,
   rankLabels,
+  attackMap,
 }: GameScreenProps<G>) {
   const { t } = useTranslation();
   const s = useSession();
@@ -165,6 +180,11 @@ export function GameScreen<G extends VariantGame>({
   const asksYesNo = !!plainChoice && promotingChoices.length === 1;
 
   const top: Color = orientation === 'w' ? 'b' : 'w';
+  const showAttacks = !!attackMap?.on;
+  const attacks = useMemo(
+    () => (showAttacks ? { own: shown.attackedSquares(orientation), enemy: shown.attackedSquares(top) } : null),
+    [showAttacks, shown, orientation, top, version], // eslint-disable-line react-hooks/exhaustive-deps
+  );
   const times = clock ? timesAt(clock, now) : null;
   const balance = materialBalance(shown, pieceValues);
   const lastRecord = shownPly > 0 ? records[shownPly - 1]! : null;
@@ -243,6 +263,7 @@ export function GameScreen<G extends VariantGame>({
           lastMove={last ? { from: last.from, to: last.to } : null}
           checkSquare={shown.checkedKingSquare()}
           hint={viewPly === null ? hint : null}
+          attackMap={attacks}
           animate={viewPly === null && last ? { from: last.from, to: last.to, key: `${livePly}` } : null}
           selected={input.selected}
           targets={input.targets}
@@ -283,6 +304,26 @@ export function GameScreen<G extends VariantGame>({
         )}
         {renderCounting?.(shown)}
         {actions}
+        {attackMap && (
+          <Card data-testid="attack-map" className="flex flex-col gap-1.5 py-2">
+            <div className="flex items-center justify-between gap-3">
+              <span className="font-bold">{t('play.attackMap')}</span>
+              <Switch checked={attackMap.on} onChange={attackMap.onToggle} label={t('play.attackMap')} />
+            </div>
+            {attackMap.on && (
+              <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm">
+                <span className="flex items-center gap-1.5">
+                  <span aria-hidden className="h-3.5 w-3.5 rounded-sm" style={{ background: theme.attackOwn ?? ATTACK_OWN }} />
+                  {t('play.attackMapOwn')}
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <span aria-hidden className="h-3.5 w-3.5 rounded-sm" style={{ background: theme.attackEnemy ?? ATTACK_ENEMY }} />
+                  {t('play.attackMapEnemy')}
+                </span>
+              </div>
+            )}
+          </Card>
+        )}
       </div>
       </div>
 

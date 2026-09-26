@@ -4,8 +4,8 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { chess, START_FEN } from '@chaturanga/chess';
 import { afterAll, describe, expect, it } from 'vitest';
-import { reviewGame, terminalEval } from './analysis';
-import { type PositionEval, UciEngine, type UciTransport } from './engine';
+import { type PositionEval, reviewGame, terminalEval, UciEngine, type UciTransport } from '@chaturanga/game-shell';
+import { chessReview } from './kit';
 import { type BookData, OpeningBook } from './openings';
 import raw from './openings/book.json';
 
@@ -64,7 +64,7 @@ describe('Stockfish analysis (ch-015)', () => {
       evals.push(terminalEval(game) ?? (await engine.analyse(game.fen(), { depth: 10, movetime: 2000 })));
       if (i < moves.length) game.move(moves[i]!);
     }
-    const review = reviewGame({ startFen: START_FEN, moves, evals, book: new OpeningBook(raw as unknown as BookData) });
+    const review = reviewGame({ rules: chessReview.rules, startFen: START_FEN, moves, evals, book: new OpeningBook(raw as unknown as BookData) });
     const labels = review.moves.map((m) => `${m.san}:${m.label}`);
     expect(labels[0]).toBe('e4:book');
     // 4. Nxe5 is already dubious; 5. Nxf7 loses outright.

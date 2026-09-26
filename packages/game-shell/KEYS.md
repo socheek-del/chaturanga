@@ -103,3 +103,40 @@ Every family site shows its siblings (`MoreGames`, plat-006). The sibling names 
 | Key | Used for |
 | --- | --- |
 | `family.title` | Heading of the home-page section, and the label of the footer line |
+
+# Saved games and game review
+
+Only a product that saves and reviews games needs these (`GamesScreen`, `ReviewScreen`, plat-017), plus a
+`ReviewKit` (engine, rules, stores, PGN) and a `review` action on its game screen's result dialog.
+
+## Keys
+
+| Key | Used for |
+| --- | --- |
+| `games.title`, `games.storedHere`, `games.empty`, `games.emptyHint` | Games list heading and empty state |
+| `games.import`, `games.importTitle`, `games.importLabel`, `games.importSubmit` | PGN import |
+| `games.importIllegal` (`{{move}}`, `{{number}}`), `games.importUnreadable` | PGN import errors |
+| `games.review`, `games.pgn`, `games.pgnTitle`, `games.copy`, `games.copied`, `games.download` | Row actions and PGN dialog |
+| `games.delete`, `games.deleteConfirm` | Deleting a game |
+| `games.versus` (`{{white}}`, `{{black}}`), `games.moveCount_*` (`{{count}}`) | Row text; plural forms per language |
+| `games.mode.<mode>`, `games.event.<mode>` | `computer`, `local`, `online`, `imported`: row label and PGN Event tag |
+| `games.outcome.<outcome>` | `won`, `lost`, `draw`, `whiteWins`, `blackWins`, `unfinished` |
+| `computer.you`, `online.opponent`, `colors.w`, `colors.b` | Player names |
+| `play.reason.<reason>` | PGN Termination tag |
+| `play.moves`, `play.flip`, `play.cancel` | Move list heading, flip button, dialogs |
+| `review.title`, `review.analysing`, `review.progress` (`{{done}}`, `{{total}}`), `review.error` | Analysis state |
+| `review.notFound`, `review.backToGames`, `review.accuracy`, `review.start`, `review.summary` | Summary card |
+| `review.next`, `review.previous`, `review.graph`, `review.evalBar` (`{{score}}`) | Walk controls, graph, bar |
+| `review.startPosition`, `review.bestWas` (`{{move}}`), `review.line` (`{{line}}`) | Coach card |
+| `review.labelName.<label>`, `review.verdict.<label>` (`{{move}}`), `review.explain.<label>` | One per label: `brilliant`, `great`, `best`, `excellent`, `good`, `book`, `inaccuracy`, `mistake`, `miss`, `blunder` (a product without an opening book may leave out `book`) |
+| `review.engineCredit` | Credit line under the review |
+
+The product's own result dialog button (`review.label` of `GameScreen`) needs its own key; chess uses
+`play.gameReview`.
+
+## Colour tokens
+
+The review screens colour each label and the evaluation bar with CSS variables the product defines in both
+themes, next to its other tokens: `--grade-brilliant`, `--grade-great`, `--grade-best`,
+`--grade-excellent`, `--grade-good`, `--grade-book`, `--grade-inaccuracy`, `--grade-mistake`,
+`--grade-miss`, `--grade-blunder`, and `--eval-white`, `--eval-black` for the two sides of the bar and graph.

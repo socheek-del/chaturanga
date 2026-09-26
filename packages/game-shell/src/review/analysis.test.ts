@@ -1,12 +1,52 @@
 import { chess, START_FEN } from '@chaturanga/chess';
 import { describe, expect, it } from 'vitest';
-import { exchangeGain, gameAccuracy, hangingBefore, type Label, moveAccuracy, reviewGame, sacrificeValue, sanOf, terminalEval, winPercent } from './analysis';
+import {
+  exchangeGain,
+  gameAccuracy,
+  hangingBefore,
+  type Label,
+  moveAccuracy,
+  type ReviewRules,
+  reviewGame,
+  sacrificeValue,
+  sanOf,
+  terminalEval,
+  winPercent,
+} from './analysis';
 import type { PositionEval } from './engine';
-import { type BookData, OpeningBook } from './openings';
-import raw from './openings/book.json';
+import { type BookData, OpeningBook, positionHash } from './openings';
 import type { Score } from './uci';
 
-const book = new OpeningBook(raw as unknown as BookData);
+/** The chess product's rules for review: its material, and a passed turn that drops the en passant square. */
+const rules: ReviewRules = {
+  variant: chess,
+  pieceValues: { k: 0, q: 9, r: 5, b: 3, n: 3, p: 1 },
+  passTurn: (fen) => {
+    const f = fen.split(' ');
+    f[1] = f[1] === 'w' ? 'b' : 'w';
+    f[3] = '-';
+    return f.join(' ');
+  },
+};
+
+/** A small book in the shape a product ships: two lines, the Italian and the Barnes Opening's trap. */
+function bookOf(lines: Array<[eco: string, name: string, moves: string[]]>): OpeningBook {
+  const data: BookData = { passing: [], named: {} };
+  for (const [eco, name, moves] of lines) {
+    const game = chess.createGame();
+    for (const m of moves) {
+      game.move(m);
+      data.passing.push(positionHash(game.fen()));
+    }
+    data.named[positionHash(game.fen())] = [eco, name];
+  }
+  return new OpeningBook(data);
+}
+const book = bookOf([
+  ['C50', 'Italian Game: Two Knights', ['e2e4', 'e7e5', 'g1f3', 'b8c6']],
+  ['A00', "Barnes Opening: Fool's Mate", ['f2f3', 'e7e5', 'g2g4', 'd8h4']],
+  ['A00', 'Barnes Opening', ['f2f3']],
+]);
 
 /** Centipawns (White's side) for a win percentage: the inverse of the Lichess curve. */
 const cpFor = (win: number): number => Math.round(-Math.log(2 / ((win - 50) / 50 + 1) - 1) / 0.00368208);
@@ -19,7 +59,7 @@ const ev = (score: Score, pv: string[] = [], second?: { score: Score; pv: string
 
 /** Labels of a one-move game from `fen`: White's move `uci`, with the engine's view before and after. */
 function labelOf(fen: string, uci: string, before: PositionEval, after: PositionEval): Label {
-  return reviewGame({ startFen: fen, moves: [uci], evals: [before, after], book: null }).moves[0]!.label;
+  return reviewGame({ rules, startFen: fen, moves: [uci], evals: [before, after], book: null }).moves[0]!.label;
 }
 
 const OPEN = 'r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3';
@@ -78,18 +118,18 @@ describe('move labels (ch-015)', () => {
   it('Book while the game stays on a named line from the usual start, then leaves it for good', () => {
     const moves = ['e2e4', 'e7e5', 'g1f3', 'b8c6', 'a2a3', 'g8f6'];
     const evals = Array.from({ length: moves.length + 1 }, () => ev({ cp: 20 }, ['d2d4']));
-    const review = reviewGame({ startFen: START_FEN, moves, evals, book });
+    const review = reviewGame({ rules, startFen: START_FEN, moves, evals, book });
     expect(review.moves.map((m) => m.label).slice(0, 4)).toEqual(['book', 'book', 'book', 'book']);
     expect(review.moves[4]!.label).not.toBe('book');
     expect(review.moves[5]!.label).not.toBe('book');
-    expect(review.opening?.name).toMatch(/Knight/);
+    expect(review.opening?.name).toBe('Italian Game: Two Knights');
   });
 
   it('a named trap is still judged: a book move that loses a lot is not Book, and the book ends there', () => {
     // 1. f3 e5 2. g4?? Qh4# is itself a named line (Barnes Opening: Fool's Mate).
     const moves = ['f2f3', 'e7e5', 'g2g4', 'd8h4'];
     const evals = [ev({ cp: 30 }, ['e2e4']), ev({ cp: -60 }, ['e7e5']), ev({ cp: -60 }, ['e2e4']), ev({ mate: -1 }, ['d8h4']), ev({ mate: -1 })];
-    const review = reviewGame({ startFen: START_FEN, moves, evals, book });
+    const review = reviewGame({ rules, startFen: START_FEN, moves, evals, book });
     expect(review.moves.map((m) => m.label)).toEqual(['book', 'book', 'blunder', 'best']);
     expect(review.opening?.name).toMatch(/Barnes Opening/);
   });
@@ -110,8 +150,8 @@ describe('move labels (ch-015)', () => {
     const fen = 'r1b1kbnr/pppp1Npp/8/6q1/2BnP3/8/PPPP1PPP/RNBQK2R b KQkq - 0 5';
     expect(labelOf(fen, 'g5g2', ev({ cp: -600 }, ['g5g2']), ev({ cp: -600 }))).not.toBe('brilliant');
     // The knight on f7 attacks both the queen on g5 and the rook on h8: the queen is the most at stake.
-    expect(hangingBefore(fen, 'b')).toBe(9);
-    expect(hangingBefore('4k3/8/8/8/8/8/4r3/4K3 w - - 0 1', 'w')).toBeNull();
+    expect(hangingBefore(rules, fen, 'b')).toBe(9);
+    expect(hangingBefore(rules, '4k3/8/8/8/8/8/4r3/4K3 w - - 0 1', 'w')).toBeNull();
   });
 
   it('Great for the only good move, but not for a recapture or a forced move', () => {
@@ -126,7 +166,7 @@ describe('move labels (ch-015)', () => {
     // 1. e4 d5 2. exd5 Qxd5: the queen takes back on d5.
     const moves = ['e2e4', 'd7d5', 'e4d5', 'd8d5'];
     const evals = [ev({ cp: 30 }), ev({ cp: 30 }), ev({ cp: 30 }), ev({ cp: 200 }, ['d8d5'], { score: { cp: 500 }, pv: ['g8f6'] }), ev({ cp: 30 })];
-    expect(reviewGame({ startFen: START_FEN, moves, evals, book: null }).moves[3]!.label).toBe('best');
+    expect(reviewGame({ rules, startFen: START_FEN, moves, evals, book: null }).moves[3]!.label).toBe('best');
 
     // A king in check with one way out.
     const forced = '7k/8/8/8/8/5q2/r7/7K w - - 0 1';
@@ -144,7 +184,7 @@ describe('move labels (ch-015)', () => {
       ev({ cp: -cpFor(85) }, ['b8c6']),
       ev({ cp: cpFor(50) }),
     ];
-    const review = reviewGame({ startFen: START_FEN, moves, evals, book: null });
+    const review = reviewGame({ rules, startFen: START_FEN, moves, evals, book: null });
     expect(review.moves[2]!.label).toBe('blunder');
     expect(review.moves[3]!.label).toBe('miss');
   });
@@ -152,19 +192,19 @@ describe('move labels (ch-015)', () => {
   it('a mistake with no error before it stays a mistake', () => {
     const moves = ['e2e4', 'e7e5', 'd1h5', 'g8f6'];
     const evals = [ev({ cp: 20 }), ev({ cp: 20 }), ev({ cp: 20 }, ['g1f3']), ev({ cp: 20 }, ['b8c6']), ev({ cp: cpFor(68) })];
-    expect(reviewGame({ startFen: START_FEN, moves, evals, book: null }).moves[3]!.label).toBe('mistake');
+    expect(reviewGame({ rules, startFen: START_FEN, moves, evals, book: null }).moves[3]!.label).toBe('mistake');
   });
 
   it('counts labels per side and writes the best line in SAN', () => {
     const moves = ['e2e4', 'e7e5'];
     const evals = [ev({ cp: 20 }, ['e2e4', 'e7e5', 'g1f3']), ev({ cp: 20 }, ['e7e5']), ev({ cp: 20 })];
-    const review = reviewGame({ startFen: START_FEN, moves, evals, book: null });
+    const review = reviewGame({ rules, startFen: START_FEN, moves, evals, book: null });
     expect(review.counts.w.best).toBe(1);
     expect(review.counts.b.best).toBe(1);
     expect(review.moves[0]!.bestLine).toEqual(['e4', 'e5', 'Nf3']);
     expect(review.moves[0]!.bestSan).toBe('e4');
     expect(review.whiteWins).toHaveLength(3);
-    expect(() => reviewGame({ startFen: START_FEN, moves, evals: evals.slice(1), book: null })).toThrow();
+    expect(() => reviewGame({ rules, startFen: START_FEN, moves, evals: evals.slice(1), book: null })).toThrow();
   });
 });
 
@@ -179,18 +219,18 @@ describe('position helpers (ch-015)', () => {
 
   it('finds what exchanges win on a square', () => {
     // A queen en prise to a pawn, and a knight defended by a pawn attacked by a rook.
-    expect(exchangeGain(chess.createGame('4k3/8/8/3q4/4P3/8/8/4K3 w - - 0 1'), 35)).toBe(9);
-    expect(exchangeGain(chess.createGame('4k3/8/4p3/3n4/8/8/8/3RK3 w - - 0 1'), 35)).toBe(0);
-    expect(exchangeGain(chess.createGame('4k3/8/8/3n4/8/8/8/3RK3 w - - 0 1'), 35)).toBe(3);
+    expect(exchangeGain(rules, chess.createGame('4k3/8/8/3q4/4P3/8/8/4K3 w - - 0 1'), 35)).toBe(9);
+    expect(exchangeGain(rules, chess.createGame('4k3/8/4p3/3n4/8/8/8/3RK3 w - - 0 1'), 35)).toBe(0);
+    expect(exchangeGain(rules, chess.createGame('4k3/8/8/3n4/8/8/8/3RK3 w - - 0 1'), 35)).toBe(3);
   });
 
   it('measures a sacrifice from the side that left the piece', () => {
     const game = chess.createGame('r1bq1rk1/pppn1ppp/4p3/3pP3/1b1P4/2NB1N2/PPP2PPP/R2QK2R w KQ - 0 8');
     game.move('d3h7');
-    expect(sacrificeValue(game, 'w')).toBe(3);
+    expect(sacrificeValue(rules, game, 'w')).toBe(3);
   });
 
   it('writes a line in SAN and stops at a move that does not fit', () => {
-    expect(sanOf(chess.createGame(), ['e2e4', 'e7e5', 'e4e5', 'g1f3'])).toEqual(['e4', 'e5']);
+    expect(sanOf(chess, chess.createGame(), ['e2e4', 'e7e5', 'e4e5', 'g1f3'])).toEqual(['e4', 'e5']);
   });
 });

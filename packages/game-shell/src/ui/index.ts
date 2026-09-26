@@ -21,3 +21,7 @@ export { QuickMatch, type QuickMatchProps } from './QuickMatch';
 export { TimeControlPicker, type TimeControlPickerProps } from './TimeControlPicker';
 export { useIdentity } from './useIdentity';
 export { useNow } from './useNow';
+export { EvalBar, EvalGraph, LABEL_MARK, LabelBadge, BoardMarks } from './review/components';
+export { ExportDialog, GamesScreen, type GamesScreenProps } from './review/GamesScreen';
+export { AppLink, type BoardLook, moveNumber, type ReviewLinks, ReviewScreen, type ReviewScreenProps } from './review/ReviewScreen';
+export { type AnalysisState, positionsOf, useGameAnalysis } from './review/useGameAnalysis';

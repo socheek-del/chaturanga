@@ -1,10 +1,11 @@
-import { PgnError, START_FEN } from '@chaturanga/chess';
-import type { TFunction } from 'i18next';
+import { chess, PgnError, START_FEN } from '@chaturanga/chess';
 import { describe, expect, it } from 'vitest';
-import type { SavedGame } from '../../stores/history';
-import { importPgn, outcomeOf, playerName, savedGameToPgn } from './savedGame';
+import type { SavedGame } from './history';
+import { type BotName, importPgn, outcomeOf, playerName, savedGameToPgn, type Translate } from './savedGame';
 
-const t = ((key: string) => key) as unknown as TFunction;
+const t: Translate = (key) => key;
+const botName: BotName = (tr, level) => tr(`bots.level${level}.name`);
+const options = { botName };
 
 const base: SavedGame = {
   id: 'computer-1',
@@ -21,10 +22,10 @@ const base: SavedGame = {
 
 describe('saved games (ch-014)', () => {
   it('names players by role in the site language', () => {
-    expect(playerName(t, { kind: 'you' }, 'w')).toBe('computer.you');
-    expect(playerName(t, { kind: 'bot', level: 3 }, 'b')).toBe('bots.bishop.name');
-    expect(playerName(t, { kind: 'side' }, 'b')).toBe('colors.b');
-    expect(playerName(t, { kind: 'name', name: 'Tal' }, 'w')).toBe('Tal');
+    expect(playerName(t, { kind: 'you' }, 'w', botName)).toBe('computer.you');
+    expect(playerName(t, { kind: 'bot', level: 3 }, 'b', botName)).toBe('bots.level3.name');
+    expect(playerName(t, { kind: 'side' }, 'b', botName)).toBe('colors.b');
+    expect(playerName(t, { kind: 'name', name: 'Tal' }, 'w', botName)).toBe('Tal');
   });
 
   it('reads the outcome from the viewer side when there is one', () => {
@@ -36,8 +37,9 @@ describe('saved games (ch-014)', () => {
   });
 
   it('exports tags, clock and termination, and never a site address', () => {
-    const pgn = savedGameToPgn(base, t);
+    const pgn = savedGameToPgn(chess, base, t, { ...options, tags: { Variant: 'chess' } });
     expect(pgn).toContain('[Event "games.event.computer"]');
+    expect(pgn).toContain('[Variant "chess"]');
     expect(pgn).toContain('[Site "?"]');
     expect(pgn).toContain('[Date "2026.09.26"]');
     expect(pgn).toContain('[White "computer.you"]');
@@ -48,21 +50,21 @@ describe('saved games (ch-014)', () => {
   });
 
   it('imports a PGN, taking the result from the board first and the Result tag second', () => {
-    const mate = importPgn('1. f3 e5 2. g4 Qh4#', 5);
+    const mate = importPgn(chess, '1. f3 e5 2. g4 Qh4#', 5);
     expect(mate.result).toEqual({ winner: 'b', reason: 'checkmate' });
     expect(mate.players).toEqual({ w: { kind: 'side' }, b: { kind: 'side' } });
     expect(mate.id).toBe('imported-5');
 
-    const resigned = importPgn('[White "A"]\n[Black "B"]\n[Result "1-0"]\n\n1. e4 e5 1-0', 6);
+    const resigned = importPgn(chess, '[White "A"]\n[Black "B"]\n[Result "1-0"]\n\n1. e4 e5 1-0', 6);
     expect(resigned.result).toEqual({ winner: 'w', reason: 'resign' });
     expect(resigned.players.w).toEqual({ kind: 'name', name: 'A' });
-    expect(importPgn('1. e4 e5 1/2-1/2', 7).result).toEqual({ winner: null, reason: 'agreement' });
-    expect(importPgn('1. e4 e5 *', 8).result).toBeNull();
+    expect(importPgn(chess, '1. e4 e5 1/2-1/2', 7).result).toEqual({ winner: null, reason: 'agreement' });
+    expect(importPgn(chess, '1. e4 e5 *', 8).result).toBeNull();
     // Its own tags go back out on export.
-    expect(savedGameToPgn(resigned, t)).toContain('[White "A"]');
+    expect(savedGameToPgn(chess, resigned, t, options)).toContain('[White "A"]');
   });
 
   it('refuses text that is not a game', () => {
-    expect(() => importPgn('not a game', 1)).toThrow(PgnError);
+    expect(() => importPgn(chess, 'not a game', 1)).toThrow(PgnError);
   });
 });

@@ -18,7 +18,7 @@ test('the app is installable (manifest, icons, service worker) (ch-005)', async 
   const manifestHref = await page.locator('link[rel="manifest"]').getAttribute('href');
   expect(manifestHref).toBeTruthy();
   const manifest = await (await page.request.get(manifestHref!)).json();
-  expect(manifest).toMatchObject({ short_name: 'Chess', display: 'standalone', start_url: '/', lang: 'ja' });
+  expect(manifest).toMatchObject({ short_name: 'Chess', display: 'standalone', start_url: '/', lang: 'en' });
   expect(manifest.icons.map((i: { sizes: string }) => i.sizes)).toEqual(expect.arrayContaining(['192x192', '512x512']));
 
   const client = await page.context().newCDPSession(page);

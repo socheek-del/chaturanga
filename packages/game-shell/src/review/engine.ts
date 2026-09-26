@@ -41,7 +41,11 @@ export class UciEngine {
   private queue: Promise<unknown> = Promise.resolve();
   private ready: Promise<void> | null = null;
 
-  constructor(private readonly transport: UciTransport) {
+  /** `options` are UCI options set once at start, e.g. `{ UCI_Variant: 'makruk' }`. */
+  constructor(
+    private readonly transport: UciTransport,
+    private readonly options: Readonly<Record<string, string>> = {},
+  ) {
     transport.onLine((line) => {
       for (const listener of [...this.listeners]) listener(line);
     });
@@ -65,6 +69,7 @@ export class UciEngine {
       await uciok;
       this.transport.send(`setoption name MultiPV value ${MULTI_PV}`);
       this.transport.send('setoption name Hash value 32');
+      for (const [name, value] of Object.entries(this.options)) this.transport.send(`setoption name ${name} value ${value}`);
       const readyok = this.waitFor((l) => l.trim() === 'readyok');
       this.transport.send('isready');
       await readyok;
@@ -124,8 +129,8 @@ export class UciEngine {
   }
 }
 
-/** Stockfish in a Web Worker; it finds its `.wasm` next to its own script. */
-export function workerTransport(url = '/engine/stockfish.js'): UciTransport {
+/** An engine that is its own Web Worker script (Stockfish.js); it finds its `.wasm` next to itself. */
+export function workerTransport(url: string): UciTransport {
   const worker = new Worker(url);
   return {
     send: (command) => worker.postMessage(command),

@@ -1,6 +1,6 @@
 {
   "project": "Chaturanga — family of traditional chess games (Makruk, Sittuyin, Xiangqi, Shogi and international chess live)",
-  "last_updated": "2026-09-26",
+  "last_updated": "2026-09-27",
   "rules": {
     "single_active_feature": true,
     "passing_requires_evidence": true,
@@ -2457,6 +2457,64 @@
         "2026-09-26: deployed with npm run deploy:chess (version eead9d75-c2dd-477c-ab7a-4094901c2fe8) after CI passed on ae7913e; npm run smoke:prod -w apps/chess/web 14 passed, including e2e-prod/review.spec.ts (engine wasm served with a wasm content type; Fool's Mate reviewed on the live site with 2. g4 a blunder)."
       ],
       "notes": "Simplicity is taken from Duolingo's flow only (one card per move, plain words); the look stays Marble and never copies Duolingo's trade dress."
+    },
+    {
+      "id": "plat-017",
+      "product": "platform",
+      "priority": 113,
+      "area": "review",
+      "milestone": "M20",
+      "title": "Saved games and game review as a shared layer",
+      "user_visible_behavior": "Nothing changes for chess players; saved games, PGN, engine analysis, move labels and the review and games screens now live in the shared packages, so another game gets them by supplying its engine, art and words.",
+      "status": "passing",
+      "verification": [
+        "Generic PGN reading and writing in @chaturanga/rules-core works for any Variant (chess and Makruk tested); the chess PGN tests pass unchanged through it.",
+        "game-shell holds the history store and recorder, the analysis store, the UCI engine client, the label maths and the Games and Review screens, with no game-specific code (lint rule and review).",
+        "The chess app uses the shared layer; its unit tests, e2e (games, review, online) and the offline PWA review case pass unchanged.",
+        "packages/game-shell/KEYS.md lists the keys and TOKENS the shared review screens read."
+      ],
+      "evidence": [
+        "2026-09-27: packages/rules-core/src/pgn.ts: writePgn/readPgn over any Variant (SAN from the variant, a pluggable SanResolver, default resolveBySan matching the variant own SAN). @chaturanga/chess toPgn/parsePgn are now thin wrappers keeping its loose resolveSan; chess pgn tests 11 passed unchanged. packages/makruk/src/pgn.test.ts (4): Makruk SAN with =M promotion, a full game, a counting FEN, an illegal move.",
+        "2026-09-27: game-shell/src/review/ holds the history store and recorder (createHistoryStore(product) with per-store onRemoved), createAnalysisStore(product, history, engineId), UciEngine with per-game UCI options, the label maths generic over ReviewRules {variant, pieceValues, passTurn} (static exchange read from coordinate notation, so any board size), the OpeningBook data class, geometry for any board size, and a ReviewKit type; game-shell/src/ui/review/ holds GamesScreen, ReviewScreen (board look injected like GameScreen, router-free links), components and useGameAnalysis. No @chaturanga/chess import outside tests. game-shell tests 87 passed.",
+        "2026-09-27: apps/chess/web now supplies only chessReview (features/review/kit.ts), the Stockfish URL, its opening book and thin GamesPage/ReviewPage wrappers; book.json rebuilt byte-identical through the shared positionHash. Chess unit tests 96 passed, chess e2e 33 passed (games, review, online), PWA suite 3 passed (fixed the stale lang ja expectation in the installability test, a pre-existing mismatch).",
+        "2026-09-27: packages/game-shell/KEYS.md documents the Games and Review keys and the --grade-*/--eval-* colour tokens. npm run verify exit 0."
+      ],
+      "notes": "Owner decision 2026-09-27: extract rather than copy, so Makruk (and later Sittuyin, Xiangqi, Shogi) reuse one implementation."
+    },
+    {
+      "id": "review-001",
+      "product": "makruk",
+      "priority": 114,
+      "area": "review",
+      "milestone": "M20",
+      "title": "Makruk: saved games on this device, with PGN export and import",
+      "user_visible_behavior": "Every Makruk game against the computer, pass-and-play or online is saved in this browser and listed under Games; a game can be copied out as PGN with [Variant \"makruk\"], and such a PGN can be pasted in.",
+      "status": "not_started",
+      "verification": [
+        "Unit tests: Makruk PGN written by the site reads back to the same moves, including promotion to Met and a counting position FEN.",
+        "E2E: a finished pass-and-play game and a computer game appear under Games after a reload; PGN export and import work; every string exists in th and en."
+      ],
+      "evidence": [],
+      "notes": "Built on plat-017."
+    },
+    {
+      "id": "review-002",
+      "product": "makruk",
+      "priority": 115,
+      "area": "review",
+      "milestone": "M20",
+      "title": "Makruk game review with Fairy-Stockfish",
+      "user_visible_behavior": "A saved Makruk game is analysed on the device by Fairy-Stockfish (makruk variant) and reviewed like chess: move labels, accuracy, eval bar and graph, best-move arrow and line, in Thai and English.",
+      "status": "not_started",
+      "verification": [
+        "Fairy-Stockfish WASM (GPL-3.0) is imported verbatim by a script with its licence and source recorded, credited on the About page, and precached for offline review.",
+        "The site is cross-origin isolated (COOP same-origin, COEP require-corp) in dev, preview and production, which the threaded WASM build needs; nothing else on the site breaks (full Makruk e2e and PWA suites).",
+        "Integration test: the same engine build, run by Node, analyses a Makruk game and flags a blunder.",
+        "E2E: a finished game opens its review from the result dialog, the analysis finishes, labels show, and it works offline.",
+        "Thai wording is drafted and added to the native review (docs/i18n-review.md, polish-002)."
+      ],
+      "evidence": [],
+      "notes": "Owner decisions 2026-09-27: Fairy-Stockfish, shared code, Thai drafted by the agent and marked for native review. No public Makruk opening list exists, so there is no Book label or opening name."
     }
   ]
 }

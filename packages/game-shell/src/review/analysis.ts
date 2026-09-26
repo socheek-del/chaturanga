@@ -1,9 +1,9 @@
-import { chess, type Color, type Game, START_FEN } from '@chaturanga/chess';
+import { type Color, squareOf, type Variant, type VariantGame } from '@chaturanga/rules-core';
 import type { EngineLine, PositionEval } from './engine';
 import type { Opening, OpeningBook } from './openings';
 import type { Score } from './uci';
 
-/** The move labels of a review, best to worst as chess.com orders them (ch-015). */
+/** The move labels of a review, best to worst as chess.com orders them (ch-015, plat-017). */
 export const LABELS = ['brilliant', 'great', 'best', 'excellent', 'good', 'book', 'inaccuracy', 'mistake', 'miss', 'blunder'] as const;
 export type Label = (typeof LABELS)[number];
 
@@ -19,15 +19,42 @@ export const THRESHOLDS = { excellent: 2, good: 5, inaccuracy: 10, mistake: 20 }
 export const GREAT_GAP = 15;
 export const GREAT_SECOND_CEILING = 60;
 export const GREAT_CEILING = 90;
-/** Brilliant: the sacrifice is worth at least this many pawns, and the player stays at least level. */
+/**
+ * Brilliant: the sacrifice is worth at least this many pawns, and the player stays at least level. Only a
+ * piece worth at least SACRIFICE_PIECE pawns can be sacrificed (a chess knight, a Makruk Khon).
+ */
 export const SACRIFICE_MIN = 2;
+export const SACRIFICE_PIECE = 2.5;
 export const BRILLIANT_FLOOR = 50;
 /** Brilliant is not awarded in a position already this won, unless the sacrifice forces mate. */
 export const BRILLIANT_CEILING = 90;
 /** Miss: back to within this much of where the player stood before the opponent's error. */
 export const MISS_SLACK = 5;
 
-const PIECE_VALUE: Record<string, number> = { p: 1, n: 3, b: 3, r: 5, q: 9, k: 100 };
+/**
+ * What the labels need to know about a game beyond its engine scores. The king (`k`) is valued as more than
+ * any exchange, whatever the product's material table says.
+ */
+export interface ReviewRules<G extends VariantGame = VariantGame> {
+  variant: Variant<G>;
+  /** Material in pawns per piece type, as the product counts it for its players. */
+  pieceValues: Readonly<Record<string, number>>;
+  /**
+   * The same position with the other side to move, or null when that is not a legal position. Default:
+   * the second FEN field is flipped, which is right for any FEN whose other fields do not depend on the
+   * side to move (chess clears its en passant square too).
+   */
+  passTurn?: (fen: string) => string | null;
+}
+
+const KING_VALUE = 100;
+const valueOf = (rules: ReviewRules, type: string): number => (type === 'k' ? KING_VALUE : (rules.pieceValues[type] ?? 0));
+
+function defaultPassTurn(fen: string): string {
+  const fields = fen.split(' ');
+  fields[1] = fields[1] === 'w' ? 'b' : 'w';
+  return fields.join(' ');
+}
 
 /** Expected score in percent from centipawns (the Lichess curve); a forced mate is 100 or 0. */
 export function winPercent(score: Score): number {
@@ -105,7 +132,8 @@ export interface GameReview {
   opening: Opening | null;
 }
 
-export interface ReviewInput {
+export interface ReviewInput<G extends VariantGame = VariantGame> {
+  rules: ReviewRules<G>;
   startFen: string;
   moves: readonly string[];
   /** One per position, before every move and after the last; the engine's view, or the rules' for an ended game. */
@@ -120,20 +148,23 @@ const fromSide = (score: Score, color: Color): Score =>
  * The rules' verdict on a position the game has ended in, shaped like an engine result so that a mate
  * reads as won and a draw as level. Null while the game can go on.
  */
-export function terminalEval(game: Game): PositionEval | null {
+export function terminalEval(game: VariantGame): PositionEval | null {
   const status = game.status();
   if (status.kind === 'ongoing') return null;
-  const score: Score = status.kind === 'checkmate' ? { mate: status.winner === 'w' ? 1 : -1 } : { cp: 0 };
+  // A decided ending (mate, a stalemate some variants score as a win) reads as won; anything else as level.
+  const winner = 'winner' in status ? status.winner : null;
+  const score: Score = winner ? { mate: winner === 'w' ? 1 : -1 } : { cp: 0 };
   return { fen: game.fen(), depth: 0, lines: [{ score, pv: [] }] };
 }
 
-/** Labels every move, and sums up each side (ch-015). Pure: the engine's work comes in `evals`. */
-export function reviewGame({ startFen, moves, evals, book }: ReviewInput): GameReview {
+/** Labels every move, and sums up each side (ch-015, plat-017). Pure: the engine's work comes in `evals`. */
+export function reviewGame<G extends VariantGame>({ rules, startFen, moves, evals, book }: ReviewInput<G>): GameReview {
   if (evals.length !== moves.length + 1) throw new Error(`need ${moves.length + 1} evaluations, got ${evals.length}`);
-  const game = chess.createGame(startFen);
+  const { variant } = rules;
+  const game = variant.createGame(startFen);
   const scores = evals.map((e) => e.lines[0]?.score ?? { cp: 0 });
   const whiteWins = scores.map(winPercent);
-  const useBook = !!book && startFen === START_FEN;
+  const useBook = !!book && startFen === variant.startFen;
   let inBook = useBook;
   let opening: Opening | null = null;
 
@@ -144,8 +175,8 @@ export function reviewGame({ startFen, moves, evals, book }: ReviewInput): GameR
     const legalCount = game.legalUci().length;
     const bestLine = before.lines[0];
     const best = bestLine?.pv[0] ?? null;
-    const bestSan = best ? sanOf(game, [best])[0] ?? null : null;
-    const bestLineSan = bestLine ? sanOf(game, bestLine.pv) : [];
+    const bestSan = best ? sanOf(variant, game, [best])[0] ?? null : null;
+    const bestLineSan = bestLine ? sanOf(variant, game, bestLine.pv) : [];
     const previous = game.lastMove();
     const fenBefore = game.fen();
 
@@ -171,16 +202,16 @@ export function reviewGame({ startFen, moves, evals, book }: ReviewInput): GameR
     else label = 'blunder';
 
     if ((label === 'best' || label === 'excellent') && legalCount > 1) {
-      const capturedValue = record.captured ? PIECE_VALUE[record.captured.type]! : 0;
+      const capturedValue = record.captured ? valueOf(rules, record.captured.type) : 0;
       // Only material the move itself puts en prise counts: a piece already hanging is not a sacrifice.
-      const alreadyHanging = hangingBefore(before.fen || fenBefore, color);
+      const alreadyHanging = hangingBefore(rules, before.fen || fenBefore, color);
       const after = fromSide(scores[i + 1]!, color);
       const forcesMate = 'mate' in after && after.mate > 0;
       if (
         (winBefore < BRILLIANT_CEILING || forcesMate) &&
         winAfter >= BRILLIANT_FLOOR &&
         alreadyHanging !== null &&
-        sacrificeValue(game, color) - alreadyHanging - capturedValue >= SACRIFICE_MIN
+        sacrificeValue(rules, game, color) - alreadyHanging - capturedValue >= SACRIFICE_MIN
       ) {
         label = 'brilliant';
       } else if (
@@ -238,8 +269,8 @@ function isOnlyMove(lines: readonly EngineLine[], color: Color, winBefore: numbe
 }
 
 /** SAN of a line from the game's current position, stopping at the first move that does not fit. */
-export function sanOf(game: Game, line: readonly string[]): string[] {
-  const copy = chess.createGame(game.fen());
+export function sanOf(variant: Variant, game: VariantGame, line: readonly string[]): string[] {
+  const copy = variant.createGame(game.fen());
   const out: string[] = [];
   for (const uci of line) {
     try {
@@ -253,13 +284,13 @@ export function sanOf(game: Game, line: readonly string[]): string[] {
 
 /**
  * Material the opponent (to move) can win by exchanges on the mover's pieces, the most on any one square:
- * a knight or more left where it can be taken for less.
+ * a piece worth SACRIFICE_PIECE or more left where it can be taken for less.
  */
-export function sacrificeValue(game: Game, mover: Color): number {
+export function sacrificeValue(rules: ReviewRules, game: VariantGame, mover: Color): number {
   let most = 0;
   for (const { square, piece } of game.pieces()) {
-    if (piece.color !== mover || piece.type === 'k' || PIECE_VALUE[piece.type]! < 3) continue;
-    most = Math.max(most, exchangeGain(game, square));
+    if (piece.color !== mover || piece.type === 'k' || valueOf(rules, piece.type) < SACRIFICE_PIECE) continue;
+    most = Math.max(most, exchangeGain(rules, game, square));
   }
   return most;
 }
@@ -268,27 +299,45 @@ export function sacrificeValue(game: Game, mover: Color): number {
  * What the opponent could already win on the mover's pieces before the move: the position with the move
  * passed. Null when the mover was in check, where passing is impossible and no sacrifice is judged.
  */
-export function hangingBefore(fen: string, mover: Color): number | null {
-  const fields = fen.split(' ');
-  fields[1] = mover === 'w' ? 'b' : 'w';
-  fields[3] = '-';
+export function hangingBefore(rules: ReviewRules, fen: string, mover: Color): number | null {
+  const passed = (rules.passTurn ?? defaultPassTurn)(fen);
+  if (!passed) return null;
   try {
-    const passed = chess.createGame(fields.join(' '));
-    return passed.inCheck() || chess.createGame(fen).inCheck() ? null : sacrificeValue(passed, mover);
+    const game = rules.variant.createGame(passed);
+    return game.turn === mover || game.inCheck() || rules.variant.createGame(fen).inCheck() ? null : sacrificeValue(rules, game, mover);
   } catch {
     return null;
   }
 }
 
-/** Static exchange on `square` for the side to move: least valuable attacker first, stopping when it stops paying. */
-export function exchangeGain(game: Game, square: number): number {
+/**
+ * Static exchange on `square` for the side to move: least valuable attacker first, stopping when it stops
+ * paying. Moves are read from their coordinate notation, so any board size works; a capture that can promote
+ * in several ways is tried once.
+ */
+export function exchangeGain(rules: ReviewRules, game: VariantGame, square: number): number {
   const target = game.pieceAt(square);
   if (!target) return 0;
-  const captures = game.legalMoves().filter((m) => m.to === square && (m.promotion === null || m.promotion === 'q'));
-  if (captures.length === 0) return 0;
-  const attacker = captures.reduce((a, b) => (PIECE_VALUE[game.pieceAt(a.from)!.type]! <= PIECE_VALUE[game.pieceAt(b.from)!.type]! ? a : b));
-  game.move(attacker);
-  const gain = PIECE_VALUE[target.type]! - exchangeGain(game, square);
+  const { files } = rules.variant;
+  const captures = new Map<number, string>();
+  for (const uci of game.legalUci()) {
+    const match = /^([a-p]\d{1,2})([a-p]\d{1,2})/.exec(uci);
+    if (!match || squareOf(match[2]!, files) !== square) continue;
+    const from = squareOf(match[1]!, files)!;
+    if (!captures.has(from)) captures.set(from, uci);
+  }
+  if (captures.size === 0) return 0;
+  let attacker: string | null = null;
+  let cheapest = Infinity;
+  for (const [from, uci] of captures) {
+    const value = valueOf(rules, game.pieceAt(from)!.type);
+    if (value < cheapest) {
+      cheapest = value;
+      attacker = uci;
+    }
+  }
+  game.move(attacker!);
+  const gain = valueOf(rules, target.type) - exchangeGain(rules, game, square);
   game.undo();
   return Math.max(0, gain);
 }

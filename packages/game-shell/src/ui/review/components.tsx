@@ -1,11 +1,11 @@
-import type { Color } from '@chaturanga/chess';
+import type { Color } from '@chaturanga/rules-core';
 import { cn } from '@chaturanga/ui';
 import { BookOpen, Check, type LucideIcon, Star, ThumbsUp, X } from 'lucide-react';
 import type { CSSProperties, PointerEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { Label } from './analysis';
-import { formatScore, graphPoints, plyAt, squareCenter, whiteShare } from './geometry';
-import type { Score } from './uci';
+import type { Label } from '../../review/analysis';
+import { formatScore, graphPoints, plyAt, squareCenter, whiteShare } from '../../review/geometry';
+import type { Score } from '../../review/uci';
 
 /** Each label's colour token, and either a chess annotation glyph or an icon (ch-016). */
 export const LABEL_MARK: Record<Label, { color: string; glyph?: string; icon?: LucideIcon }> = {
@@ -45,13 +45,18 @@ export function BoardMarks({
   orientation,
   arrow,
   badge,
+  files = 8,
+  ranks = 8,
 }: {
   orientation: Color;
   arrow: { from: number; to: number } | null;
   badge: { square: number; label: Label } | null;
+  files?: number;
+  ranks?: number;
 }) {
-  const a = arrow ? { from: squareCenter(arrow.from, orientation), to: squareCenter(arrow.to, orientation) } : null;
-  const b = badge ? squareCenter(badge.square, orientation) : null;
+  const at = (square: number) => squareCenter(square, orientation, files, ranks);
+  const a = arrow ? { from: at(arrow.from), to: at(arrow.to) } : null;
+  const b = badge ? at(badge.square) : null;
   let line = null;
   if (a) {
     const dx = a.to.x - a.from.x;
@@ -62,7 +67,7 @@ export function BoardMarks({
     line = { ...a, end };
   }
   return (
-    <svg viewBox="0 0 8 8" className="h-full w-full" data-testid="board-marks">
+    <svg viewBox={`0 0 ${files} ${ranks}`} className="h-full w-full" data-testid="board-marks">
       <defs>
         <marker id="review-arrow-head" viewBox="0 0 4 4" refX="1.2" refY="2" markerWidth="3" markerHeight="3" orient="auto">
           <path d="M0,0 L4,2 L0,4 z" fill="var(--grade-best)" />

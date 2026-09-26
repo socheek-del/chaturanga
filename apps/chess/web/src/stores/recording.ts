@@ -1,11 +1,9 @@
 import type { Color } from '@chaturanga/chess';
-import type { OnlineSessionState } from '@chaturanga/game-shell';
+import { createRecorder, type HistoryStore, type OnlineSessionState, type PlayerTag } from '@chaturanga/game-shell';
 import { useEffect } from 'react';
 import type { StoreApi } from 'zustand';
-import { createRecorder, type HistoryStore, type PlayerTag, useGameHistory } from './history';
+import { useGameHistory } from './history';
 import { useComputerMatch, useComputerSession, useLocalSession } from './localSession';
-// Registers the hook that drops a game's analysis when the game leaves the list.
-import './analysis';
 
 /** Both seats, from the side of the player who sat on `mine`. */
 const seats = (mine: Color, you: PlayerTag, them: PlayerTag): Record<Color, PlayerTag> =>

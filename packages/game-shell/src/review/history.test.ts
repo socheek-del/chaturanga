@@ -2,7 +2,18 @@ import { chess, type Game } from '@chaturanga/chess';
 import { createGameSession } from '@chaturanga/game-shell';
 import { beforeEach, describe, expect, it } from 'vitest';
 import type { StateStorage } from 'zustand/middleware';
-import { createHistoryStore, createRecorder, HISTORY_LIMIT, type HistoryStore, onGameRemoved, type SavedGame } from './history';
+import type { ProductConfig } from '../product';
+import { createHistoryStore, createRecorder, HISTORY_LIMIT, type HistoryStore, type SavedGame } from './history';
+
+const PRODUCT: ProductConfig = {
+  id: 'chess',
+  locales: ['en'],
+  defaultLocale: 'en',
+  languageNames: { en: 'English' },
+  ogLocales: { en: 'en_US' },
+  fonts: [],
+  storagePrefix: 'chess.',
+};
 
 function memoryStorage(): StateStorage & { data: Map<string, string> } {
   const data = new Map<string, string>();
@@ -16,13 +27,13 @@ function memoryStorage(): StateStorage & { data: Map<string, string> } {
 
 const side = { players: { w: { kind: 'side' as const }, b: { kind: 'side' as const } }, you: null };
 
-describe('game history (ch-014)', () => {
+describe('game history (ch-014, plat-017)', () => {
   let storage: ReturnType<typeof memoryStorage>;
   let store: HistoryStore;
 
   beforeEach(() => {
     storage = memoryStorage();
-    store = createHistoryStore(() => storage);
+    store = createHistoryStore(PRODUCT, () => storage);
   });
 
   function play(moves: string[]) {
@@ -79,7 +90,7 @@ describe('game history (ch-014)', () => {
     play(['e2e4', 'e7e5']);
     const id = store.getState().games[0]!.id;
     // A reload: new stores read what the old ones saved, and the session is rebuilt from its moves.
-    const reloaded = createHistoryStore(() => storage);
+    const reloaded = createHistoryStore(PRODUCT, () => storage);
     const session = createGameSession<Game>(chess);
     session.getState().start(null, undefined, 0);
     session.getState().move('e2e4', 0);
@@ -106,7 +117,7 @@ describe('game history (ch-014)', () => {
 
   it(`keeps the newest ${HISTORY_LIMIT} games and tells listeners which were dropped`, () => {
     const dropped: string[] = [];
-    const off = onGameRemoved((id) => dropped.push(id));
+    const off = store.onRemoved((id) => dropped.push(id));
     const base: Omit<SavedGame, 'id' | 'createdAt'> = {
       mode: 'local',
       updatedAt: 0,
@@ -129,7 +140,7 @@ describe('game history (ch-014)', () => {
     storage.setItem('chess.games', JSON.stringify({ state: { games: [{ id: 1 }, null], current: 'x' }, version: 1 }));
     const bad = memoryStorage();
     for (const [k, v] of storage.data) bad.setItem(k, v);
-    const reloaded = createHistoryStore(() => bad);
+    const reloaded = createHistoryStore(PRODUCT, () => bad);
     expect(reloaded.getState().games).toEqual([]);
   });
 });

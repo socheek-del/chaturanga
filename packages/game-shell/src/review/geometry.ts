@@ -1,11 +1,16 @@
-import type { Color } from '@chaturanga/chess';
+import type { Color } from '@chaturanga/rules-core';
 import type { Score } from './uci';
 
-/** Centre of a square in a board drawn as an 8x8 SVG (`viewBox="0 0 8 8"`), seen from `orientation`. */
-export function squareCenter(square: number, orientation: Color): { x: number; y: number } {
-  const file = square % 8;
-  const rank = Math.floor(square / 8);
-  return orientation === 'w' ? { x: file + 0.5, y: 7 - rank + 0.5 } : { x: 7 - file + 0.5, y: rank + 0.5 };
+/**
+ * Centre of a square in a board drawn as an SVG one unit per square (`viewBox="0 0 files ranks"`), seen from
+ * `orientation`.
+ */
+export function squareCenter(square: number, orientation: Color, files = 8, ranks = 8): { x: number; y: number } {
+  const file = square % files;
+  const rank = Math.floor(square / files);
+  return orientation === 'w'
+    ? { x: file + 0.5, y: ranks - 1 - rank + 0.5 }
+    : { x: files - 1 - file + 0.5, y: rank + 0.5 };
 }
 
 /** Points of the evaluation graph: White's win percentage at each ply, White up. */

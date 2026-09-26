@@ -1,10 +1,9 @@
-import { chess } from '@chaturanga/chess';
+import type { Variant, VariantGame } from '@chaturanga/rules-core';
 import { useEffect, useMemo, useState } from 'react';
-import { loadEvals, saveEval } from '../../stores/analysis';
-import type { SavedGame } from '../../stores/history';
-import { type GameReview, reviewGame, terminalEval } from './analysis';
-import { type PositionEval, UciEngine, workerTransport } from './engine';
-import { loadOpeningBook } from './openings';
+import { type GameReview, reviewGame, terminalEval } from '../../review/analysis';
+import type { PositionEval, UciEngine } from '../../review/engine';
+import type { SavedGame } from '../../review/history';
+import type { ReviewKit } from '../../review/kit';
 
 export type AnalysisState =
   | { status: 'loading' }
@@ -13,21 +12,23 @@ export type AnalysisState =
   | { status: 'error' };
 
 /** Every position of the game, before each move and after the last. */
-export function positionsOf(game: Pick<SavedGame, 'startFen' | 'moves'>): string[] {
-  const board = chess.createGame(game.startFen);
+export function positionsOf(variant: Variant, game: Pick<SavedGame, 'startFen' | 'moves'>): string[] {
+  const board = variant.createGame(game.startFen);
   const fens = [board.fen()];
   for (const m of game.moves) fens.push(board.move(m).fenAfter);
   return fens;
 }
 
 /**
- * Analyses a saved game with Stockfish, position by position, saving each result so a review that is left
- * and reopened carries on where it stopped (ch-015). A finished analysis is labelled straight from storage.
+ * Analyses a saved game with the product's engine, position by position, saving each result so a review
+ * that is left and reopened carries on where it stopped (ch-015, plat-017). A finished analysis is labelled
+ * straight from storage, without starting the engine.
  */
-export function useGameAnalysis(game: SavedGame | undefined): AnalysisState {
+export function useGameAnalysis<G extends VariantGame>(kit: ReviewKit<G>, game: SavedGame | undefined): AnalysisState {
   const [state, setState] = useState<AnalysisState>({ status: 'loading' });
+  const { variant } = kit.rules;
   const key = game ? `${game.id}:${game.moves.join(' ')}` : '';
-  const fens = useMemo(() => (game ? positionsOf(game) : []), [key]); // eslint-disable-line react-hooks/exhaustive-deps
+  const fens = useMemo(() => (game ? positionsOf(variant, game) : []), [key]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (!game) return;
@@ -36,17 +37,15 @@ export function useGameAnalysis(game: SavedGame | undefined): AnalysisState {
     setState({ status: 'loading' });
 
     (async () => {
-      const book = await loadOpeningBook();
-      const evals = loadEvals(game.id, fens);
-      // Ended positions are the rules' to judge, not the engine's.
-      const board = chess.createGame(game.startFen);
-      fens.forEach((_, i) => {
-        if (i > 0) board.move(game.moves[i - 1]!);
-        if (i === fens.length - 1) evals[i] ??= terminalEval(board);
-      });
+      const book = kit.loadBook ? await kit.loadBook() : null;
+      const evals = kit.analysis.load(game.id, fens);
+      // An ended position is the rules' to judge, not the engine's.
+      const board = variant.createGame(game.startFen);
+      for (const m of game.moves) board.move(m);
+      evals[fens.length - 1] ??= terminalEval(board);
       const missing = evals.flatMap((e, i) => (e ? [] : [i]));
       if (missing.length > 0) {
-        engine = new UciEngine(workerTransport());
+        engine = kit.createEngine();
         await engine.newGame();
         let done = fens.length - missing.length;
         if (!cancelled) setState({ status: 'running', done, total: fens.length });
@@ -55,14 +54,14 @@ export function useGameAnalysis(game: SavedGame | undefined): AnalysisState {
           const evaluation = await engine.analyse(fens[i]!);
           if (cancelled) return;
           evals[i] = evaluation;
-          saveEval(game.id, evaluation);
+          kit.analysis.save(game.id, evaluation);
           setState({ status: 'running', done: ++done, total: fens.length });
         }
       }
       if (cancelled) return;
       setState({
         status: 'done',
-        review: reviewGame({ startFen: game.startFen, moves: game.moves, evals: evals as PositionEval[], book }),
+        review: reviewGame({ rules: kit.rules, startFen: game.startFen, moves: game.moves, evals: evals as PositionEval[], book }),
       });
     })().catch((err: unknown) => {
       console.error(err);

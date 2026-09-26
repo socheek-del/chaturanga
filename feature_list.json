@@ -2331,6 +2331,60 @@
         "2026-09-26: screenshots at 390px and 1280px checked (Makruk squares, Xiangqi points with rings over pieces, Shogi)."
       ],
       "notes": "Not in lessons: the lesson player has its own board and was left out on purpose. Translations of the three new keys await the native reviews already open (polish-002, sit-011, xq-011, sg-011). The site perspective is the board's bottom side, so flipping the board swaps the colours."
+    },
+    {
+      "id": "plat-016",
+      "product": "platform",
+      "priority": 107,
+      "area": "puzzles",
+      "milestone": "M19",
+      "title": "Puzzle layer: shared puzzle shape, player, level list and local progress",
+      "user_visible_behavior": "Any game can offer puzzles. The player picks a difficulty level, sees the puzzles in it with a mark on the solved ones and a star on the favourites, filters by all, unsolved or favourites, and solves a puzzle by playing the solution moves. Solved and favourite state stays in this browser only.",
+      "status": "not_started",
+      "verification": [
+        "game-shell exports a Puzzle shape (id, position, solution moves, rating, level, themes) and a progress store (solved with first-try flag, favourites) keyed by the product storage prefix; unit tests cover save, reload, and corrupt or missing storage.",
+        "game-shell /ui has a puzzle player (built on the lesson player's move check) and a level and list screen; unit tests cover a correct line, a wrong move, the solved mark, the favourite toggle and each filter.",
+        "game-shell /testing has describePuzzles(variant, puzzles): every solution move is legal in the game's rules engine and every id is unique.",
+        "Puzzle data files load lazily per level and the service worker caches them for offline use."
+      ],
+      "evidence": [],
+      "notes": "From the 2026-09-26 owner brainstorm. Nothing game-specific in the shared layer: each game owns its puzzle data and words. Open questions for the owner: fixed rating bands or an adaptive puzzle rating; fail on a wrong move or allow retries and hints; extras such as a daily puzzle, streak or timed mode."
+    },
+    {
+      "id": "ch-013",
+      "product": "chess",
+      "priority": 108,
+      "area": "puzzles",
+      "milestone": "M19",
+      "title": "Chess puzzles from the Lichess puzzle database, in difficulty levels",
+      "user_visible_behavior": "The chess site has a Puzzles section with about 1,000 puzzles in five levels (Beginner <1000, Easy 1000-1400, Medium 1400-1800, Hard 1800-2200, Expert 2200+ Lichess rating). Puzzles can be favourited, and solved ones are marked.",
+      "status": "not_started",
+      "verification": [
+        "A repeatable script picks the most popular Lichess puzzles in each rating band, spread across themes, and writes one JSON file per level into the chess product's own folders; the script and its source file version are recorded.",
+        "describePuzzles passes on every chess puzzle with @chaturanga/chess; the Lichess setup move (the first move of each puzzle) is applied before the player's turn.",
+        "E2E: open Puzzles, pick a level, solve a puzzle, see it marked solved, star it, filter by favourites, reload and see both kept.",
+        "Screenshots at 390px and 1280px in the Marble design."
+      ],
+      "evidence": [],
+      "notes": "Depends on plat-016. Lichess puzzle database is CC0, compatible with GPL-3.0; credit it on the about page anyway. The count (about 1,000, ~100 KB) is a starting point and can grow. Open questions for the owner: fixed rating bands or an adaptive puzzle rating; fail on a wrong move or allow retries and hints; extras such as a daily puzzle, streak or timed mode."
+    },
+    {
+      "id": "puzzle-001",
+      "product": "makruk",
+      "priority": 109,
+      "area": "puzzles",
+      "milestone": "M19",
+      "title": "Makruk puzzles generated from engine games, in difficulty levels",
+      "user_visible_behavior": "The Makruk site has a Puzzles section in Thai and English with difficulty levels, favourites and solved marks, like the chess site.",
+      "status": "not_started",
+      "verification": [
+        "No public Makruk puzzle set is known, so a generator script plays self-play games (Makruk bots or Fairy-Stockfish via ffish), scans positions with multi-PV and keeps only positions with exactly one winning move at each player turn and a clear gap to the next best move.",
+        "Every kept puzzle is re-checked against ffish for a unique solution, and describePuzzles passes with @chaturanga/makruk; counting-rule draws are excluded.",
+        "Difficulty comes from solution length and search depth first, then a manual curation pass; the level bands are documented next to the data.",
+        "E2E and screenshots as in ch-013, in Thai and English."
+      ],
+      "evidence": [],
+      "notes": "Depends on plat-016; best started after ch-013 proves the layer. Mate-in-N puzzles are expected to dominate because counting rules draw many material-winning endgames. The same generator could later serve Sittuyin and Xiangqi; Shogi could use classical tsume collections."
     }
   ]
 }

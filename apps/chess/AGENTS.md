@@ -6,6 +6,7 @@ International chess — the FIDE game — as a web PWA. It offers:
 - pass-and-play
 - online play by room code or quick match
 - 16 interactive lessons
+- every game saved in the browser, with PGN export and import, and a Stockfish game review (ch-015..ch-016)
 - its own "Marble" design identity, **proposed and awaiting owner approval** (`apps/chess/docs/design.md`)
 
 The product plan is `apps/chess/docs/PLAN.md`. The platform rules in the root `AGENTS.md` apply here too.
@@ -41,6 +42,16 @@ The product plan is `apps/chess/docs/PLAN.md`. The platform rules in the root `A
   the author credited on the About page. The other is **marble**, drawn in this repository as SVG paths
   (`src/features/board/PieceSvg.tsx`); the king of that set is the site's mark (`logo.ts`). Never edit a file
   in `pieces/traditional/` by hand.
+- **Saved games (ch-014):** `src/stores/history.ts` keeps the newest 100 games in localStorage
+  (`chess.games`); `src/stores/recording.ts` writes pass-and-play and computer games as they are played, and
+  `OnlineGamePage` writes online games under `online-<room code>` from the viewer's side. PGN is in
+  `@chaturanga/chess` (`toPgn`, `parsePgn`); an export never carries the site address (`Site "?"`).
+- **Game review (ch-015, ch-016):** Stockfish 19 lite single-threaded WASM, stored verbatim in
+  `public/engine/` (GPL-3.0, `CREDITS.md`; re-download with `npm run engine`), runs in a Web Worker and is
+  precached for offline use. The engine's view of each position is stored per game (`chess.analysis.<id>`);
+  labels are computed on load in `src/features/review/analysis.ts` (lost win percentage, chess.com's
+  thresholds; Brilliant, Great and Miss are heuristics documented there). Book moves and opening names come
+  from lichess-org/chess-openings (CC0), precomputed into `openings/book.json` by `npm run openings`.
 - **Board:** the squares are transparent and the chequer is one SVG underlay (`Chequer.tsx`), so no
   chess-only idea leaked into `@chaturanga/board-ui`.
 
@@ -58,6 +69,8 @@ npm run smoke:prod -w apps/chess/web       # drives the live site
 npm run icons -w apps/chess/web            # PWA icons from the king mark
 npm run og -w apps/chess/web               # Open Graph image
 npm run capture:design -w apps/chess/web   # design review screenshots
+npm run engine -w apps/chess/web           # re-download the Stockfish build (public/engine)
+npm run openings -w apps/chess/web         # re-download the opening list and rebuild book.json
 BASE_URL=<live site> npm run capture:readme -w apps/chess/web
 ```
 

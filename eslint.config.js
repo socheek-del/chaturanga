@@ -5,7 +5,8 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default defineConfig(
-  { ignores: ['**/dist/**', '**/.wrangler/**', '**/node_modules/**', '**/coverage/**'] },
+  // An app's public folder holds static files served as they are (a vendored engine build among them): not our source.
+  { ignores: ['**/dist/**', '**/.wrangler/**', '**/node_modules/**', '**/coverage/**', 'apps/*/web/public/**'] },
   js.configs.recommended,
   tseslint.configs.recommended,
   {

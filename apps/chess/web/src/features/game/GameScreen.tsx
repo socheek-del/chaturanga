@@ -1,6 +1,7 @@
 import { chess, type Game, type Piece } from '@chaturanga/chess';
 import { GameScreen as Screen, type GameScreenProps as ScreenProps } from '@chaturanga/game-shell/ui';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router';
 import { useSettings } from '../../stores/settings';
 import { Chequer } from '../board/Chequer';
 import { PieceSvg } from '../board/PieceSvg';
@@ -21,13 +22,17 @@ type Injected =
   | 'boardUnderlay'
   | 'describePromotion';
 
-export type GameScreenProps = Omit<ScreenProps<Game>, Injected>;
+export type GameScreenProps = Omit<ScreenProps<Game>, Injected | 'review'> & {
+  /** The saved game this screen is writing (ch-014); its result dialog then offers a review (ch-016). */
+  reviewId?: string | null;
+};
 
 export { undoAllowed } from '@chaturanga/game-shell/ui';
 
 /** The chess game screen: the shared screen with the Marble board and piece set. */
-export function GameScreen(props: GameScreenProps) {
+export function GameScreen({ reviewId, ...props }: GameScreenProps) {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const theme = boardTheme(useSettings((st) => st.boardTheme));
   const showCoordinates = useSettings((st) => st.showCoordinates);
   const showAttackMap = useSettings((st) => st.showAttackMap);
@@ -50,6 +55,7 @@ export function GameScreen(props: GameScreenProps) {
       pieceValues={PIECE_VALUE}
       boardUnderlay={<Chequer theme={theme} />}
       describePromotion={(piece) => t(`pieces.${piece.type}`)}
+      review={reviewId ? { label: t('play.gameReview'), onReview: () => navigate(`/games/${reviewId}`) } : undefined}
     />
   );
 }

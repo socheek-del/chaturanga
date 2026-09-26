@@ -8,6 +8,8 @@ export interface GameOverModalProps {
   onClose: () => void;
   onRematch: () => void;
   onNewGame: () => void;
+  /** A product that reviews games offers it here, with its own words for the button. */
+  review?: { label: string; onReview: () => void };
 }
 
 export function resultTitleKey(result: GameResult): string {
@@ -16,7 +18,7 @@ export function resultTitleKey(result: GameResult): string {
   return 'play.result.draw';
 }
 
-export function GameOverModal({ result, open, onClose, onRematch, onNewGame }: GameOverModalProps) {
+export function GameOverModal({ result, open, onClose, onRematch, onNewGame, review }: GameOverModalProps) {
   const { t } = useTranslation();
   return (
     <Modal open={open} onClose={onClose} title={t(resultTitleKey(result))}>
@@ -24,6 +26,11 @@ export function GameOverModal({ result, open, onClose, onRematch, onNewGame }: G
         {t(`play.reason.${result.reason}`)}
       </p>
       <div className="flex flex-col gap-3">
+        {review && (
+          <Button block size="lg" variant="secondary" data-testid="game-review" onClick={review.onReview}>
+            {review.label}
+          </Button>
+        )}
         <Button block size="lg" onClick={onRematch}>
           {t('play.rematch')}
         </Button>

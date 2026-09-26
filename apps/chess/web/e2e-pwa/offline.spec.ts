@@ -44,3 +44,23 @@ test('offline: play the computer and play locally (ch-005)', async ({ page, cont
   await page.getByRole('button', { name: 'Start' }).click();
   await expect(page.locator('[data-square] [data-piece]')).toHaveCount(32);
 });
+
+test('offline: a finished game is reviewed by the precached engine (ch-015)', async ({ page, context }) => {
+  await waitForServiceWorker(page);
+  await context.setOffline(true);
+
+  await page.goto('/play/local');
+  await page.getByRole('button', { name: 'Start' }).click();
+  for (const [from, to] of [
+    ['f2', 'f3'],
+    ['e7', 'e5'],
+    ['g2', 'g4'],
+    ['d8', 'h4'],
+  ]) {
+    await page.locator(`[data-square="${from}"]`).click();
+    await page.locator(`[data-square="${to}"]`).click();
+  }
+  await page.getByTestId('game-review').click();
+  await expect(page.getByTestId('review-summary')).toBeVisible({ timeout: 60_000 });
+  await expect(page.getByTestId('review-opening')).toContainText('Barnes Opening');
+});

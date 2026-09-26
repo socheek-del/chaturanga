@@ -13,7 +13,8 @@
     "play": "Play",
     "settings": "Settings",
     "learn": "Learn",
-    "about": "About"
+    "about": "About",
+    "games": "Games"
   },
   "colors": {
     "w": "White",
@@ -100,7 +101,8 @@
       "resign": "Resigned",
       "agreement": "Draw agreed",
       "abandon": "Opponent left"
-    }
+    },
+    "gameReview": "Game review"
   },
   "computer": {
     "chooseBot": "Choose an opponent",
@@ -234,7 +236,11 @@
     "source": "View the source",
     "contribute": "How to contribute",
     "reportBug": "Report a bug or suggest an idea",
-    "madeBy": "Made by {{name}}"
+    "madeBy": "Made by {{name}}",
+    "engineTitle": "Game review",
+    "engineBody": "Games are analysed in your browser by Stockfish 19 (the lite, single-threaded build by Stockfish.js), used under the GPL-3.0 licence. Opening names come from the lichess opening list, which is in the public domain.",
+    "engineSource": "Stockfish on GitHub",
+    "openingsSource": "The lichess opening list"
   },
   "seo": {
     "home": {
@@ -269,5 +275,103 @@
       "title": "Settings | Chess",
       "description": "Language, appearance, board and clock settings for the chess site."
     }
+  },
+  "games": {
+    "title": "Your games",
+    "storedHere": "Saved in this browser only. Clearing the site data deletes them.",
+    "empty": "No games yet",
+    "emptyHint": "Games you play against the computer, with a friend or online are saved here automatically.",
+    "import": "Import PGN",
+    "importTitle": "Import a game",
+    "importLabel": "Paste a game in PGN",
+    "importSubmit": "Import",
+    "importIllegal": "Move {{number}} ({{move}}) is not legal in this game.",
+    "importUnreadable": "This does not look like a chess game in PGN.",
+    "review": "Review",
+    "pgn": "PGN",
+    "pgnTitle": "Game in PGN",
+    "copy": "Copy",
+    "copied": "Copied",
+    "download": "Download",
+    "delete": "Delete",
+    "deleteConfirm": "Delete this game?",
+    "versus": "{{white}} vs {{black}}",
+    "moveCount_one": "{{count}} move",
+    "moveCount_other": "{{count}} moves",
+    "mode": {
+      "computer": "Against the computer",
+      "local": "Pass and play",
+      "online": "Online",
+      "imported": "Imported"
+    },
+    "event": {
+      "computer": "Game against the computer",
+      "local": "Pass-and-play game",
+      "online": "Online game",
+      "imported": "Imported game"
+    },
+    "outcome": {
+      "won": "Won",
+      "lost": "Lost",
+      "draw": "Draw",
+      "whiteWins": "White won",
+      "blackWins": "Black won",
+      "unfinished": "Not finished"
+    }
+  },
+  "review": {
+    "title": "Game review",
+    "analysing": "Analysing the game",
+    "progress": "{{done}} of {{total}} positions",
+    "error": "The analysis stopped. Reload the page to try again.",
+    "notFound": "This game is not saved in this browser.",
+    "backToGames": "Your games",
+    "accuracy": "Accuracy",
+    "start": "Start review",
+    "summary": "Back to the summary",
+    "next": "Next",
+    "previous": "Previous move",
+    "graph": "How the game went: White above the line, Black below. Tap to jump to a move.",
+    "evalBar": "Evaluation {{score}}",
+    "startPosition": "The starting position.",
+    "bestWas": "Best was {{move}}",
+    "engineCredit": "Analysis by Stockfish, on this device.",
+    "labelName": {
+      "brilliant": "Brilliant",
+      "great": "Great",
+      "best": "Best",
+      "excellent": "Excellent",
+      "good": "Good",
+      "book": "Book",
+      "inaccuracy": "Inaccuracy",
+      "mistake": "Mistake",
+      "miss": "Miss",
+      "blunder": "Blunder"
+    },
+    "verdict": {
+      "brilliant": "{{move}} is brilliant",
+      "great": "{{move}} is a great move",
+      "best": "{{move}} is the best move",
+      "excellent": "{{move}} is excellent",
+      "good": "{{move}} is good",
+      "book": "{{move}} is a book move",
+      "inaccuracy": "{{move}} is an inaccuracy",
+      "mistake": "{{move}} is a mistake",
+      "miss": "{{move}} is a miss",
+      "blunder": "{{move}} is a blunder"
+    },
+    "explain": {
+      "brilliant": "A sacrifice that works: you gave up material and got more back.",
+      "great": "The only move that keeps your position together.",
+      "best": "The engine's first choice here.",
+      "excellent": "Nearly as strong as the best move.",
+      "good": "A sound move, but there was a stronger one.",
+      "book": "A known opening move.",
+      "inaccuracy": "Not a big error, but it gives away part of your edge.",
+      "mistake": "This gives away a lot.",
+      "miss": "Your opponent slipped, and this lets the chance go.",
+      "blunder": "A serious error that can cost the game."
+    },
+    "line": "Engine line: {{line}}"
   }
 }

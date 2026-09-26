@@ -75,3 +75,30 @@ test('the seat token belongs to this site only (ch-007)', async ({ page }) => {
   expect(keys).toContain('chess.identity');
   expect(keys.some((key) => key.startsWith('makruk.') || key.startsWith('sittuyin.') || key.startsWith('shogi.'))).toBe(false);
 });
+
+test('both players find the online game under Games, each from their own side (ch-014)', async ({ browser }) => {
+  const host = await newPlayer(browser);
+  await host.getByRole('radio', { name: 'White', exact: true }).click();
+  await host.getByRole('button', { name: 'Create room' }).click();
+  const code = (await host.getByTestId('room-code').textContent())!.trim();
+  const friend = await newPlayer(browser);
+  await friend.getByLabel('Room code').fill(code);
+  await friend.getByRole('button', { name: 'Join', exact: true }).click();
+
+  await play(host, [['e2', 'e4']]);
+  await expect(plies(friend)).toHaveCount(1);
+  await play(friend, [['e7', 'e5']]);
+  await expect(plies(host)).toHaveCount(2);
+
+  for (const [page, versus] of [
+    [host, 'You vs Opponent'],
+    [friend, 'Opponent vs You'],
+  ] as const) {
+    await page.goto('/games');
+    const row = page.getByTestId('game-row');
+    await expect(row).toHaveCount(1);
+    await expect(row).toHaveAttribute('data-game-id', `online-${code}`);
+    await expect(row).toContainText(versus);
+    await expect(row).toContainText('Online');
+  }
+});

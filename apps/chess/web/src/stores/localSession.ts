@@ -1,5 +1,7 @@
 import { createGameSession as createVariantSession, type GameSessionState as VariantSessionState, storageKey } from '@chaturanga/game-shell';
-import { type Game, chess } from '@chaturanga/chess';
+import { type Color, type Game, chess } from '@chaturanga/chess';
+import { create } from 'zustand';
+import { createJSONStorage, persist } from 'zustand/middleware';
 import { PRODUCT } from '../../product.config';
 
 /** A Chess game session (shared session logic in @chaturanga/game-shell). */
@@ -16,3 +18,11 @@ export const useLocalSession = createGameSession(storageKey(PRODUCT, 'session.lo
 
 /** Game against the computer. */
 export const useComputerSession = createGameSession(storageKey(PRODUCT, 'session.computer'));
+
+/** Bot and colour of the current game; saved with the game so a reload continues against the same bot. */
+export const useComputerMatch = create<{ level: number; humanColor: Color }>()(
+  persist(() => ({ level: 2, humanColor: 'w' as Color }), {
+    name: storageKey(PRODUCT, 'session.computerMatch'),
+    storage: createJSONStorage(() => localStorage),
+  }),
+);

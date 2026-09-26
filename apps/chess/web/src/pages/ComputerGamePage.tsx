@@ -1,18 +1,15 @@
 import { parseUci } from '@chaturanga/board-ui';
-import { storageKey } from '@chaturanga/game-shell';
 import { Button, Card, cn, SegmentedControl } from '@chaturanga/ui';
 import { type Color, type PieceType, chess } from '@chaturanga/chess';
 import { botById, BOTS } from '@chaturanga/chess-ai';
 import { Lightbulb, LoaderCircle } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { create } from 'zustand';
-import { createJSONStorage, persist } from 'zustand/middleware';
-import { PRODUCT } from '../../product.config';
 import { AiCancelled, cancelAi, requestComputerMove, requestHint } from '../features/ai/aiClient';
 import { PieceSvg } from '../features/board/PieceSvg';
 import { GameScreen, undoAllowed } from '../features/game/GameScreen';
-import { useComputerSession } from '../stores/localSession';
+import { useGameHistory } from '../stores/history';
+import { useComputerMatch, useComputerSession } from '../stores/localSession';
 import { boardTheme } from '../features/board/themes';
 import { useSettings } from '../stores/settings';
 
@@ -21,14 +18,6 @@ const MIN_THINK_MS = 450;
 
 /** Each bot is named after a piece (D10), and shows it. */
 const BOT_PIECE: Record<string, PieceType> = { pawn: 'p', knight: 'n', bishop: 'b', rook: 'r', queen: 'q', king: 'k' };
-
-/** Bot and colour of the current game; saved with the game so a reload continues against the same bot. */
-const useComputerMatch = create<{ level: number; humanColor: Color }>()(
-  persist(() => ({ level: 2, humanColor: 'w' as Color }), {
-    name: storageKey(PRODUCT, 'session.computerMatch'),
-    storage: createJSONStorage(() => localStorage),
-  }),
-);
 
 const opposite = (c: Color): Color => (c === 'w' ? 'b' : 'w');
 
@@ -178,6 +167,7 @@ function ComputerGame({ level, humanColor }: { level: number; humanColor: Color 
     setHint(null);
   };
 
+  const reviewId = useGameHistory((s) => s.current.computer);
   const humanHasMoved = game.moves().some((r) => r.color === humanColor);
   const canHint = !result && game.turn === humanColor && viewPly === null && !hintLoading;
 
@@ -191,6 +181,7 @@ function ComputerGame({ level, humanColor }: { level: number; humanColor: Color 
       canUndo={humanHasMoved && undoAllowed({ game, result })}
       onUndo={takeback}
       resignColor={humanColor}
+      reviewId={reviewId}
       hint={hint && hint.version === version ? hint : null}
       status={
         thinking && !result ? (

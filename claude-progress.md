@@ -911,3 +911,33 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
   - **Agent:** fix the `family.spec.ts` locator (exact link names).
   - **Owner:** try the switch, then push to deploy. The native reviewers should also check the new
     `play.attackMap*` strings.
+
+### Session 022 (chess game review, branch `feat/chess-review`)
+
+- Date: 2026-09-26
+- Goal: owner request — a chess.com-style game review with Duolingo-like simplicity, and every game saved in
+  the browser so it can be reviewed later. Owner choices this session: Stockfish lite WASM as the judge;
+  the full chess.com label set (Brilliant, Great, Best, Excellent, Good, Book, Inaccuracy, Mistake, Miss,
+  Blunder); accuracy, eval bar and graph, best-move arrow and line (no plain-words coaching beyond one
+  sentence per label); games from the computer, pass-and-play and online; PGN export and import.
+- Worked in a git worktree (`../t-chess-review`, branch `feat/chess-review`) because another session was
+  running in the main checkout. Baseline on entry: `./init.sh` exit 0.
+- Added `ch-014`, `ch-015`, `ch-016` (renumbered from ch-013..015 at merge time: session 021 had planned `ch-013` as chess puzzles) to `feature_list.json`; all three are `passing` with evidence there.
+  - `ch-014`: PGN in `@chaturanga/chess`; `stores/history.ts` + `stores/recording.ts`; Games page.
+  - `ch-015`: Stockfish 19 lite single in `public/engine/` (imported verbatim from the npm tarball, checked
+    against the registry's integrity hash); `features/review/{uci,engine,analysis,openings}.ts`;
+    `stores/analysis.ts` stores engine output per position, labels are computed on load.
+  - `ch-016`: `pages/ReviewPage.tsx` and `features/review/components.tsx`; the shared `GameOverModal` and
+    `GameScreen` gained an optional `review` action (additive; other products do not pass it).
+- Two labelling bugs were found by looking at real games, and fixed with tests: a named trap (Fool's Mate
+  is in the lichess list) was labelled Book, and a piece already hanging before the move counted as a
+  sacrifice. Great and Brilliant were then tuned on the Opera Game, the Evergreen Game and a GM game (Great
+  needs a 15-point gap in an undecided position; a sacrifice that forces mate is Brilliant).
+- Verification: `npm run verify` exit 0; chess Playwright 32 passed; PWA suite: the new offline review case
+  passes.
+- Known issue, not from this work: `e2e-pwa/offline.spec.ts` "the app is installable" fails on `main` too —
+  it expects manifest `lang: 'ja'` (copied from Shogi) while chess declares `en`.
+- Not merged or pushed: the branch waits for the owner. Merging will conflict with the other session only in
+  `feature_list.json` and this log (both append-only here).
+- Next best step: owner tries the review on a phone (analysis speed on a slow device is the open question;
+  `REVIEW_LIMITS` in `features/review/engine.ts` is the knob), then merge `feat/chess-review` and deploy.

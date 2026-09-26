@@ -52,6 +52,8 @@ export interface GameScreenProps<G extends VariantGame> {
   onRematch: () => void;
   /** Replays show the result in the banner only. */
   showResultDialog?: boolean;
+  /** Offered in the result dialog when the product can review the finished game. */
+  review?: { label: string; onReview: () => void };
 
   /* The product's identity. */
   theme: BoardTheme;
@@ -103,6 +105,7 @@ export function GameScreen<G extends VariantGame>({
   actions,
   onRematch,
   showResultDialog = true,
+  review,
   theme,
   showCoordinates,
   renderPiece,
@@ -361,6 +364,7 @@ export function GameScreen<G extends VariantGame>({
           onClose={() => setDismissedVersion(version)}
           onRematch={onRematch}
           onNewGame={s.exitToSetup}
+          review={review}
         />
       )}
       {/* A move with more than one way to be played waits for the choice: promote or not (Shogi), or which

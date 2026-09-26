@@ -149,7 +149,7 @@ broken starting state.
   - `packages/chess-ai` (`@chaturanga/chess-ai`): chess bots on ai-core with a real chess evaluation; the
     ladder is a bundled Node script (`npm run test:strength -w packages/chess-ai`).
   - `apps/chess/web`, `apps/chess/worker`: the chess product (`apps/chess/AGENTS.md`). English only, the
-    "Marble" identity, 16 lessons, online rooms, PWA. The Worker runs on :8791 and deploys on its own
+    "Marble" identity, 16 lessons, online rooms, PWA, saved games with PGN, and a Stockfish game review. The Worker runs on :8791 and deploys on its own
     subdomain and D1 (ch-008).
   - `apps/makruk/web`, `apps/makruk/worker`: the Makruk product (`apps/makruk/AGENTS.md`).
 - **Commands:**

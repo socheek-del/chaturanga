@@ -77,7 +77,8 @@ export default defineConfig({
         ],
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,svg,png,woff,woff2}'],
+        // The engine (public/engine, about 1.8 MB) is precached so game review works offline (ch-015).
+        globPatterns: ['**/*.{js,css,html,svg,png,woff,woff2,wasm}'],
         navigateFallback: '/index.html',
         navigateFallbackDenylist: [/^\/api\//, /^\/ws\//, /^\/robots\.txt$/, /^\/sitemap\.xml$/],
         maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,

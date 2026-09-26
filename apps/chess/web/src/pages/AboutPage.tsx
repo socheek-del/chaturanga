@@ -1,5 +1,5 @@
 import { buttonClasses, Card } from '@chaturanga/ui';
-import { BookOpen, Brush, Bug, Heart } from 'lucide-react';
+import { BookOpen, Brush, Bug, Cpu, Heart } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -7,6 +7,8 @@ export const REPO_URL = 'https://github.com/socheek-del/chaturanga';
 const AUTHOR = 'socheek-del';
 /** Where the traditional piece set comes from; its licence travels with the files (CREDITS.md). */
 const PIECE_ART_URL = 'https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces';
+const STOCKFISH_URL = 'https://github.com/official-stockfish/Stockfish';
+const OPENINGS_URL = 'https://github.com/lichess-org/chess-openings';
 
 function ExternalLink({ href, children, variant = 'outline' }: { href: string; children: ReactNode; variant?: 'primary' | 'outline' }) {
   return (
@@ -51,6 +53,20 @@ export function AboutPage() {
           className="font-semibold text-secondary underline underline-offset-4"
         >
           {t('about.artSource')}
+        </a>
+      </Card>
+
+      <Card className="flex flex-col gap-2" data-testid="engine-credit">
+        <h2 className="flex items-center gap-2 text-lg font-bold">
+          <Cpu aria-hidden className="h-5 w-5 text-secondary" />
+          {t('about.engineTitle')}
+        </h2>
+        <p className="text-muted">{t('about.engineBody')}</p>
+        <a href={STOCKFISH_URL} target="_blank" rel="noopener noreferrer" className="font-semibold text-secondary underline underline-offset-4">
+          {t('about.engineSource')}
+        </a>
+        <a href={OPENINGS_URL} target="_blank" rel="noopener noreferrer" className="font-semibold text-secondary underline underline-offset-4">
+          {t('about.openingsSource')}
         </a>
       </Card>
 

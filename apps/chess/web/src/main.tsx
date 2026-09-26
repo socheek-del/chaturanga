@@ -8,9 +8,13 @@ import { registerSW } from 'virtual:pwa-register';
 import './i18n';
 import './index.css';
 import { router } from './router';
+import { startRecording } from './stores/recording';
 
 // Precache the app shell so local play and the computer work offline; updates apply automatically.
 registerSW({ immediate: true });
+
+// Every game played on this device is saved as it is played, for Games and review (ch-014).
+startRecording();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

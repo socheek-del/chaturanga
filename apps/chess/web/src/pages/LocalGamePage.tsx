@@ -4,6 +4,7 @@ import { Button, Card } from '@chaturanga/ui';
 import type { Color } from '@chaturanga/chess';
 import { useTranslation } from 'react-i18next';
 import { GameScreen, undoAllowed } from '../features/game/GameScreen';
+import { useGameHistory } from '../stores/history';
 import { useLocalSession } from '../stores/localSession';
 import { useSettings } from '../stores/settings';
 
@@ -37,6 +38,7 @@ function LocalGame() {
   const game = useLocalSession((s) => s.game);
   const result = useLocalSession((s) => s.result);
   const flipped = useLocalSession((s) => s.flipped);
+  const reviewId = useGameHistory((s) => s.current.local);
   useLocalSession((s) => s.version);
 
   const orientation: Color = flipped ? 'b' : 'w';
@@ -51,6 +53,7 @@ function LocalGame() {
       canUndo={undoAllowed({ game, result })}
       onUndo={() => useLocalSession.getState().undo()}
       resignColor={game.turn}
+      reviewId={reviewId}
       onRematch={() => {
         const { start, timeControl } = useLocalSession.getState();
         start(timeControl);

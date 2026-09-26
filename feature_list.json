@@ -2385,6 +2385,77 @@
       ],
       "evidence": [],
       "notes": "Depends on plat-016; best started after ch-013 proves the layer. Mate-in-N puzzles are expected to dominate because counting rules draw many material-winning endgames. The same generator could later serve Sittuyin and Xiangqi; Shogi could use classical tsume collections."
+    },
+    {
+      "id": "ch-014",
+      "product": "chess",
+      "priority": 110,
+      "area": "history",
+      "milestone": "M18",
+      "title": "Saved games on this device, with PGN export and import",
+      "user_visible_behavior": "Every game against the computer, pass-and-play or online is saved in this browser as it is played and stays listed under Games until the browser storage is cleared. A game can be copied out as PGN, and a PGN can be pasted in to be reviewed.",
+      "status": "passing",
+      "verification": [
+        "Unit tests: PGN written by the site parses back to the same moves, tags and start position; PGN from other sites (comments, variations, NAGs, move numbers, results, FEN tag) parses; an illegal move is reported with its move number.",
+        "Unit tests: a game is saved on every move under one id, a takeback updates the same record, a new game gets a new id, a game abandoned before both sides moved twice is dropped, and the list keeps the newest 100 games.",
+        "E2E: a finished game against the computer and a pass-and-play game appear under Games after a reload; a pasted PGN appears in the list; Copy PGN gives the moves played."
+      ],
+      "evidence": [
+        "2026-09-26: packages/chess/src/pgn.ts writes PGN (Seven Tag Roster, SetUp/FEN for other starts, move numbers including a black first move, 80-column wrap, escaped tag values) and reads it back loosely (comments, variations, NAGs, escape lines, clock comments, 0-0, extra disambiguation, missing '=', BOM and CRLF) while requiring every move to be legal; PgnError carries the failing ply and SAN. 11 unit tests in pgn.test.ts.",
+        "2026-09-26: apps/chess/web/src/stores/history.ts keeps up to 100 games in localStorage ('chess.games'), newest first, with a removal hook for data kept beside a game; createRecorder writes one record per game on every change, keeps the same record across a reload and a takeback, starts a new one for a new game, drops an unfinished game of fewer than 4 plies, and keys online games by room code. stores/recording.ts wires it to pass-and-play and the computer from main.tsx, and OnlineGamePage records the viewer's side (spectators save nothing). 8 unit tests in history.test.ts, 5 in features/history/savedGame.test.ts (names, outcome, export tags with Site '?', import results).",
+        "2026-09-26: the Games page (/games, new nav item) lists saved games with outcome, players, mode, date and length, shows PGN in a dialog with Copy and Download, imports pasted PGN with a readable error, and deletes a game after confirmation. Every string is an i18n key.",
+        "2026-09-26: Playwright e2e/games.spec.ts 4 passed (finished pass-and-play game listed after a reload; computer game saved as played; PGN export with no address in it; PGN import incl. an illegal move error; delete) and e2e/online.spec.ts gained a case where host and friend each find the game under Games from their own side; full chess e2e 29 passed; npm run verify exits 0."
+      ],
+      "notes": "Stored in localStorage (small JSON per game; the analysis is stored separately by ch-015). Online games are saved from the viewer's side, keyed by room code."
+    },
+    {
+      "id": "ch-015",
+      "product": "chess",
+      "priority": 111,
+      "area": "review",
+      "milestone": "M18",
+      "title": "Game analysis with Stockfish and chess.com-style move labels",
+      "user_visible_behavior": "A saved game can be analysed on the device by Stockfish; every move gets a label (Brilliant, Great, Best, Excellent, Good, Book, Inaccuracy, Mistake, Miss, Blunder), each player gets an accuracy score, and the analysis is kept with the game.",
+      "status": "passing",
+      "verification": [
+        "Stockfish 19 lite (single-threaded WASM, GPL-3.0) is imported verbatim by a script, with its licence and source recorded next to the files and credited in the app; it is precached so review works offline.",
+        "Unit tests: UCI output parsing (cp, mate, multipv, bounds), win-percentage and accuracy formulas, and every label on hand-built evaluations; Book from the bundled opening list; Brilliant only for a sound sacrifice; Great only for an only move; Miss only for a missed punishment.",
+        "Integration test: the real engine (the Node build of the same file) analyses a short known game and finds the blunder in it.",
+        "E2E: analysing a saved game in the browser shows progress, finishes, and survives a reload without analysing again."
+      ],
+      "evidence": [
+        "2026-09-26: apps/chess/web/scripts/import-stockfish.mjs downloads stockfish@19.0.0 from the npm registry, checks the tarball against the registry's sha512 integrity, and stores bin/stockfish-19-lite-single.{js,wasm} (21 KB + 1.8 MB) and Copying.txt verbatim in public/engine/ next to CREDITS.md. vite.config precaches .wasm; the About page gained a 'Game review' credit card linking to Stockfish and the opening list. Root eslint ignores apps/*/web/public/** (static files).",
+        "2026-09-26: scripts/import-openings.mjs downloads lichess-org/chess-openings a..e.tsv (CC0, 3815 lines) verbatim and precomputes openings/book.json (3815 named + 4048 passing positions, FNV-1a hashed keys, 67 KB gzipped, lazy-loaded). Building it at runtime took 5.4 s under vitest, too slow for a phone.",
+        "2026-09-26: features/review/uci.ts (5 tests), engine.ts (UciEngine over a Worker or child-process transport, MultiPV 2, depth 14 / 1.5 s cap, White-side scores), analysis.ts (Lichess win% and accuracy, chess.com thresholds, Book, Brilliant = a sacrifice created by the move worth >= 2 pawns in a level-or-better position not already decided unless it forces mate, Great = the runner-up loses >= 15 points in an undecided position and is not a recapture, Miss = a mistake/blunder after the opponent's error that returns to where the player stood). analysis.test.ts 17 tests, openings.test.ts 4, stores/analysis.test.ts 3 (per-FEN storage, compaction, eviction of the oldest games' analysis when storage is full).",
+        "2026-09-26: engine.test.ts runs the shipped Stockfish file under Node (copied as .cjs next to its .wasm): scores come back from White's side with a runner-up line, mate in 1 is found, and the Blackburne Shilling trap is reviewed with 5. Nxf7 flagged (win% drop > 10) and Black's accuracy above White's.",
+        "2026-09-26: label sanity check on real games at review depth (not committed as a test, too slow): Opera Game 16. Qb8+ Brilliant, Evergreen 21. Qxd7+ Brilliant, a GM game at 92/94 accuracy with few Great labels. Two bugs found this way and fixed with tests: a named trap was labelled Book (a book move losing >= 10 points is now judged and ends the book), and a piece already hanging counted as a sacrifice.",
+        "2026-09-26: Playwright e2e/review.spec.ts: analysis shows progress and finishes in the browser; a reload opens the finished review without loading the engine at all; e2e-pwa: a game is reviewed offline by the precached engine. npm run verify exit 0; chess e2e 32 passed."
+      ],
+      "notes": "Labels are judged by lost win percentage (the Lichess formula) with chess.com thresholds; Brilliant, Great and Miss are heuristics. Opening names and Book moves come from lichess-org/chess-openings (CC0)."
+    },
+    {
+      "id": "ch-016",
+      "product": "chess",
+      "priority": 112,
+      "area": "review",
+      "milestone": "M18",
+      "title": "Game review screen",
+      "user_visible_behavior": "After a game, or from Games, the player opens a review: a simple summary (accuracy, label counts, opening) and then a move-by-move walk with the label on the board, an eval bar, an eval graph to jump around, and the engine best move drawn as an arrow with its line.",
+      "status": "passing",
+      "verification": [
+        "The result dialog of every chess game offers Game review, which opens the review of that game.",
+        "Every string is an i18n key; describeLocales passes.",
+        "Unit tests: the eval graph and bar map evaluations to the right heights, and the arrow is drawn between the right squares in both orientations.",
+        "E2E: from a finished game, review opens, analysis finishes, stepping through moves shows labels, tapping the graph jumps to a move, and the best-move arrow appears."
+      ],
+      "evidence": [
+        "2026-09-26: the shared GameOverModal/GameScreen take an optional review action (label and handler come from the product, so no shared i18n key was added); the chess GameScreen wrapper turns a reviewId into a 'Game review' button, passed by the computer, pass-and-play and online pages (online only for players, not spectators).",
+        "2026-09-26: pages/ReviewPage.tsx at /games/:gameId: summary card (opening, accuracy per side, label counts, Start review), then a coach card per move (label badge, one plain sentence, best move and engine line), eval bar beside the board, eval graph with the worst moves dotted and tap-to-jump, best-move arrow and the label on the destination square drawn in the board overlay, move list with badges, arrow keys, flip, PGN. Colours are new Marble tokens (--grade-*, --eval-*) in both themes; badges use chess annotation glyphs and lucide icons.",
+        "2026-09-26: every string is an i18n key in en.json (review.*, games.*, play.gameReview, about.engine*); describeLocales passes in npm run verify.",
+        "2026-09-26: geometry.test.ts (4): squares map to the right SVG points in both orientations, graph points and tap-to-ply, bar share and score text.",
+        "2026-09-26: Playwright e2e/review.spec.ts 3 passed: from the result dialog of a finished game the review opens and finishes; 2. g4 in Fool's Mate is a blunder with 'Best was' and one best-move arrow; Next moves on; taps on the graph jump to ply 0 and the last ply; an imported PGN opens in review with its opening named; an unknown id says so. Screenshots checked at 1280 and 390 wide and in dark mode (e2e-evidence/, gitignored)."
+      ],
+      "notes": "Simplicity is taken from Duolingo's flow only (one card per move, plain words); the look stays Marble and never copies Duolingo's trade dress."
     }
   ]
 }

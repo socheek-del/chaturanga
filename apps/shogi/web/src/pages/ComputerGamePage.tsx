@@ -193,12 +193,16 @@ function ComputerGame({ level, humanColor }: { level: number; humanColor: Color 
       resignColor={humanColor}
       hint={hint && hint.version === version ? hint : null}
       status={
-        thinking && !result ? (
-          <p data-testid="thinking" className="flex items-center justify-center gap-2 text-sm font-bold text-muted">
-            <LoaderCircle aria-hidden className="h-4 w-4 animate-spin" />
-            {t('computer.thinking', { name: botName })}
-          </p>
-        ) : null
+        // Always rendered, only hidden while idle: on a phone the board is sized to the space left, so a line that
+        // came and went each turn would shrink and grow the board with it.
+        <p
+          data-testid="thinking"
+          aria-hidden={!(thinking && !result) || undefined}
+          className={cn('flex items-center justify-center gap-2 text-sm font-bold text-muted', !(thinking && !result) && 'invisible')}
+        >
+          <LoaderCircle aria-hidden className="h-4 w-4 animate-spin" />
+          {t('computer.thinking', { name: botName })}
+        </p>
       }
       actions={
         <Button variant="warning" onClick={askHint} disabled={!canHint} data-testid="hint">

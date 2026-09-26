@@ -47,7 +47,7 @@ test('the UI keeps animating while the strongest bot thinks (ai-001)', async ({ 
   );
   expect(frames).toBeGreaterThan(30);
   await expect(plies(page)).toHaveCount(1, { timeout: 15_000 });
-  await expect(page.getByTestId('thinking')).toHaveCount(0);
+  await expect(page.getByTestId('thinking')).toBeHidden();
 });
 
 test('hint highlights a legal move for the player (ai-003)', async ({ page }) => {

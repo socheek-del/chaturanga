@@ -968,3 +968,18 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
 - Deployed: CI green on `dde7e46` (Makruk and siblings); chess by hand (version 7f8a609d). Live checks:
   chess `smoke:prod` 14 passed; new Makruk `smoke:prod` 2 passed (isolation headers live, engine served,
   review works). Remaining open item: native Thai review of the new strings (polish-002).
+
+### Session 024 (board flicker on phones vs the computer)
+
+- Bug (owner report): on a phone, every turn switch against the computer made the board and the player bars
+  shrink and grow. Reproduced at 390x664 in chess: the board went 329px -> 301px -> 329px each turn. Cause: the
+  "thinking…" line was mounted only on the bot's turn, and `useFittedBoard` sizes the board to the height left
+  in the column. Local play was stable.
+- Fix: every `ComputerGamePage` (chess, makruk, shogi, sittuyin, xiangqi) keeps the line mounted and hides it
+  with `invisible` + `aria-hidden` while idle, so its space is always reserved.
+- Regression test: chess `e2e/mobile.spec.ts` "the board keeps its size while the computer thinks on a phone"
+  records the board width every frame across a bot reply; it fails without the fix (`[329, 301]`) and passes
+  with it. Makruk's e2e now expects the idle line to be hidden rather than absent.
+- Verification: `npm run verify` exit 0; chess mobile + computer e2e 5 passed; makruk/shogi/sittuyin/xiangqi
+  computer e2e all passed.
+- Chess still needs a manual `npm run deploy:chess`; CI deploys the other four on push.

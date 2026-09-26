@@ -139,6 +139,8 @@ broken starting state.
     with the product's art, words, sounds and counting injected — the keys they read are in
     `packages/game-shell/KEYS.md`. Each app declares its product in `apps/<game>/web/product.config.ts` and
     `@source`s `game-shell/src/ui`.
+    Saved games, PGN (in rules-core), engine analysis, move labels and the Games and Review screens are
+    shared too (plat-017): a product supplies a `ReviewKit`, keys and colours listed in `KEYS.md`.
   - `packages/server-kit` (`@chaturanga/server-kit`): the online-play Worker layer — the room state
     machine (clocks wait for a setup phase), room codes, seat tokens, `registerPlayRoutes` (health, guest
     token, rooms, quick match, room socket), and the `GameRoomBase` and `MatchmakerBase` Durable Objects,
@@ -151,7 +153,8 @@ broken starting state.
   - `apps/chess/web`, `apps/chess/worker`: the chess product (`apps/chess/AGENTS.md`). English only, the
     "Marble" identity, 16 lessons, online rooms, PWA, saved games with PGN, and a Stockfish game review. The Worker runs on :8791 and deploys on its own
     subdomain and D1 (ch-008).
-  - `apps/makruk/web`, `apps/makruk/worker`: the Makruk product (`apps/makruk/AGENTS.md`).
+  - `apps/makruk/web`, `apps/makruk/worker`: the Makruk product (`apps/makruk/AGENTS.md`), with saved games
+    and a Fairy-Stockfish game review; the site is cross-origin isolated for the engine's threads.
 - **Commands:**
   - `npm run verify`: lint, typecheck and unit tests in every workspace.
   - `npm run dev` / `npm run e2e` / `npm run build` / `npm run deploy`: currently run the Makruk product.

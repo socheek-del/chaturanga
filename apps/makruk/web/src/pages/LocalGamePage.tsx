@@ -6,6 +6,7 @@ import { Button, Card, SegmentedControl } from '@chaturanga/ui';
 import { TimeControlPicker } from '@chaturanga/game-shell/ui';
 import { GameScreen, undoAllowed } from '../features/game/GameScreen';
 import { toTimeControl } from '../features/game/timeControls';
+import { useGameHistory } from '../stores/history';
 import { useLocalSession } from '../stores/localSession';
 import { type PassAndPlayView, useSettings } from '../stores/settings';
 
@@ -81,6 +82,7 @@ function LocalGame() {
   const game = useLocalSession((s) => s.game);
   const result = useLocalSession((s) => s.result);
   const flipped = useLocalSession((s) => s.flipped);
+  const reviewId = useGameHistory((s) => s.current.local);
   useLocalSession((s) => s.version);
   const view = useSettings((st) => st.passAndPlayView);
 
@@ -98,6 +100,7 @@ function LocalGame() {
       canUndo={undoAllowed({ game, result })}
       onUndo={() => useLocalSession.getState().undo()}
       resignColor={game.turn}
+      reviewId={reviewId}
       onRematch={() => {
         const { start, timeControl, startFen } = useLocalSession.getState();
         start(timeControl, startFen);

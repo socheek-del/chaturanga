@@ -44,6 +44,15 @@ function siteAddress(): Plugin {
 }
 
 // In dev, the Worker runs on :8787 (wrangler dev) and Vite proxies API + WebSocket traffic to it.
+/**
+ * Game review runs Fairy-Stockfish, whose threads need SharedArrayBuffer, which browsers only give a
+ * cross-origin isolated page (review-002). Production sends the same headers from public/_headers.
+ */
+const CROSS_ORIGIN_ISOLATION = {
+  'Cross-Origin-Opener-Policy': 'same-origin',
+  'Cross-Origin-Embedder-Policy': 'require-corp',
+};
+
 export default defineConfig({
   // plat-006: sibling sites for the "more games" links, with addresses from their own site.config.ts.
   define: { __SITE_URL__: JSON.stringify(SITE_URL), __FAMILY__: JSON.stringify(familyLinks('makruk')) },
@@ -75,7 +84,8 @@ export default defineConfig({
         ],
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,svg,png,woff,woff2}'],
+        // The engine (public/engine, about 1.7 MB) is precached so game review works offline (review-002).
+        globPatterns: ['**/*.{js,css,html,svg,png,woff,woff2,wasm}'],
         navigateFallback: '/index.html',
         navigateFallbackDenylist: [/^\/api\//, /^\/ws\//, /^\/robots\.txt$/, /^\/sitemap\.xml$/],
         maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
@@ -84,12 +94,14 @@ export default defineConfig({
   ],
   server: {
     port: 5173,
+    headers: CROSS_ORIGIN_ISOLATION,
     proxy: {
       '/api': 'http://127.0.0.1:8787',
       '/ws': { target: 'ws://127.0.0.1:8787', ws: true },
     },
   },
   preview: {
+    headers: CROSS_ORIGIN_ISOLATION,
     proxy: {
       '/api': 'http://127.0.0.1:8787',
       '/ws': { target: 'ws://127.0.0.1:8787', ws: true },

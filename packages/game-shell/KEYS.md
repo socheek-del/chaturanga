@@ -118,7 +118,7 @@ Only a product that saves and reviews games needs these (`GamesScreen`, `ReviewS
 | `games.importIllegal` (`{{move}}`, `{{number}}`), `games.importUnreadable` | PGN import errors |
 | `games.review`, `games.pgn`, `games.pgnTitle`, `games.copy`, `games.copied`, `games.download` | Row actions and PGN dialog |
 | `games.delete`, `games.deleteConfirm` | Deleting a game |
-| `games.versus` (`{{white}}`, `{{black}}`), `games.moveCount_*` (`{{count}}`) | Row text; plural forms per language |
+| `games.versus` (`{{white}}`, `{{black}}`), `games.moveCount_one`, `games.moveCount_other` (`{{count}}`) | Row text; a language without plurals (Thai) repeats the same text in both |
 | `games.mode.<mode>`, `games.event.<mode>` | `computer`, `local`, `online`, `imported`: row label and PGN Event tag |
 | `games.outcome.<outcome>` | `won`, `lost`, `draw`, `whiteWins`, `blackWins`, `unfinished` |
 | `computer.you`, `online.opponent`, `colors.w`, `colors.b` | Player names |

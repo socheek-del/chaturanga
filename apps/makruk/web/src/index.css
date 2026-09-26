@@ -42,6 +42,20 @@
 
   --card-shadow: 0 1px 2px rgb(31 29 54 / 0.06), 0 8px 24px -12px rgb(31 29 54 / 0.18);
 
+  /* Game review (review-002, game-shell KEYS.md): one colour per move label, and the two sides of the bar. */
+  --grade-brilliant: #13807a;
+  --grade-great: #3a54a8;
+  --grade-best: #2f7d4a;
+  --grade-excellent: #5a8a3a;
+  --grade-good: #6f8468;
+  --grade-book: #8c6a45;
+  --grade-inaccuracy: #b98712;
+  --grade-mistake: #c65f27;
+  --grade-miss: #a8465e;
+  --grade-blunder: #b63a2b;
+  --eval-white: #fbf7ee;
+  --eval-black: #25223f;
+
   color-scheme: light;
 }
 
@@ -74,6 +88,19 @@
   --scrim: #121226;
 
   --card-shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 10px 28px -14px rgb(0 0 0 / 0.6);
+
+  --grade-brilliant: #54c8bd;
+  --grade-great: #9eacf4;
+  --grade-best: #7fca94;
+  --grade-excellent: #a6cf85;
+  --grade-good: #a9bea4;
+  --grade-book: #d2ad80;
+  --grade-inaccuracy: #f0c055;
+  --grade-mistake: #f09a62;
+  --grade-miss: #e98ba3;
+  --grade-blunder: #f08a7a;
+  --eval-white: #efe9dc;
+  --eval-black: #0b0b18;
 
   color-scheme: dark;
 }

@@ -4,7 +4,10 @@ import { useComputerMatch, useComputerSession, useLocalSession } from './localSe
 
 let started = false;
 
-/** Saves every pass-and-play game and every game against the computer as it is played (ch-014). */
+/**
+ * Saves every pass-and-play game and every game against the computer as it is played (review-001). The
+ * guided first game is a lesson and is not saved.
+ */
 export function startRecording(): void {
   if (started) return;
   started = true;

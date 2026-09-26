@@ -15,6 +15,8 @@ export interface PositionEval {
 
 /** How the engine is reached: a Web Worker in the browser, a child process in tests. */
 export interface UciTransport {
+  /** Settles when the engine has loaded; a rejection (no engine) fails the first search instead of hanging it. */
+  ready?: Promise<void>;
   send(command: string): void;
   onLine(listener: (line: string) => void): void;
   terminate(): void;
@@ -64,6 +66,7 @@ export class UciEngine {
 
   init(): Promise<void> {
     this.ready ??= (async () => {
+      await this.transport.ready;
       const uciok = this.waitFor((l) => l.trim() === 'uciok');
       this.transport.send('uci');
       await uciok;
@@ -140,5 +143,71 @@ export function workerTransport(url: string): UciTransport {
       });
     },
     terminate: () => worker.terminate(),
+  };
+}
+
+/** An Emscripten engine module (Fairy-Stockfish WASM): a factory that resolves to the engine itself. */
+interface EngineModule {
+  postMessage(command: string): void;
+  addMessageListener(listener: (line: string) => void): void;
+  terminate?(): void;
+}
+
+const loadedScripts = new Map<string, Promise<void>>();
+
+function loadScript(url: string): Promise<void> {
+  let loading = loadedScripts.get(url);
+  if (!loading) {
+    loading = new Promise<void>((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = url;
+      script.onload = () => resolve();
+      script.onerror = () => {
+        loadedScripts.delete(url);
+        reject(new Error(`could not load ${url}`));
+      };
+      document.head.append(script);
+    });
+    loadedScripts.set(url, loading);
+  }
+  return loading;
+}
+
+/**
+ * An engine shipped as an Emscripten module script that defines a global factory (Fairy-Stockfish WASM:
+ * `Stockfish`). Its search runs in threads, which needs a cross-origin isolated page; commands sent before
+ * the module is ready wait for it.
+ */
+export function moduleTransport(scriptUrl: string, factoryName = 'Stockfish'): UciTransport {
+  const listeners: Array<(line: string) => void> = [];
+  const queue: string[] = [];
+  let engine: EngineModule | null = null;
+  let terminated = false;
+
+  const ready = (async () => {
+    if (!globalThis.crossOriginIsolated) throw new Error('the engine needs a cross-origin isolated page (COOP and COEP headers)');
+    await loadScript(scriptUrl);
+    const factory = (globalThis as unknown as Record<string, () => Promise<EngineModule>>)[factoryName];
+    if (!factory) throw new Error(`${scriptUrl} did not define ${factoryName}`);
+    const module = await factory();
+    if (terminated) {
+      module.terminate?.();
+      return;
+    }
+    module.addMessageListener((line) => {
+      for (const listener of listeners) listener(line);
+    });
+    engine = module;
+    for (const command of queue.splice(0)) module.postMessage(command);
+  })();
+  return {
+    ready,
+    send: (command) => (engine ? engine.postMessage(command) : void queue.push(command)),
+    onLine: (listener) => void listeners.push(listener),
+    terminate: () => {
+      terminated = true;
+      engine?.terminate?.();
+      engine = null;
+    },
   };
 }

@@ -5,7 +5,7 @@ const REPO = 'https://github.com/socheek-del/chaturanga';
 test('about page explains the project and links to GitHub for contributors; there is no account area', async ({ page }) => {
   await page.goto('/');
   const nav = page.getByRole('navigation');
-  await expect(nav.getByRole('link')).toHaveText(['หมากรุกไทย', 'เล่น', 'เรียน', 'เกี่ยวกับ', 'ตั้งค่า']);
+  await expect(nav.getByRole('link')).toHaveText(['หมากรุกไทย', 'เล่น', 'เรียน', 'ประวัติ', 'เกี่ยวกับ', 'ตั้งค่า']);
   await nav.getByRole('link', { name: 'เกี่ยวกับ', exact: true }).click();
 
   await expect(page).toHaveURL(/\/about$/);

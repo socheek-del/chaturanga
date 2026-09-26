@@ -1,6 +1,6 @@
 import { resolveLocale } from '@chaturanga/game-shell';
 import { MoreGames, useFocusModeProvider } from '@chaturanga/game-shell/ui';
-import { ArrowLeft, GraduationCap, Info, type LucideIcon, Settings, Swords } from 'lucide-react';
+import { ArrowLeft, GraduationCap, History, Info, type LucideIcon, Settings, Swords } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link, NavLink, Outlet } from 'react-router';
 import { PRODUCT } from '../../product.config';
@@ -11,6 +11,7 @@ import { ThemeController } from './ThemeController';
 const NAV: ReadonlyArray<{ to: string; key: string; icon: LucideIcon; end?: boolean }> = [
   { to: '/', key: 'nav.play', icon: Swords, end: true },
   { to: '/learn', key: 'nav.learn', icon: GraduationCap },
+  { to: '/games', key: 'nav.games', icon: History },
   { to: '/about', key: 'nav.about', icon: Info },
   { to: '/settings', key: 'nav.settings', icon: Settings },
 ];

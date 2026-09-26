@@ -3,7 +3,9 @@ import {
   type GameSessionState as VariantSessionState,
   storageKey,
 } from '@chaturanga/game-shell';
-import { type Game, makruk } from '@chaturanga/makruk';
+import { type Color, type Game, makruk } from '@chaturanga/makruk';
+import { create } from 'zustand';
+import { createJSONStorage, persist } from 'zustand/middleware';
 import { PRODUCT } from '../../product.config';
 
 /** A Makruk game session (shared session logic in @chaturanga/game-shell). */
@@ -26,3 +28,11 @@ export const useComputerSession = createGameSession(storageKey(PRODUCT, 'session
 
 /** Guided first game (lesson) against the easiest bot. */
 export const useGuidedSession = createGameSession(storageKey(PRODUCT, 'session.guided'));
+
+/** Bot and colour of the current game; saved with the game so a reload continues against the same bot. */
+export const useComputerMatch = create<{ level: number; humanColor: Color }>()(
+  persist(() => ({ level: 2, humanColor: 'w' as Color }), {
+    name: storageKey(PRODUCT, 'session.computerMatch'),
+    storage: createJSONStorage(() => localStorage),
+  }),
+);

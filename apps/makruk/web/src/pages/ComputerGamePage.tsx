@@ -3,28 +3,19 @@ import { type Color, type Game, type PieceType, parseSquare } from '@chaturanga/
 import { Lightbulb, LoaderCircle } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { create } from 'zustand';
-import { createJSONStorage, persist } from 'zustand/middleware';
 import { Button, Card, cn, SegmentedControl } from '@chaturanga/ui';
 import { AiCancelled, cancelAi, requestComputerMove, requestHint } from '../features/ai/aiClient';
 import { PieceSvg } from '../features/board/PieceSvg';
 import { GameScreen, undoAllowed } from '../features/game/GameScreen';
 import { CoachTip } from '../features/learn/CoachTip';
-import { type GameSessionStore, useComputerSession } from '../stores/localSession';
+import { useGameHistory } from '../stores/history';
+import { type GameSessionStore, useComputerMatch, useComputerSession } from '../stores/localSession';
 import { useSettings } from '../stores/settings';
 
 /** Minimum visible "thinking" time so instant bot replies still feel like a turn. */
 const MIN_THINK_MS = 450;
 
 const BOT_PIECE: Record<string, PieceType> = { bia: 'p', met: 'm', khon: 's', ma: 'n', ruea: 'r', khun: 'k' };
-
-/** Bot and colour of the current game; saved with the game so a reload continues against the same bot. */
-const useComputerMatch = create<{ level: number; humanColor: Color }>()(
-  persist(() => ({ level: 2, humanColor: 'w' as Color }), {
-    name: 'makruk.session.computerMatch',
-    storage: createJSONStorage(() => localStorage),
-  }),
-);
 
 const opposite = (c: Color): Color => (c === 'w' ? 'b' : 'w');
 
@@ -132,6 +123,9 @@ export function ComputerGame({ useSession, level, humanColor, coach = false, tit
   const [hint, setHint] = useState<{ from: number; to: number; version: number } | null>(null);
   const [hintLoading, setHintLoading] = useState(false);
   const botName = t(`bots.${bot.key}.name`);
+  // Only the game against the computer is saved (review-001); the guided lesson reuses this screen.
+  const savedId = useGameHistory((s) => s.current.computer);
+  const reviewId = useSession === useComputerSession ? savedId : null;
 
   useEffect(() => {
     if (result || game.turn !== computerColor || viewPly !== null) return;
@@ -195,6 +189,7 @@ export function ComputerGame({ useSession, level, humanColor, coach = false, tit
       canUndo={humanHasMoved && undoAllowed({ game, result })}
       onUndo={takeback}
       resignColor={humanColor}
+      reviewId={reviewId}
       hint={hint && hint.version === version ? hint : null}
       status={
         <>

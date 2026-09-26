@@ -1,6 +1,7 @@
 import { GameScreen as Screen, type GameScreenProps as ScreenProps } from '@chaturanga/game-shell/ui';
 import { type Game, makruk, type Piece } from '@chaturanga/makruk';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router';
 import { PieceSvg } from '../board/PieceSvg';
 import { boardTheme } from '../board/themes';
 import { playSound } from '../sound/sound';
@@ -21,13 +22,17 @@ type Injected =
   | 'onSound'
   | 'renderCounting';
 
-export type GameScreenProps = Omit<ScreenProps<Game>, Injected>;
+export type GameScreenProps = Omit<ScreenProps<Game>, Injected | 'review'> & {
+  /** The saved game this screen is writing (review-001); its result dialog then offers a review (review-002). */
+  reviewId?: string | null;
+};
 
 export { undoAllowed } from '@chaturanga/game-shell/ui';
 
 /** The Makruk game screen: the shared screen with Makruk pieces, board colours, sounds and counting. */
-export function GameScreen(props: GameScreenProps) {
+export function GameScreen({ reviewId, ...props }: GameScreenProps) {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const theme = boardTheme(useSettings((st) => st.boardTheme));
   const showCoordinates = useSettings((st) => st.showCoordinates);
   const showAttackMap = useSettings((st) => st.showAttackMap);
@@ -53,6 +58,7 @@ export function GameScreen(props: GameScreenProps) {
       }
       pieceValues={PIECE_VALUE}
       onSound={playSound}
+      review={reviewId ? { label: t('play.gameReview'), onReview: () => navigate(`/games/${reviewId}`) } : undefined}
       renderCounting={(game) => {
         const counting = game.counting();
         return counting && <CountingIndicator counting={counting} />;

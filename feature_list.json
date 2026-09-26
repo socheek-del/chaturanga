@@ -2477,7 +2477,8 @@
         "2026-09-27: packages/rules-core/src/pgn.ts: writePgn/readPgn over any Variant (SAN from the variant, a pluggable SanResolver, default resolveBySan matching the variant own SAN). @chaturanga/chess toPgn/parsePgn are now thin wrappers keeping its loose resolveSan; chess pgn tests 11 passed unchanged. packages/makruk/src/pgn.test.ts (4): Makruk SAN with =M promotion, a full game, a counting FEN, an illegal move.",
         "2026-09-27: game-shell/src/review/ holds the history store and recorder (createHistoryStore(product) with per-store onRemoved), createAnalysisStore(product, history, engineId), UciEngine with per-game UCI options, the label maths generic over ReviewRules {variant, pieceValues, passTurn} (static exchange read from coordinate notation, so any board size), the OpeningBook data class, geometry for any board size, and a ReviewKit type; game-shell/src/ui/review/ holds GamesScreen, ReviewScreen (board look injected like GameScreen, router-free links), components and useGameAnalysis. No @chaturanga/chess import outside tests. game-shell tests 87 passed.",
         "2026-09-27: apps/chess/web now supplies only chessReview (features/review/kit.ts), the Stockfish URL, its opening book and thin GamesPage/ReviewPage wrappers; book.json rebuilt byte-identical through the shared positionHash. Chess unit tests 96 passed, chess e2e 33 passed (games, review, online), PWA suite 3 passed (fixed the stale lang ja expectation in the installability test, a pre-existing mismatch).",
-        "2026-09-27: packages/game-shell/KEYS.md documents the Games and Review keys and the --grade-*/--eval-* colour tokens. npm run verify exit 0."
+        "2026-09-27: packages/game-shell/KEYS.md documents the Games and Review keys and the --grade-*/--eval-* colour tokens. npm run verify exit 0.",
+        "2026-09-27: also shared: recordSession/seats (game-shell) and useRecordOnlineGame/onlineGameId (game-shell/ui), and moduleTransport for Emscripten engine modules with a ready promise so a failed load reaches the review error state. Chess re-run after this: e2e 33 passed."
       ],
       "notes": "Owner decision 2026-09-27: extract rather than copy, so Makruk (and later Sittuyin, Xiangqi, Shogi) reuse one implementation."
     },
@@ -2489,12 +2490,16 @@
       "milestone": "M20",
       "title": "Makruk: saved games on this device, with PGN export and import",
       "user_visible_behavior": "Every Makruk game against the computer, pass-and-play or online is saved in this browser and listed under Games; a game can be copied out as PGN with [Variant \"makruk\"], and such a PGN can be pasted in.",
-      "status": "not_started",
+      "status": "passing",
       "verification": [
         "Unit tests: Makruk PGN written by the site reads back to the same moves, including promotion to Met and a counting position FEN.",
         "E2E: a finished pass-and-play game and a computer game appear under Games after a reload; PGN export and import work; every string exists in th and en."
       ],
-      "evidence": [],
+      "evidence": [
+        "2026-09-27: apps/makruk/web: stores/history.ts (createHistoryStore(PRODUCT)), stores/recording.ts (pass-and-play and the computer; the guided lesson is not saved), OnlineGamePage records the viewer side, useComputerMatch moved to stores/localSession.ts, Games page and nav item (ประวัติ / Games), result dialog Game review button for local, computer and online games. PGN carries [Variant \"makruk\"] through the shared writer; Makruk PGN unit tests (packages/makruk/src/pgn.test.ts) 4 passed.",
+        "2026-09-27: every new string in th and en (games.*, review.*, play.gameReview, nav.games, about.engineCredit); Thai has no plural forms, so moveCount_one and _other carry the same text; locales.test passes; the Thai text is listed for native review in apps/makruk/docs/i18n-review.md (polish-002).",
+        "2026-09-27: Playwright e2e/review.spec.ts: a finished pass-and-play game from a FEN is listed after a reload with its outcome; PGN export has [Variant \"makruk\"], the FEN tag and 1. Rh8# 1-0, and no address; an illegal PGN names move 2 (e6); the exported PGN imports back; a computer game is saved as played (คุณ พบ น้องเบี้ย). Full Makruk e2e 74 passed (about.spec updated for the new nav item; family.spec fixed with exact: true, a pre-existing failure on main where Chess matched Chinese chess and others)."
+      ],
       "notes": "Built on plat-017."
     },
     {
@@ -2505,7 +2510,7 @@
       "milestone": "M20",
       "title": "Makruk game review with Fairy-Stockfish",
       "user_visible_behavior": "A saved Makruk game is analysed on the device by Fairy-Stockfish (makruk variant) and reviewed like chess: move labels, accuracy, eval bar and graph, best-move arrow and line, in Thai and English.",
-      "status": "not_started",
+      "status": "passing",
       "verification": [
         "Fairy-Stockfish WASM (GPL-3.0) is imported verbatim by a script with its licence and source recorded, credited on the About page, and precached for offline review.",
         "The site is cross-origin isolated (COOP same-origin, COEP require-corp) in dev, preview and production, which the threaded WASM build needs; nothing else on the site breaks (full Makruk e2e and PWA suites).",
@@ -2513,7 +2518,12 @@
         "E2E: a finished game opens its review from the result dialog, the analysis finishes, labels show, and it works offline.",
         "Thai wording is drafted and added to the native review (docs/i18n-review.md, polish-002)."
       ],
-      "evidence": [],
+      "evidence": [
+        "2026-09-27: apps/makruk/web/scripts/import-fairy-stockfish.mjs takes fairy-stockfish-nnue.wasm@1.1.12 from the npm registry tarball after checking its sha512 integrity and stores stockfish.js, stockfish.wasm (1.6 MB), stockfish.worker.js, Copying.txt and AUTHORS verbatim in public/engine/ with CREDITS.md; the About page credits Fairy-Stockfish; vite precaches .wasm.",
+        "2026-09-27: cross-origin isolation: public/_headers (COOP same-origin, COEP require-corp) for production and the same headers in vite dev and preview; e2e checks crossOriginIsolated is true, the full Makruk e2e (74) and PWA suite (3) pass under it.",
+        "2026-09-27: features/review/kit.ts: makrukReview = shared rules with Makruk material, UciEngine(moduleTransport(\"/engine/stockfish.js\"), { UCI_Variant: \"makruk\" }), no opening book. features/review/engine.test.ts runs the shipped engine files under Node: it reads our Makruk FENs (start position, 2 lines, legal pv) and flags 1. Kf1 in a position where Kxd2 wins a rook (label mistake or blunder, best Kxd2).",
+        "2026-09-27: Playwright: the result dialog opens the review and the analysis finishes; Kf1 is flagged with Best was Kxd2 and one best-move arrow; a reload labels from storage without loading the engine; PWA: offline review by the precached engine, still cross-origin isolated. Screenshot checked (Thai text, Wat colours)."
+      ],
       "notes": "Owner decisions 2026-09-27: Fairy-Stockfish, shared code, Thai drafted by the agent and marked for native review. No public Makruk opening list exists, so there is no Book label or opening name."
     }
   ]

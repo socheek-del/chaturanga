@@ -15,6 +15,7 @@ it has not been reviewed.
 | Bot personas | `th.json` → `bots.*` | Names and descriptions feel fun and respectful |
 | Emails | `apps/makruk/worker/src/accounts/email.ts` → `COPY` (confirmation, password reset) | Subject and body |
 | Store listing / manifest | `apps/makruk/web/vite.config.ts` → `manifest` | App name and description |
+| Saved games and game review (review-001, review-002) | `th.json` → `games.*`, `review.*`, `play.gameReview`, `nav.games`, `about.engineCredit` | Drafted by the engineering team on 2026-09-27; the move-label names below most of all |
 
 Everything can also be reviewed in the running app: open https://th-chess.beanroti.com
 (Thai is the default) and go through Home, Play (pass-and-play, computer, online), Learn
@@ -38,6 +39,10 @@ Everything can also be reviewed in the running app: open https://th-chess.beanro
 | Threefold repetition | ตำแหน่งซ้ำสามครั้ง | |
 | Rated / Casual | นับคะแนน / ไม่นับคะแนน | |
 | Bullet / Blitz / Rapid / Classical | บุลเล็ต / บลิตซ์ / แรพิด / คลาสสิก | Consider Thai alternatives |
+| Move labels: Brilliant / Great / Best / Excellent / Good | เฉียบคม / ยอดเยี่ยม / ดีที่สุด / ดีมาก / ดี | Game review; each must read as a clearly different grade |
+| Move labels: Book / Inaccuracy / Mistake / Miss / Blunder | ตามตำรา / ไม่แม่นยำ / ผิดพลาด / พลาดโอกาส / พลาดหนัก | Book is not shown for Makruk yet (no opening list) |
+| Accuracy / Game review / Engine line | ความแม่นยำ / ทบทวนเกม / แนวเดินของเอนจิน | |
+| Games (nav) | ประวัติ | Short enough for the phone nav bar |
 
 ## How to submit changes
 

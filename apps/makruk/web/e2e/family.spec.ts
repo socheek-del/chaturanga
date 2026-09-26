@@ -30,7 +30,7 @@ test('Makruk links to every sibling game at its configured address, in the site 
   const footer = page.getByTestId('family-footer');
   await expect(footer).toContainText('More games');
   for (const site of siblings) {
-    await expect(footer.getByRole('link', { name: site.names[OTHER]! })).toHaveAttribute('href', href(site, OTHER));
+    await expect(footer.getByRole('link', { name: site.names[OTHER]!, exact: true })).toHaveAttribute('href', href(site, OTHER));
   }
 
   // Only the siblings' names cross over: one link each, none back to this site, and no name in a language

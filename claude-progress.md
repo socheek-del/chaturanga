@@ -945,3 +945,23 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
 - Note for the next session: CI does not deploy chess on push; `npm run deploy:chess` is still manual.
 - Next best step: owner tries the review on a phone (analysis speed on a slow device is the open question;
   `REVIEW_LIMITS` in `features/review/engine.ts` is the knob); consider a `deploy-chess` CI job.
+
+### Session 023 (Makruk game review on a shared layer, branch `feat/shared-review`)
+
+- Date: 2026-09-27
+- Goal: owner request — the chess game review for Makruk too. Owner choices: Fairy-Stockfish WASM as the
+  judge, extract the review into shared packages rather than copy it, Thai drafted by the agent and marked
+  for native review, and all three parts (saved games, PGN, review).
+- Worked in a new worktree (`../t-chess-review2`, branch `feat/shared-review` from `origin/main`).
+- `plat-017` passing: PGN moved to `rules-core` for any variant; history, recorder, analysis store, UCI
+  engine client (worker and Emscripten-module transports), label maths (`ReviewRules`), and the Games and
+  Review screens moved to `game-shell`; chess supplies a `ReviewKit` and thin pages, behaviour unchanged
+  (e2e 33). KEYS.md lists the review keys and `--grade-*`/`--eval-*` tokens.
+- `review-001`, `review-002` passing for Makruk: saved games, PGN with `[Variant "makruk"]`,
+  Fairy-Stockfish review. **The Makruk site is now cross-origin isolated** (COOP/COEP) because the engine
+  uses threads; anything later loaded from another origin needs a CORP header. No opening book (none public).
+- Two pre-existing test bugs fixed on the way: chess PWA expected manifest `lang: 'ja'`; Makruk
+  `family.spec` matched "Chess" inside other game names (now `exact: true`).
+- Verification: `npm run verify` exit 0; chess e2e 33, Makruk e2e 74, Makruk PWA 3, chess PWA 3 passed.
+- Open: native Thai review of the new strings (polish-002); production isolation headers must be checked on
+  the live site after deploy (the `_headers` file is the Cloudflare static-assets mechanism).

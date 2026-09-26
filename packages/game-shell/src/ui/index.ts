@@ -25,3 +25,4 @@ export { EvalBar, EvalGraph, LABEL_MARK, LabelBadge, BoardMarks } from './review
 export { ExportDialog, GamesScreen, type GamesScreenProps } from './review/GamesScreen';
 export { AppLink, type BoardLook, moveNumber, type ReviewLinks, ReviewScreen, type ReviewScreenProps } from './review/ReviewScreen';
 export { type AnalysisState, positionsOf, useGameAnalysis } from './review/useGameAnalysis';
+export { onlineGameId, useRecordOnlineGame } from './review/useRecordOnlineGame';

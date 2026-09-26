@@ -72,6 +72,14 @@ export function AboutPage() {
         </div>
       </Card>
 
+      <p className="text-center text-sm text-muted" data-testid="engine-credit">
+        <Trans
+          i18nKey="about.engineCredit"
+          components={{
+            engine: <a href="https://github.com/fairy-stockfish/Fairy-Stockfish" target="_blank" rel="noopener noreferrer" className="font-bold text-secondary" />,
+          }}
+        />
+      </p>
       <p className="text-center text-sm text-muted">
         <Trans
           i18nKey="about.pieceArt"

@@ -49,3 +49,17 @@ test('offline: play the computer and take a lesson (polish-001)', async ({ page,
   await page.getByRole('button', { name: 'เริ่มเกม' }).click();
   await expect(page.locator('[data-square] [data-piece]')).toHaveCount(32);
 });
+
+test('offline: a finished game is reviewed by the precached engine, still cross-origin isolated (review-002)', async ({ page, context }) => {
+  await waitForServiceWorker(page);
+  await context.setOffline(true);
+
+  await page.goto(`/play/local?fen=${encodeURIComponent('k7/8/1K6/8/8/8/8/7R w - - 0 1')}`);
+  await page.locator('[data-time-control="none"]').click();
+  await page.getByRole('button', { name: 'เริ่มเกม' }).click();
+  await page.locator('[data-square="h1"]').click();
+  await page.locator('[data-square="h8"]').click();
+  await page.getByTestId('game-review').click();
+  expect(await page.evaluate(() => crossOriginIsolated)).toBe(true);
+  await expect(page.getByTestId('review-summary')).toBeVisible({ timeout: 60_000 });
+});

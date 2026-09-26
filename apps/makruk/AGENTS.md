@@ -7,6 +7,8 @@ Makruk (Thai chess) is a web PWA. It offers:
 - online play
 - game-like tutorials
 - themes in its own "Wat" (Thai temple) design system (`apps/makruk/docs/design.md`)
+- every game saved in the browser, with PGN export and import, and a Fairy-Stockfish game review
+  (review-001, review-002)
 
 The original product plan is `apps/makruk/docs/PLAN.md`. The platform rules in the root `AGENTS.md` apply
 here too.
@@ -33,6 +35,15 @@ here too.
   - GitHub Actions deploys on push to `main`.
   - `npm run deploy` (= `deploy:makruk`) applies D1 migrations (`apps/makruk/worker/migrations`) first.
   - Worker name and D1 database are both `makruk`.
+- **Saved games and review (review-001, review-002):** built on the shared layer in `game-shell`
+  (plat-017); `src/features/review/kit.ts` is everything Makruk supplies. Games are stored in
+  localStorage (`makruk.games`, analyses under `makruk.analysis.<id>`). The engine is Fairy-Stockfish WASM
+  (`fairy-stockfish-nnue.wasm@1.1.12`, GPL-3.0), stored verbatim in `web/public/engine/` (`CREDITS.md`;
+  re-download with `npm run engine -w apps/makruk/web`) and precached for offline use. It searches in
+  threads, so **the whole site is cross-origin isolated**: `web/public/_headers` in production and
+  `CROSS_ORIGIN_ISOLATION` in `vite.config.ts` for dev and preview. Anything loaded from another origin
+  (an image, a font, a script) must now send `Cross-Origin-Resource-Policy`, or it will be blocked. There is
+  no public Makruk opening list, so no Book label. PGN carries `[Variant "makruk"]`.
 - **Accounts:** removed from the product for now (owner decision 2026-09-14).
   - The site is open to everyone, with no sign-in, ratings or history.
   - Online play uses an invisible anonymous seat token (`apps/makruk/web/src/features/online/identity.ts`).

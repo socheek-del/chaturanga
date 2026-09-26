@@ -1,0 +1,5 @@
+# Game review runs Fairy-Stockfish, whose threads need SharedArrayBuffer, which browsers only give a
+# cross-origin isolated page (review-002). Nothing on this site loads from another origin.
+/*
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp

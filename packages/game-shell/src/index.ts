@@ -74,6 +74,7 @@ export {
   type SearchLimits,
   UciEngine,
   type UciTransport,
+  moduleTransport,
   workerTransport,
 } from './review/engine';
 export { formatScore, graphPoints, plyAt, squareCenter, whiteShare } from './review/geometry';
@@ -92,6 +93,7 @@ export {
   type SavedGame,
 } from './review/history';
 export type { ReviewKit } from './review/kit';
+export { recordSession, seats } from './review/recording';
 export { type BookData, type Opening, OpeningBook, positionHash, positionKey } from './review/openings';
 export {
   type BotName,

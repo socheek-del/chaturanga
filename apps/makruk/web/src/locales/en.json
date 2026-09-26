@@ -20,7 +20,8 @@
     "reportBug": "Report a bug or suggest an idea",
     "translate": "Help review the Thai text",
     "madeBy": "Made by {{name}}",
-    "pieceArt": "Traditional piece art by <author>Yevrowl</author>, <licence>CC BY-SA 4.0</licence>."
+    "pieceArt": "Traditional piece art by <author>Yevrowl</author>, <licence>CC BY-SA 4.0</licence>.",
+    "engineCredit": "Games are reviewed on your device by <engine>Fairy-Stockfish</engine>, used under the GPL-3.0 licence."
   },
   "seo": {
     "home": {
@@ -62,7 +63,8 @@
     "play": "Play",
     "learn": "Learn",
     "about": "About",
-    "settings": "Settings"
+    "settings": "Settings",
+    "games": "Games"
   },
   "home": {
     "choose": "Choose how to play",
@@ -168,7 +170,8 @@
       "resign": "Resignation",
       "agreement": "Draw agreed",
       "abandon": "Game abandoned"
-    }
+    },
+    "gameReview": "Game review"
   },
   "learn": {
     "title": "Lessons",
@@ -246,12 +249,30 @@
     "hint": "Hint"
   },
   "bots": {
-    "bia": { "name": "Little Bia", "desc": "Just learning — makes lots of mistakes" },
-    "met": { "name": "Rookie Met", "desc": "Grabs pieces but doesn't look ahead" },
-    "khon": { "name": "Khon the Fighter", "desc": "Thinks two moves ahead" },
-    "ma": { "name": "Tricky Ma", "desc": "Loves tactical tricks" },
-    "ruea": { "name": "Iron Ruea", "desc": "Solid and precise" },
-    "khun": { "name": "Grand Khun", "desc": "The strongest — thinks deepest" }
+    "bia": {
+      "name": "Little Bia",
+      "desc": "Just learning — makes lots of mistakes"
+    },
+    "met": {
+      "name": "Rookie Met",
+      "desc": "Grabs pieces but doesn't look ahead"
+    },
+    "khon": {
+      "name": "Khon the Fighter",
+      "desc": "Thinks two moves ahead"
+    },
+    "ma": {
+      "name": "Tricky Ma",
+      "desc": "Loves tactical tricks"
+    },
+    "ruea": {
+      "name": "Iron Ruea",
+      "desc": "Solid and precise"
+    },
+    "khun": {
+      "name": "Grand Khun",
+      "desc": "The strongest — thinks deepest"
+    }
   },
   "settings": {
     "title": "Settings",
@@ -317,5 +338,103 @@
     "dialogTitle": "Well done!",
     "dialogBody": "You finished this lesson and earned 10 XP",
     "close": "Close"
+  },
+  "games": {
+    "title": "Your games",
+    "storedHere": "Saved in this browser only. Clearing the site data deletes them.",
+    "empty": "No games yet",
+    "emptyHint": "Games you play against the computer, with a friend or online are saved here automatically.",
+    "import": "Import PGN",
+    "importTitle": "Import a game",
+    "importLabel": "Paste a Makruk game in PGN",
+    "importSubmit": "Import",
+    "importIllegal": "Move {{number}} ({{move}}) is not legal in this game.",
+    "importUnreadable": "This does not look like a Makruk game in PGN.",
+    "review": "Review",
+    "pgn": "PGN",
+    "pgnTitle": "Game in PGN",
+    "copy": "Copy",
+    "copied": "Copied",
+    "download": "Download",
+    "delete": "Delete",
+    "deleteConfirm": "Delete this game?",
+    "versus": "{{white}} vs {{black}}",
+    "moveCount_one": "{{count}} move",
+    "moveCount_other": "{{count}} moves",
+    "mode": {
+      "computer": "Against the computer",
+      "local": "Pass and play",
+      "online": "Online",
+      "imported": "Imported"
+    },
+    "event": {
+      "computer": "Game against the computer",
+      "local": "Pass-and-play game",
+      "online": "Online game",
+      "imported": "Imported game"
+    },
+    "outcome": {
+      "won": "Won",
+      "lost": "Lost",
+      "draw": "Draw",
+      "whiteWins": "White won",
+      "blackWins": "Black won",
+      "unfinished": "Not finished"
+    }
+  },
+  "review": {
+    "title": "Game review",
+    "analysing": "Analysing the game",
+    "progress": "{{done}} of {{total}} positions",
+    "error": "The analysis stopped. Reload the page to try again.",
+    "notFound": "This game is not saved in this browser.",
+    "backToGames": "Your games",
+    "accuracy": "Accuracy",
+    "start": "Start review",
+    "summary": "Back to the summary",
+    "next": "Next",
+    "previous": "Previous move",
+    "graph": "How the game went: White above the line, Black below. Tap to jump to a move.",
+    "evalBar": "Evaluation {{score}}",
+    "startPosition": "The starting position.",
+    "bestWas": "Best was {{move}}",
+    "line": "Engine line: {{line}}",
+    "engineCredit": "Analysis by Fairy-Stockfish, on this device.",
+    "labelName": {
+      "brilliant": "Brilliant",
+      "great": "Great",
+      "best": "Best",
+      "excellent": "Excellent",
+      "good": "Good",
+      "book": "Book",
+      "inaccuracy": "Inaccuracy",
+      "mistake": "Mistake",
+      "miss": "Miss",
+      "blunder": "Blunder"
+    },
+    "verdict": {
+      "brilliant": "{{move}} is brilliant",
+      "great": "{{move}} is a great move",
+      "best": "{{move}} is the best move",
+      "excellent": "{{move}} is excellent",
+      "good": "{{move}} is good",
+      "book": "{{move}} is a book move",
+      "inaccuracy": "{{move}} is an inaccuracy",
+      "mistake": "{{move}} is a mistake",
+      "miss": "{{move}} is a miss",
+      "blunder": "{{move}} is a blunder"
+    },
+    "explain": {
+      "brilliant": "A sacrifice that works: you gave up material and got more back.",
+      "great": "The only move that keeps your position together.",
+      "best": "The engine's first choice here.",
+      "excellent": "Nearly as strong as the best move.",
+      "good": "A sound move, but there was a stronger one.",
+      "book": "A known opening move.",
+      "inaccuracy": "Not a big error, but it gives away part of your edge.",
+      "mistake": "This gives away a lot.",
+      "miss": "Your opponent slipped, and this lets the chance go.",
+      "blunder": "A serious error that can cost the game."
+    }
   }
 }

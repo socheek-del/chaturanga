@@ -983,3 +983,20 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
 - Verification: `npm run verify` exit 0; chess mobile + computer e2e 5 passed; makruk/shogi/sittuyin/xiangqi
   computer e2e all passed.
 - Deployed: CI green on `a1eb86a` (the other four sites); chess by hand (version 4693c4b1), chess `smoke:prod` 14 passed.
+
+### Session 025 (in-app feedback through feedback-hub, branch `feat/feedback-hub`)
+
+- Goal (owner request): let anyone send a problem or idea from any game; reports become GitHub issues that
+  agents can work through.
+- Built outside this repo: `~/githubrepos/feedback-hub` (Cloudflare Worker + D1 + GitHub App, drop-in widget,
+  `/feedback` Claude Code skill). Public reports land `untriaged`; the owner's land `agent-ready`.
+- Here (plat-018): shared `FeedbackLink` in `@chaturanga/game-shell/ui`, one line in each AppShell, `feedback.*`
+  strings in all 9 locale files, KEYS.md updated. The sites are cross-origin isolated (COEP), so the widget
+  cannot frame the bot check; public users finish on the hub's `/report` page in a new tab. The hub serves
+  `widget.js` with `Cross-Origin-Resource-Policy: cross-origin` so COEP pages can load it.
+- Localhost loads nothing by default, so e2e and offline tests are unchanged. To try it locally set
+  `localStorage['feedback-hub:dev'] = 'http://localhost:8788'` and run the hub with `wrangler dev --port 8788`.
+- Verification: `./init.sh` exit 0 (includes 4 new game-shell tests). Manual Chrome check against a local hub
+  (see plat-018 evidence). E2E not re-run: the link never renders on localhost.
+- Open: deploy the hub, then `npm run project -- add chaturanga socheek-del/chaturanga https://th-chess.beanroti.com https://my-chess.beanroti.com https://cn-chess.beanroti.com https://jp-chess.beanroti.com https://chess.beanroti.com --remote`
+  in feedback-hub; native review of the new th/my/zh-Hans/ja strings. Not pushed: `main` auto-deploys.

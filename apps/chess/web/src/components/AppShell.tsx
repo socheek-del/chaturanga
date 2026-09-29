@@ -1,5 +1,5 @@
 import { resolveLocale } from '@chaturanga/game-shell';
-import { MoreGames, useFocusModeProvider } from '@chaturanga/game-shell/ui';
+import { FeedbackLink, MoreGames, useFocusModeProvider } from '@chaturanga/game-shell/ui';
 import { cn } from '@chaturanga/ui';
 import { ArrowLeft, GraduationCap, History, Info, type LucideIcon, Settings, Swords } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -74,6 +74,7 @@ export function AppShell() {
           <Outlet />
         </FocusProvider>
         {!focus && <MoreGames sites={__FAMILY__} locale={resolveLocale(PRODUCT, i18n.language)} variant="footer" />}
+        {!focus && <FeedbackLink product={PRODUCT.id} />}
       </main>
     </div>
   );

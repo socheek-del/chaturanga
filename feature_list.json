@@ -2527,6 +2527,27 @@
         "2026-09-27: deployed by CI on dde7e46 (all jobs green); apps/makruk/web gained smoke:prod (playwright.prod.config.ts, e2e-prod/review.spec.ts): 2 passed against the live site — COOP/COEP present on / and on a deep link, engine files served, crossOriginIsolated true, and a game reviewed with 1. Kf1 flagged and Kxd2 as best."
       ],
       "notes": "Owner decisions 2026-09-27: Fairy-Stockfish, shared code, Thai drafted by the agent and marked for native review. No public Makruk opening list exists, so there is no Book label or opening name."
+    },
+    {
+      "id": "plat-018",
+      "product": "platform",
+      "priority": 116,
+      "area": "platform",
+      "milestone": "M20",
+      "title": "Send feedback from every game (feedback-hub)",
+      "user_visible_behavior": "Every game's footer has a \"Send feedback\" link in the page language. It opens the shared feedback-hub panel (problem or idea). Reports become issues in socheek-del/chaturanga labelled untriaged, with the product and language attached. Because the sites are cross-origin isolated, public users finish a quick bot check in a new tab on the hub; the owner sends straight from the app.",
+      "status": "in_progress",
+      "verification": [
+        "game-shell unit tests: the widget script is added once with project chaturanga, the link appears only after the widget is ready, strings come from feedback.* keys, the context names the product and language, and localhost loads nothing unless a dev hub is set.",
+        "npm run verify passes; e2e is unaffected because localhost never loads the widget.",
+        "Manual, against a local hub: Makruk in Thai shows the link, the panel is translated, public mode hands off to /report, owner mode sends from the app on a phone in dark mode.",
+        "After the hub is live: register the project with every production origin, then send one report from each site."
+      ],
+      "evidence": [
+        "2026-09-27: packages/game-shell/src/ui/Feedback.tsx + Feedback.test.tsx (4 tests); FeedbackLink in all five AppShells; feedback.* strings in all 9 locale files. ./init.sh exit 0.",
+        "2026-09-27: Chrome against a local hub on :8788 with localStorage feedback-hub:dev: Makruk desktop light (th) link 'ส่งความคิดเห็น', panel translated, crossOriginIsolated true, send button 'ดำเนินการต่อ' (hand-off); phone 390x844 dark owner link on /about sent 'Makruk owner test from phone' and showed 'ขอบคุณ! ส่งรายงานแล้ว'."
+      ],
+      "notes": "Hub: ~/githubrepos/feedback-hub (Cloudflare Worker + D1 + GitHub App). Translations in th, my, zh-Hans and ja were drafted without a native reviewer. Stays in_progress until the hub is deployed and a production report is filed."
     }
   ]
 }

@@ -1026,4 +1026,11 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
   screenshots at 390x844 light and 1280x860 dark reviewed (deal, selection glow, Skip/+2 bursts, colour
   picker, win dialog with confetti). `npm run verify` exit 0; full chess e2e 43 passed; chess PWA e2e 3 passed.
 - Baseline note: `./init.sh` failed once on a Makruk web engine test (`process.exit unexpectedly called with
-  "0"` from the Fairy-Stockfish worker); three reruns of that suite passed. Flaky, pre-existing, not touched.
+  "0"` from the Fairy-Stockfish worker); the same error failed CI verify on `main` on 2026-09-29 and on the
+  Card Chess push. Cause: Emscripten's threaded build calls `process.exit(0)` once its workers stop, and
+  vitest forbids `process.exit`. Fixed in the test transport (`apps/makruk/web/src/features/review/engine.test.ts`):
+  the clean exit is swallowed after the file's last test; any non-zero code still fails. 8/8 local runs pass.
+- Deployed: pushed `af3646f` to `main`; `npm run deploy:chess` (version 380350ab); chess `smoke:prod` 14 passed;
+  live check: home → Card Chess → deal shows 7 + 7 cards, sitemap lists `/play/cards`, no page errors.
+- Open: owner review of the Card Chess rules and look; an online mode (server-dealt hidden hands); a `deploy-chess`
+  CI job (chess still deploys by hand).

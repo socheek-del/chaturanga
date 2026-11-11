@@ -41,7 +41,14 @@ function nodeTransport(): UciTransport {
     ready,
     send: (c) => (engine ? engine.postMessage(c) : void queue.push(c)),
     onLine: (l) => void listeners.push(l),
-    terminate: () => engine?.terminate(),
+    terminate: () => {
+      // Emscripten's threaded build ends with process.exit(0) once its workers stop, and vitest turns any
+      // process.exit into an unhandled error (a flaky "process.exit unexpectedly called with 0" in CI). The
+      // clean exit is swallowed here, after the file's last test; any other exit code still fails the run.
+      const forbidden = process.exit;
+      process.exit = ((code?: number) => (code ? forbidden(code) : undefined)) as typeof process.exit;
+      engine?.terminate();
+    },
   };
 }
 

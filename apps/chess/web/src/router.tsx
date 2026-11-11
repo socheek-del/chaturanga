@@ -4,6 +4,7 @@ import { DesignPage } from './DesignPage';
 import { GamesPage } from './pages/GamesPage';
 import { ReviewPage } from './pages/ReviewPage';
 import { AboutPage } from './pages/AboutPage';
+import { CardChessPage } from './pages/CardChessPage';
 import { ComputerGamePage } from './pages/ComputerGamePage';
 import { HomePage } from './pages/HomePage';
 import { LearnPage } from './pages/LearnPage';
@@ -20,6 +21,7 @@ export const router = createBrowserRouter([
       { index: true, element: <HomePage /> },
       { path: 'play/local', element: <LocalGamePage /> },
       { path: 'play/computer', element: <ComputerGamePage /> },
+      { path: 'play/cards', element: <CardChessPage /> },
       { path: 'play/online', element: <OnlinePage /> },
       { path: 'play/online/:code', element: <OnlineGameRoute /> },
       { path: 'games', element: <GamesPage /> },

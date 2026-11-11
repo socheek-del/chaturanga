@@ -153,6 +153,9 @@ broken starting state.
   - `apps/chess/web`, `apps/chess/worker`: the chess product (`apps/chess/AGENTS.md`). English only, the
     "Marble" identity, 16 lessons, online rooms, PWA, saved games with PGN, and a Stockfish game review. The Worker runs on :8791 and deploys on its own
     subdomain and D1 (ch-008).
+  - `packages/uno` (`@chaturanga/uno`): the card game Uno as a pure, seeded, serialisable state machine with
+    no chess in it (`packages/uno/README.md`). A host game filters its plays and reacts to its events; chess
+    uses it for Card Chess (`apps/chess/AGENTS.md`).
   - `apps/makruk/web`, `apps/makruk/worker`: the Makruk product (`apps/makruk/AGENTS.md`), with saved games
     and a Fairy-Stockfish game review; the site is cross-origin isolated for the engine's threads.
 - **Commands:**

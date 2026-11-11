@@ -1,6 +1,6 @@
 {
   "project": "Chaturanga — family of traditional chess games (Makruk, Sittuyin, Xiangqi, Shogi and international chess live)",
-  "last_updated": "2026-09-27",
+  "last_updated": "2026-11-11",
   "rules": {
     "single_active_feature": true,
     "passing_requires_evidence": true,
@@ -2548,6 +2548,43 @@
         "2026-09-27: Chrome against a local hub on :8788 with localStorage feedback-hub:dev: Makruk desktop light (th) link 'ส่งความคิดเห็น', panel translated, crossOriginIsolated true, send button 'ดำเนินการต่อ' (hand-off); phone 390x844 dark owner link on /about sent 'Makruk owner test from phone' and showed 'ขอบคุณ! ส่งรายงานแล้ว'."
       ],
       "notes": "Hub: ~/githubrepos/feedback-hub (Cloudflare Worker + D1 + GitHub App). Translations in th, my, zh-Hans and ja were drafted without a native reviewer. Stays in_progress until the hub is deployed and a production report is filed."
+    },
+    {
+      "id": "uno-001",
+      "product": "platform",
+      "priority": 117,
+      "area": "engine",
+      "milestone": "M21",
+      "title": "Portable Uno rules engine (@chaturanga/uno)",
+      "user_visible_behavior": "None directly. packages/uno holds the rules of Uno (108-card deck, matching, Skip, Reverse, Draw Two, Wild, Wild Draw Four with its colour rule, drawing, passing, calling Uno, reshuffling, winning on the last card) as a pure seeded state machine with no chess in it, so any game or a server can reuse it.",
+      "status": "passing",
+      "verification": [
+        "npm test -w packages/uno: deck, shuffle, matching, every action card, Uno call and penalty, reshuffle, and random 2-4 player playouts that keep all 108 cards accounted for and always end.",
+        "Lint rule: no DOM, timers or network in packages/uno/src."
+      ],
+      "evidence": [
+        "2026-11-11: packages/uno/src/game.test.ts 22 tests passed; npm run verify (see claude-progress.md session 026)."
+      ],
+      "notes": "Not implemented: stacking, Wild Draw Four challenges, scoring across rounds. See packages/uno/README.md."
+    },
+    {
+      "id": "cards-001",
+      "product": "chess",
+      "priority": 118,
+      "area": "play",
+      "milestone": "M21",
+      "title": "Card Chess: chess moves decided by Uno cards",
+      "user_visible_behavior": "/play/cards (linked from the home page) deals seven cards each. A player plays a card that matches the pile by colour or number/symbol, and the card decides what may move: red queen/rooks, blue bishops, green knights, yellow pawns, the king with any card, a wild any piece (then name a colour). Skip/Reverse give another move, Draw Two/Wild Draw Four also make the opponent draw; an extra move is cancelled when the move gives check. A capture makes the other side draw. Stuck: draw, then pass (in check: keep drawing). Call UNO! at two cards or draw two. Win by checkmate or by playing the last card. Vs computer (3 levels, in a Web Worker) or pass-and-play with hidden hands; saved across reloads; playful animations (deal, slam, bursts, colour ripple, glowing pieces, confetti) and synthesised sounds, all off under reduced motion.",
+      "status": "passing",
+      "verification": [
+        "apps/chess/web src/features/cards/rules.test.ts: card-to-piece mapping, matching, skip null move, check cancels the extra move, capture draw, wild colour, draw/pass, in-check drawing, free move when the decks are empty, Uno call and penalty, checkmate and last-card wins, 25 random whole games in sync, bot finishes a game and finds a mate in one.",
+        "e2e/cards.spec.ts (9): home entry and deal, a card limits the move and the computer answers, wild colour picker, skip, draw then pass, UNO call, forgotten UNO penalty, last-card win dialog, phone layout fits 390x664.",
+        "Deploy chess and load /play/cards on the live site."
+      ],
+      "evidence": [
+        "2026-11-11: rules.test.ts 17 passed; e2e/cards.spec.ts 9 passed; screenshots reviewed at 390x844 light and 1280x860 dark."
+      ],
+      "notes": "Online play is not offered: hidden hands would need the server to deal. The design is an experiment on top of the proposed Marble identity."
     }
   ]
 }

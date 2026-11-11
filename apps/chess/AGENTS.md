@@ -52,6 +52,16 @@ The product plan is `apps/chess/docs/PLAN.md`. The platform rules in the root `A
   labels are computed on load in `src/features/review/analysis.ts` (lost win percentage, chess.com's
   thresholds; Brilliant, Great and Miss are heuristics documented there). Book moves and opening names come
   from lichess-org/chess-openings (CC0), precomputed into `openings/book.json` by `npm run openings`.
+- **Card Chess (cards-001, `/play/cards`):** chess moves decided by Uno-rules cards. The card game itself is
+  the portable `packages/uno` (`@chaturanga/uno`, no chess in it). The chess binding is
+  `src/features/cards/`: `rules.ts` (pure; colour → pieces: red queen/rooks, blue bishops, green knights,
+  yellow pawns, the king with any card, a wild any piece; an extra turn is a null move in the FEN and is
+  cancelled when the move gives check; a capture makes the other side draw; win by checkmate or last card),
+  `bot.ts` (shallow chess search per allowed move plus card heuristics, run in `bot.worker.ts`), `store.ts`
+  (persisted as `chess.cards`), `CardTable.tsx` (screen and animations; CSS keyframes `cc-*` in
+  `index.css`). Vs computer and pass-and-play only: online play would need hidden hands on the server.
+  The site names the mode "Card Chess" and mentions Uno only to describe the rules; the card art is this
+  site's own.
 - **Board:** the squares are transparent and the chequer is one SVG underlay (`Chequer.tsx`), so no
   chess-only idea leaked into `@chaturanga/board-ui`.
 

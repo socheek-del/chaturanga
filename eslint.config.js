@@ -44,6 +44,7 @@ export default defineConfig(
       'packages/shogi/src/**/*.ts',
       'packages/rules-core/src/**/*.ts',
       'packages/ai-core/src/**/*.ts',
+      'packages/uno/src/**/*.ts',
       'packages/sittuyin-ai/src/**/*.ts',
       'packages/xiangqi-ai/src/**/*.ts',
     ],

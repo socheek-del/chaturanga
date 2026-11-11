@@ -62,7 +62,8 @@
   "modes": {
     "single": "Play the computer",
     "local": "Two players, one device",
-    "online": "Play online"
+    "online": "Play online",
+    "cards": "Card Chess"
   },
   "home": {
     "tagline": "Play chess free on any device.",
@@ -73,7 +74,9 @@
     "intro": "Chess is the game the world shares. Two armies, sixty-four squares, and one rule that decides everything: trap the king and the game is over.",
     "learn": "Learn chess",
     "learnDesc": "Sixteen short lessons: every piece, castling, capture in passing, promotion, and the tactics and endings that win games.",
-    "onlineDesc": "Invite a friend with a code, or get matched."
+    "onlineDesc": "Invite a friend with a code, or get matched.",
+    "cardsDesc": "Chess dealt by the rules of Uno: the card you play picks the piece you move.",
+    "newBadge": "New"
   },
   "play": {
     "attackMap": "Attack map",
@@ -299,6 +302,10 @@
     "settings": {
       "title": "Settings | Chess",
       "description": "Language, appearance, board and clock settings for the chess site."
+    },
+    "cards": {
+      "title": "Card Chess — Chess Meets Uno",
+      "description": "A new way to play chess: match cards by colour or number, Uno style, and the card decides which piece moves. Skip, Draw Two and Wild cards included. Free, vs the computer or a friend."
     }
   },
   "games": {
@@ -398,5 +405,135 @@
       "blunder": "A serious error that can cost the game."
     },
     "line": "Engine line: {{line}}"
+  },
+  "cards": {
+    "title": "Card Chess",
+    "tagline": "Chess dealt by the rules of Uno. Match the pile, and the card decides which piece moves.",
+    "modeComputer": "Vs computer",
+    "modeLocal": "Pass and play",
+    "level": "Computer",
+    "side": "Your pieces",
+    "random": "Random",
+    "deal": "Deal the cards",
+    "bot": {
+      "1": "Rookie",
+      "2": "Card shark",
+      "3": "Grandmaster"
+    },
+    "you": "You",
+    "table": "Card Chess table",
+    "yourHand": "Your cards",
+    "cardCount_one": "{{count}} card",
+    "cardCount_other": "{{count}} cards",
+    "drawPile": "Draw a card ({{count}} left)",
+    "topCard": "Top of the pile: {{card}}",
+    "pass": "Pass",
+    "callUno": "UNO!",
+    "any": "any",
+    "reveal": "{{side}} to play — tap to see your cards",
+    "soundOn": "Turn sound on",
+    "soundOff": "Turn sound off",
+    "pickColor": "Name the next colour",
+    "pickColorHint": "Your opponent must match it — and it decides which of their pieces may move.",
+    "playAgain": "Deal again",
+    "newSetup": "Change setup",
+    "legend": "Who moves",
+    "kingNote": "The king may move with any card. Wilds move any piece.",
+    "log": "Table talk",
+    "logEmpty": "No cards played yet.",
+    "logSkip": "loses a turn",
+    "logNoSkip": "check! extra move cancelled",
+    "logDraw": {
+      "stuck": "draws {{count}}",
+      "draw2": "draws {{count}} (Draw Two)",
+      "wild4": "draws {{count}} (Wild Draw Four)",
+      "uno-penalty": "forgot UNO, draws {{count}}",
+      "capture": "lost a piece, draws {{count}}"
+    },
+    "color": {
+      "red": "Red",
+      "yellow": "Yellow",
+      "green": "Green",
+      "blue": "Blue"
+    },
+    "short": {
+      "red": "queen & rooks",
+      "blue": "bishops",
+      "green": "knights",
+      "yellow": "pawns"
+    },
+    "moves": {
+      "red": "moves the queen or a rook",
+      "blue": "moves a bishop",
+      "green": "moves a knight",
+      "yellow": "moves a pawn",
+      "wild": "moves any piece"
+    },
+    "kind": {
+      "skip": "Skip",
+      "reverse": "Reverse",
+      "draw2": "Draw Two",
+      "wild": "Wild",
+      "wild4": "Wild Draw Four",
+      "number": "Number"
+    },
+    "status": {
+      "pick": "Your turn — pick a glowing card.",
+      "checkPick": "Check! Pick a card that saves your king.",
+      "move": "Now make a move: this card {{pieces}} (or the king).",
+      "moveAny": "Wild! Move any piece.",
+      "draw": "Nothing fits. Tap the deck to draw.",
+      "checkDraw": "Check, and nothing saves you yet — keep drawing.",
+      "pass": "Still nothing. Pass your turn.",
+      "free": "The deck is empty — make any move to escape check.",
+      "waiting": "{{name}} is playing…",
+      "over": "Game over."
+    },
+    "fx": {
+      "skip": "Skip! Again!",
+      "reverse": "Reverse! Again!",
+      "draw2": "+{{count}}",
+      "wild4": "+{{count}}",
+      "uno": "UNO!",
+      "caught": "Forgot UNO! +{{count}}",
+      "capture": "Captured! +1",
+      "color": "{{color}}!",
+      "check": "Check!",
+      "pass": "Pass",
+      "reshuffle": "Reshuffle!",
+      "no-skip": "Check! No extra move"
+    },
+    "result": {
+      "checkmate": "{{name}} wins by checkmate!",
+      "last-card": "{{name}} played the last card!",
+      "draw": "It's a draw",
+      "cheer": "What a hand. Deal again?",
+      "again": "The cards weren't with you this time. Shuffle up and try again.",
+      "why": {
+        "stalemate": "Stalemate: no legal move, and no check.",
+        "insufficient-material": "Neither side has enough pieces left to checkmate.",
+        "fifty-move": "Fifty moves without a capture or a pawn move.",
+        "repetition": "The same position came up three times."
+      }
+    },
+    "rules": {
+      "title": "How to play",
+      "ok": "Got it",
+      "intro": "Card Chess is chess with a hand of cards. Each turn you play one card, then make a chess move that card allows.",
+      "match": "Play a card that matches the top of the pile by colour or by number or symbol — the law of Uno. A wild goes on anything.",
+      "colors": "The card's colour picks who moves: red = queen or rooks, blue = bishops, green = knights, yellow = pawns.",
+      "king": "The king may move with any card, and castling counts as a king move.",
+      "stuck": "No card fits? Draw one. Still stuck? Pass — but never while in check: then keep drawing until a card saves your king.",
+      "capture": "Every capture makes the other player draw a card.",
+      "uno": "Down to two cards? Tap UNO! before you play, or draw two.",
+      "win": "Win by checkmate — or by playing your last card.",
+      "action": {
+        "skip": "Skip: move, then move again.",
+        "reverse": "Reverse: with two players it works like a Skip.",
+        "draw2": "Draw Two: move, your opponent draws two, and you move again.",
+        "wild": "Wild: move any piece, then name the next colour.",
+        "wild4": "Wild Draw Four: as a Wild, and your opponent draws four. Only when you hold no card of the current colour. If any move gives check, the extra move is cancelled."
+      }
+    }
   }
 }

@@ -26,6 +26,7 @@
     "@chaturanga/chess": "*",
     "@chaturanga/chess-ai": "*",
     "@chaturanga/game-shell": "*",
+    "@chaturanga/uno": "*",
     "@chaturanga/ui": "*",
     "@fontsource/noto-sans": "^5.2.5",
     "i18next": "^26.4.2",

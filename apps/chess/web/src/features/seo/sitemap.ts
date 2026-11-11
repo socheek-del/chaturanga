@@ -10,6 +10,7 @@ export const INDEXED_PAGES: ReadonlyArray<{ path: string; priority: number }> = 
   { path: '/', priority: 1.0 },
   { path: '/play/computer', priority: 0.9 },
   { path: '/play/online', priority: 0.9 },
+  { path: '/play/cards', priority: 0.9 },
   { path: '/learn', priority: 0.8 },
   { path: '/play/local', priority: 0.7 },
   { path: '/about', priority: 0.5 },

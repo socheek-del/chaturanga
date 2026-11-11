@@ -1,7 +1,7 @@
 import { resolveLocale } from '@chaturanga/game-shell';
 import { MoreGames } from '@chaturanga/game-shell/ui';
 import { Badge, Card } from '@chaturanga/ui';
-import { Cpu, Globe, GraduationCap, Users } from 'lucide-react';
+import { Cpu, Globe, GraduationCap, Layers, Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { PRODUCT } from '../../product.config';
@@ -21,6 +21,21 @@ export function HomePage() {
         <h1 className="text-3xl font-bold">{t('app.name')}</h1>
         <p className="mt-1 max-w-lg opacity-90">{t('home.tagline')}</p>
       </header>
+
+      <Link to="/play/cards" data-testid="cards-entry">
+        <Card interactive className="cc-home relative flex items-center gap-4 overflow-hidden">
+          <span className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-secondary-soft text-secondary">
+            <Layers aria-hidden className="h-7 w-7" />
+          </span>
+          <span className="flex flex-col">
+            <span className="flex items-center gap-2 text-lg font-bold">
+              {t('modes.cards')}
+              <Badge tone="secondary">{t('home.newBadge')}</Badge>
+            </span>
+            <span className="text-sm text-muted">{t('home.cardsDesc')}</span>
+          </span>
+        </Card>
+      </Link>
 
       <div className="grid gap-3 sm:grid-cols-2">
         {MODES.map(({ to, key, desc, icon: Icon }) => (

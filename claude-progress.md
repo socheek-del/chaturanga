@@ -1000,3 +1000,30 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
   (see plat-018 evidence). E2E not re-run: the link never renders on localhost.
 - Open: deploy the hub, then `npm run project -- add chaturanga socheek-del/chaturanga https://th-chess.beanroti.com https://my-chess.beanroti.com https://cn-chess.beanroti.com https://jp-chess.beanroti.com https://chess.beanroti.com --remote`
   in feedback-hub; native review of the new th/my/zh-Hans/ja strings. Not pushed: `main` auto-deploys.
+
+### Session 026 (Card Chess: chess moves decided by Uno cards)
+
+- Date: 2026-11-11
+- Goal (owner request): a standalone Uno module with an engine portable to other domains, and an option in
+  chess where the Uno card a player plays dictates the moves they may make; playful animations; design is an
+  experiment (Mobbin consulted for card-hand patterns: fanned hands with a raised selection, stacked decks).
+  Owner said to push and deploy on `main`.
+- `uno-001` passing: `packages/uno` (`@chaturanga/uno`), a pure seeded Uno state machine with no chess in it
+  (README in the package). Added to the engine-purity lint list.
+- `cards-001` passing: Card Chess at `/play/cards` on the chess site, linked from the home page and the
+  sitemap. Rules, bot, store and screen in `apps/chess/web/src/features/cards/` (documented in
+  `apps/chess/AGENTS.md`). Decisions made by the agent, open for the owner to change:
+  - colour → pieces: red queen/rooks, blue bishops, green knights, yellow pawns; the king moves with any card;
+    a wild moves any piece and names the next colour.
+  - two-player Uno law: Skip and Reverse give another move; Draw Two / Wild Draw Four also make the opponent
+    draw. An extra move is a null move in the FEN and is cancelled when the move gives check.
+  - every capture makes the other side draw one card; win by checkmate or by playing the last card.
+  - stuck: draw one, then pass; in check: keep drawing (a free move only if both decks are empty).
+  - visible name "Card Chess"; Uno is named only to describe the rules, and the card art is the site's own
+    (trademark caution, as with the Duolingo decision).
+  - no online mode yet: hidden hands need the server to deal.
+- Verification: `packages/uno` 22 tests; chess `rules.test.ts` 17 tests; `e2e/cards.spec.ts` 9 passed;
+  screenshots at 390x844 light and 1280x860 dark reviewed (deal, selection glow, Skip/+2 bursts, colour
+  picker, win dialog with confetti). `npm run verify` exit 0; full chess e2e 43 passed; chess PWA e2e 3 passed.
+- Baseline note: `./init.sh` failed once on a Makruk web engine test (`process.exit unexpectedly called with
+  "0"` from the Fairy-Stockfish worker); three reruns of that suite passed. Flaky, pre-existing, not touched.

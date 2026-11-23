@@ -1,0 +1,132 @@
+{
+  "generatedAt": "2026-11-14T17:58:04.778Z",
+  "categories": [
+    "Games",
+    "Learn",
+    "Create",
+    "Personal",
+    "Other"
+  ],
+  "apps": [
+    {
+      "host": "anki.beanroti.com",
+      "url": "https://anki.beanroti.com/",
+      "name": "Anki Lite",
+      "description": "Spaced-repetition flashcards for vocabulary.",
+      "category": "Learn",
+      "signIn": true,
+      "icon": "https://anki.beanroti.com/icon.svg",
+      "source": "worker",
+      "service": "anki",
+      "up": true
+    },
+    {
+      "host": "bloom.beanroti.com",
+      "url": "https://bloom.beanroti.com/",
+      "name": "Bloom",
+      "description": "Habit companion. Logged minutes grow a tree for each activity.",
+      "category": "Personal",
+      "signIn": true,
+      "icon": "https://bloom.beanroti.com/favicon.svg",
+      "source": "worker",
+      "service": "bloom",
+      "up": true
+    },
+    {
+      "host": "chess.beanroti.com",
+      "url": "https://chess.beanroti.com/",
+      "name": "Chess",
+      "description": "Play chess against six computer levels or a friend, with 16 lessons.",
+      "category": "Games",
+      "signIn": false,
+      "icon": "https://chess.beanroti.com/favicon.svg",
+      "source": "worker",
+      "service": "chess",
+      "up": true
+    },
+    {
+      "host": "cn-chess.beanroti.com",
+      "url": "https://cn-chess.beanroti.com/",
+      "name": "Xiangqi",
+      "description": "Chinese chess against the computer or a friend, with lessons.",
+      "category": "Games",
+      "signIn": false,
+      "icon": "https://cn-chess.beanroti.com/favicon.svg",
+      "source": "worker",
+      "service": "xiangqi",
+      "up": true
+    },
+    {
+      "host": "drawspace.beanroti.com",
+      "url": "https://drawspace.beanroti.com/",
+      "name": "Drawspace",
+      "description": "Self-hosted Excalidraw whiteboard with saved drawings.",
+      "category": "Create",
+      "signIn": true,
+      "icon": "https://drawspace.beanroti.com/favicon.svg",
+      "source": "worker",
+      "service": "drawspace",
+      "up": true
+    },
+    {
+      "host": "jp-chess.beanroti.com",
+      "url": "https://jp-chess.beanroti.com/",
+      "name": "Shogi",
+      "description": "Japanese chess against the computer or a friend, with lessons.",
+      "category": "Games",
+      "signIn": false,
+      "icon": "https://jp-chess.beanroti.com/favicon.svg",
+      "source": "worker",
+      "service": "shogi",
+      "up": true
+    },
+    {
+      "host": "mmunit.beanroti.com",
+      "url": "https://mmunit.beanroti.com/",
+      "name": "Myanmar Units",
+      "description": "Convert Myanmar units: viss, kyattha, gold price, rice, fuel, miles.",
+      "category": "Learn",
+      "signIn": false,
+      "icon": "https://mmunit.beanroti.com/favicon.svg",
+      "source": "worker",
+      "service": "mmunit",
+      "up": true
+    },
+    {
+      "host": "my-chess.beanroti.com",
+      "url": "https://my-chess.beanroti.com/",
+      "name": "Sittuyin",
+      "description": "Burmese chess against the computer or a friend, with lessons.",
+      "category": "Games",
+      "signIn": false,
+      "icon": "https://my-chess.beanroti.com/favicon.svg",
+      "source": "worker",
+      "service": "sittuyin",
+      "up": true
+    },
+    {
+      "host": "th-chess.beanroti.com",
+      "url": "https://th-chess.beanroti.com/",
+      "name": "Makruk",
+      "description": "Thai chess against the computer or a friend, with lessons.",
+      "category": "Games",
+      "signIn": false,
+      "icon": "https://th-chess.beanroti.com/favicon.svg",
+      "source": "worker",
+      "service": "makruk",
+      "up": true
+    },
+    {
+      "host": "wardrobe.beanroti.com",
+      "url": "https://wardrobe.beanroti.com/",
+      "name": "Wardrobe",
+      "description": "Catalogue of your clothes and outfits.",
+      "category": "Personal",
+      "signIn": true,
+      "icon": "https://wardrobe.beanroti.com/favicon.svg",
+      "source": "pages",
+      "service": "my-wardrobe",
+      "up": true
+    }
+  ]
+}

@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>beanroti apps</title>
+<meta name="description" content="Every beanroti.com app in one place.">
+<meta name="theme-color" content="#f2f3ff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#16172c" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/directory.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <img src="/favicon.svg" width="44" height="44" alt="">
+      <h1>beanroti<span> apps</span></h1>
+      <span class="brand-print" aria-hidden="true"></span>
+    </div>
+    <div class="toolbar">
+      <p class="count" id="count" role="status">Loading…</p>
+      <label class="search">
+        <span class="sr">Search apps</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="q" type="search" placeholder="Search apps" autocomplete="off" spellcheck="false">
+        <kbd>/</kbd>
+      </label>
+    </div>
+  </header>
+
+  <main id="list"></main>
+  <p class="empty" id="empty" hidden>No app matches “<span id="term"></span>”.</p>
+  <footer id="foot"></footer>
+</div>
+
+<script>
+const lockIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+const goIcon = '<svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>';
+
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+
+function monogram(el, app) {
+  el.className = "icon mono";
+  el.textContent = app.name.slice(0, 1).toUpperCase();
+}
+
+let data = { apps: [], categories: [] };
+
+function card(app) {
+  const a = document.createElement("a");
+  a.className = "card";
+  a.href = app.url;
+  a.target = "_blank";
+  a.rel = "noopener";
+  a.innerHTML = `
+    <span class="icon"></span>
+    <span class="title"><span>${esc(app.name)}</span>${app.signIn ? `<span class="badge" title="Needs sign-in">${lockIcon}Sign-in</span>` : ""}</span>
+    ${goIcon}
+    ${app.description ? `<p class="desc">${esc(app.description)}</p>` : ""}
+    <span class="host">${esc(app.host)}</span>
+    <span class="sr">(opens in a new tab)</span>`;
+  const icon = a.querySelector(".icon");
+  // An app behind Cloudflare Access redirects the icon to a login page; onerror falls back to a letter.
+  if (app.icon) {
+    const img = new Image();
+    img.alt = "";
+    img.decoding = "async";
+    img.onerror = () => monogram(icon, app);
+    img.src = app.icon;
+    icon.append(img);
+  } else {
+    monogram(icon, app);
+  }
+  return a;
+}
+
+function render() {
+  const term = $("q").value.trim().toLowerCase();
+  const match = (a) => !term || [a.name, a.description, a.host, a.category].join(" ").toLowerCase().includes(term);
+  const shown = data.apps.filter(match);
+  const order = [...data.categories, ...new Set(data.apps.map((a) => a.category))];
+  const groups = [...new Set(order)].map((c) => [c, shown.filter((a) => a.category === c)]).filter(([, l]) => l.length);
+
+  const list = $("list");
+  list.replaceChildren();
+  for (const [cat, apps] of groups) {
+    const sec = document.createElement("section");
+    sec.innerHTML = `<h2>${esc(cat)}</h2>`;
+    const grid = document.createElement("div");
+    grid.className = "grid";
+    apps.forEach((a) => grid.append(card(a)));
+    sec.append(grid);
+    list.append(sec);
+  }
+  // Enter in the search box opens the first result; mark it while searching.
+  const first = list.querySelector(".card");
+  if (term && first) first.classList.add("first");
+
+  $("empty").hidden = shown.length > 0;
+  $("term").textContent = term;
+  $("count").textContent = term
+    ? `${shown.length} of ${data.apps.length} apps`
+    : `${data.apps.length} apps`;
+}
+
+$("q").addEventListener("input", render);
+$("q").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    const first = $("list").querySelector(".card");
+    if (first) window.open(first.href, "_blank", "noopener");
+  } else if (e.key === "Escape") {
+    e.target.value = "";
+    render();
+  }
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "/" && document.activeElement !== $("q")) {
+    e.preventDefault();
+    $("q").focus();
+  }
+});
+
+fetch("/apps.json", { cache: "no-cache" })
+  .then((response) => {
+    if (!response.ok) throw new Error("App list unavailable");
+    return response.json();
+  })
+  .then((json) => {
+    data = json;
+    render();
+    if (json.generatedAt) {
+      const d = new Date(json.generatedAt);
+      $("foot").textContent = `List synced from Cloudflare on ${d.toLocaleDateString(undefined, { dateStyle: "medium" })}.`;
+    }
+  })
+  .catch(() => { $("count").textContent = "Could not load the app list."; });
+</script>
+</body>
+</html>

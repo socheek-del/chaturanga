@@ -1,6 +1,6 @@
 {
   "project": "Chaturanga — family of traditional chess games (Makruk, Sittuyin, Xiangqi, Shogi, international chess and Janggi live)",
-  "last_updated": "2026-11-23",
+  "last_updated": "2026-11-24",
   "rules": {
     "single_active_feature": true,
     "passing_requires_evidence": true,
@@ -2780,6 +2780,24 @@
       ],
       "evidence": [
         "2026-11-23: Review sheet written; needs a native reviewer."
+      ]
+    },
+    {
+      "id": "beanroti-001",
+      "product": "platform",
+      "priority": 131,
+      "area": "design",
+      "milestone": "Beanroti",
+      "title": "Beanroti directory identity",
+      "user_visible_behavior": "The Beanroti app directory has a distinct cobalt and lime identity, a responsive catalog with light and dark modes, and keyboard search.",
+      "status": "passing",
+      "verification": [
+        "Exercise app count, search, keyboard shortcuts, sign-in indicators, icon fallback, app links and 404 navigation in a browser at desktop and phone widths.",
+        "Run npm run build:beanroti-apps to bundle the directory Worker."
+      ],
+      "evidence": [
+        "2026-11-24: Playwright Chromium smoke passed at 1360px light, 390px dark and 320px light. Reviewed desktop and mobile screenshots.",
+        "2026-11-24: npm run build:beanroti-apps dry run passed."
       ]
     }
   ]

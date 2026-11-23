@@ -1052,3 +1052,15 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
   owner approval of the design; native Korean review; saved games and review for Janggi.
 - Known, not from this work: `apps/xiangqi/web/e2e/family.spec.ts` fails on the "Chess" link (substring match; it
   needs `exact: true` as Makruk has). Left alone: a game's work does not edit another game's files.
+
+### Session 028 (Beanroti directory identity)
+
+- Date: 2026-11-24
+- Owner request: give the directory a distinctive indie app identity, push and deploy.
+- Cobalt and lime masthead, bean mark, responsive catalog grid, and matching 404 page. The catalog uses the live
+  registry snapshot. The separate local registry update for Three-player Chess is outside this release.
+- Browser smoke passed at 1360px light, 390px dark and 320px light, including the app count, search, slash and
+  Escape shortcuts, Enter launch, sign-in label, icon fallback, 404 return link and horizontal fit. Reviewed
+  desktop and mobile screenshots. The Cloudflare bundle dry run passed.
+- Startup in the mixed working tree hit a pre-existing lock mismatch for the Vite React plugin. The Beanroti
+  commit includes only the directory workspace entries and scripts.

@@ -14,6 +14,7 @@ export interface InitOptions {
   timeControl: TimeControl | null;
   opponent?: PublicUser;
   rated?: boolean;
+  startFen?: string;
 }
 
 /** The part of a room stub this class calls; a product's own GameRoom satisfies it. */
@@ -185,6 +186,7 @@ export abstract class GameRoomBase<E extends RoomEnv> extends DurableObject<E> {
         timeControl: room.timeControl,
         opponent: room.players.w!,
         rated: room.rated,
+        startFen: room.startFen,
       });
       if (created) return { ...room, nextCode: code };
       code = generateRoomCode();

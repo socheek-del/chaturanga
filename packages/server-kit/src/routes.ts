@@ -69,6 +69,7 @@ export function registerPlayRoutes<E extends PlayEnv>(app: Hono<{ Bindings: E }>
         color: body.data.color,
         timeControl: body.data.timeControl,
         rated: body.data.rated,
+        startFen: body.data.startFen,
       });
       if (created) return c.json({ code } satisfies CreateGameResponse, 201);
     }

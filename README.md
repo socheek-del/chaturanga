@@ -4,7 +4,7 @@
 
 **The chess family, from international chess to its cousins across Asia. Free, no sign-up, in your own language.**
 
-[**Chess**][chess] · [**หมากรุกไทย · Makruk**][makruk] · [**စစ်တုရင် · Sittuyin**][sittuyin] · [**象棋 · Xiangqi**][xiangqi] · [**将棋 · Shogi**][shogi]
+[**Chess**][chess] · [**หมากรุกไทย · Makruk**][makruk] · [**စစ်တုရင် · Sittuyin**][sittuyin] · [**象棋 · Xiangqi**][xiangqi] · [**将棋 · Shogi**][shogi] · [**장기 · Janggi**][janggi]
 
 [![License: GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-1cb0f6)](LICENSE)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-ff9600)](CONTRIBUTING.md)
@@ -13,8 +13,8 @@
 
 ---
 
-Chaturanga, the ancient Indian game, is the common ancestor of chess, Makruk, Sittuyin, Shogi and Xiangqi.
-Its descendants are still played every day around the world, and this project brings five of them to any
+Chaturanga, the ancient Indian game, is the common ancestor of chess, Makruk, Sittuyin, Shogi, Xiangqi and Janggi.
+Its descendants are still played every day around the world, and this project brings six of them to any
 phone or computer: **learn the rules from zero**, **practise against the computer**, and **play friends
 online** or on one device.
 
@@ -60,6 +60,9 @@ Each game has its own site, look and language. No ads, no accounts, and nothing 
   </tr>
 </table>
 
+**[장기 · Janggi][janggi]** — Korean chess. Cannons must jump to move, you may pass, and points settle what
+checkmate does not. Korean · English — [about this game](apps/janggi/README.md)
+
 More games may follow.
 
 ## What you get
@@ -103,4 +106,5 @@ this project and are covered by the same license.
 [sittuyin]: https://my-chess.beanroti.com
 [xiangqi]: https://cn-chess.beanroti.com
 [shogi]: https://jp-chess.beanroti.com
+[janggi]: https://kr-chess.beanroti.com
 [chess]: https://chess.beanroti.com

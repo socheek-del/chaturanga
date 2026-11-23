@@ -29,6 +29,10 @@ describe('resultFromStatus', () => {
   });
 });
 
+it.each(['repetition', 'fifty-move', 'bikjang', 'double-pass'] as const)('%s names the winner when points decide it, as in Janggi', (kind) => {
+  expect(resultFromStatus({ kind, winner: 'b' })).toEqual({ winner: 'b', reason: kind });
+});
+
 describe('isUndoableResult', () => {
   it('allows takeback with no result yet', () => {
     expect(isUndoableResult(null)).toBe(true);
@@ -56,6 +60,8 @@ describe('isUndoableResult', () => {
       'insufficient-material',
       'perpetual-check',
       'perpetual-chase',
+      'bikjang',
+      'double-pass',
     ]);
   });
 });

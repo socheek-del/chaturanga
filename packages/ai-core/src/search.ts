@@ -34,6 +34,11 @@ export interface SearchAdapter {
    * Adapters without the hook keep the default: every repetition is a draw with contempt.
    */
   repetitionScore?(): number | undefined;
+  /**
+   * Optional, for games that can end while there are still moves to play (Janggi: facing generals, two
+   * passes). Returns the score from the point of view of the side to move, or undefined while play goes on.
+   */
+  terminalScore?(): number | undefined;
 }
 
 export interface SearchOptions {
@@ -122,6 +127,8 @@ export function search(adapter: SearchAdapter, options: SearchOptions): SearchRe
     if (ply === REPETITION_PLY && seen.size > 0 && seen.has(adapter.key())) {
       return adapter.repetitionScore?.() ?? (adapter.turn() === root ? -contempt : contempt);
     }
+    const ended = adapter.terminalScore?.();
+    if (ended !== undefined) return ended;
     const checked = adapter.inCheck();
     if (checked && ply < MAX_PLY) depth++; // check extension: don't stop the search in the middle of a mating attack
     if (depth <= 0) return quiesce(alpha, beta, QUIESCENCE_DEPTH);

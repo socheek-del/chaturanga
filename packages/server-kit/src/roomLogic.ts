@@ -50,6 +50,8 @@ export function createRoom(
     now: number;
     opponent?: PublicUser;
     rated?: boolean;
+    /** Must be one of the variant's `startFens`; anything else falls back to its `startFen`. */
+    startFen?: string;
   },
 ): RoomState {
   const players: Record<Color, PublicUser | null> = { w: null, b: null };
@@ -59,7 +61,7 @@ export function createRoom(
     code: options.code,
     variant: variant.id,
     createdAt: options.now,
-    startFen: variant.startFen,
+    startFen: options.startFen && variant.startFens?.includes(options.startFen) ? options.startFen : variant.startFen,
     moves: [],
     players,
     timeControl: options.timeControl,

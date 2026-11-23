@@ -13,10 +13,13 @@ Chaturanga is a family of chess games. Each game is its own web PWA product:
 - **Chess** (international chess): live (`apps/chess/docs/PLAN.md`). Its design is "Marble"
   (`apps/chess/docs/design.md`), proposed and awaiting owner approval. English only; a second language is
   `ch-011`.
+- **Janggi** (Korean chess): live (`apps/janggi/docs/PLAN.md`). Its design is "Dancheong"
+  (`apps/janggi/docs/design.md`), proposed and awaiting owner approval. Passing and points made the platform
+  learn decided repetitions and chosen start positions (`plat-019`).
 - Others may follow.
 
 Owner decisions, target layout and order of work are in `docs/PLATFORM.md`. Facts about a single game live next
-to that game: `apps/makruk/AGENTS.md` for the Makruk product, `apps/sittuyin/AGENTS.md` for the Sittuyin product, `apps/xiangqi/AGENTS.md` for the Xiangqi product, `apps/shogi/AGENTS.md` for the Shogi product, and `packages/<game>/RULES.md` for the rules
+to that game: `apps/makruk/AGENTS.md` for the Makruk product, `apps/sittuyin/AGENTS.md` for the Sittuyin product, `apps/xiangqi/AGENTS.md` for the Xiangqi product, `apps/shogi/AGENTS.md` for the Shogi product, `apps/janggi/AGENTS.md` for the Janggi product, and `packages/<game>/RULES.md` for the rules
 as implemented.
 
 This repository is designed for long-running coding-agent work. The goal is not to maximize raw code output.
@@ -108,6 +111,9 @@ broken starting state.
     computer, 15 lessons, online rooms, PWA and ja/en, on the 9x9 squares board with both piece stands always
     on screen. The Worker runs on :8790, deploys on its own subdomain and D1 (sg-008), and links to its
     siblings (sg-009). `npm run smoke:prod -w apps/shogi/web` drives the live site.
+  - `packages/janggi`, `packages/janggi-ai`, `apps/janggi/web`, `apps/janggi/worker`: the Janggi product
+    (`apps/janggi/AGENTS.md`, `packages/janggi/RULES.md`). The Worker runs on :8792 and deploys on its own
+    subdomain and D1 (jg-008).
   - `packages/ai-core` (`@chaturanga/ai-core`): game-independent alpha-beta search over a `SearchAdapter`,
     bot personas and root-move picking.
   - `packages/ai` (`@chaturanga/makruk-ai`): Makruk computer opponents, run in a Web Worker. It keeps its own

@@ -1,0 +1,315 @@
+{
+  "brand": "장기",
+  "app": {
+    "name": "장기",
+    "seal": "將"
+  },
+  "family": {
+    "title": "다른 게임"
+  },
+  "feedback": {
+    "link": "의견 보내기",
+    "title": "의견 보내기",
+    "close": "닫기",
+    "type": "종류",
+    "bug": "문제",
+    "idea": "제안",
+    "details": "내용",
+    "placeholder": "무슨 일이 있었나요? 어떻게 하면 더 좋아질까요?",
+    "note": "페이지 주소, 화면 크기, 브라우저 정보도 함께 전송됩니다.",
+    "publicNote": "보낸 내용은 GitHub에 공개되니 개인 정보는 적지 마세요.",
+    "owner": "소유자 모드: 바로 에이전트 대기열로 보냅니다.",
+    "send": "보내기",
+    "sending": "보내는 중…",
+    "sent": "감사합니다! 의견을 보냈습니다.",
+    "failed": "보내지 못했습니다. 다시 시도해 주세요.",
+    "rateLimited": "지금은 요청이 너무 많습니다. 잠시 후 다시 시도해 주세요.",
+    "network": "서버에 연결할 수 없습니다. 인터넷 연결을 확인해 주세요.",
+    "queued": "오프라인입니다. 저장해 두었다가 연결되면 보냅니다.",
+    "challengeFailed": "봇 확인을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.",
+    "continue": "계속",
+    "handoff": "새 탭에서 간단한 봇 확인을 마치면 의견이 전송됩니다.",
+    "handedOff": "새 탭에서 전송을 마쳐 주세요.",
+    "closeTab": "이제 이 탭을 닫아도 됩니다."
+  },
+  "nav": {
+    "label": "주 메뉴",
+    "back": "뒤로",
+    "play": "대국",
+    "settings": "설정",
+    "learn": "배우기",
+    "about": "소개"
+  },
+  "colors": {
+    "w": "초",
+    "b": "한"
+  },
+  "pieces": {
+    "k": "왕",
+    "a": "사",
+    "b": "상",
+    "n": "마",
+    "r": "차",
+    "c": "포",
+    "p": "졸·병"
+  },
+  "board": {
+    "label": "장기판",
+    "pieceName": "{{color}} {{piece}}",
+    "pointWithPiece": "{{point}}, {{piece}}",
+    "emptyPoint": "{{point}}, 빈자리"
+  },
+  "modes": {
+    "single": "컴퓨터와 두기",
+    "local": "한 기기로 둘이 두기",
+    "online": "온라인 대국"
+  },
+  "home": {
+    "tagline": "어느 기기에서나 무료로 장기를 두세요.",
+    "singleDesc": "초보부터 고수까지, 기물 이름을 딴 여섯 상대.",
+    "localDesc": "기기를 주고받으며 둡니다.",
+    "aboutGame": "장기란",
+    "traditional": "전통",
+    "intro": "장기는 한국의 전통 놀이입니다. 포는 반드시 다른 기물을 넘어야 움직이고, 차와 졸은 궁성의 대각선을 따라 갈 수 있으며, 한 수 쉴 수도 있습니다. 외통이 나지 않으면 남은 기물의 점수로 승부를 가립니다.",
+    "learn": "장기 배우기",
+    "learnDesc": "장기판, 모든 기물, 한수쉼, 빅장, 점수와 기본 외통을 다루는 짧은 강의 열네 개.",
+    "onlineDesc": "방 코드로 친구를 부르거나 상대를 찾아 둡니다."
+  },
+  "play": {
+    "attackMap": "공격 범위",
+    "attackMapOwn": "내가 공격",
+    "attackMapEnemy": "상대가 공격",
+    "start": "시작",
+    "turn": "{{color}} 차례",
+    "check": "장군",
+    "captured": "잡은 기물",
+    "clockOf": "{{color}}의 시계",
+    "moves": "기보",
+    "noMoves": "아직 둔 수가 없습니다",
+    "first": "처음으로",
+    "back": "이전 수",
+    "forward": "다음 수",
+    "last": "마지막 수",
+    "flip": "판 뒤집기",
+    "undo": "무르기",
+    "resign": "기권",
+    "backToLive": "대국으로 돌아가기",
+    "newGame": "새 대국",
+    "rematch": "다시 두기",
+    "review": "판 보기",
+    "cancel": "취소",
+    "resignConfirm": "{{color}} 기권할까요?",
+    "timeControl": "시간",
+    "noClock": "시간 제한 없음",
+    "custom": "직접 설정",
+    "minutes": "분",
+    "increment": "수당 추가(초)",
+    "categories": {
+      "bullet": "불릿",
+      "blitz": "블리츠",
+      "rapid": "래피드",
+      "classical": "클래식"
+    },
+    "result": {
+      "whiteWins": "초 승리",
+      "blackWins": "한 승리",
+      "draw": "무승부"
+    },
+    "reason": {
+      "checkmate": "외통",
+      "repetition": "같은 장면 세 번 반복, 점수 판정",
+      "fifty-move": "50수 동안 잡은 기물 없음, 점수 판정",
+      "insufficient-material": "양쪽 모두 외통을 낼 수 없음",
+      "perpetual-check": "계속 장군을 부른 쪽이 패배",
+      "bikjang": "빅장, 점수 판정",
+      "double-pass": "양쪽 모두 한수쉼, 점수 판정",
+      "timeout": "시간 초과",
+      "resign": "기권",
+      "agreement": "합의 무승부",
+      "abandon": "상대가 나감"
+    },
+    "pass": "한수쉼",
+    "points": "{{color}} {{points}}점",
+    "bikjang": "빅장!",
+    "passEndsTitle": "대국을 끝낼까요?",
+    "passEndsBikjang": "두 왕이 마주 보고 있습니다. 한 수 쉬면 빅장을 받아들여 점수로 승부를 가립니다. 초 {{w}}점, 한 {{b}}점으로 {{color}} 승리입니다.",
+    "passEndsDouble": "상대가 한 수 쉬었습니다. 나도 쉬면 점수로 승부를 가립니다. 초 {{w}}점, 한 {{b}}점으로 {{color}} 승리입니다."
+  },
+  "computer": {
+    "chooseBot": "상대 고르기",
+    "level": "{{level}}단계",
+    "side": "내 진영",
+    "sideWhite": "초 (선수)",
+    "sideBlack": "한 (후수)",
+    "sideRandom": "무작위",
+    "you": "나",
+    "thinking": "{{name}} 생각 중",
+    "hint": "힌트"
+  },
+  "bots": {
+    "soldier": {
+      "name": "졸",
+      "desc": "이제 막 배우는 중. 빠르고 느슨하게 둡니다."
+    },
+    "advisor": {
+      "name": "사",
+      "desc": "한 수 앞의 잡기를 봅니다."
+    },
+    "elephant": {
+      "name": "상",
+      "desc": "차분하고 신중합니다."
+    },
+    "horse": {
+      "name": "마",
+      "desc": "실수를 놓치지 않습니다."
+    },
+    "cannon": {
+      "name": "포",
+      "desc": "여러 수 앞을 내다봅니다."
+    },
+    "chariot": {
+      "name": "차",
+      "desc": "가장 강합니다. 봐주지 않습니다."
+    }
+  },
+  "settings": {
+    "language": "언어",
+    "appearance": "화면",
+    "system": "시스템",
+    "light": "밝게",
+    "dark": "어둡게",
+    "board": "장기판",
+    "play": "대국",
+    "coordinates": "좌표 표시",
+    "pieces": "기물",
+    "piecesHint": "한자는 실제 장기알의 모습입니다. 한글, 행마, 로마자는 한자가 낯선 분을 위한 것입니다.",
+    "pieceSet": {
+      "characters": "한자",
+      "symbols": "행마",
+      "letters": "로마자",
+      "hangul": "한글"
+    }
+  },
+  "design": {
+    "title": "디자인",
+    "intro": "장기 사이트만의 모습: 단청의 쪽빛, 비취색, 주홍색과 은행나무 판, 팔각 기물.",
+    "swatches": "색상",
+    "buttons": "버튼",
+    "pieces": "기물",
+    "typography": "글자",
+    "typographySample": "장기는 한국의 전통 놀이입니다.",
+    "cards": "카드",
+    "controls": "조작",
+    "boards": "장기판",
+    "board": {
+      "ginkgo": "은행나무",
+      "hanji": "한지",
+      "night": "밤"
+    },
+    "sample": "예시"
+  },
+  "learn": {
+    "title": "강의",
+    "exit": "강의 나가기",
+    "progress": "강의 진행",
+    "check": "확인",
+    "continue": "계속",
+    "correct": "정답!",
+    "wrong": "아쉬워요",
+    "tryAgain": "다시 해 보기",
+    "complete": "강의 완료!",
+    "stars": "별 {{count}}개",
+    "unit": "{{number}}단원",
+    "start": "시작",
+    "xpLabel": "경험치",
+    "hint": "힌트"
+  },
+  "online": {
+    "opponent": "상대",
+    "quickTitle": "빠른 대국",
+    "quickHint": "시간을 고르면 상대를 찾아 드립니다.",
+    "searching": "상대를 찾는 중 ({{pool}})…",
+    "createTitle": "비공개 방 만들기",
+    "color": "내 진영",
+    "create": "방 만들기",
+    "joinTitle": "코드로 참가",
+    "codeLabel": "방 코드",
+    "join": "참가",
+    "invalidCode": "방 코드는 여섯 글자입니다",
+    "notFound": "방을 찾을 수 없습니다",
+    "serverError": "서버에 연결할 수 없습니다. 다시 시도해 주세요.",
+    "connecting": "연결 중…",
+    "reconnecting": "연결이 끊겨 다시 연결하는 중…",
+    "waitingTitle": "방이 준비되었습니다",
+    "shareHint": "이 코드나 링크를 친구에게 보내면 시작할 수 있습니다.",
+    "copyLink": "링크 복사",
+    "copied": "복사됨",
+    "qrAlt": "방 참가 QR 코드",
+    "waitingFor": "친구를 기다리는 중…",
+    "spectating": "관전 중입니다",
+    "offerDraw": "무승부 제안",
+    "drawOffered": "무승부를 제안했습니다",
+    "drawOfferReceived": "상대가 무승부를 제안했습니다",
+    "accept": "수락",
+    "decline": "거절",
+    "opponentDisconnected": "상대의 연결이 끊겼습니다. {{seconds}}초 안에 돌아오지 않으면 승리합니다",
+    "rematchOffered": "상대의 수락을 기다리는 중…",
+    "rematchReceived": "상대가 다시 두기를 원합니다. \"다시 두기\"를 누르면 시작합니다."
+  },
+  "about": {
+    "what": "장기를 무료로 둘 수 있는 사이트입니다. 가입도 광고도 없습니다.",
+    "free": "컴퓨터와 두고, 온라인이나 한 기기에서 친구와 두고, 강의로 규칙을 배우세요.",
+    "whatTitle": "장기란 무엇인가요?",
+    "whatBody": "장기는 한국의 전통 놀이입니다. 기물은 가로 아홉 줄, 세로 열 줄 판의 교차점에 놓이며 강은 없습니다. 대국 전에 양쪽은 마와 상의 차림을 고릅니다. 포는 움직이거나 잡을 때 반드시 기물 하나를 넘어야 하고, 포끼리는 넘거나 잡을 수 없습니다. 궁성 안에서는 차, 포, 졸도 대각선을 따라 갈 수 있습니다. 한 수 쉴 수도 있습니다. 빅장, 연속 한수쉼, 같은 장면 세 번 반복, 50수 동안 잡은 기물이 없는 경우에는 점수로 승부를 가리며, 후수인 한은 덤 1.5점을 받습니다. 계속 장군만 부르는 쪽은 집니다.",
+    "openSource": "오픈 소스",
+    "licence": "코드는 GPL-3.0 라이선스로 공개되어 있습니다. 문제 제보, 강의 개선, 한국어 검토, 개발 등 누구나 도울 수 있습니다.",
+    "source": "소스 코드 보기",
+    "contribute": "참여 방법",
+    "reportBug": "문제 제보 또는 제안",
+    "madeBy": "{{name}} 제작"
+  },
+  "seo": {
+    "home": {
+      "title": "무료 온라인 장기 — 컴퓨터, 친구와 두기 | Janggi",
+      "description": "가입 없이 무료로 장기를 두세요. 여섯 단계 컴퓨터, 방 코드로 친구와 대국, 한 기기로 둘이 두기, 그리고 강의까지."
+    },
+    "computer": {
+      "title": "컴퓨터와 장기 두기 — 6단계",
+      "description": "초보부터 고수까지 여섯 단계의 컴퓨터와 장기를 두세요. 힌트와 무르기를 쓸 수 있습니다."
+    },
+    "online": {
+      "title": "친구와 온라인 장기 두기",
+      "description": "시간을 골라 빠른 대국을 하거나, 방을 만들어 친구에게 코드를 보내세요. 무료, 가입 불필요."
+    },
+    "room": {
+      "title": "온라인 장기 대국방",
+      "description": "친구와 온라인으로 장기를 두세요."
+    },
+    "local": {
+      "title": "한 기기로 둘이 장기 두기",
+      "description": "기기를 주고받으며 옆 사람과 장기를 두세요. 무료, 오프라인에서도 됩니다."
+    },
+    "learn": {
+      "title": "장기 배우기 — 무료 강의 14개",
+      "description": "장기판, 모든 기물의 행마, 궁성, 차림, 한수쉼, 빅장, 점수와 기본 외통까지. 짧은 강의 열네 개로 장기를 배우세요."
+    },
+    "about": {
+      "title": "무료 장기 사이트 소개",
+      "description": "가입도 광고도 없는 오픈 소스 장기 사이트입니다. 컴퓨터나 친구와 두고 규칙을 배우세요."
+    },
+    "settings": {
+      "title": "설정 | 장기",
+      "description": "장기 사이트의 언어, 화면, 장기판 설정입니다."
+    }
+  },
+  "setup": {
+    "title": "차림",
+    "yours": "내 차림",
+    "botPicks": "컴퓨터는 자기 차림을 스스로 고릅니다.",
+    "of": "{{color}}의 차림",
+    "inner": "안상차림",
+    "outer": "바깥상차림",
+    "left": "왼상차림",
+    "right": "오른상차림"
+  }
+}

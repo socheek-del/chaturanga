@@ -7,6 +7,8 @@
  */
 import { PRODUCT as CHESS } from '../../../apps/chess/web/product.config';
 import { SITE_URL as CHESS_URL } from '../../../apps/chess/web/site.config';
+import { PRODUCT as JANGGI } from '../../../apps/janggi/web/product.config';
+import { SITE_URL as JANGGI_URL } from '../../../apps/janggi/web/site.config';
 import { PRODUCT as MAKRUK } from '../../../apps/makruk/web/product.config';
 import { SITE_URL as MAKRUK_URL } from '../../../apps/makruk/web/site.config';
 import { PRODUCT as SHOGI } from '../../../apps/shogi/web/product.config';
@@ -34,6 +36,7 @@ export const SITES: Readonly<Record<GameId, { url: string; locales: readonly str
   xiangqi: { url: XIANGQI_URL, locales: XIANGQI.locales, defaultLocale: XIANGQI.defaultLocale },
   shogi: { url: SHOGI_URL, locales: SHOGI.locales, defaultLocale: SHOGI.defaultLocale },
   chess: { url: CHESS_URL, locales: CHESS.locales, defaultLocale: CHESS.defaultLocale },
+  janggi: { url: JANGGI_URL, locales: JANGGI.locales, defaultLocale: JANGGI.defaultLocale },
 };
 
 /** Every declared language of every family site, for checking that each game has a name in it. */

@@ -1,6 +1,6 @@
 {
-  "project": "Chaturanga — family of traditional chess games (Makruk, Sittuyin, Xiangqi, Shogi and international chess live)",
-  "last_updated": "2026-11-11",
+  "project": "Chaturanga — family of traditional chess games (Makruk, Sittuyin, Xiangqi, Shogi, international chess and Janggi live)",
+  "last_updated": "2026-11-23",
   "rules": {
     "single_active_feature": true,
     "passing_requires_evidence": true,
@@ -2585,6 +2585,202 @@
         "2026-11-11: rules.test.ts 17 passed; e2e/cards.spec.ts 9 passed; screenshots reviewed at 390x844 light and 1280x860 dark."
       ],
       "notes": "Online play is not offered: hidden hands would need the server to deal. The design is an experiment on top of the proposed Marble identity."
+    },
+    {
+      "id": "plat-019",
+      "product": "platform",
+      "priority": 119,
+      "area": "platform",
+      "milestone": "M22",
+      "title": "Passes, chosen start positions and points endings",
+      "user_visible_behavior": "Shared layers support a pass, a variant with several start positions, and endings decided by points. No sibling changes behaviour.",
+      "status": "passing",
+      "verification": [
+        "npm run verify in every workspace",
+        "useMoveInput never plays a pass by touch; resultFromStatus names points winners",
+        "GameRoom test: a room opens on an allowed FEN, keeps it for a rematch, refuses any other"
+      ],
+      "evidence": [
+        "2026-11-23: npm run verify exit 0 (Node 22.23.1). board-ui, rules-core and janggi-worker tests cover the new behaviour."
+      ]
+    },
+    {
+      "id": "jg-001",
+      "product": "janggi",
+      "priority": 120,
+      "area": "engine",
+      "milestone": "M22",
+      "title": "Janggi board, FEN and move generation",
+      "user_visible_behavior": "packages/janggi generates legal moves for every piece, passing and all 16 starts, as Fairy-Stockfish does.",
+      "status": "passing",
+      "verification": [
+        "perft, rules and reference tests against ffish; PERFT_DEEP=1"
+      ],
+      "evidence": [
+        "2026-11-23: npm run test:deep: 87 passed, including 400 full games and 2,000 sparse-position games in lock-step with ffish 0.7.10 (legal moves, SAN, FEN, result on every ply)."
+      ]
+    },
+    {
+      "id": "jg-002",
+      "product": "janggi",
+      "priority": 121,
+      "area": "engine",
+      "milestone": "M22",
+      "title": "Janggi game end",
+      "user_visible_behavior": "Bikjang, double pass, points, repetition, perpetual check, 50 moves, insufficient material.",
+      "status": "passing",
+      "verification": [
+        "rules.test.ts: one named case per ending, each also played on ffish; reference.test.ts requires every ending to occur"
+      ],
+      "evidence": [
+        "2026-11-23: Same deep run as jg-001."
+      ]
+    },
+    {
+      "id": "jg-003",
+      "product": "janggi",
+      "priority": 122,
+      "area": "ai",
+      "milestone": "M22",
+      "title": "Janggi computer opponents",
+      "user_visible_behavior": "Six bots on ai-core that understand passes, bikjang and points.",
+      "status": "in_progress",
+      "verification": [
+        "ai.test.ts",
+        "Strength ladder: each level beats the one below"
+      ],
+      "evidence": [
+        "2026-11-23: 17 tests pass. Local ladder (20 games each): L2-L1 +18 -2, L3-L2 +18 -2, L4-L3 +20, L5-L4 +20. L6-L5 +3 -0 so far (10 planned): a full L6 run is still to be completed."
+      ]
+    },
+    {
+      "id": "jg-004",
+      "product": "janggi",
+      "priority": 123,
+      "area": "design",
+      "milestone": "M22",
+      "title": "Janggi design identity and piece art (owner approval gate)",
+      "user_visible_behavior": "The \"Dancheong\" look, octagonal pieces, four piece sets, three boards.",
+      "status": "in_progress",
+      "verification": [
+        "Owner approves apps/janggi/docs/design.md",
+        "glyphs and pieceSets tests"
+      ],
+      "evidence": [
+        "2026-11-23: Built and live; screenshots reviewed by the agent at 390 and 1280, light and dark. Awaits owner approval."
+      ]
+    },
+    {
+      "id": "jg-005",
+      "product": "janggi",
+      "priority": 124,
+      "area": "play",
+      "milestone": "M22",
+      "title": "Janggi web app",
+      "user_visible_behavior": "Pass-and-play and computer with arrangements, pass, points and bikjang notice; PWA; ko/en.",
+      "status": "passing",
+      "verification": [
+        "apps/janggi/web e2e and e2e:pwa"
+      ],
+      "evidence": [
+        "2026-11-23: e2e 31 passed; PWA 2 passed; 78+ unit tests."
+      ]
+    },
+    {
+      "id": "jg-006",
+      "product": "janggi",
+      "priority": 125,
+      "area": "learn",
+      "milestone": "M22",
+      "title": "Janggi lessons",
+      "user_visible_behavior": "14 lessons checked against the engine.",
+      "status": "passing",
+      "verification": [
+        "lessons.test.ts, learn.spec.ts"
+      ],
+      "evidence": [
+        "2026-11-23: All pass; every ending claim is replayed on the engine."
+      ]
+    },
+    {
+      "id": "jg-007",
+      "product": "janggi",
+      "priority": 126,
+      "area": "online",
+      "milestone": "M22",
+      "title": "Janggi online play",
+      "user_visible_behavior": "Rooms, quick match, chosen arrangements.",
+      "status": "passing",
+      "verification": [
+        "worker tests; online.spec.ts"
+      ],
+      "evidence": [
+        "2026-11-23: Worker tests and online e2e pass, including arrangements and a pass across two browsers."
+      ]
+    },
+    {
+      "id": "jg-008",
+      "product": "janggi",
+      "priority": 127,
+      "area": "deploy",
+      "milestone": "M22",
+      "title": "Deploy Janggi on its own subdomain",
+      "user_visible_behavior": "The site is live on its own Worker, D1 and custom domain.",
+      "status": "passing",
+      "verification": [
+        "smoke:prod"
+      ],
+      "evidence": [
+        "2026-11-23: D1 janggi created and migrated, AUTH_SECRET set, Worker version 2b6e2dfd deployed. smoke:prod: 9/9 Janggi checks including a two-browser online game."
+      ]
+    },
+    {
+      "id": "jg-009",
+      "product": "janggi",
+      "priority": 128,
+      "area": "platform",
+      "milestone": "M22",
+      "title": "Janggi joins the family links",
+      "user_visible_behavior": "Every sibling links to Janggi and back.",
+      "status": "in_progress",
+      "verification": [
+        "e2e-prod/family.spec.ts for every site"
+      ],
+      "evidence": [
+        "2026-11-23: Janggi links to its five siblings in production. The siblings show Janggi only after they redeploy (merge feat/janggi to main; chess by hand): 5 of 6 production family checks fail until then."
+      ]
+    },
+    {
+      "id": "jg-010",
+      "product": "janggi",
+      "priority": 129,
+      "area": "seo",
+      "milestone": "M22",
+      "title": "Janggi SEO, About page and README",
+      "user_visible_behavior": "Titles, sitemap, OG image, READMEs.",
+      "status": "passing",
+      "verification": [
+        "seo tests and e2e"
+      ],
+      "evidence": [
+        "2026-11-23: seo.spec.ts passes. README media not made (not in the verification)."
+      ]
+    },
+    {
+      "id": "jg-011",
+      "product": "janggi",
+      "priority": 130,
+      "area": "i18n",
+      "milestone": "M22",
+      "title": "Native Korean review",
+      "user_visible_behavior": "A native speaker reviews the Korean text.",
+      "status": "blocked",
+      "verification": [
+        "apps/janggi/docs/i18n-review.md completed by a native reviewer"
+      ],
+      "evidence": [
+        "2026-11-23: Review sheet written; needs a native reviewer."
+      ]
     }
   ]
 }

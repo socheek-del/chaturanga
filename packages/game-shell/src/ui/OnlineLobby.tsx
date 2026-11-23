@@ -1,7 +1,7 @@
 import { RoomCode } from '@chaturanga/protocol';
 import { Button, Card, SegmentedControl } from '@chaturanga/ui';
 import { LoaderCircle } from 'lucide-react';
-import { type FormEvent, useState } from 'react';
+import { type FormEvent, type ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { createRoom, fetchRoom } from '../online/api';
 import type { IdentitySource } from '../online/identity';
@@ -20,10 +20,14 @@ export interface OnlineLobbyProps {
   onColorChange: (color: OnlineColorChoice) => void;
   /** Opens a room; the product owns its routes. */
   onEnterRoom: (code: string) => void;
+  /** Start position of a created room, for a variant with `startFens`. */
+  startFen?: string;
+  /** The product's own choices for a created room, such as opening arrangements. */
+  roomOptions?: ReactNode;
 }
 
 /** The online lobby: quick match, create a private room, join one by code. No chat anywhere. */
-export function OnlineLobby({ identity: source, timeControl, onTimeControlChange, color, onColorChange, onEnterRoom }: OnlineLobbyProps) {
+export function OnlineLobby({ identity: source, timeControl, onTimeControlChange, color, onColorChange, onEnterRoom, startFen, roomOptions }: OnlineLobbyProps) {
   const { t } = useTranslation();
   const { identity, failed } = useIdentity(source);
   const [code, setCode] = useState('');
@@ -36,7 +40,7 @@ export function OnlineLobby({ identity: source, timeControl, onTimeControlChange
     setBusy('create');
     setServerError(false);
     try {
-      onEnterRoom(await createRoom(identity.token, { timeControl: toTimeControl(timeControl), color, rated: false }));
+      onEnterRoom(await createRoom(identity.token, { timeControl: toTimeControl(timeControl), color, rated: false, startFen }));
     } catch {
       setServerError(true);
     } finally {
@@ -89,6 +93,7 @@ export function OnlineLobby({ identity: source, timeControl, onTimeControlChange
             ]}
           />
         </div>
+        {roomOptions}
         <Button size="lg" block onClick={create} disabled={!identity || busy !== null}>
           {busy === 'create' && <LoaderCircle aria-hidden className="h-5 w-5 animate-spin" />}
           {t('online.create')}

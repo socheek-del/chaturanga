@@ -25,8 +25,8 @@ declares.
 | `play.reason.<reason>` | One per `ResultReason` the variant can produce |
 
 `play.reason.*` covers `checkmate`, `stalemate`, `repetition`, `counting`, `fifty-move`,
-`insufficient-material`, `perpetual-check`, `perpetual-chase`, `timeout`, `resign`, `agreement` and
-`abandon`. A product only needs the reasons its own rules can reach — Makruk has no fifty-move rule, so
+`insufficient-material`, `perpetual-check`, `perpetual-chase`, `bikjang`, `double-pass`, `timeout`,
+`resign`, `agreement` and `abandon`. A product only needs the reasons its own rules can reach — Makruk has no fifty-move rule, so
 it omits that one; Makruk and Sittuyin never produce `perpetual-check` or `perpetual-chase` (only a
 variant that can lose to a repeated check or chase, e.g. Xiangqi, needs those two).
 

@@ -15,6 +15,8 @@ export const RESULT_REASONS = [
   'insufficient-material',
   'perpetual-check',
   'perpetual-chase',
+  'bikjang',
+  'double-pass',
   'timeout',
   'resign',
   'agreement',
@@ -37,9 +39,13 @@ export function resultFromStatus(status: GameStatus): GameResult | null {
     case 'checkmate':
     case 'perpetual-check':
     case 'perpetual-chase':
+    case 'bikjang':
+    case 'double-pass':
       return { winner: status.winner, reason: status.kind };
     case 'stalemate':
-      return { winner: status.winner ?? null, reason: 'stalemate' };
+    case 'repetition':
+    case 'fifty-move':
+      return { winner: status.winner ?? null, reason: status.kind };
     default:
       return { winner: null, reason: status.kind };
   }

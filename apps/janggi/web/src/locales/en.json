@@ -1,0 +1,315 @@
+{
+  "brand": "Janggi",
+  "app": {
+    "name": "Janggi",
+    "seal": "將"
+  },
+  "family": {
+    "title": "More games"
+  },
+  "feedback": {
+    "link": "Send feedback",
+    "title": "Send feedback",
+    "close": "Close",
+    "type": "Type",
+    "bug": "Problem",
+    "idea": "Idea",
+    "details": "Details",
+    "placeholder": "What happened, or what would make this better?",
+    "note": "Also sends the page address, screen size and browser.",
+    "publicNote": "Reports are posted publicly on GitHub, so leave out personal details.",
+    "owner": "Owner mode: reports go straight to the agent queue.",
+    "send": "Send",
+    "sending": "Sending…",
+    "sent": "Thanks! Your report was sent.",
+    "failed": "Could not send. Please try again.",
+    "rateLimited": "Too many reports for now. Please try again later.",
+    "network": "Could not reach the server. Check your connection and try again.",
+    "queued": "You're offline. Saved, and it will send when you're back online.",
+    "challengeFailed": "The bot check could not load. Please try again later.",
+    "continue": "Continue",
+    "handoff": "A new tab opens for a quick bot check, then your report is sent.",
+    "handedOff": "Finish sending in the new tab.",
+    "closeTab": "You can close this tab now."
+  },
+  "nav": {
+    "label": "Main",
+    "back": "Back",
+    "play": "Play",
+    "settings": "Settings",
+    "learn": "Learn",
+    "about": "About"
+  },
+  "colors": {
+    "w": "Cho",
+    "b": "Han"
+  },
+  "pieces": {
+    "k": "General",
+    "a": "Advisor",
+    "b": "Elephant",
+    "n": "Horse",
+    "r": "Chariot",
+    "c": "Cannon",
+    "p": "Soldier"
+  },
+  "board": {
+    "label": "Janggi board",
+    "pieceName": "{{color}} {{piece}}",
+    "pointWithPiece": "{{point}}, {{piece}}",
+    "emptyPoint": "{{point}}, empty"
+  },
+  "modes": {
+    "single": "Play the computer",
+    "local": "Two players, one device",
+    "online": "Play online"
+  },
+  "home": {
+    "tagline": "Play Janggi, Korean chess, free on any device.",
+    "singleDesc": "Six opponents named after the pieces, from beginner to strong.",
+    "localDesc": "Pass the device back and forth.",
+    "aboutGame": "About Janggi",
+    "traditional": "Traditional",
+    "intro": "Janggi is the chess of Korea. Cannons must jump to move at all, chariots and soldiers ride the palace diagonals, and you may pass your turn. When nobody checkmates, the points on the board decide.",
+    "learn": "Learn Janggi",
+    "learnDesc": "Fourteen short lessons: the board, every piece, passing, bikjang, points and basic mates.",
+    "onlineDesc": "Invite a friend with a code, or get matched."
+  },
+  "play": {
+    "attackMap": "Attack map",
+    "attackMapOwn": "You attack",
+    "attackMapEnemy": "Opponent attacks",
+    "start": "Start",
+    "turn": "{{color}} to move",
+    "check": "Check",
+    "captured": "Captured pieces",
+    "clockOf": "{{color}}'s clock",
+    "moves": "Moves",
+    "noMoves": "No moves yet",
+    "first": "First move",
+    "back": "Previous move",
+    "forward": "Next move",
+    "last": "Latest move",
+    "flip": "Flip the board",
+    "undo": "Take back",
+    "resign": "Resign",
+    "backToLive": "Back to the game",
+    "newGame": "New game",
+    "rematch": "Play again",
+    "review": "Look at the board",
+    "cancel": "Cancel",
+    "resignConfirm": "Resign for {{color}}?",
+    "timeControl": "Time",
+    "noClock": "No clock",
+    "custom": "Custom",
+    "minutes": "Minutes",
+    "increment": "Increment (s)",
+    "categories": {
+      "bullet": "Bullet",
+      "blitz": "Blitz",
+      "rapid": "Rapid",
+      "classical": "Classical"
+    },
+    "result": {
+      "whiteWins": "Cho wins",
+      "blackWins": "Han wins",
+      "draw": "Draw"
+    },
+    "reason": {
+      "checkmate": "Checkmate",
+      "repetition": "Threefold repetition, decided on points",
+      "fifty-move": "Fifty moves without a capture, decided on points",
+      "insufficient-material": "Neither side can checkmate",
+      "perpetual-check": "Perpetual check loses",
+      "bikjang": "Bikjang: the Generals faced, decided on points",
+      "double-pass": "Both sides passed, decided on points",
+      "timeout": "Out of time",
+      "resign": "Resigned",
+      "agreement": "Draw agreed",
+      "abandon": "Opponent left"
+    },
+    "pass": "Pass",
+    "points": "{{color}} {{points}}",
+    "bikjang": "Bikjang!",
+    "passEndsTitle": "End the game?",
+    "passEndsBikjang": "The Generals face each other. Passing accepts bikjang, and the points decide: Cho {{w}}, Han {{b}}. {{color}} wins.",
+    "passEndsDouble": "Your opponent just passed. If you pass too, the points decide: Cho {{w}}, Han {{b}}. {{color}} wins."
+  },
+  "computer": {
+    "chooseBot": "Choose an opponent",
+    "level": "Level {{level}}",
+    "side": "Your side",
+    "sideWhite": "Cho (first)",
+    "sideBlack": "Han (second)",
+    "sideRandom": "Random",
+    "you": "You",
+    "thinking": "{{name}} is thinking",
+    "hint": "Hint"
+  },
+  "bots": {
+    "soldier": {
+      "name": "Soldier",
+      "desc": "Just learning. Plays quickly and loosely."
+    },
+    "advisor": {
+      "name": "Advisor",
+      "desc": "Sees captures one move ahead."
+    },
+    "elephant": {
+      "name": "Elephant",
+      "desc": "Steady and careful."
+    },
+    "horse": {
+      "name": "Horse",
+      "desc": "Quick to punish a mistake."
+    },
+    "cannon": {
+      "name": "Cannon",
+      "desc": "Plans several moves ahead."
+    },
+    "chariot": {
+      "name": "Chariot",
+      "desc": "The strongest. Expect no gifts."
+    }
+  },
+  "settings": {
+    "language": "Language",
+    "appearance": "Appearance",
+    "system": "System",
+    "light": "Light",
+    "dark": "Dark",
+    "board": "Board",
+    "play": "Play",
+    "coordinates": "Show coordinates",
+    "pieces": "Pieces",
+    "piecesHint": "The characters are what a real set uses. Hangul, moves and letters are for players who do not read them.",
+    "pieceSet": {
+      "characters": "Characters",
+      "symbols": "Moves",
+      "letters": "Letters",
+      "hangul": "Hangul"
+    }
+  },
+  "design": {
+    "title": "Design",
+    "intro": "The Janggi site's own look: the indigo, jade and vermilion of painted palace eaves, a ginkgo board and octagonal pieces.",
+    "swatches": "Colours",
+    "buttons": "Buttons",
+    "pieces": "Pieces",
+    "typography": "Typography",
+    "typographySample": "Janggi is the traditional chess of Korea.",
+    "cards": "Cards",
+    "controls": "Controls",
+    "boards": "Boards",
+    "board": {
+      "ginkgo": "Ginkgo",
+      "hanji": "Hanji paper",
+      "night": "Night"
+    },
+    "sample": "Sample"
+  },
+  "learn": {
+    "title": "Lessons",
+    "exit": "Leave lesson",
+    "progress": "Lesson progress",
+    "check": "Check",
+    "continue": "Continue",
+    "correct": "Correct!",
+    "wrong": "Not quite",
+    "tryAgain": "Try again",
+    "complete": "Lesson complete!",
+    "stars": "Stars: {{count}}",
+    "unit": "Unit {{number}}",
+    "start": "Start",
+    "xpLabel": "Experience points",
+    "hint": "Hint"
+  },
+  "online": {
+    "opponent": "Opponent",
+    "quickTitle": "Quick match",
+    "quickHint": "Pick a time control and we'll find you an opponent.",
+    "searching": "Finding an opponent ({{pool}})…",
+    "createTitle": "Create a private room",
+    "color": "Your side",
+    "create": "Create room",
+    "joinTitle": "Join with a code",
+    "codeLabel": "Room code",
+    "join": "Join",
+    "invalidCode": "Room codes have 6 characters",
+    "notFound": "Room not found",
+    "serverError": "Couldn't reach the server. Please try again.",
+    "connecting": "Connecting…",
+    "reconnecting": "Connection lost, reconnecting…",
+    "waitingTitle": "Your room is ready",
+    "shareHint": "Send this code or link to a friend to start playing.",
+    "copyLink": "Copy link",
+    "copied": "Copied",
+    "qrAlt": "QR code to join the room",
+    "waitingFor": "Waiting for your friend to join…",
+    "spectating": "You are watching this game",
+    "offerDraw": "Offer a draw",
+    "drawOffered": "Draw offered",
+    "drawOfferReceived": "Your opponent offers a draw",
+    "accept": "Accept",
+    "decline": "Decline",
+    "opponentDisconnected": "Your opponent disconnected — you win if they are not back in {{seconds}}s",
+    "rematchOffered": "Waiting for your opponent to accept the rematch…",
+    "rematchReceived": "Your opponent wants a rematch. Press \"Play again\" to accept."
+  },
+  "about": {
+    "what": "This is a free site for playing Janggi, Korean chess. No account, no ads.",
+    "free": "Play the computer, play a friend online or on one device, and learn the rules with lessons.",
+    "whatTitle": "What is Janggi?",
+    "whatBody": "Janggi is the traditional chess of Korea. The pieces stand on the points of a nine by ten board with no river. Before play each side chooses how to set out its Horses and Elephants. Cannons must jump exactly one piece to move or capture and can never jump or take another Cannon. Inside the palace, Chariots, Cannons and Soldiers may follow the diagonal lines. A player may pass. Facing Generals (bikjang), two passes in a row, a threefold repetition or fifty moves without a capture are settled on points, where Han gets 1.5 for moving second. Giving check without end loses.",
+    "openSource": "Open source",
+    "licence": "The code is public under the GPL-3.0 licence. Anyone can help: report bugs, improve lessons, review the Korean text or write code.",
+    "source": "View the source",
+    "contribute": "How to contribute",
+    "reportBug": "Report a bug or suggest an idea",
+    "madeBy": "Made by {{name}}"
+  },
+  "seo": {
+    "home": {
+      "title": "Janggi Online — Play Korean Chess Free vs Computer & Friends",
+      "description": "Play Janggi (Korean chess) online for free, no sign-up. Face 6 computer levels, invite a friend by room code or share one device, and learn from lessons."
+    },
+    "computer": {
+      "title": "Play Janggi vs Computer — 6 Levels | Korean Chess",
+      "description": "Practise Janggi against bots from beginner to strong, with hints and takebacks. Free, instant, and works on phones and desktops."
+    },
+    "online": {
+      "title": "Play Janggi Online with Friends | Korean Chess",
+      "description": "Pick a time control for a quick match, or create a room and send the code to a friend. Free, no account needed."
+    },
+    "room": {
+      "title": "Online Janggi Room | Korean Chess",
+      "description": "Join an online Janggi (Korean chess) game with a friend."
+    },
+    "local": {
+      "title": "Two-Player Janggi on One Device | Korean Chess",
+      "description": "Pass the phone back and forth and play Janggi with someone next to you. Free, no account, works offline."
+    },
+    "learn": {
+      "title": "Learn Janggi — 14 Free Lessons | Korean Chess",
+      "description": "Learn Janggi from scratch: the board, every piece, the palace, opening arrangements, passing, bikjang, points and basic mates. Fourteen short lessons."
+    },
+    "about": {
+      "title": "About This Free Janggi Site | Korean Chess",
+      "description": "A free, open-source Janggi site: no account, no ads. Play the computer or a friend, and learn the rules."
+    },
+    "settings": {
+      "title": "Settings | Janggi",
+      "description": "Language, appearance, board and clock settings for the Janggi site."
+    }
+  },
+  "setup": {
+    "title": "Opening arrangement",
+    "yours": "Your arrangement",
+    "botPicks": "The computer picks its own arrangement.",
+    "of": "{{color}}'s arrangement",
+    "inner": "Elephants inside",
+    "outer": "Elephants outside",
+    "left": "Left elephants",
+    "right": "Right elephants"
+  }
+}

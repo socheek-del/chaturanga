@@ -34,7 +34,10 @@
     "deploy:shogi": "npm run build -w apps/shogi/web && npm run deploy -w apps/shogi/worker",
     "dev:chess": "concurrently -n worker,web -c yellow,green \"npm run dev -w apps/chess/worker\" \"npm run dev -w apps/chess/web\"",
     "build:chess": "npm run build -w apps/chess/web && npm run build -w apps/chess/worker",
-    "deploy:chess": "npm run build -w apps/chess/web && npm run deploy -w apps/chess/worker"
+    "deploy:chess": "npm run build -w apps/chess/web && npm run deploy -w apps/chess/worker",
+    "dev:janggi": "concurrently -n worker,web -c yellow,green \"npm run dev -w apps/janggi/worker\" \"npm run dev -w apps/janggi/web\"",
+    "build:janggi": "npm run build -w apps/janggi/web && npm run build -w apps/janggi/worker",
+    "deploy:janggi": "npm run build -w apps/janggi/web && npm run deploy -w apps/janggi/worker"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

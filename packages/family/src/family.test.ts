@@ -1,6 +1,8 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
+import { PRODUCT as JANGGI } from '../../../apps/janggi/web/product.config';
+import { SITE_URL as JANGGI_URL } from '../../../apps/janggi/web/site.config';
 import { PRODUCT as MAKRUK } from '../../../apps/makruk/web/product.config';
 import { SITE_URL as MAKRUK_URL } from '../../../apps/makruk/web/site.config';
 import { PRODUCT as SITTUYIN } from '../../../apps/sittuyin/web/product.config';
@@ -30,6 +32,7 @@ describe('family (plat-006, plat-010)', () => {
     expect(SITES.makruk).toEqual({ url: MAKRUK_URL, locales: MAKRUK.locales, defaultLocale: MAKRUK.defaultLocale });
     expect(SITES.sittuyin).toEqual({ url: SITTUYIN_URL, locales: SITTUYIN.locales, defaultLocale: SITTUYIN.defaultLocale });
     expect(SITES.xiangqi).toEqual({ url: XIANGQI_URL, locales: XIANGQI.locales, defaultLocale: XIANGQI.defaultLocale });
+    expect(SITES.janggi).toEqual({ url: JANGGI_URL, locales: JANGGI.locales, defaultLocale: JANGGI.defaultLocale });
   });
 
   it('links each site to every sibling and never to itself, however many games there are', () => {

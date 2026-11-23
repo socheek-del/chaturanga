@@ -52,6 +52,11 @@ export interface Variant<G extends VariantGame = VariantGame> {
   readonly files: number;
   readonly ranks: number;
   readonly startFen: string;
+  /**
+   * Every position a game may start from, when players choose how to set out their pieces (Janggi). Left out,
+   * `startFen` is the only one. The server accepts no other start for an online room.
+   */
+  readonly startFens?: readonly string[];
   /** Lower-case FEN letters of the piece types this variant uses. */
   readonly pieceTypes: readonly string[];
   /** True when pieces can be held in hand and placed (Sittuyin setup, Shogi drops). */

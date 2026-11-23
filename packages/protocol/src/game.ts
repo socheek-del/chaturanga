@@ -120,6 +120,8 @@ export type GuestResponse = z.infer<typeof GuestResponse>;
 export const CreateGameRequest = z.object({
   timeControl: TimeControl.nullable(),
   color: z.enum(['w', 'b', 'random']),
+  /** One of the variant's `startFens`; the room's start position when left out is `startFen`. */
+  startFen: z.string().max(200).optional(),
   /** Rated games update ratings when both players are signed in and the game is timed. */
   rated: z.boolean().default(true),
 });

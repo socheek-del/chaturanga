@@ -73,7 +73,9 @@ export function useMoveInput({ game, version, canMove, onMove, files = 8 }: Move
     () => (canMove ? game.legalUci().flatMap((uci) => parseUci(uci, files) ?? []) : []),
     [game, version, canMove, files], // eslint-disable-line react-hooks/exhaustive-deps
   );
-  const boardMoves = legal.filter((m): m is BoardMove => m.kind === 'move');
+  // A pass is written as a move onto the same square (Janggi's `e2e2`). It is never played by touching the
+  // board, where dropping a piece back on its square means changing one's mind: the product offers a button.
+  const boardMoves = legal.filter((m): m is BoardMove => m.kind === 'move' && (m.from !== m.to || m.promotion !== null));
   const drops = legal.filter((m): m is DropMove => m.kind === 'drop');
 
   const current = selection && selection.version === version ? selection : null;

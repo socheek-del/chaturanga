@@ -1,4 +1,5 @@
 // @vitest-environment happy-dom
+import { Game as JanggiGame } from '@chaturanga/janggi';
 import { Game as MakrukGame, parseSquare as sq } from '@chaturanga/makruk';
 import { Game as ShogiGame } from '@chaturanga/shogi';
 import { Game as SittuyinGame } from '@chaturanga/sittuyin';
@@ -325,5 +326,20 @@ describe('useMoveInput with a promotion that offers a choice of pieces (plat-014
     act(() => hook.result.current.onSquareClick(sq('e7')));
     expect(hook.result.current.targets).toEqual([sq('e8')]);
     expect(hook.result.current.promotionTargets).toEqual([sq('e8')]);
+  });
+});
+
+describe('useMoveInput with Janggi, whose pass is a move onto the same point', () => {
+  it('never passes by tapping or by dropping the general back on its point', () => {
+    const game = new JanggiGame();
+    expect(game.legalUci()).toContain('e2e2');
+    const onMove = vi.fn();
+    const { result } = renderHook(() => useMoveInput({ game, version: 0, canMove: true, onMove, files: 9 }));
+    const e2 = 9 + 4;
+    act(() => result.current.onSquareClick(e2));
+    expect(result.current.targets).not.toContain(e2);
+    act(() => result.current.onSquareClick(e2));
+    act(() => void expect(result.current.onDrop(e2, e2)).toBe(false));
+    expect(onMove).not.toHaveBeenCalled();
   });
 });

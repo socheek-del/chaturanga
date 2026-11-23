@@ -1034,3 +1034,21 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
   live check: home → Card Chess → deal shows 7 + 7 cards, sitemap lists `/play/cards`, no page errors.
 - Open: owner review of the Card Chess rules and look; an online mode (server-dealt hidden hands); a `deploy-chess`
   CI job (chess still deploys by hand).
+
+### Session 027 (Janggi, branch `feat/janggi`)
+
+- Date: 2026-11-23
+- Goal (owner request): Janggi, Korean chess, as the sixth product on a new subdomain, deployed.
+- Baseline: `./init.sh` failed under the machine's Node 25 (its built-in `localStorage` breaks happy-dom tests:
+  makruk-web and game-shell). nvm is not installed here; under Node 22.23.1 (`.nvmrc`) the same suites pass.
+- Added `plat-019` and `jg-001..011` (states and evidence in `feature_list.json`), packages `janggi` and
+  `janggi-ai`, apps `janggi/web` and `janggi/worker`, a CI deploy job.
+- Decisions for the owner to confirm: `apps/janggi/docs/PLAN.md` (D1-D6).
+- Verification: `npm run verify` exit 0; Janggi deep engine run 87 passed; Janggi e2e 31, PWA 2; production smoke
+  10/10 of the Janggi checks. Playwright ran on a newer cached Chromium than the pinned build.
+- Deployed by hand: D1 `janggi` (9c5a083d-6e82-4577-96bb-f45661865ca9), AUTH_SECRET set, version 2b6e2dfd.
+- Open: merge to `main` (redeploys the siblings with the Janggi link and starts CI deploys; deploy chess by hand);
+  finish the L6-L5 ladder; register the new origin with feedback-hub (`project add`), so its feedback link works;
+  owner approval of the design; native Korean review; saved games and review for Janggi.
+- Known, not from this work: `apps/xiangqi/web/e2e/family.spec.ts` fails on the "Chess" link (substring match; it
+  needs `exact: true` as Makruk has). Left alone: a game's work does not edit another game's files.

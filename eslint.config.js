@@ -42,11 +42,13 @@ export default defineConfig(
       'packages/sittuyin/src/**/*.ts',
       'packages/xiangqi/src/**/*.ts',
       'packages/shogi/src/**/*.ts',
+      'packages/janggi/src/**/*.ts',
       'packages/rules-core/src/**/*.ts',
       'packages/ai-core/src/**/*.ts',
       'packages/uno/src/**/*.ts',
       'packages/sittuyin-ai/src/**/*.ts',
       'packages/xiangqi-ai/src/**/*.ts',
+      'packages/janggi-ai/src/**/*.ts',
     ],
     ignores: ['packages/*/src/**/*.test.ts', 'packages/*/src/testing/**'],
     rules: {

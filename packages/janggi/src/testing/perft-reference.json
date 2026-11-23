@@ -1,0 +1,112 @@
+{
+  "generator": "ffish@0.7.10 (Fairy-Stockfish)",
+  "positions": [
+    {
+      "name": "start",
+      "fen": "rnba1abnr/4k4/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/4K4/RNBA1ABNR w - - 0 1",
+      "perft": [
+        32,
+        1024,
+        33000
+      ]
+    },
+    {
+      "name": "outer arrangement against left",
+      "fen": "rnba1anbr/4k4/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/4K4/RBNA1ANBR w - - 0 1",
+      "perft": [
+        32,
+        1024
+      ]
+    },
+    {
+      "name": "chariot and cannon on the palace diagonals",
+      "fen": "3k5/4a4/5R3/9/9/9/9/3c5/4A4/4K1C2 w - - 0 1",
+      "perft": [
+        31,
+        242,
+        6326
+      ]
+    },
+    {
+      "name": "soldiers inside the palace",
+      "fen": "5k3/9/3P5/4P4/9/9/9/9/9/3K5 w - - 0 1",
+      "perft": [
+        11,
+        32,
+        330
+      ]
+    },
+    {
+      "name": "random seed 1",
+      "fen": "1nba1a1n1/9/rc1k3c1/p2p2p2/9/7P1/P4P3/N4K2C/3A5/b1B2AB1R w - - 2 14",
+      "perft": [
+        29,
+        950,
+        27963
+      ]
+    },
+    {
+      "name": "random seed 2",
+      "fen": "2b1aab2/3k5/5cnc1/p2pn1p2/2P6/6r2/P3P1PP1/1C7/4KC3/1NBAA1B2 w - - 7 17",
+      "perft": [
+        27,
+        850,
+        23542
+      ]
+    },
+    {
+      "name": "random seed 3",
+      "fen": "1nbR5/4a4/1c3k3/p4p3/1B4p2/P8/4P2P1/1C7/5A3/RN1K3N1 w - - 1 20",
+      "perft": [
+        42,
+        811,
+        33524
+      ]
+    },
+    {
+      "name": "random seed 4",
+      "fen": "rn1k3n1/5a3/9/ppp5p/6p2/9/P5N2/3CKA3/8R/bNB2cB2 w - - 0 23",
+      "perft": [
+        30,
+        884,
+        22518
+      ]
+    },
+    {
+      "name": "random seed 5",
+      "fen": "5k1C1/3a5/9/p3b2p1/8p/4p1P2/P2P4P/N2K5/3A5/R1B3B2 w - - 3 26",
+      "perft": [
+        33,
+        764,
+        23068
+      ]
+    },
+    {
+      "name": "random seed 6",
+      "fen": "1n1aak3/9/7P1/p3p4/8P/1c7/2b2PR2/1C1C1K3/4A4/2BA2B2 w - - 5 29",
+      "perft": [
+        31,
+        527,
+        17038
+      ]
+    },
+    {
+      "name": "random seed 7",
+      "fen": "1n5n1/4ka3/1c1a3c1/9/9/2P6/9/1C1A3C1/5b3/1NBK1ABr1 w - - 6 32",
+      "perft": [
+        20,
+        484,
+        9517
+      ]
+    },
+    {
+      "name": "random seed 8",
+      "fen": "2bkaab1r/9/2n4cn/2B6/2P2p1P1/5P3/6P2/3K3CN/1r7/1NBc1A2R b - - 1 20",
+      "perft": [
+        8,
+        191,
+        8709
+      ]
+    }
+  ]
+}

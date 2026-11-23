@@ -36,10 +36,13 @@
     "build:chess": "npm run build -w apps/chess/web && npm run build -w apps/chess/worker",
     "deploy:chess": "npm run build -w apps/chess/web && npm run deploy -w apps/chess/worker",
     "dev:janggi": "concurrently -n worker,web -c yellow,green \"npm run dev -w apps/janggi/worker\" \"npm run dev -w apps/janggi/web\"",
+    "dev:threechess": "concurrently -n worker,web -c yellow,green \"npm run dev -w apps/threechess/worker\" \"npm run dev -w apps/threechess/web\"",
+    "build:beanroti-apps": "npm run build -w apps/beanroti/worker",
+    "deploy:beanroti-apps": "npm run deploy -w apps/beanroti/worker",
     "build:janggi": "npm run build -w apps/janggi/web && npm run build -w apps/janggi/worker",
     "deploy:janggi": "npm run build -w apps/janggi/web && npm run deploy -w apps/janggi/worker",
-    "build:beanroti-apps": "npm run build -w apps/beanroti/worker",
-    "deploy:beanroti-apps": "npm run deploy -w apps/beanroti/worker"
+    "build:threechess": "npm run build -w apps/threechess/web && npm run build -w apps/threechess/worker",
+    "deploy:threechess": "npm run build -w apps/threechess/web && npm run deploy -w apps/threechess/worker"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

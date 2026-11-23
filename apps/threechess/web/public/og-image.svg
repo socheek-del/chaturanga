@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#111b25"/>
+  <circle cx="983" cy="318" r="245" fill="#1b2935"/>
+  <path d="M982 75 1193 438H771z" fill="none" stroke="#344551" stroke-width="2"/>
+  <path d="M982 118 1156 420H808z" fill="none" stroke="#e96c52" stroke-width="3"/>
+  <circle cx="982" cy="318" r="98" fill="#e96c52"/>
+  <text x="982" y="347" text-anchor="middle" font-family="Georgia,serif" font-size="88" fill="#fff7e8">3</text>
+  <text x="80" y="205" font-family="Georgia,serif" font-size="74" fill="#fff7e8">Chess has</text>
+  <text x="80" y="294" font-family="Georgia,serif" font-size="74" fill="#fff7e8">a third side.</text>
+  <text x="84" y="370" font-family="Arial,sans-serif" font-size="24" letter-spacing="3" fill="#b4c0c5">THREE ARMIES · ONE SHARED BOARD</text>
+</svg>

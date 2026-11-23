@@ -64,6 +64,10 @@ Then start one product:
 | Makruk | `npm run dev:makruk` | http://localhost:5173 | :8787 |
 | Sittuyin | `npm run dev:sittuyin` | http://localhost:5174 | :8788 |
 | Xiangqi | `npm run dev:xiangqi` | http://localhost:5176 | :8789 |
+| Shogi | `npm run dev:shogi` | http://localhost:5177 | :8790 |
+| Chess | `npm run dev:chess` | http://localhost:5178 | :8791 |
+| Janggi | `npm run dev:janggi` | http://localhost:5190 | :8792 |
+| Three-player chess | `npm run dev:threechess` | http://localhost:5193 | :8793 |
 
 Each command runs that game's Cloudflare Worker (with a local D1) beside its Vite dev server, which proxies
 `/api` and `/ws` to it.
@@ -85,9 +89,12 @@ product's own folders, a shared package or the lock file changed.
 ## Deploying
 
 No site address is hardcoded. Each app reads its own address from `apps/<game>/web/site.config.ts`, which can
-be overridden per product at build time (`MAKRUK_SITE_URL`, `SITTUYIN_SITE_URL`, `XIANGQI_SITE_URL`). Moving a
-site to another domain is covered step by step in
+be overridden per product at build time (`MAKRUK_SITE_URL`, `SITTUYIN_SITE_URL`, `XIANGQI_SITE_URL`,
+`SHOGI_SITE_URL`, `CHESS_SITE_URL`, `JANGGI_SITE_URL`, `THREECHESS_SITE_URL`). Moving a site to another domain is covered step by step in
 [CONTRIBUTING.md](../CONTRIBUTING.md#deploying-to-your-own-domain).
 
 Each product deploys with `npm run deploy:<game>`, which applies that game's D1 migrations and then publishes
 its Worker. In production this happens from CI, not from a laptop.
+
+The Beanroti app directory is maintained separately in `apps/beanroti/web/public/apps.json` and deployed with
+`npm run deploy:beanroti-apps`. Add a product link there when its destination is ready to publish.

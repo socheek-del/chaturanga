@@ -1064,3 +1064,28 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
   desktop and mobile screenshots. The Cloudflare bundle dry run passed.
 - Startup in the mixed working tree hit a pre-existing lock mismatch for the Vite React plugin. The Beanroti
   commit includes only the directory workspace entries and scripts.
+
+### Session 029 (Three-player chess)
+
+- Date: 2026-11-24
+- Owner request: build Three-player chess from the Wikipedia overview, work on `main`, publish it, and add it
+  to `app.beanroti.com`.
+- The reference describes a family of variants, so this product documents its selected rules as Chaturanga
+  Ring in `apps/threechess/docs/PLAN.md` and `packages/threechess/RULES.md`: 8 files × 12 ranks, three
+  clockwise seats, checkmate elimination, pass on stalemate, last king wins. V1 is English pass-and-play.
+- Implemented `plat-020`, `packages/threechess`, its own web PWA and Worker, a family entry, SEO/PWA assets,
+  and the app directory catalog entry at `apps/beanroti/web/public/apps.json`. Updated repo docs and CI build
+  and deploy jobs.
+- Verification: `NODE_OPTIONS=--no-experimental-webstorage npm run verify` passed across the whole repo
+  (Worker suites needed local bind/log access). Three-player web unit tests passed; Playwright e2e passed 3/3
+  in installed Chrome. `npm run build:threechess`, `npm run build:beanroti-apps` and `npm run build:chess`
+  all passed. The app's rules suite passed 22/22.
+- Startup limitation: `./init.sh` could not install from npm because the registry resolved to `ENOTFOUND`;
+  this machine has Node 25 rather than the pinned Node 22, so verification used the web-storage workaround.
+- Deployment blocker: Cloudflare rejected `wrangler d1 create threechess` because the account has reached its
+  10-database limit. The repo requires each game's own Worker and D1. No existing database was reused and no
+  paid plan was changed. The catalog entry is in source but is not published while its game URL is offline.
+- `tpc-001`, `tpc-002` and `plat-020` are passing in `feature_list.json`; `tpc-003` is blocked on dedicated D1
+  capacity and production deploy. Do not push yet: main's CI deploy job will try this Worker, and the catalog
+  would link to an unavailable site. After D1 capacity is resolved, update the ID, push `main`, deploy the
+  game and catalog, and run a production smoke check.

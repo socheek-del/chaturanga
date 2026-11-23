@@ -5,7 +5,6 @@
 import { describe, expect, it } from 'vitest';
 import { squareNameOf, squareOf } from '../coords';
 import { FenError, IllegalMoveError } from '../errors';
-import type { Color } from '../types';
 import type { Variant, VariantGame } from '../variant';
 import { mulberry32 } from './random';
 
@@ -16,18 +15,20 @@ export interface ConformanceFixtures {
   /** Strings that are not legal moves in the start position. */
   illegalMoves: readonly string[];
   /** A position and the move that mates from it. */
-  checkmate: { fen: string; move: string; winner: Color };
+  checkmate: { fen: string; move: string; winner: string };
 }
 
 const PLAYOUT_SEEDS = 5;
 const PLAYOUT_PLIES = 120;
 
-export function describeVariantConformance<G extends VariantGame>(
+export function describeVariantConformance<G extends VariantGame<string>>(
   variant: Variant<G>,
   fixtures: ConformanceFixtures,
 ): void {
   describe(`${variant.id} implements the rules-core Variant (plat-002)`, () => {
-    it('starts from startFen with White to move', () => {
+    const players = variant.players ?? (['w', 'b'] as unknown as readonly G['turn'][]);
+
+    it('starts from startFen with the first seat to move', () => {
       const game = variant.createGame();
       expect(game.fen()).toBe(variant.startFen);
       expect(variant.createGame(variant.startFen).fen()).toBe(variant.startFen);
@@ -36,7 +37,7 @@ export function describeVariantConformance<G extends VariantGame>(
       expect(game.lastMove()).toBeNull();
       expect(game.status()).toEqual({ kind: 'ongoing' });
       expect(variant.files * variant.ranks).toBeGreaterThan(0);
-      if (!variant.hasHands) expect([...game.hand('w'), ...game.hand('b')]).toEqual([]);
+      if (!variant.hasHands) expect(players.flatMap((player) => game.hand(player))).toEqual([]);
     });
 
     it.each(fixtures.fens)('round-trips %s', (fen) => {
@@ -60,7 +61,7 @@ export function describeVariantConformance<G extends VariantGame>(
         const listed = new Map(game.pieces().map(({ square, piece }) => [square, piece]));
         for (let square = 0; square < boardSize; square++)
           expect(game.pieceAt(square)).toEqual(listed.get(square) ?? null);
-        const types = [...listed.values()].map((p) => p.type).concat(game.hand('w'), game.hand('b'));
+        const types = [...listed.values()].map((p) => p.type).concat(...players.map((player) => [...game.hand(player)]));
         for (const type of types) expect(variant.pieceTypes).toContain(type);
       }
     });
@@ -109,7 +110,7 @@ export function describeVariantConformance<G extends VariantGame>(
         while (!game.isGameOver() && game.moves().length < PLAYOUT_PLIES) {
           const side = game.turn;
           const own = game.attackedSquares(side);
-          const enemy = game.attackedSquares(side === 'w' ? 'b' : 'w');
+          const enemy = [...new Set(players.filter((player) => player !== side).flatMap((player) => game.attackedSquares(player)))].sort((a, b) => a - b);
           for (const squares of [own, enemy]) {
             expect(squares).toEqual([...new Set(squares)].sort((a, b) => a - b));
             for (const sq of squares) expect(sq >= 0 && sq < boardSize).toBe(true);

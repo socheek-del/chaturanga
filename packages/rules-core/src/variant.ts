@@ -1,14 +1,14 @@
 import type { Color, GameStatus, Piece, Square } from './types';
 
 /** What every rules engine records for a played move. */
-export interface VariantMoveRecord {
+export interface VariantMoveRecord<C extends string = Color> {
   /** Fairy-Stockfish coordinate notation, e.g. `e3e4`, `a5a6m`, `h5g4f`, `K@h3`. */
   uci: string;
   san: string;
-  color: Color;
+  color: C;
   /** The piece that moved or was placed, as it was before any promotion. */
-  piece: Piece;
-  captured: Piece | null;
+  piece: Piece<string, C>;
+  captured: Piece<string, C> | null;
   /** Destination square; the placement square for a drop. */
   to: Square;
   fenAfter: string;
@@ -18,20 +18,20 @@ export interface VariantMoveRecord {
  * A game in progress. Moves are strings end to end (protocol, server, stores, URLs), so only the rules
  * engine ever parses them.
  */
-export interface VariantGame {
-  readonly turn: Color;
+export interface VariantGame<C extends string = Color> {
+  readonly turn: C;
   fen(): string;
-  pieceAt(square: Square): Piece | null;
-  pieces(): Array<{ square: Square; piece: Piece }>;
+  pieceAt(square: Square): Piece<string, C> | null;
+  pieces(): Array<{ square: Square; piece: Piece<string, C> }>;
   /** Piece types a side still holds in hand (setup placements, drops); always empty without hands. */
-  hand(color: Color): readonly string[];
+  hand(color: C): readonly string[];
   legalUci(): string[];
   /** Plays a move in coordinate notation; throws IllegalMoveError. */
-  move(uci: string): VariantMoveRecord;
-  undo(): VariantMoveRecord | null;
-  moves(): VariantMoveRecord[];
-  lastMove(): VariantMoveRecord | null;
-  status(): GameStatus;
+  move(uci: string): VariantMoveRecord<C>;
+  undo(): VariantMoveRecord<C> | null;
+  moves(): VariantMoveRecord<C>[];
+  lastMove(): VariantMoveRecord<C> | null;
+  status(): GameStatus<C>;
   isGameOver(): boolean;
   inCheck(): boolean;
   /** Square of the side-to-move's king if it is in check, otherwise null. */
@@ -41,12 +41,12 @@ export interface VariantGame {
    * there, ignoring pins and whose turn it is. Squares holding `color`'s own pieces count (they are
    * defended). Pieces in hand attack nothing. Drives the attack-map overlay (plat-015).
    */
-  attackedSquares(color: Color): Square[];
+  attackedSquares(color: C): Square[];
   /** Running count of a counting rule, in plies; null when no count is running. */
   counting(): { limitPlies: number; plies: number } | null;
 }
 
-export interface Variant<G extends VariantGame = VariantGame> {
+export interface Variant<G extends VariantGame<string> = VariantGame> {
   /** Stable id used in protocol messages and storage, e.g. 'makruk', 'sittuyin'. */
   readonly id: string;
   readonly files: number;
@@ -59,6 +59,8 @@ export interface Variant<G extends VariantGame = VariantGame> {
   readonly startFens?: readonly string[];
   /** Lower-case FEN letters of the piece types this variant uses. */
   readonly pieceTypes: readonly string[];
+  /** Seats in turn order. Omitted for the traditional White/Black pair. */
+  readonly players?: readonly G['turn'][];
   /** True when pieces can be held in hand and placed (Sittuyin setup, Shogi drops). */
   readonly hasHands: boolean;
   /**

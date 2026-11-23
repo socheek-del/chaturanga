@@ -1,0 +1,64 @@
+{
+  "brand": "Three-player chess",
+  "family": { "title": "More games" },
+  "home": {
+    "eyebrow": "A game for three",
+    "title": "Chess has\na third side.",
+    "description": "Three armies circle the same board. Every move changes two rivalries. Only one king is left standing.",
+    "play": "Set the board",
+    "note": "Pass-and-play · Three people · One device",
+    "ruleTitle": "The ring rules",
+    "ruleBody": "A 96-square ring with three four-rank home sectors. White, Black, then Red. Move clockwise and watch both sides.",
+    "details": "Read the rules"
+  },
+  "game": {
+    "turn": "{{player}} to move",
+    "check": "Check — find a safe square",
+    "checkmate": "Checkmate",
+    "stalemate": "Stalemate · turn passes",
+    "winner": "{{player}} wins",
+    "draw": "Draw · no player can move",
+    "undo": "Take back",
+    "newGame": "New game",
+    "home": "Game home",
+    "moves": "Moves",
+    "logEyebrow": "Round log",
+    "emptyMoves": "Moves will appear here.",
+    "note": "Three seats. One king standing.",
+    "ringNote": "Ranks wrap from 12 back to 1.",
+    "selectPiece": "Choose a piece, then a highlighted square.",
+    "promotion": "Choose promotion",
+    "promoteTo": "Promote to {{piece}}",
+    "cancel": "Cancel",
+    "confirmReset": "Start a new game? The current position will be replaced.",
+    "boardLabel": "Three-player chess board, rank {{rank}}",
+    "squareLabel": "{{file}}{{rank}}{{piece}}",
+    "checkLabel": "Check on {{player}}"
+  },
+  "players": {
+    "w": "White",
+    "b": "Black",
+    "r": "Red",
+    "playing": "In the game",
+    "check": "In check",
+    "checkmate": "Checkmated",
+    "stalemate": "Turn passes",
+    "eliminated": "Out",
+    "winner": "Winner"
+  },
+  "pieces": {
+    "p": "pawn",
+    "n": "knight",
+    "b": "bishop",
+    "r": "rook",
+    "q": "queen",
+    "k": "king",
+    "withOwner": "{{player}} {{piece}}"
+  },
+  "rules": {
+    "board": "The 8 by 12 board wraps after rank 12. Files a–h stay in place.",
+    "turns": "White moves, then Black, then Red. All pawns move clockwise.",
+    "pieces": "Pieces keep their usual moves. Pawns promote to a queen on the next home sector.",
+    "elimination": "Checkmate takes a player out. Their pieces become still blockers. The last king wins."
+  }
+}

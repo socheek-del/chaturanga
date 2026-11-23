@@ -16,6 +16,9 @@ Chaturanga is a family of chess games. Each game is its own web PWA product:
 - **Janggi** (Korean chess): live (`apps/janggi/docs/PLAN.md`). Its design is "Dancheong"
   (`apps/janggi/docs/design.md`), proposed and awaiting owner approval. Passing and points made the platform
   learn decided repetitions and chosen start positions (`plat-019`).
+- **Three-player chess**: a three-person pass-and-play product in progress (`apps/threechess/docs/PLAN.md`).
+  Its custom 96-cell ring rules are documented in `packages/threechess/RULES.md`; generic player seats
+  (`plat-020`) support its three turns. It has no AI or online play in v1.
 - Others may follow.
 
 Owner decisions, target layout and order of work are in `docs/PLATFORM.md`. Facts about a single game live next
@@ -41,8 +44,8 @@ broken starting state.
 
 ## Working Rules
 
-- Work on one feature at a time (`single_active_feature`). Each feature names its `product` (`platform`,
-  `makruk`, `sittuyin`).
+- Work on one feature at a time (`single_active_feature`). Each feature names its product (`platform` or a
+  game such as `makruk`, `sittuyin`, `xiangqi`, `shogi`, `chess`, `janggi` or `threechess`).
 - Do not mark a feature `passing` just because code was added. Run its `verification` steps and record
   `evidence`.
 - Keep changes within the selected feature scope unless a blocker forces a narrow supporting fix.
@@ -88,7 +91,8 @@ broken starting state.
   CI already switch Node.
 - **Layout:**
   - `packages/rules-core` (`@chaturanga/rules-core`): the Variant interface; the shared 8x8 board, move
-    tables and attacks; rule errors. Its `/testing` export has the ffish loader and the conformance suite.
+    tables and attacks; rule errors. Variant seats are generic, with two-player defaults. Its `/testing`
+    export has the ffish loader and the conformance suite.
   - `packages/makruk` (`@chaturanga/makruk`): pure Makruk rules (`RULES.md`). The single source of truth
     for the Makruk web app, AI and worker.
   - `packages/sittuyin` (`@chaturanga/sittuyin`): pure Sittuyin rules (`RULES.md`). The single source of
@@ -124,8 +128,9 @@ broken starting state.
   - `packages/family` (`@chaturanga/family`): the family's game list with names in every site language.
     `src/sites.ts` reads each game's address and languages from its own `site.config.ts` and
     `product.config.ts`, and each app's vite.config injects its siblings as `__FAMILY__` for `MoreGames`.
-    A site address is overridden per product (`MAKRUK_SITE_URL`, `SITTUYIN_SITE_URL`, `XIANGQI_SITE_URL`),
-    never with a shared variable.
+    A site address is overridden per product (`MAKRUK_SITE_URL`, `SITTUYIN_SITE_URL`, `XIANGQI_SITE_URL`,
+    `SHOGI_SITE_URL`, `CHESS_SITE_URL`, `JANGGI_SITE_URL`, `THREECHESS_SITE_URL`), never with a shared
+    variable.
   - `packages/ui` (`@chaturanga/ui`): React primitives (Badge, Button, Card, Modal, ProgressBar,
     SegmentedControl, Switch, `cn`). They carry shape, state and accessibility but no palette: every
     colour is a Tailwind token the product defines, listed in `packages/ui/TOKENS.md`. Apps must list it
@@ -159,6 +164,13 @@ broken starting state.
   - `apps/chess/web`, `apps/chess/worker`: the chess product (`apps/chess/AGENTS.md`). English only, the
     "Marble" identity, 16 lessons, online rooms, PWA, saved games with PGN, and a Stockfish game review. The Worker runs on :8791 and deploys on its own
     subdomain and D1 (ch-008).
+  - `packages/threechess` (`@chaturanga/threechess`): pure, serialisable three-player ring-chess rules
+    (`RULES.md`), implementing the generic Variant with three named seats.
+  - `apps/threechess/web`, `apps/threechess/worker`: the Three-player chess product
+    (`apps/threechess/AGENTS.md`). English-only pass-and-play PWA, 8 files by 12 ranks, Worker on :8793,
+    and its own D1 and subdomain. No AI or online rooms in v1.
+  - `apps/beanroti/web/public/apps.json`: source catalog for app.beanroti.com, served by the independent
+    `apps/beanroti/worker` Worker. Add directory entries here; only publish them after their destination is live.
   - `packages/uno` (`@chaturanga/uno`): the card game Uno as a pure, seeded, serialisable state machine with
     no chess in it (`packages/uno/README.md`). A host game filters its plays and reacts to its events; chess
     uses it for Card Chess (`apps/chess/AGENTS.md`).
@@ -168,6 +180,8 @@ broken starting state.
   - `npm run verify`: lint, typecheck and unit tests in every workspace.
   - `npm run dev` / `npm run e2e` / `npm run build` / `npm run deploy`: currently run the Makruk product.
     `dev:makruk`, `build:makruk` and `deploy:makruk` name it explicitly.
+  - `npm run dev:threechess`, `npm run build:threechess`, `npm run deploy:threechess` for Three-player chess;
+    `npm run build:beanroti-apps` and `npm run deploy:beanroti-apps` for the app directory.
   - `npm run test:deep -w packages/<game>`: perft to every depth plus 400 lock-step games against ffish.
 - **License:** GPL-3.0 (public repo; Fairy-Stockfish WASM is allowed).
 - **Source control:** remote `git@github-socheek-del:socheek-del/chaturanga.git` (renamed from `Makruk`;

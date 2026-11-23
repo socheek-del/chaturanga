@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#111b25" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Three-player chess — one board, three rivals</title>
+    <meta name="description" content="Play three-player chess with friends on one screen. Three armies, one ring-shaped board, and only one king left standing." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="%SITE_URL%/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Three-player chess" />
+    <meta property="og:title" content="Three-player chess — one board, three rivals" />
+    <meta property="og:description" content="Three armies. A shared ring. Play together around one screen." />
+    <meta property="og:url" content="%SITE_URL%/" />
+    <meta property="og:image" content="%SITE_URL%/og-image.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": ["VideoGame", "WebApplication"],
+        "name": "Three-player chess",
+        "url": "%SITE_URL%/",
+        "description": "A free three-player chess variant on a 96-cell ring board, played pass-and-play on one device.",
+        "genre": ["Board game", "Chess", "Strategy"],
+        "gamePlatform": ["Web browser", "Android", "iOS"],
+        "applicationCategory": "GameApplication",
+        "operatingSystem": "Any",
+        "playMode": "MultiPlayer",
+        "numberOfPlayers": { "@type": "QuantitativeValue", "minValue": 3, "maxValue": 3 },
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+        "codeRepository": "https://github.com/socheek-del/chaturanga"
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-14T17:58:04.778Z",
+  "generatedAt": "2026-11-23T17:19:18.000Z",
   "categories": [
     "Games",
     "Learn",
@@ -115,6 +115,18 @@
       "source": "worker",
       "service": "makruk",
       "up": true
+    },
+    {
+      "host": "three-player-chess.beanroti.com",
+      "url": "https://three-player-chess.beanroti.com/",
+      "name": "Three-player chess",
+      "description": "Three-player chess for three friends around one screen. Pass-and-play on a 96-cell ring.",
+      "category": "Games",
+      "signIn": false,
+      "icon": "https://three-player-chess.beanroti.com/favicon.svg",
+      "source": "worker",
+      "service": "three-player-chess",
+      "up": false
     },
     {
       "host": "wardrobe.beanroti.com",

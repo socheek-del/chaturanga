@@ -4,7 +4,7 @@
 
 **The chess family, from international chess to its cousins across Asia. Free, no sign-up, in your own language.**
 
-[**Chess**][chess] · [**หมากรุกไทย · Makruk**][makruk] · [**စစ်တုရင် · Sittuyin**][sittuyin] · [**象棋 · Xiangqi**][xiangqi] · [**将棋 · Shogi**][shogi] · [**장기 · Janggi**][janggi]
+[**Chess**][chess] · [**หมากรุกไทย · Makruk**][makruk] · [**စစ်တုရင် · Sittuyin**][sittuyin] · [**象棋 · Xiangqi**][xiangqi] · [**将棋 · Shogi**][shogi] · [**장기 · Janggi**][janggi] · [**Three-player chess**][threechess]
 
 [![License: GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-1cb0f6)](LICENSE)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-ff9600)](CONTRIBUTING.md)
@@ -14,9 +14,9 @@
 ---
 
 Chaturanga, the ancient Indian game, is the common ancestor of chess, Makruk, Sittuyin, Shogi, Xiangqi and Janggi.
-Its descendants are still played every day around the world, and this project brings six of them to any
-phone or computer: **learn the rules from zero**, **practise against the computer**, and **play friends
-online** or on one device.
+This project brings those six traditional games to any phone or computer to **learn the rules from zero**,
+**practise against the computer**, and **play friends online** or on one device. Three-player chess adds a
+pass-and-play variant for three people around one screen.
 
 Each game has its own site, look and language. No ads, no accounts, and nothing to install unless you want to.
 
@@ -65,17 +65,19 @@ checkmate does not. Korean · English — [about this game](apps/janggi/README.m
 
 More games may follow.
 
+**[Three-player chess][threechess]** — a three-seat 96-cell ring board, built for three people sharing one
+device. English — [about this game](apps/threechess/README.md)
+
 ## What you get
 
 - 📚 **Lessons from zero.** Short lessons covering the board, every piece and the endings. Every answer is
   checked by the game's own rules, not by a list of accepted answers.
-- 🤖 **Six computer opponents** per game, each stronger than the last, with hints and take-backs while you
-  learn.
-- 🌐 **Play friends online.** Quick match, or share a room code. No chat, on purpose.
-- 👥 **Pass and play** on one device, with a clock or without.
+- 🤖 **Six computer opponents** in the products with computer play, with hints and take-backs while you learn.
+- 🌐 **Play friends online** in the products with rooms: quick match, or share a room code. No chat, on purpose.
+- 👥 **Pass and play** on one device; Three-player chess supports three people around one screen.
 - 📱 **Install it like an app.** Once installed, lessons, pass-and-play and the computer work offline.
-- 🗣️ **Your language first.** Thai, Burmese, Chinese and Japanese are the default on their own sites, with English
-  alongside.
+- 🗣️ **Your language first.** The traditional game sites default to Thai, Burmese, Chinese, Japanese or Korean,
+  with English alongside. Three-player chess is English-only.
 - 🆓 **Free and open source.** No ads, no accounts, and nobody selling your games.
 
 ## Help out
@@ -108,3 +110,4 @@ this project and are covered by the same license.
 [shogi]: https://jp-chess.beanroti.com
 [janggi]: https://kr-chess.beanroti.com
 [chess]: https://chess.beanroti.com
+[threechess]: https://three-player-chess.beanroti.com

@@ -1,5 +1,5 @@
 {
-  "project": "Chaturanga — family of traditional chess games (Makruk, Sittuyin, Xiangqi, Shogi, international chess and Janggi live)",
+  "project": "Chaturanga — family of chess games (Makruk, Sittuyin, Xiangqi, Shogi, Chess and Janggi live; Three-player chess in progress)",
   "last_updated": "2026-11-24",
   "rules": {
     "single_active_feature": true,
@@ -2799,6 +2799,77 @@
         "2026-11-24: Playwright Chromium smoke passed at 1360px light, 390px dark and 320px light. Reviewed desktop and mobile screenshots.",
         "2026-11-24: npm run build:beanroti-apps dry run passed."
       ]
+    },
+    {
+      "id": "plat-020",
+      "product": "platform",
+      "priority": 132,
+      "area": "platform",
+      "milestone": "M23",
+      "title": "Generic player seats for three-seat variants",
+      "user_visible_behavior": "The Variant model and conformance suite support three named players while existing games keep their two-player defaults.",
+      "status": "passing",
+      "verification": [
+        "Run npm run verify across all existing products and the three-seat engine.",
+        "Run packages/threechess conformance and named rules fixtures."
+      ],
+      "evidence": [
+        "2026-11-24: npm run verify passed; the shared conformance suite uses each variant's players list and all existing products retain two-player defaults."
+      ]
+    },
+    {
+      "id": "tpc-001",
+      "product": "threechess",
+      "priority": 133,
+      "area": "engine",
+      "milestone": "M23",
+      "title": "Three-player Chaturanga Ring rules engine",
+      "user_visible_behavior": "A pure engine enforces the documented 96-cell ring board, clockwise seats, chess moves, king safety, elimination, stalemate and draw rules.",
+      "status": "passing",
+      "verification": [
+        "Run packages/threechess unit tests and shared Variant conformance as part of npm run verify."
+      ],
+      "evidence": [
+        "2026-11-24: 22 threechess tests and the full repository verification passed."
+      ]
+    },
+    {
+      "id": "tpc-002",
+      "product": "threechess",
+      "priority": 134,
+      "area": "play",
+      "milestone": "M23",
+      "title": "Three-player pass-and-play PWA",
+      "user_visible_behavior": "Three people can play on one device, undo moves, promote, resume a saved game and read the rules on a responsive PWA.",
+      "status": "passing",
+      "verification": [
+        "Run Three-player chess web unit tests and Playwright e2e for turn order, persistence, undo and mobile layout.",
+        "Build the production web and Worker bundles."
+      ],
+      "evidence": [
+        "2026-11-24: Web unit tests passed; Playwright e2e passed 3/3, including mobile fit and reload/takeback persistence.",
+        "2026-11-24: npm run build:threechess passed; npm run build:chess passed after the shared family update."
+      ]
+    },
+    {
+      "id": "tpc-003",
+      "product": "threechess",
+      "priority": 135,
+      "area": "deploy",
+      "milestone": "M23",
+      "title": "Deploy Three-player chess and list it in Beanroti apps",
+      "user_visible_behavior": "Three-player chess is live on its own Worker, D1 and subdomain and has a working entry on app.beanroti.com.",
+      "status": "blocked",
+      "verification": [
+        "Create the dedicated threechess D1 and set its ID in the Worker configuration.",
+        "Deploy and smoke-check the Three-player chess site.",
+        "Deploy the Beanroti directory entry and verify its link reaches the live game."
+      ],
+      "evidence": [
+        "2026-11-24: Cloudflare rejected D1 creation because the account has reached its 10-database limit. The repo requires a separate D1 per product; no existing game's database was reused.",
+        "2026-11-24: The Three-player chess entry is prepared in apps/beanroti/web/public/apps.json, but is not published until its destination is live."
+      ],
+      "notes": "Resume after Cloudflare can create a dedicated D1 (for example, after an account plan/limit change). Then deploy Three-player chess, publish the app directory, and run production smoke checks."
     }
   ]
 }

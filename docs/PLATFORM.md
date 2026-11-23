@@ -10,6 +10,7 @@ Owner decisions, 2026-09-14:
 - **Shogi (Japanese chess)** is the fourth game, built and deployed 2026-09-18. Its languages are Japanese (default) and English. Full plan: `apps/shogi/docs/PLAN.md`. It is the first game where captured pieces come back (hands stay live for the whole game and a captured piece changes owner) and the first with an **optional** promotion, so the same from→to pair is two legal moves; the platform-prep features `plat-011..013` remove those assumptions — plus the board's fixed coordinate labels — before Shogi's own features (`sg-001..011`) build on them.
 - **International chess** is the fifth game, built and deployed 2026-09-18. Its language is English at launch (a second language is an open question, because each declared language becomes a family language that needs a name for every game). Full plan: `apps/chess/docs/PLAN.md`. It is the first game with castling, with en passant and with a promotion that offers a choice of four pieces; only the last of those needs a platform change (`plat-014`), before chess's own features (`ch-001..011`).
 - **Janggi (Korean chess)** is the sixth game, built and deployed 2026-11-23. Its languages are Korean (default) and English. Full plan: `apps/janggi/docs/PLAN.md`. It is the first game with a pass, with players choosing their start position, and with undecided games settled on points (`plat-019`).
+- **Three-player chess** is the seventh product, built on 2026-11-24. “Three-player chess” is a family, not one standard ruleset; this product documents its custom 96-cell Chaturanga Ring and ships a three-person pass-and-play PWA. Full plan: `apps/threechess/docs/PLAN.md`. Generic player seats (`plat-020`) let the engine model three turns without changing sibling game behavior.
 - Other games may come later.
 
 ## The one rule
@@ -50,7 +51,7 @@ apps/
   shogi/web       shogi/worker       own theme · ja, en
 ```
 
-The root README describes the family. Each game has its own README and translated README (`README.th.md`, `README.my.md`). The root `AGENTS.md` holds platform rules; `apps/<game>/AGENTS.md` holds game facts. `feature_list.json` features carry a `product` field (`platform`, `makruk`, `sittuyin`).
+The root README describes the family. Each game has its own README and translated README (`README.th.md`, `README.my.md`). The root `AGENTS.md` holds platform rules; `apps/<game>/AGENTS.md` holds game facts. `feature_list.json` features carry a `product` field (`platform` or the game's id).
 
 ## Variant interface (settled in plat-002)
 
@@ -159,6 +160,12 @@ choice of pieces, and the step-by-step work breakdown: `apps/chess/docs/PLAN.md`
 Fairy-Stockfish's `chess` variant, the same rule as the other four games; castling (`e1g1`, `e1c1`), promotion
 (`e7e8q|r|b|n`), en passant (`e5d6`) and the claimable threefold and fifty-move draws were probed with ffish
 0.7.10 on 2026-09-18.
+
+## Three-player chess product plan
+
+Three-player chess's chosen rules and product decisions are in `apps/threechess/docs/PLAN.md` and
+`packages/threechess/RULES.md`. It extends `Variant` with generic seat labels and conformance coverage; no
+existing two-player product changes its turn order or board behavior.
 
 ## Sittuyin rules reference (from Fairy-Stockfish `sittuyin`, probed with ffish 0.7.10)
 

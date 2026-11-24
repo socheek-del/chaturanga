@@ -63,6 +63,9 @@ for (const side of ['w', 'b'] as const) {
       await play(page, 'e7', 'e6');
     }
     await expect(plies(page)).toHaveCount(side === 'w' ? 2 : 3);
+    await button(page, 'Resign').click();
+    await page.getByTestId('confirm-resign').click();
+    await expect(page.getByRole('dialog')).toContainText(side === 'w' ? 'Black wins' : 'White wins');
   });
 }
 
@@ -82,4 +85,21 @@ test('invite rooms synchronize moves and retain the guest seat after reconnect',
   await expect(guest.getByRole('grid')).toHaveAttribute('data-orientation', 'b');
   await play(guest, 'e7', 'e6');
   await expect(plies(host)).toHaveCount(2);
+  await button(guest, 'Resign').click();
+  await guest.getByTestId('confirm-resign').click();
+  await expect(host.getByRole('dialog')).toContainText('White wins');
+  await expect(guest.getByRole('dialog')).toContainText('White wins');
+});
+
+test('the installed site can load and start a local game offline', async ({ page, context }) => {
+  test.skip(!process.env.SHATRANJ_E2E_URL, 'Requires a built PWA served over HTTPS or loopback.');
+  await page.goto('/');
+  await page.evaluate(async () => { await navigator.serviceWorker.ready; });
+  await expect.poll(() => page.evaluate(() => !!navigator.serviceWorker.controller)).toBe(true);
+  await context.setOffline(true);
+  await page.reload();
+  await page.getByRole('link', { name: 'Play on one device' }).click();
+  await button(page, 'Start').click();
+  await play(page, 'e2', 'e3');
+  await expect(plies(page)).toHaveCount(1);
 });

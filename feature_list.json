@@ -2951,7 +2951,7 @@
       "milestone": "M24",
       "title": "Release Shatranj with bots and multiplayer",
       "user_visible_behavior": "Players can learn classical Shatranj in an interactive tutorial and complete games against a bot, locally with another person, and in an online invite room.",
-      "status": "in_progress",
+      "status": "blocked",
       "verification": [
         "Pin and test classical rules and Variant conformance.",
         "Complete the interactive tutorial in the browser and verify its moves and answers against the engine.",
@@ -2960,7 +2960,8 @@
       ],
       "evidence": [
         "2026-11-24: Node 22 typecheck passed; 21 Shatranj rules and conformance tests passed, including 12 seeded Fairy-Stockfish games. Shared rules-core tests passed 36/36.",
-        "2026-11-24: Bot tests passed 2/2, tutorial data passed 11/11, Playwright passed 5/5 for tutorial completion, both bot seats, local persistence, and invite reconnect. The PWA build and server dry run passed."
+        "2026-11-24: Bot tests passed 2/2, tutorial data passed 11/11, Playwright passed 5/5 for tutorial completion, both bot seats, local persistence, and invite reconnect. The PWA build and server dry run passed.",
+        "2026-11-24: Full npm run verify passed. Melon stage 9232a07 on port 19897 applied the games migration. Six browser checks through an SSH tunnel passed, including final game results, invite reconnect and offline use."
       ],
       "notes": "First new product in docs/CHESS-LIKE-ROADMAP.md. Online release uses the Melon deployment path. Public DNS for shatranj.beanroti.com is pending; the available zone login is read-only."
     },
@@ -2972,7 +2973,7 @@
       "milestone": "M24",
       "title": "Learn Three-player Chess in a guided tutorial",
       "user_visible_behavior": "New players can practice moving on the hex board, taking turns, and winning through elimination.",
-      "status": "not_started",
+      "status": "in_progress",
       "verification": [
         "Validate tutorial positions and answers against the hex rules engine.",
         "Complete the tutorial from the home page on desktop and mobile and verify feedback for incorrect answers."

@@ -2993,14 +2993,15 @@
       "milestone": "M24",
       "title": "Play Three-player Chess against bots",
       "user_visible_behavior": "One human can play as any seat with bots filling the other two.",
-      "status": "in_progress",
+      "status": "passing",
       "verification": [
         "Play a complete game as each human seat and check bot legality, elimination, and legal fallback.",
         "Verify existing local saves and pass-and-play in a browser.",
         "Deploy the bot build to Melon and run the public browser suite."
       ],
       "evidence": [
-        "2026-11-24: Bot tests 5/5 and browser tests 9/9 passed. All human seats played and restored separate saves, took back their last turn, and completed a checkmate from engine-validated endgames. The production PWA and Worker build passed."
+        "2026-11-24: Bot tests 5/5 and browser tests 9/9 passed. All human seats played and restored separate saves, took back their last turn, and completed a checkmate from engine-validated endgames. The production PWA and Worker build passed.",
+        "2026-11-24: Promoted 8771c1c on Melon port 19900. All nine browser scenarios passed on the stage and again on the public site."
       ]
     },
     {
@@ -3011,7 +3012,7 @@
       "milestone": "M24",
       "title": "Play Three-player Chess in online invite rooms",
       "user_visible_behavior": "Three people can join a private room and finish a server-validated game.",
-      "status": "not_started",
+      "status": "in_progress",
       "verification": [
         "Exercise three authenticated seats, reconnect, move rejection, elimination, and terminal game state.",
         "Verify all three seats in production after the Melon service and isolated store are deployed."

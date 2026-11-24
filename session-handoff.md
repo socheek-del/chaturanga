@@ -3,7 +3,7 @@
 ## Active work
 
 - Implement the [42-entry rollout](docs/CHESS-LIKE-ROADMAP.md) one product at a time. Every game requires an interactive tutorial, a bot mode and applicable multiplayer.
-- Current feature is `tpc-006`, Three-player Chess bots. Shatranj public release is blocked on DNS. Next is Three-player Chess online play. Record only verified evidence in `feature_list.json` and `claude-progress.md`.
+- Current feature is `tpc-007`, Three-player Chess online invite rooms. Shatranj public release is blocked on DNS. Record only verified evidence in `feature_list.json` and `claude-progress.md`.
 - Push verified increments directly to main. Use GitHub Actions for verification and Melon over SSH for release. Cloudflare is a fallback when a documented Melon limitation prevents delivery.
 
 ## Verified
@@ -27,4 +27,4 @@ Melon stage 9232a07 is healthy as `chaturanga-stage-shatranj-19897` in `~/chatur
 
 ## Three-player Chess
 
-The tutorial and coordinate labels are live from 3154fc8 on Melon port 19899, with five public browser checks passing. Bot mode is implemented and passed five bot tests, nine local browser tests and the production build. It is ready to stage and promote before moving to tpc-007 online rooms.
+The tutorial and coordinate labels are live from 3154fc8 on Melon port 19899, with five public browser checks passing. Bot mode is live from 8771c1c on Melon port 19900. All nine browser tests passed locally, on the stage and on the public site. Port 19899 still serves the preceding tutorial release for rollback. Next implement three-seat online invites and reconnects with isolated persisted state.

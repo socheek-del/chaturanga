@@ -1168,3 +1168,5 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
 - Promoted 3154fc8 to port 19899 on Melon. All five public tutorial and local-mode regression checks passed.
 - Added a bounded three-seat Max-n opponent in a Web Worker. A human can choose any seat, play two bots, reload that seat's save and take back their last turn without touching pass-and-play.
 - Bot tests passed 5/5, typecheck and lint passed, and local Chromium passed 9/9. Verified all human seats, legal bot moves, fallback, persistence and checkmate endings. Production PWA build and server dry run passed. Bot mode remains in progress until staged and public smoke.
+- Promoted bot revision 8771c1c on Melon port 19900. All nine browser scenarios passed on the exact stage and on public HTTPS. tpc-006 passes. Rubric accepted with all applicable checks verified against the authored hex rules; there is no Fairy-Stockfish equivalent for this three-seat format.
+- Active feature is tpc-007. Prev origin on port 19899 remains available for rollback. Shatranj remains staged and blocked on public DNS.

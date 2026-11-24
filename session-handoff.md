@@ -3,7 +3,7 @@
 ## Active work
 
 - Implement the [42-entry rollout](docs/CHESS-LIKE-ROADMAP.md) one product at a time. Every game requires an interactive tutorial, a bot mode and applicable multiplayer.
-- Current feature is `ctg-001`, the two-player al-Adli Chaturanga reconstruction. Shatranj public release is blocked on DNS. Record only verified evidence in `feature_list.json` and `claude-progress.md`.
+- Current feature is `mhs-001`, Maharajah and the Sepoys. Shatranj and Chaturanga public releases are blocked on DNS. Record only verified evidence in `feature_list.json` and `claude-progress.md`.
 - Push verified increments directly to main. Use GitHub Actions for verification and Melon over SSH for release. Cloudflare is a fallback when a documented Melon limitation prevents delivery.
 
 ## Verified
@@ -31,8 +31,12 @@ The tutorial and coordinate labels are live from 3154fc8 on Melon port 19899, wi
 
 Online invite rooms are live from fe0b009 on Melon port 19901. Its database migration ran, staged play survived a restart, and all eleven public browser checks passed. The public catalog uses 886f994 and describes the tutorial, bots and online rooms. Keep port 19900 as rollback. If replacing online containers, preserve the current isolated room data and signing secret.
 
-## Next game
+## Chaturanga
 
 Implement the two-player [al-Adli reconstruction](https://ludii.games/details.php?keyword=Chaturanga+%28al-Adli%29). Ludii documents orthogonal two-cell elephant leaps, opposite king files, victory for the stalemated king, and immediate bare-king victory. The preset Fairy-Stockfish Chaturanga differs, so configure an independent reference for the shared move rules and test the historical endings separately.
 
-The Chaturanga rules engine is in `packages/chaturanga` and passed 20 tests, including eight seeded reference playouts with a rules-matched Fairy-Stockfish configuration. Continue ctg-001 with the bot and its own web and worker product. Keep Shatranj staged pending DNS.
+The Chaturanga rules engine, bot, tutorial and product are implemented. Melon stage 89604bb is healthy as `chaturanga-stage-chaturanga-19902` in `~/chaturanga-release.chaturanga.wanRAh`. Its SQL migration and six staged browser checks passed, including offline play. Public DNS is missing for `chaturanga.beanroti.com`; after DNS is present, acquire its TLS certificate on Melon, promote the stage, verify HTTPS and online play, then publish the catalog entry.
+
+## Maharajah and the Sepoys
+
+Next is the traditional single royal Maharajah against a conventional army, with no promotion. The stock Fairy-Stockfish variant permits rules that require overrides for this selection. The start, movement, and checkmate goals are documented in the [Wikipedia rules](https://en.wikipedia.org/wiki/Maharajah_and_the_Sepoys#Game_rules).

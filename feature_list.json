@@ -3032,7 +3032,7 @@
       "milestone": "M24",
       "title": "Release the two-player Chaturanga reconstruction",
       "user_visible_behavior": "Players learn and play the documented al-Adli reconstruction through an interactive tutorial, a bot, same-device multiplayer and private invite rooms.",
-      "status": "in_progress",
+      "status": "blocked",
       "verification": [
         "Pin the historical rules and verify engine conformance, distinctive elephant movement, stalemate and bare king.",
         "Complete the tutorial and play local, both bot seats and a synchronized room in the browser.",
@@ -3040,9 +3040,26 @@
       ],
       "evidence": [
         "2026-11-24: Node 22 typecheck and all 20 rules tests passed, including Variant conformance and eight seeded games against a Fairy-Stockfish configuration with the reconstructed setup and elephant move.",
-        "2026-11-24: Bot tests 2/2, tutorial checks 11/11 and local browser scenarios 5/5 passed. The PWA and server production build passed. Phone and desktop layout were reviewed."
+        "2026-11-24: Bot tests 2/2, tutorial checks 11/11 and local browser scenarios 5/5 passed. The PWA and server production build passed. Phone and desktop layout were reviewed.",
+        "2026-11-24: Melon stage 89604bb on port 19902 applied its migration. All six staged browser checks passed, including invite reconnect and offline PWA play. Public DNS returned no record."
       ],
       "notes": "Selected the documented al-Adli reconstruction. New public hostname and TLS need DNS edit access. Continue implementation while Shatranj public DNS is pending."
+    },
+    {
+      "id": "mhs-001",
+      "product": "maharajah",
+      "priority": 145,
+      "area": "release",
+      "milestone": "M24",
+      "title": "Release Maharajah and the Sepoys",
+      "user_visible_behavior": "Players learn the asymmetric rules and play either the lone Maharajah or the Sepoy army against a bot, locally or in a private online room.",
+      "status": "in_progress",
+      "verification": [
+        "Pin the historical rules, validate both roles, and run shared conformance and reference playouts.",
+        "Complete the interactive tutorial and verify both bot roles, local play, and online reconnect in the browser.",
+        "Stage on Melon, verify public HTTPS and WebSocket play, then publish the catalog entry."
+      ],
+      "evidence": []
     }
   ]
 }

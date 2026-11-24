@@ -5,7 +5,7 @@ import { SIZE, hexAt, hexOf } from './hex';
 import type { Player } from './types';
 
 function fen(pieces: Array<[string, Player, string]>, eliminated = '-') {
-  const board = Array.from({ length: SIZE * SIZE }, (_, square) => hexAt(...hexOf(square)) === null ? '.' : '-');
+  const board = Array.from({ length: SIZE * SIZE }, (_, square): string => hexAt(...hexOf(square)) === null ? '.' : '-');
   for (const [cell, color, type] of pieces) board[parseSquare(cell)!] = color + type;
   const rows = Array.from({ length: SIZE }, (_, row) => board.slice(row * SIZE, (row + 1) * SIZE).join(','));
   return `${rows.join('/')} w - ${eliminated} -`;

@@ -1160,3 +1160,5 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
 
 - Added an eight-step tutorial on the existing hex board. It teaches the three pawn directions, piece movement, promotion, checkmate elimination and stalemate, with incorrect-answer feedback. The tutorial keeps the local game save separate.
 - Node 22 typecheck passed, web unit tests passed 3/3 and local Playwright passed 5/5, including the full tutorial at 390px and 1280px. Melon release is next. Shatranj public DNS is still pending.
+- Main CI passed at 35460b7. Promoted the tutorial on Melon port 19898 and verified the exact public bundle. All five public browser checks passed. Old origin retained for rollback.
+- tpc-008 is passing. Follow-up 3154fc8 adds labels for the two tutorial cells named in each prompt, verified in all five local browser tests. It is staging separately. Next active feature is Three-player Chess bots (tpc-006).

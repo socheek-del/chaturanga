@@ -2973,14 +2973,15 @@
       "milestone": "M24",
       "title": "Learn Three-player Chess in a guided tutorial",
       "user_visible_behavior": "New players can practice moving on the hex board, taking turns, and winning through elimination.",
-      "status": "in_progress",
+      "status": "passing",
       "verification": [
         "Validate tutorial positions and answers against the hex rules engine.",
         "Complete the tutorial from the home page on desktop and mobile and verify feedback for incorrect answers.",
         "Deploy and complete the tutorial smoke against the Melon release."
       ],
       "evidence": [
-        "2026-11-24: Typecheck, 3 web unit tests, and all 5 local browser scenarios passed. Tutorial completed at both 390px and 1280px."
+        "2026-11-24: Typecheck, 3 web unit tests, and all 5 local browser scenarios passed. Tutorial completed at both 390px and 1280px.",
+        "2026-11-24: Main CI passed for 35460b7. Melon staged and promoted the release to port 19898. All five browser scenarios passed on the public site, including both tutorial viewport sizes."
       ]
     },
     {
@@ -2991,7 +2992,7 @@
       "milestone": "M24",
       "title": "Play Three-player Chess against bots",
       "user_visible_behavior": "One human can play as any seat with bots filling the other two.",
-      "status": "not_started",
+      "status": "in_progress",
       "verification": [
         "Play a complete game as each human seat and check bot legality, elimination, and legal fallback.",
         "Verify existing local saves and pass-and-play in a browser."

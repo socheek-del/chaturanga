@@ -3,7 +3,7 @@
 ## Active work
 
 - Implement the [42-entry rollout](docs/CHESS-LIKE-ROADMAP.md) one product at a time. Every game requires an interactive tutorial, a bot mode and applicable multiplayer.
-- Current feature is `tpc-008`, the Three-player Chess tutorial. Shatranj public release is blocked on DNS. Next are Three-player Chess bots and online play. Record only verified evidence in `feature_list.json` and `claude-progress.md`.
+- Current feature is `tpc-006`, Three-player Chess bots. Shatranj public release is blocked on DNS. Next is Three-player Chess online play. Record only verified evidence in `feature_list.json` and `claude-progress.md`.
 - Push verified increments directly to main. Use GitHub Actions for verification and Melon over SSH for release. Cloudflare is a fallback when a documented Melon limitation prevents delivery.
 
 ## Verified
@@ -24,3 +24,7 @@ The classical engine, rule fixtures and seeded Fairy-Stockfish comparison are co
 Update: Shatranj now has its bot, PWA, tutorial and server. Local Playwright passed all five scenarios. Stage the pushed product on Melon and verify production build assets and a real room. Public DNS for `shatranj.beanroti.com` was absent and the available token lacks DNS edit. The existing game certificate covers seven explicit names and omits Shatranj. Once DNS resolves to Melon, configure Caddy to obtain TLS for the new hostname, run public HTTPS and WebSocket smoke, then publish the directory entry.
 
 Melon stage 9232a07 is healthy as `chaturanga-stage-shatranj-19897` in `~/chaturanga-release.shatranj.AUuZbW`. Its migration and six deployed browser checks passed. Keep its state and promote the staged container when DNS is ready.
+
+## Three-player Chess
+
+The tutorial is live from 35460b7 on Melon port 19898 and all five public browser checks passed. Coordinate-label polish 3154fc8 passed local checks and is staging on port 19899. Before the next release, verify which build is currently routed. The next feature adds a human seat choice and two bots with independent browser saves.

@@ -224,6 +224,7 @@ function StepBoard<G extends VariantGame, Verify>({
     <Board
       files={props.variant.files}
       ranks={props.variant.ranks}
+      isPlayable={props.variant.isPlayable}
       pieces={game.pieces()}
       theme={props.theme}
       showCoordinates={props.showCoordinates}

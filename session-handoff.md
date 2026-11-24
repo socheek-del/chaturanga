@@ -72,3 +72,5 @@ Grande Acedrex revision 5adadf2 is running, migrated and verified as `chaturanga
 Active feature is `tamerlane-001`. Use the common [Tamerlane rules](https://en.wikipedia.org/wiki/Tamerlane_chess#Tamerlane_chess) with citadels and every promotion. The [Zurafa rules](https://zurafa.app/en/rules/) document one way to operationalize the special pawn. Keep the choice and its edge-case handling in the product rules. The engine should use thirteen columns, with holes outside the ordinary eleven files except for the two citadels.
 
 Tamerlane’s rules package passes 35 checks. The generic rules-core goal-square result carries the citadel draw to the server and UI. Use engine files b–l for the main board, with a9 and m2 as citadels. The rest of the outer files are holes and must be hidden from pointer and keyboard play.
+
+The Tamerlane product passes its local board, tutorial, bot and online checks. Run all seven scenarios with `TAMERLANE_E2E_URL` against the exact Melon build, then verify DNS and public release eligibility.

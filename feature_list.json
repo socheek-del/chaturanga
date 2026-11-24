@@ -3123,7 +3123,8 @@
         "Stage on Melon, verify public HTTPS and WebSocket play, then publish the catalog entry."
       ],
       "evidence": [
-        "2026-11-24: Node 22 typecheck and all 35 rules tests passed. Rules-core passed 37 checks and protocol passed 3 with the generic goal-square result."
+        "2026-11-24: Node 22 typecheck and all 35 rules tests passed. Rules-core passed 37 checks and protocol passed 3 with the generic goal-square result.",
+        "2026-11-24: The board and shell regression checks passed, bot checks passed 2/2, tutorial checks passed 16/16 and local browser scenarios passed 6/6, including a saved citadel draw and both bot sides."
       ]
     }
   ]

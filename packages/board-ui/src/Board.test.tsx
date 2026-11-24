@@ -45,6 +45,14 @@ describe('Board (plat-005a)', () => {
     expect(view.getByRole('grid').style.aspectRatio).toBe('9 / 9');
   });
 
+  it('preserves holes in the layout without exposing them as playable cells', () => {
+    const view = render(<Board {...base} pieces={[]} files={3} ranks={2}
+      orientation="b" isPlayable={(square) => square !== 0 && square !== 5} />);
+    expect(view.getAllByRole('gridcell').map((cell) => cell.dataset.square)).toEqual(['c1', 'b1', 'b2', 'a2']);
+    expect(view.getByRole('grid').querySelector('[data-board-hole="a1"]')?.getAttribute('aria-hidden')).toBe('true');
+    expect(view.getByRole('grid').querySelector('[data-board-hole="c2"]')).not.toBeNull();
+  });
+
   it('draws a points grid: one cell per intersection, named like squares, from Red and from Black (plat-009)', () => {
     const pieces = [{ square: 4, piece: { color: 'w', type: 'k', promoted: false } as Piece }];
     const red = render(<Board {...base} pieces={pieces} files={9} ranks={10} grid="points" />);

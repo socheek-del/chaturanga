@@ -1,7 +1,7 @@
 import { IllegalMoveError, type Color, type GameStatus, type Square, type Variant, type VariantMoveRecord } from '@chaturanga/rules-core';
 import { attackedSquares, boardAfter, checkedKing, legalMoves, moveUci, type Move } from './movement';
 import {
-  FILES, RANKS, START_FEN, PIECE_TYPES, goalReached, isPawn, opposite, parseFen, placementOf, squareName,
+  FILES, RANKS, START_FEN, PIECE_TYPES, goalReached, isPawn, isPlayable, opposite, parseFen, placementOf, squareName,
   type Piece, type Position,
 } from './position';
 
@@ -15,6 +15,7 @@ interface HistoryEntry {
 export class Game {
   private position: Position;
   private readonly history: HistoryEntry[] = [];
+  private readonly candidates = new WeakMap<Position, Move[]>();
 
   constructor(fen: string = START_FEN) {
     this.position = parseFen(fen);
@@ -44,8 +45,16 @@ export class Game {
   checkedKingSquare(): Square | null { return checkedKing(this.position.board, this.turn); }
   attackedSquares(color: Color): Square[] { return attackedSquares(this.position.board, color); }
   isGameOver(): boolean { return this.status().kind !== 'ongoing'; }
-  legalUci(): string[] { return legalMoves(this.position).map(moveUci); }
-  status(): GameStatus { return this.evaluate(legalMoves(this.position)); }
+  legalUci(): string[] { return this.availableMoves().map(moveUci); }
+  status(): GameStatus { return this.evaluate(this.availableMoves()); }
+
+  private availableMoves(): Move[] {
+    const cached = this.candidates.get(this.position);
+    if (cached) return cached;
+    const moves = legalMoves(this.position);
+    this.candidates.set(this.position, moves);
+    return moves;
+  }
 
   private evaluate(moves: readonly Move[]): GameStatus {
     if (this.position.rights.includes(goalReached)) return { kind: 'goal-square' };
@@ -56,7 +65,7 @@ export class Game {
 
   move(uci: string): VariantMoveRecord {
     const position = this.position;
-    const move = legalMoves(position).find((candidate) => moveUci(candidate) === uci);
+    const move = this.availableMoves().find((candidate) => moveUci(candidate) === uci);
     if (!move) throw new IllegalMoveError(uci);
     const { from, to, promotion, spendRight, draw } = move;
     const { turn: color, rights, board, halfmove, fullmove } = position;
@@ -92,6 +101,7 @@ export const tamerlane = {
   id: 'tamerlane',
   files: FILES,
   ranks: RANKS,
+  isPlayable,
   startFen: START_FEN,
   pieceTypes: PIECE_TYPES,
   hasHands: false,

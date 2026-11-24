@@ -51,6 +51,8 @@ export interface Variant<G extends VariantGame<string> = VariantGame> {
   readonly id: string;
   readonly files: number;
   readonly ranks: number;
+  /** If provided, identifies the playable cells inside the rectangular coordinate grid. */
+  readonly isPlayable?: (square: Square) => boolean;
   readonly startFen: string;
   /**
    * Every position a game may start from, when players choose how to set out their pieces (Janggi). Left out,

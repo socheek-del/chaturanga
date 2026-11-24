@@ -259,6 +259,7 @@ export function GameScreen<G extends VariantGame>({
           describeSquare={describeSquare}
           files={variant.files}
           ranks={variant.ranks}
+          isPlayable={variant.isPlayable}
           orientation={orientation}
           showCoordinates={showCoordinates}
           fileLabels={fileLabels}

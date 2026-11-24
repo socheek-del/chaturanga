@@ -161,6 +161,7 @@ function Review<G extends VariantGame>({
               describeSquare={look.describeSquare}
               files={variant.files}
               ranks={variant.ranks}
+              isPlayable={variant.isPlayable}
               orientation={orientation}
               showCoordinates={look.showCoordinates}
               fileLabels={look.fileLabels}

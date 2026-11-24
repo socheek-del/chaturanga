@@ -37,6 +37,8 @@ export interface BoardProps {
   grid?: 'squares' | 'points';
   orientation?: Color;
   showCoordinates?: boolean;
+  /** Cells outside the playable area occupy space without receiving input. */
+  isPlayable?: (square: Square) => boolean;
   /**
    * What the coordinates read, indexed by engine file and rank. Without them the board falls back to the
    * square's own name (`a`..`h`, `1`..`8`); Shogi passes 9..1 and 一..九, which is what a player sees on a real
@@ -137,6 +139,7 @@ export function Board({
   grid = 'squares',
   orientation = 'w',
   showCoordinates = true,
+  isPlayable,
   fileLabels,
   rankLabels,
   selected = null,
@@ -181,7 +184,8 @@ export function Board({
     const col = Math.floor(((clientX - rect.left) / rect.width) * files);
     const row = Math.floor(((clientY - rect.top) / rect.height) * ranks);
     if (col < 0 || col >= files || row < 0 || row >= ranks) return null;
-    return squareFor(row, col);
+    const square = squareFor(row, col);
+    return isPlayable?.(square) === false ? null : square;
   };
   useImperativeHandle(handle, () => ({ squareAt }));
 
@@ -249,6 +253,10 @@ export function Board({
     for (let col = 0; col < files; col++) {
       const square = squareFor(row, col);
       const name = squareNameOf(square, files);
+      if (isPlayable?.(square) === false) {
+        cells.push(<div key={square} data-board-hole={name} aria-hidden />);
+        continue;
+      }
       const piece = bySquare.get(square);
       const isTarget = targetSet.has(square);
       const isPromotion = promotionSet.has(square);
@@ -295,7 +303,7 @@ export function Board({
               style={{ background: `radial-gradient(circle, ${theme.check} 0%, ${theme.check} 35%, transparent 75%)` }}
             />
           )}
-          {showCoordinates && col === 0 && (
+          {showCoordinates && (col === 0 || isPlayable?.(squareFor(row, col - 1)) === false) && (
             <span
               className="absolute left-0.5 top-0 text-[clamp(8px,2.2vw,12px)] font-bold leading-none"
               style={{ color: theme.coordinate }}

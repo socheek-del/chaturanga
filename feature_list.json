@@ -3095,7 +3095,7 @@
       "milestone": "M26",
       "title": "Release Grande Acedrex",
       "user_visible_behavior": "Players learn the 12×12 medieval game and can play against a bot, locally, or in a private online room.",
-      "status": "in_progress",
+      "status": "blocked",
       "verification": [
         "Pin the historical reconstruction, then test bent moves, first king leaps, file-specific promotions, all endings and Variant conformance.",
         "Complete the tutorial and verify each bot side, same-device play and private rooms in the browser.",
@@ -3103,8 +3103,26 @@
       ],
       "evidence": [
         "2026-11-24: Node 22 typecheck and all 22 rules checks passed, including Variant conformance, independent movement and ending fixtures, and six seeded replay and undo games.",
-        "2026-11-24: Bot checks 2/2, tutorial checks 13/13 and local browser scenarios 5/5 passed. The phone tutorial covered rank-12 promotion and mate, and the invite room synchronized a rank-12 king leap."
-      ]
+        "2026-11-24: Bot checks 2/2, tutorial checks 13/13 and local browser scenarios 5/5 passed. The phone tutorial covered rank-12 promotion and mate, and the invite room synchronized a rank-12 king leap.",
+        "2026-11-24: Melon stage 5adadf2 on port 19905 applied its migration and passed all six browser scenarios, including offline play and online rank-12 play."
+      ],
+      "notes": "Melon stage is ready. Public launch requires DNS for acedrex.beanroti.com before TLS, promotion and public smoke."
+    },
+    {
+      "id": "tamerlane-001",
+      "product": "tamerlane",
+      "priority": 160,
+      "area": "release",
+      "milestone": "M27",
+      "title": "Release standard Tamerlane Chess",
+      "user_visible_behavior": "Players learn the citadels, typed pawns and royal rules, then play against a bot, on one device or in private rooms.",
+      "status": "in_progress",
+      "verification": [
+        "Pin the common historical array and verify board topology, the royal and citadel rules, and each pawn’s promotion.",
+        "Complete the interactive tutorial and verify both bot sides and local and private online play in the browser.",
+        "Stage on Melon, verify public HTTPS and WebSocket play, then publish the catalog entry."
+      ],
+      "evidence": []
     }
   ]
 }

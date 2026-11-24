@@ -64,3 +64,9 @@ Active feature is `acedrex-001`. Implement the dice-free [Cazaux/Musser reconstr
 Grande Acedrex engine and its 22 rules checks pass. Next use variable-length UCI in bot encoding and browser input, then package the tutorial and isolated Worker. Its third FEN field is part of the position key because it preserves unused king leaps.
 
 The Grande Acedrex tutorial, bot and PWA are locally verified, including moves with two-digit ranks over the room socket. Run all six production scenarios with `ACEDREX_E2E_URL` through the Melon tunnel.
+
+Grande Acedrex revision 5adadf2 is running, migrated and verified as `chaturanga-stage-acedrex-19905` in `~/chaturanga-release.acedrex.sFoXPN`. It passed all six browser scenarios. Public DNS for `acedrex.beanroti.com` is absent.
+
+## Tamerlane Chess
+
+Active feature is `tamerlane-001`. Use the common [Tamerlane rules](https://en.wikipedia.org/wiki/Tamerlane_chess#Tamerlane_chess) with citadels and every promotion. The [Zurafa rules](https://zurafa.app/en/rules/) document one way to operationalize the special pawn. Keep the choice and its edge-case handling in the product rules. The engine should use thirteen columns, with holes outside the ordinary eleven files except for the two citadels.

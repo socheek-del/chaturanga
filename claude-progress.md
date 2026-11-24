@@ -1212,3 +1212,9 @@ Use the dice-free Cazaux/Musser reconstruction summarized by Wikipedia. It has s
 The Grande Acedrex rules engine passes all 22 tests and typecheck. The suite covers bent pieces, king leap rights, file promotion, all historical endings, shared conformance and replay of seeded 12×12 games. Full repository verification passed at the preceding Courier product checkpoint.
 
 Grande Acedrex’s English PWA and isolated online server are implemented. Passed 2/2 bot, 13/13 tutorial and 5/5 local browser checks, including rank-12 promotion, mate and an online king leap. Stage and verify the offline production build on Melon.
+
+Grande Acedrex stage 5adadf2 is healthy on Melon port 19905 in `~/chaturanga-release.acedrex.sFoXPN`. Its migration and all six staged browser checks passed. Public DNS is absent, so keep the stage ready for HTTPS promotion.
+
+### Tamerlane Chess
+
+Select the common 11×10 array in the Wikipedia rules. Use the two true citadels, typed pawn upgrades, lone-royal mate, the checked shah's exchange and the three promotions of the pawn of pawns. Encode the board as eleven ordinary files within a thirteen-column grid. Research sources disagree on the rare pawn redeployment and occupied home-square cases, so document the precise playable interpretation and confirm it with fixtures.

@@ -3080,7 +3080,9 @@
         "Verify a complete interactive tutorial, both bot sides, local save and invite-room reconnect in the browser.",
         "Stage on Melon, verify public HTTPS and WebSocket play, then publish the catalog entry."
       ],
-      "evidence": []
+      "evidence": [
+        "2026-11-24: Node 22 typecheck and all 18 engine tests passed, including Variant conformance and six seeded twelve-file comparisons against configured Fairy-Stockfish."
+      ]
     }
   ]
 }

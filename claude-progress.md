@@ -1114,3 +1114,11 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
   The board pieces, player cards and promotion choices share these styles.
 - Checked computed colors and shapes and reviewed Chrome screenshots at 390 and 1280 pixels.
   All three game browser tests passed, and the production web build passed.
+
+### Session 033 (Wikipedia chess and chess-like games roadmap)
+
+- Reconciled all 42 Wikipedia entries in `docs/CHESS-LIKE-ROADMAP.md`. Six live games already meet the minimum, Three-player Chess needs bots and online rooms, and 35 entries need new products. Added the roadmap, Shatranj pilot and Three-player follow-ups to the feature list.
+- Fast-forwarded local `main` to `9e7e374`. Inspected Actions run 45311784040 and fixed its Three-player Chess test fixture type error in `c800e51`. Three-player Chrome e2e passed 3/3 and the production build and Wrangler dry run passed.
+- Wrangler authenticated and listed ten D1 databases. New online releases need capacity under the dedicated-database design. No plan, database or DNS settings changed. Authored titles need permission or a suitable license for faithful publication.
+- Next feature is the classical Shatranj pilot. The rules source and release requirements are in the roadmap. Keep the catalog update behind production verification.
+- `./init.sh` passed under Node 22.23.1 after the fixture fix, including npm install and all workspace verification. Validated all 42 roadmap rows against the source, parsed the feature list as JSON, and ran `git diff --check`.

@@ -1,6 +1,6 @@
 # Chess and chess-like games rollout
 
-Scope snapshot, 2026-11-24. The [Wikipedia section](https://en.wikipedia.org/wiki/List_of_abstract_strategy_games#Chess_and_chess-like_games) lists 42 entries. Six existing products already provide tutorials, bots, local multiplayer and online rooms. Three-player Chess is live with local multiplayer and needs a tutorial, bots and online rooms. The other 35 entries need new products, including one representative of the Shogi variants entry.
+Scope snapshot, 2026-11-24. The [Wikipedia section](https://en.wikipedia.org/wiki/List_of_abstract_strategy_games#Chess_and_chess-like_games) lists 42 entries. Seven existing products provide tutorials, bots, local multiplayer and online rooms. Three-player Chess gained these modes on Melon during this rollout. The other 35 entries need new products, including one representative of the Shogi variants entry.
 
 The section defines the catalog. For each game, use its linked description and primary rules where available. Record the selected edition, source, setup, turn, edge cases and outcomes in the product rules document before implementing. Prefer the most widely played documented variant when supported by evidence. Where usage data is missing, use an established tournament edition or a clearly identified reconstruction. The selections below are planning defaults. Confirm incomplete or conflicting rules before committing an engine.
 
@@ -14,7 +14,7 @@ The section defines the catalog. For each game, use its linked description and p
 | Shogi | Keep standard 9×9 rules and existing modes |
 | Sittuyin | Keep current Burmese chess rules and existing modes |
 | Xiangqi | Keep current Chinese chess rules and existing modes |
-| Three-player chess | Keep the owner's 91-cell hex game. Add an interactive tutorial, one-human/two-bot play and three-seat invite rooms. Preserve existing saves and local play |
+| Three-player chess | Keep the owner's 91-cell hex game. Tutorial, one-human/two-bot play and three-seat invite rooms are live on Melon. Preserve existing saves and local play |
 
 ## Build order
 
@@ -23,7 +23,7 @@ Each row is one product. Complete and release one at a time. A source or permiss
 | Wave | Wikipedia entry | Default and implementation dependency |
 | --- | --- | --- |
 | 1 | Shatranj | Classical Persian/Arabic rules with ferz promotion, stalemate as a win and immediate reciprocal baring as a draw. [Historical rules reference](https://www.chessvariants.org/historic.dir/HistoricalChessVariants.pdf) |
-| 1 | Chaturanga | Two-player historical reconstruction. Pin the elephant movement and victory rules to a named source such as [Ludii's documented reconstruction](https://ludii.games/data.php?gameId=123) |
+| 1 | Chaturanga | Two-player al-Adli reconstruction. Orthogonal elephant leaps, the stalemated Raja wins, and immediate bare-king victory. [Ludii rules](https://ludii.games/details.php?keyword=Chaturanga+%28al-Adli%29) |
 | 1 | Maharajah and the Sepoys | Orthodox army versus one maharajah. Verify both winning conditions and army restrictions |
 | 1 | Courier chess | Historical 12×8 game. Pin opening and promotion conventions |
 | 1 | Grande Acedrex | Alfonso X's *Libro de los juegos* reconstruction. Confirm movement and any opening conventions |

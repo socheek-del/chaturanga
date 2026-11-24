@@ -3,7 +3,7 @@
 ## Active work
 
 - Implement the [42-entry rollout](docs/CHESS-LIKE-ROADMAP.md) one product at a time. Every game requires an interactive tutorial, a bot mode and applicable multiplayer.
-- Current feature is `tpc-007`, Three-player Chess online invite rooms. Shatranj public release is blocked on DNS. Record only verified evidence in `feature_list.json` and `claude-progress.md`.
+- Current feature is `ctg-001`, the two-player al-Adli Chaturanga reconstruction. Shatranj public release is blocked on DNS. Record only verified evidence in `feature_list.json` and `claude-progress.md`.
 - Push verified increments directly to main. Use GitHub Actions for verification and Melon over SSH for release. Cloudflare is a fallback when a documented Melon limitation prevents delivery.
 
 ## Verified
@@ -29,4 +29,8 @@ Melon stage 9232a07 is healthy as `chaturanga-stage-shatranj-19897` in `~/chatur
 
 The tutorial and coordinate labels are live from 3154fc8 on Melon port 19899, with five public browser checks passing. Bot mode is live from 8771c1c on Melon port 19900. All nine browser tests passed locally, on the stage and on the public site. Port 19899 still serves the preceding tutorial release for rollback. Next implement three-seat online invites and reconnects with isolated persisted state.
 
-Online implementation is on main after the local 11-scenario browser pass. Stage the exact online revision, verify the persisted room through a container restart, and run public HTTPS/WebSocket smoke. Current rollback origin is port 19900 (bots and tutorial).
+Online invite rooms are live from fe0b009 on Melon port 19901. Its database migration ran, staged play survived a restart, and all eleven public browser checks passed. The public catalog uses 886f994 and describes the tutorial, bots and online rooms. Keep port 19900 as rollback. If replacing online containers, preserve the current isolated room data and signing secret.
+
+## Next game
+
+Implement the two-player [al-Adli reconstruction](https://ludii.games/details.php?keyword=Chaturanga+%28al-Adli%29). Ludii documents orthogonal two-cell elephant leaps, opposite king files, victory for the stalemated king, and immediate bare-king victory. The preset Fairy-Stockfish Chaturanga differs, so configure an independent reference for the shared move rules and test the historical endings separately.

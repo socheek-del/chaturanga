@@ -3012,15 +3012,34 @@
       "milestone": "M24",
       "title": "Play Three-player Chess in online invite rooms",
       "user_visible_behavior": "Three people can join a private room and finish a server-validated game.",
-      "status": "in_progress",
+      "status": "passing",
       "verification": [
         "Exercise three authenticated seats, reconnect, move rejection, elimination, and terminal game state.",
         "Verify all three seats in production after the Melon service and isolated store are deployed."
       ],
       "evidence": [
-        "2026-11-24: Three room-state tests and eleven browser tests passed locally. Verified all three seats, synchronized moves, reconnect, full rooms, terminal state, and rejection of stale, illegal and out-of-turn moves. Production build and dry run passed."
+        "2026-11-24: Three room-state tests and eleven browser tests passed locally. Verified all three seats, synchronized moves, reconnect, full rooms, terminal state, and rejection of stale, illegal and out-of-turn moves. Production build and dry run passed.",
+        "2026-11-24: Full repository verification passed. Melon stage fe0b009 on port 19901 applied the games migration and passed all eleven browser tests. Restarted the isolated stage and verified three authenticated seats reconnecting with the same history and continuing play.",
+        "2026-11-24: Promoted fe0b009 on Melon. All eleven public browser checks passed, and the public catalog description was updated from 886f994."
       ],
       "notes": "Depends on Melon deployment and durable per-game online storage. The existing release uses browser storage."
+    },
+    {
+      "id": "ctg-001",
+      "product": "chaturanga",
+      "priority": 144,
+      "area": "release",
+      "milestone": "M24",
+      "title": "Release the two-player Chaturanga reconstruction",
+      "user_visible_behavior": "Players learn and play the documented al-Adli reconstruction through an interactive tutorial, a bot, same-device multiplayer and private invite rooms.",
+      "status": "in_progress",
+      "verification": [
+        "Pin the historical rules and verify engine conformance, distinctive elephant movement, stalemate and bare king.",
+        "Complete the tutorial and play local, both bot seats and a synchronized room in the browser.",
+        "Stage on Melon, verify public HTTPS and WebSocket play, and publish the catalog entry."
+      ],
+      "evidence": [],
+      "notes": "Selected the documented al-Adli reconstruction. New public hostname and TLS need DNS edit access. Continue implementation while Shatranj public DNS is pending."
     }
   ]
 }

@@ -42,3 +42,5 @@ The Chaturanga rules engine, bot, tutorial and product are implemented. Melon st
 Next is the traditional single royal Maharajah against a conventional army, with no promotion. The stock Fairy-Stockfish variant permits rules that require overrides for this selection. The start, movement, and checkmate goals are documented in the [Wikipedia rules](https://en.wikipedia.org/wiki/Maharajah_and_the_Sepoys#Game_rules).
 
 The Maharajah rules package now passes all 18 tests. Fairy-Stockfish needs `promotionRegionBlack = -` in addition to disabling promotion choices. Next wire the bot and PWA to this engine.
+
+The PWA and Worker are implemented and locally verified. Run the full browser suite against the staged PWA with `MAHARAJAH_E2E_URL`. Public DNS for `maharajah.beanroti.com` was absent at the local verification checkpoint.

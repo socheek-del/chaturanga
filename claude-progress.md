@@ -1190,3 +1190,5 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
 ### Maharajah and the Sepoys rules
 
 The rule package passes typecheck and all 18 tests, including shared conformance, both checkmate outcomes and six seeded Fairy-Stockfish comparisons. Next add bots for both roles, an interactive tutorial and the PWA with invite rooms.
+
+The English PWA, original board and icon, interactive tutorial, browser bot and server-validated rooms are implemented. Bot tests passed 2/2, lesson tests passed 11/11 and local browser play passed 5/5. Stage this revision on Melon and run all six scenarios against production assets.

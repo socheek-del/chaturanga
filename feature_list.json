@@ -3060,7 +3060,8 @@
         "Stage on Melon, verify public HTTPS and WebSocket play, then publish the catalog entry."
       ],
       "evidence": [
-        "2026-11-24: Node 22 typecheck and all 18 rules tests passed, including Variant conformance, checkmates for both sides, and six seeded comparisons against configured Fairy-Stockfish."
+        "2026-11-24: Node 22 typecheck and all 18 rules tests passed, including Variant conformance, checkmates for both sides, and six seeded comparisons against configured Fairy-Stockfish.",
+        "2026-11-24: Bot tests 2/2, tutorial checks 11/11 and local browser scenarios 5/5 passed. The tutorial was completed at phone width, with both bot roles, local saves, and online reconnect verified."
       ]
     }
   ]

@@ -4,7 +4,9 @@ import { once } from 'node:events';
 import { copyFileSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
-import { splitSqlQuery } from 'wrangler';
+import wrangler from 'wrangler';
+
+const splitSqlQuery = wrangler.unstable_splitSqlQuery ?? wrangler.splitSqlQuery;
 
 const config = JSON.parse(readFileSync('.melon-stage.jsonc', 'utf8'));
 const databases = config.d1_databases;

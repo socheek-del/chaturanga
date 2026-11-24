@@ -1,7 +1,9 @@
 import { randomBytes } from 'node:crypto';
 import { writeFileSync } from 'node:fs';
 import { relative } from 'node:path';
-import { unstable_readConfig } from 'wrangler';
+import wrangler from 'wrangler';
+
+const { unstable_readConfig } = wrangler;
 
 const product = process.argv[2];
 const directory = `apps/${product}/worker`;

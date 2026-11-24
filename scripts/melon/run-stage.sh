@@ -15,13 +15,14 @@ if ss -ltnH "sport = :$port" | grep -q .; then
   exit 1
 fi
 
-mkdir state
-docker run --rm --user "$(id -u):$(id -g)" --env HOME=/release \
-  --mount "type=bind,src=$stage,dst=/release" --workdir /release "$image" \
+npm_cache=$HOME/.cache/chaturanga/npm
+mkdir -p state "$npm_cache"
+docker run --rm --user "$(id -u):$(id -g)" --env HOME=/release --env npm_config_cache=/npm-cache \
+  --mount "type=bind,src=$npm_cache,dst=/npm-cache" \n  --mount "type=bind,src=$stage,dst=/release" --workdir /release "$image" \
   sh -ec '
-    npx -y npm@11 ci
+    npx -y npm@11 ci --prefer-offline
     if [ -f "apps/$1/web/package.json" ]; then
-      npm run build -w "apps/$1/web"
+      npm run build --if-present -w "apps/$1/web"
     fi
     npm install --prefix /release/.melon-runtime --no-save "workerd@$2"
     node scripts/melon/stage-config.mjs "$1"

@@ -211,7 +211,7 @@ export function App() {
               const status = game.playerStatus(player);
               return (
                 <article key={player} className={`player-card player-${player} ${game.turn === player && !isFinished ? 'is-active' : ''} ${status === 'eliminated' ? 'is-out' : ''}`}>
-                  <span className="player-crown" aria-hidden="true">{player === 'w' ? '♔' : '♚'}</span>
+                  <span className={`player-crown seat-token piece-${player}`} aria-hidden="true">{GLYPHS[player].k}</span>
                   <div className="player-copy"><strong>{t(`players.${player}`)}</strong><small>{statusLabel(status, t)}</small></div>
                   {game.turn === player && !isFinished && <span className="active-dot" aria-label={t('game.turn', { player: t(`players.${player}`) })} />}
                 </article>
@@ -249,7 +249,7 @@ export function App() {
                             style={{ left: `${50 + (q + r / 2) * 100 / SIZE}%`, top: `${50 + r * 75 / 8.5}%` }}
                             className={`square hex-shade-${shade} ${selected === square ? 'is-selected' : ''} ${destinationMoves.length ? 'is-destination' : ''} ${capture ? 'is-capture' : ''} ${isLast ? 'is-last-move' : ''}`}
                           >
-                            {piece && <span className={`piece piece-${piece.color}`} aria-hidden="true">{GLYPHS[piece.color][piece.type]}</span>}
+                            {piece && <span className={`piece seat-token piece-${piece.color}`} aria-hidden="true">{GLYPHS[piece.color][piece.type]}</span>}
                             {!piece && destinationMoves.length > 0 && <span className="move-dot" aria-hidden="true" />}
                           </button>
                         );
@@ -263,7 +263,7 @@ export function App() {
                     <div className="promotion-options">
                       {promotion.moves.map((move) => (
                         <button key={move.uci} className="promotion-piece" onClick={() => playMove(move)} aria-label={t('game.promoteTo', { piece: t(`pieces.${move.promotion}`) })}>
-                          {GLYPHS[game.turn][move.promotion!]}
+                          <span className={`seat-token piece-${game.turn}`} aria-hidden="true">{GLYPHS[game.turn][move.promotion!]}</span>
                         </button>
                       ))}
                     </div>

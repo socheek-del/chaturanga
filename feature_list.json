@@ -2888,6 +2888,22 @@
         "Cloudflare Worker 5a47d737 served the hex edition and the live Beanroti entry advertised the 91-cell hex board."
       ],
       "notes": "The hex edition uses a new browser storage key. Existing ring positions are not transferred."
+    },
+    {
+      "id": "tpc-005",
+      "product": "threechess",
+      "priority": 137,
+      "area": "design",
+      "milestone": "M23",
+      "title": "Distinguish White and Black on the hex board",
+      "user_visible_behavior": "White uses ivory circles and Black uses near-black rounded squares, with matching tokens in the player cards and promotion choices.",
+      "status": "passing",
+      "verification": [
+        "Check the rendered board at phone and desktop widths and run the Three-player chess browser suite."
+      ],
+      "evidence": [
+        "Confirmed fill, glyph color, and shape in Chrome at widths of 390 and 1280 pixels and reviewed both screenshots. All three game browser tests passed."
+      ]
     }
   ]
 }

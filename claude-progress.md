@@ -1107,3 +1107,10 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
   for turn order, persistence, takeback and mobile layout.
 - The production build and Worker deploy passed. Public DNS and HTTPS smoke checks confirmed the hex game
   (version 5a47d737), and the live Beanroti catalog confirmed the updated listing.
+
+### Session 032 (Three-player chess piece contrast)
+
+- White now uses ivory circles and Black uses near-black rounded squares. Red uses crimson circles.
+  The board pieces, player cards and promotion choices share these styles.
+- Checked computed colors and shapes and reviewed Chrome screenshots at 390 and 1280 pixels.
+  All three game browser tests passed, and the production web build passed.

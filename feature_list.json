@@ -3116,7 +3116,7 @@
       "milestone": "M27",
       "title": "Release standard Tamerlane Chess",
       "user_visible_behavior": "Players learn the citadels, typed pawns and royal rules, then play against a bot, on one device or in private rooms.",
-      "status": "in_progress",
+      "status": "blocked",
       "verification": [
         "Pin the common historical array and verify board topology, the royal and citadel rules, and each pawn’s promotion.",
         "Complete the interactive tutorial and verify both bot sides and local and private online play in the browser.",
@@ -3124,8 +3124,26 @@
       ],
       "evidence": [
         "2026-11-24: Node 22 typecheck and all 35 rules tests passed. Rules-core passed 37 checks and protocol passed 3 with the generic goal-square result.",
-        "2026-11-24: The board and shell regression checks passed, bot checks passed 2/2, tutorial checks passed 16/16 and local browser scenarios passed 6/6, including a saved citadel draw and both bot sides."
-      ]
+        "2026-11-24: The board and shell regression checks passed, bot checks passed 2/2, tutorial checks passed 16/16 and local browser scenarios passed 6/6, including a saved citadel draw and both bot sides.",
+        "2026-11-24: Melon stage f1206a7 on port 19906 applied its migration and passed all seven browser scenarios, including a persisted citadel draw and offline play."
+      ],
+      "notes": "Melon stage is ready. Public launch requires DNS for tamerlane.beanroti.com before TLS, promotion and public smoke."
+    },
+    {
+      "id": "shatar-001",
+      "product": "shatar",
+      "priority": 165,
+      "area": "release",
+      "milestone": "M28",
+      "title": "Release traditional Mongolian Shatar",
+      "user_visible_behavior": "Players learn the traditional setup, bers and checking rules, then play either side against a bot, locally or through private online rooms.",
+      "status": "in_progress",
+      "verification": [
+        "Verify the traditional setup, promotion and the history-sensitive mate outcomes against Fairy-Stockfish, plus Variant conformance.",
+        "Complete the interactive tutorial and verify both bot sides, local saves and private room reconnect.",
+        "Stage on Melon, verify public HTTPS and WebSocket play, then publish the catalog entry."
+      ],
+      "evidence": []
     }
   ]
 }

@@ -74,3 +74,9 @@ Active feature is `tamerlane-001`. Use the common [Tamerlane rules](https://en.w
 Tamerlane’s rules package passes 35 checks. The generic rules-core goal-square result carries the citadel draw to the server and UI. Use engine files b–l for the main board, with a9 and m2 as citadels. The rest of the outer files are holes and must be hidden from pointer and keyboard play.
 
 The Tamerlane product passes its local board, tutorial, bot and online checks. Run all seven scenarios with `TAMERLANE_E2E_URL` against the exact Melon build, then verify DNS and public release eligibility.
+
+Tamerlane revision f1206a7 is running and migrated as `chaturanga-stage-tamerlane-19906` in `~/chaturanga-release.tamerlane.aDgzje`. All seven browser scenarios passed. Public DNS for `tamerlane.beanroti.com` is absent.
+
+## Shatar
+
+The active feature is `shatar-001`. Match the [traditional movement and opening](https://en.wikipedia.org/wiki/Shatar#Game_rules) and the [Fairy-Stockfish mate rule](https://github.com/fairy-stockfish/Fairy-Stockfish/blob/master/src/position.h), distinguishing an only-knight mate from a double check. Keep each attacker's shak streak in the game state and compare with the stock `shatar` oracle. Document the result choice for a prohibited knight mate and the omission of regional scoring customs.

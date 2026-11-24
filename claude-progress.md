@@ -1222,3 +1222,9 @@ Select the common 11×10 array in the Wikipedia rules. Use the two true citadels
 Tamerlane's engine passed typecheck and all 35 rule checks. These cover the common rotation, typed pawns, all three special pawn stages, citadels and both royal exchanges. The shared goal-square result passed 37 rules-core tests and 3 protocol tests. Next integrate the board, bot and interactive lessons.
 
 The Tamerlane PWA, bot, 14-step tutorial and isolated Worker are implemented. The board omits nonplayable cells from pointer and keyboard input. Bot tests passed 2/2, tutorial checks passed 16/16 and local browser scenarios passed 6/6, including citadel-draw persistence. Next verify the production build and deployed room on Melon.
+
+Tamerlane stage f1206a7 is healthy on Melon port 19906 in `~/chaturanga-release.tamerlane.aDgzje`. Its migration and all seven staged browser scenarios passed. A public DNS record is still needed.
+
+### Shatar
+
+Select the traditional bers, fixed double d-pawn opening and history-sensitive mate rules of Fairy-Stockfish’s Shatar preset. Begin after the required d4/d5. Rook, bers and knight checks count as shak. A mate delivered solely by a knight loses for its mover in the selected engine. A bishop or pawn mate without a shak in its unbroken check sequence is drawn. A bare king is also a draw.

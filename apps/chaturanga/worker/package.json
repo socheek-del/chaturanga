@@ -1,0 +1,23 @@
+{
+  "name": "@chaturanga/chaturanga-worker",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "GPL-3.0-or-later",
+  "scripts": {
+    "dev": "mkdir -p ../web/dist && wrangler d1 migrations apply chaturanga --local && wrangler dev --port 8795",
+    "build": "wrangler deploy --dry-run --outdir dist",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@chaturanga/protocol": "*",
+    "@chaturanga/server-kit": "*",
+    "@chaturanga/chaturanga": "*",
+    "hono": "^4.13.7"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-plugin": "^1.1.8",
+    "@cloudflare/workers-types": "^5.20260911.1",
+    "wrangler": "^4.131.1"
+  }
+}

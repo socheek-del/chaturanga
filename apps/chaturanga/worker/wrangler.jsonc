@@ -1,0 +1,25 @@
+{
+  "name": "chaturanga",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-01",
+  "assets": {
+    "directory": "../web/dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*", "/ws/*"]
+  },
+  "durable_objects": {
+    "bindings": [
+      { "name": "GAME_ROOM", "class_name": "GameRoom" },
+      { "name": "MATCHMAKER", "class_name": "Matchmaker" }
+    ]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["GameRoom", "Matchmaker"] }],
+  "d1_databases": [{
+    "binding": "DB",
+    "database_name": "chaturanga",
+    "database_id": "10585970-335c-430f-a4af-2e9da68f0958",
+    "migrations_dir": "migrations"
+  }],
+  "vars": { "RECONNECT_GRACE_MS": "60000" }
+}

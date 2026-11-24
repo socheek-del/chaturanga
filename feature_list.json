@@ -3039,7 +3039,8 @@
         "Stage on Melon, verify public HTTPS and WebSocket play, and publish the catalog entry."
       ],
       "evidence": [
-        "2026-11-24: Node 22 typecheck and all 20 rules tests passed, including Variant conformance and eight seeded games against a Fairy-Stockfish configuration with the reconstructed setup and elephant move."
+        "2026-11-24: Node 22 typecheck and all 20 rules tests passed, including Variant conformance and eight seeded games against a Fairy-Stockfish configuration with the reconstructed setup and elephant move.",
+        "2026-11-24: Bot tests 2/2, tutorial checks 11/11 and local browser scenarios 5/5 passed. The PWA and server production build passed. Phone and desktop layout were reviewed."
       ],
       "notes": "Selected the documented al-Adli reconstruction. New public hostname and TLS need DNS edit access. Continue implementation while Shatranj public DNS is pending."
     }

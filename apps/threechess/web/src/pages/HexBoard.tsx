@@ -25,12 +25,13 @@ function getPieceLabel(piece: ReturnType<Game['pieceAt']>, t: (key: string, opti
 }
 
 export function HexBoard({
-  game, selected = null, destinations = [], lastMove, onSquareClick, children,
+  game, selected = null, destinations = [], lastMove, lessonMove, onSquareClick, children,
 }: {
   game: Game;
   selected?: number | null;
   destinations?: readonly ParsedMove[];
   lastMove?: ParsedMove | null;
+  lessonMove?: ParsedMove | null;
   onSquareClick?: (square: number) => void;
   children?: ReactNode;
 }) {
@@ -50,6 +51,7 @@ export function HexBoard({
               const destinationMoves = destinations.filter((move) => move.to === square);
               const capture = destinationMoves.length > 0 && !!piece;
               const isLast = square === lastMove?.from || square === lastMove?.to;
+              const lessonLabel = square === lessonMove?.from || square === lessonMove?.to;
               const ariaPiece = getPieceLabel(piece, t);
               return (
                 <button
@@ -59,6 +61,7 @@ export function HexBoard({
                   key={square}
                   data-testid={`cell-${squareName(square)}`}
                   data-legal={destinationMoves.length > 0 || undefined}
+                  data-lesson-square={lessonLabel || undefined}
                   aria-label={t('game.squareLabel', { file: FILES[file], rank: rank + 1, piece: ariaPiece })}
                   aria-pressed={selected === square}
                   onClick={() => onSquareClick?.(square)}
@@ -67,6 +70,7 @@ export function HexBoard({
                 >
                   {piece && <span className={`piece seat-token piece-${piece.color}`} aria-hidden="true">{GLYPHS[piece.color][piece.type]}</span>}
                   {!piece && destinationMoves.length > 0 && <span className="move-dot" aria-hidden="true" />}
+                  {lessonLabel && <span className="lesson-coordinate" aria-hidden>{squareName(square)}</span>}
                 </button>
               );
             })}

@@ -34,6 +34,7 @@ function TutorialStep({ step, next }: { step: Step; next: () => void }) {
   const [choice, setChoice] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<'correct' | 'wrong' | null>(null);
   const successful = feedback === 'correct';
+  const lessonMove = step.kind === 'move' ? parseUci(step.answer) : null;
   const legal = game.legalUci().map((uci) => parseUci(uci)!);
   const destinations = legal.filter((move) => move.from === selected);
 
@@ -65,7 +66,7 @@ function TutorialStep({ step, next }: { step: Step; next: () => void }) {
     <p className="tutorial-prompt">{t(`tutorial.steps.${step.id}`)}</p>
     {step.kind !== 'quiz' && <HexBoard
       game={game} selected={selected} destinations={destinations}
-      lastMove={successful && step.kind === 'move' ? parseUci(step.answer) : undefined}
+      lastMove={successful ? lessonMove : undefined} lessonMove={successful ? null : lessonMove}
       onSquareClick={step.kind === 'move' && !successful ? onSquareClick : undefined}>
       {promotion.length > 0 && <PromotionPicker
         player={game.turn} moves={promotion} onMove={answerMove} onCancel={() => setPromotion([])}

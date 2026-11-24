@@ -295,3 +295,15 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px soli
 @media (max-width: 380px) {
   .tutorial-link { margin: .9rem 0 0; display: block; }
 }
+.lesson-coordinate {
+  position: absolute;
+  z-index: 2;
+  bottom: 8%;
+  right: 9%;
+  padding: 0 .16rem;
+  border-radius: 2px;
+  background: #203139;
+  color: #fff5d8;
+  font: 700 clamp(.54rem, 1.4vw, .72rem)/1.2 ui-monospace, monospace;
+  pointer-events: none;
+}

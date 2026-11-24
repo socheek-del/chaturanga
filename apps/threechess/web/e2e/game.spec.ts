@@ -56,6 +56,8 @@ for (const width of [390, 1280]) {
     const next = () => page.getByRole('button', { name: 'Continue', exact: true }).click();
     await next();
     for (const [from, to] of [['d10', 'd9'], ['j4', 'i5'], ['d4', 'e4']]) {
+      await expect(page.getByTestId(`cell-${from}`).locator('.lesson-coordinate')).toHaveText(from);
+      await expect(page.getByTestId(`cell-${to}`).locator('.lesson-coordinate')).toHaveText(to);
       await page.getByTestId(`cell-${from}`).click();
       await page.getByTestId(`cell-${to}`).click();
       await expect(page.getByRole('status')).toHaveAttribute('data-result', 'correct');

@@ -62,3 +62,5 @@ Courier revision dc1feb1 is running, migrated and tested on Melon as `chaturanga
 Active feature is `acedrex-001`. Implement the dice-free [Cazaux/Musser reconstruction summarized by Wikipedia](https://en.wikipedia.org/wiki/Grant_Acedrex#Rules). The installed Fairy-Stockfish build refused a 12×12 probe, so use independent movement fixtures and seeded, replayable games. Ensure FEN and UCI preserve leap rights and support ranks 10 through 12.
 
 Grande Acedrex engine and its 22 rules checks pass. Next use variable-length UCI in bot encoding and browser input, then package the tutorial and isolated Worker. Its third FEN field is part of the position key because it preserves unused king leaps.
+
+The Grande Acedrex tutorial, bot and PWA are locally verified, including moves with two-digit ranks over the room socket. Run all six production scenarios with `ACEDREX_E2E_URL` through the Melon tunnel.

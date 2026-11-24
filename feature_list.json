@@ -3102,7 +3102,8 @@
         "Stage on Melon, verify public HTTPS and WebSocket play, then publish the catalog entry."
       ],
       "evidence": [
-        "2026-11-24: Node 22 typecheck and all 22 rules checks passed, including Variant conformance, independent movement and ending fixtures, and six seeded replay and undo games."
+        "2026-11-24: Node 22 typecheck and all 22 rules checks passed, including Variant conformance, independent movement and ending fixtures, and six seeded replay and undo games.",
+        "2026-11-24: Bot checks 2/2, tutorial checks 13/13 and local browser scenarios 5/5 passed. The phone tutorial covered rank-12 promotion and mate, and the invite room synchronized a rank-12 king leap."
       ]
     }
   ]

@@ -1210,3 +1210,5 @@ Courier stage dc1feb1 is healthy on Melon port 19904 in `~/chaturanga-release.co
 Use the dice-free Cazaux/Musser reconstruction summarized by Wikipedia. It has same-file kings, pawns on ranks four and nine, first-move king leaps, bent moves for aanca and unicornio, file-specific promotion, and wins by mate, stalemating the opponent or baring their king. The installed Fairy-Stockfish WASM declined a 12×12 test configuration. Use independent rule fixtures and seeded replay verification.
 
 The Grande Acedrex rules engine passes all 22 tests and typecheck. The suite covers bent pieces, king leap rights, file promotion, all historical endings, shared conformance and replay of seeded 12×12 games. Full repository verification passed at the preceding Courier product checkpoint.
+
+Grande Acedrex’s English PWA and isolated online server are implemented. Passed 2/2 bot, 13/13 tutorial and 5/5 local browser checks, including rank-12 promotion, mate and an online king leap. Stage and verify the offline production build on Melon.

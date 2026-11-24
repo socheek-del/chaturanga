@@ -1200,3 +1200,5 @@ Maharajah stage e4e04fb is healthy on Melon port 19903 in `~/chaturanga-release.
 Use the medieval 12×8 rules in the linked Wikipedia article. Begin after the obligatory joyleaps, with kings on f1/f8 and ferzes on g3/g6. Select immediate ferz promotion from the documented alternatives and use a draw for stalemate because its historical resolution is unknown. The museum rules describe a different promotion practice. Record the reconstruction in the engine and teach these choices explicitly.
 
 Courier’s twelve-file engine passed typecheck and all 18 tests, including six seeded Fairy-Stockfish comparisons and the common Variant checks. Next wire the bot, board, lessons and private rooms to this engine.
+
+Courier Chess now has an English PWA, an interactive tutorial, a bounded bot and isolated online rooms. Passed 2/2 bot tests, 12/12 tutorial checks and 5/5 local browser scenarios. Stage this revision on Melon to verify the built PWA and online room.

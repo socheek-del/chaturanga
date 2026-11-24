@@ -52,3 +52,5 @@ The exact Maharajah product revision e4e04fb is staged, migrated and verified on
 Next active feature is `courier-001`. Use the [medieval rules](https://en.wikipedia.org/wiki/Courier_chess#Medieval_rules) on 12×8 and begin with the customary joyleaps already applied. Select immediate ferz promotion and a draw by stalemate. Move orthodox pawns one square only and omit castling and en passant. Use rules-core’s variable-width coordinates and do not reuse the 8×8 move tables. The [Ströbeck museum rules](https://www.schachmuseum-loeberitz.de/images/stories/Dateien/Kurier-Schach.pdf) are a separate documented reconstruction.
 
 The Courier engine passes all 18 checks and is ready to integrate. Its Fairy-Stockfish comparison uses a custom 12×8 configuration. The app must use width-aware square indices throughout and sense forced ferz promotion via the legal move suffix.
+
+The Courier PWA and Worker pass their local checks. Run the six production scenarios via `COURIER_E2E_URL` through a Melon tunnel, then check public DNS before promotion.

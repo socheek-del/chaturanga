@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-24T01:36:58.321Z",
+  "generatedAt": "2026-11-24T02:20:24.000Z",
   "categories": [
     "Games",
     "Learn",
@@ -78,6 +78,18 @@
       "icon": "https://jp-chess.beanroti.com/favicon.svg",
       "source": "worker",
       "service": "shogi",
+      "up": true
+    },
+    {
+      "host": "kr-chess.beanroti.com",
+      "url": "https://kr-chess.beanroti.com/",
+      "name": "Janggi",
+      "description": "Korean chess against the computer or a friend, with lessons.",
+      "category": "Games",
+      "signIn": false,
+      "icon": "https://kr-chess.beanroti.com/favicon.svg",
+      "source": "worker",
+      "service": "janggi",
       "up": true
     },
     {

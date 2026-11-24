@@ -2958,7 +2958,9 @@
         "Verify human versus bot for both seats, local play, and an online game including reconnect.",
         "Build and deploy the PWA and server on Melon, smoke the production site, and verify the catalog listing."
       ],
-      "evidence": [],
+      "evidence": [
+        "2026-11-24: Node 22 typecheck passed; 21 Shatranj rules and conformance tests passed, including 12 seeded Fairy-Stockfish games. Shared rules-core tests passed 36/36."
+      ],
       "notes": "First new product in docs/CHESS-LIKE-ROADMAP.md. Online release uses the Melon deployment path."
     },
     {

@@ -25,6 +25,8 @@ export type GameStatus<C extends string = Color> =
   | { kind: 'fifty-move'; winner?: C }
   /** Neither side can force mate (Fairy-Stockfish insufficient-material rule). */
   | { kind: 'insufficient-material' }
+  /** A king was left without other pieces. The variant may award a win or draw. */
+  | { kind: 'bare-king'; winner?: C }
   /** A repeated position where the same side repeats check indefinitely; that side loses (Xiangqi). */
   | { kind: 'perpetual-check'; winner: C }
   /** A repeated position where the same side repeats an illegal chase indefinitely; that side loses (Xiangqi). */

@@ -1145,3 +1145,9 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
 - The route promotion helper passed a trusted HTTPS test on an isolated Caddy instance. A deliberate 503 rolled back the live test route and preserved the good Caddyfile. The existing Melon Caddy returned HTTP 200 for the Beanroti catalog and Three-player Chess health via direct HTTPS.
 - Final exact-SHA stages passed for Makruk and Beanroti at 8ee28c4. The staged Makruk history endpoint used the migrated database, and two WebSocket seats played and synchronized two moves. An offline backup recovered the room in a new container. The staged and live Melon catalog JSON SHA-256 matched the repository. No production service or route changed.
 - plat-022 passes. Release commands, promotion and state handoff are in `docs/MELON-RELEASE.md`. The active feature is now shatranj-001.
+
+### Session 037 (Shatranj engine)
+
+- Added classical Shatranj in `packages/shatranj`. The rules contract documents setup, alfil leaps, ferz promotion, decisive stalemate, reciprocal baring and digital draw conventions.
+- Node 22 typecheck passed. Shatranj tests passed 21/21, including Variant conformance and 12 seeded Fairy-Stockfish games up to 160 plies. Shared result tests passed 36/36.
+- The Shatranj feature remains in progress. Next is a bounded bot using ai-core, followed by the tutorial, local and online UI and the Melon release.

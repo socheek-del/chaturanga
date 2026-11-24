@@ -58,6 +58,7 @@ describe('isUndoableResult', () => {
       'counting',
       'fifty-move',
       'insufficient-material',
+      'bare-king',
       'perpetual-check',
       'perpetual-chase',
       'bikjang',

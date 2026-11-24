@@ -16,3 +16,7 @@
 ## Melon release workflow
 
 plat-022 passed. The 8ee28c4 Makruk and Beanroti stages, migrations and repeat run, two-seat WebSockets, backup restore and HTTPS rollback were verified. Melon’s live catalog matches the staged data. Use [the runbook](docs/MELON-RELEASE.md) for Shatranj. Its release still needs its own hostname, public smoke and catalog update.
+
+## Shatranj
+
+The classical engine, rule fixtures and seeded Fairy-Stockfish comparison are complete in `packages/shatranj`. Next build the bot and product, then verify the tutorial, both human bot seats, local and invite play, and the public Melon release.

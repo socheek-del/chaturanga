@@ -1202,3 +1202,9 @@ Use the medieval 12×8 rules in the linked Wikipedia article. Begin after the ob
 Courier’s twelve-file engine passed typecheck and all 18 tests, including six seeded Fairy-Stockfish comparisons and the common Variant checks. Next wire the bot, board, lessons and private rooms to this engine.
 
 Courier Chess now has an English PWA, an interactive tutorial, a bounded bot and isolated online rooms. Passed 2/2 bot tests, 12/12 tutorial checks and 5/5 local browser scenarios. Stage this revision on Melon to verify the built PWA and online room.
+
+Courier stage dc1feb1 is healthy on Melon port 19904 in `~/chaturanga-release.courier.rsjSBn`. Its migration and all six staged browser checks passed. Public DNS remains absent, so preserve the stage and move to the next product.
+
+### Grande Acedrex
+
+Use the dice-free Cazaux/Musser reconstruction summarized by Wikipedia. It has same-file kings, pawns on ranks four and nine, first-move king leaps, bent moves for aanca and unicornio, file-specific promotion, and wins by mate, stalemating the opponent or baring their king. The installed Fairy-Stockfish WASM declined a 12×12 test configuration. Use independent rule fixtures and seeded replay verification.

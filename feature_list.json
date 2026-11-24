@@ -3074,7 +3074,7 @@
       "milestone": "M25",
       "title": "Release medieval Courier Chess",
       "user_visible_behavior": "Players can learn the 12×8 game and play against a bot, on one device, or through private online rooms.",
-      "status": "in_progress",
+      "status": "blocked",
       "verification": [
         "Verify the twelve-file setup, eight movement types plus pawns, king safety, mates, and pawn promotion using rule fixtures and shared conformance.",
         "Verify a complete interactive tutorial, both bot sides, local save and invite-room reconnect in the browser.",
@@ -3082,8 +3082,26 @@
       ],
       "evidence": [
         "2026-11-24: Node 22 typecheck and all 18 engine tests passed, including Variant conformance and six seeded twelve-file comparisons against configured Fairy-Stockfish.",
-        "2026-11-24: Bot checks 2/2, tutorial checks 12/12 and local browser scenarios 5/5 passed, including phone-width promotion, both bot roles, local saves and online reconnect."
-      ]
+        "2026-11-24: Bot checks 2/2, tutorial checks 12/12 and local browser scenarios 5/5 passed, including phone-width promotion, both bot roles, local saves and online reconnect.",
+        "2026-11-24: Melon stage dc1feb1 on port 19904 applied its migration and passed all six browser scenarios, including offline play and online reconnect."
+      ],
+      "notes": "Melon stage is ready. Public launch requires DNS for courier.beanroti.com before TLS, promotion and public smoke."
+    },
+    {
+      "id": "acedrex-001",
+      "product": "acedrex",
+      "priority": 155,
+      "area": "release",
+      "milestone": "M26",
+      "title": "Release Grande Acedrex",
+      "user_visible_behavior": "Players learn the 12×12 medieval game and can play against a bot, locally, or in a private online room.",
+      "status": "in_progress",
+      "verification": [
+        "Pin the historical reconstruction, then test bent moves, first king leaps, file-specific promotions, all endings and Variant conformance.",
+        "Complete the tutorial and verify each bot side, same-device play and private rooms in the browser.",
+        "Stage on Melon, verify public HTTPS and WebSocket play, then publish the catalog entry."
+      ],
+      "evidence": []
     }
   ]
 }

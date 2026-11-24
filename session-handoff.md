@@ -54,3 +54,9 @@ Next active feature is `courier-001`. Use the [medieval rules](https://en.wikipe
 The Courier engine passes all 18 checks and is ready to integrate. Its Fairy-Stockfish comparison uses a custom 12×8 configuration. The app must use width-aware square indices throughout and sense forced ferz promotion via the legal move suffix.
 
 The Courier PWA and Worker pass their local checks. Run the six production scenarios via `COURIER_E2E_URL` through a Melon tunnel, then check public DNS before promotion.
+
+Courier revision dc1feb1 is running, migrated and tested on Melon as `chaturanga-stage-courier-19904` in `~/chaturanga-release.courier.rsjSBn`. All six browser scenarios passed. Public DNS for `courier.beanroti.com` is absent. Promote and publish only after public HTTPS and room smoke tests.
+
+## Grande Acedrex
+
+Active feature is `acedrex-001`. Implement the dice-free [Cazaux/Musser reconstruction summarized by Wikipedia](https://en.wikipedia.org/wiki/Grant_Acedrex#Rules). The installed Fairy-Stockfish build refused a 12×12 probe, so use independent movement fixtures and seeded, replayable games. Ensure FEN and UCI preserve leap rights and support ranks 10 through 12.

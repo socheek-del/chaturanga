@@ -155,6 +155,7 @@ main {
   place-items: center;
   --piece: #fff3c9;
   --engraving: #a98944;
+  filter: drop-shadow(0 .6px .6px #362e21);
 }
 .piece[data-side="b"] { --piece: #40352b; --engraving: #705d44; }
 
@@ -171,10 +172,10 @@ main {
   display: grid;
   place-items: center;
   border-radius: 1px;
-  color: var(--piece);
-  background: color-mix(in srgb, var(--engraving) 45%, #25231c);
+  color: #fff3c9;
+  background: #504037;
 }
-.piece [data-badge] i { width: 83%; height: 82%; }
+.piece [data-badge] i { width: 83%; height: 82%; background: currentColor; }
 .piece [data-stage] {
   color: #fff3c9;
   font: 700 clamp(6px, 1.5vw, 10px)/1 ui-sans-serif, sans-serif;

@@ -1089,3 +1089,11 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
   capacity and production deploy. Do not push yet: main's CI deploy job will try this Worker, and the catalog
   would link to an unavailable site. After D1 capacity is resolved, update the ID, push `main`, deploy the
   game and catalog, and run a production smoke check.
+
+### Session 030 (Three-player chess launch)
+
+- Owner approved launching v1 on the existing Cloudflare plan with browser storage. Removed the unused D1
+  binding and migration, then deployed the game and the Beanroti catalog entry.
+- Chrome e2e passed 3/3. Public DNS resolved the game, its homepage and health endpoint responded over HTTPS,
+  and the live catalog JSON returned the enabled listing. Worker versions are recorded under tpc-003.
+- Regenerated the workspace lockfile to fix the missing Vite React plugin entry reported by npm ci.

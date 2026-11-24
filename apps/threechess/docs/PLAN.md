@@ -13,7 +13,7 @@ house rules it implements in `packages/threechess/RULES.md`.
   Stalemate passes, and a full cycle with no legal move is a draw.
 - **D4 Play:** pass-and-play for three people on one device; position is saved in that browser. No AI or online
   play in v1.
-- **D5 Product:** English-only; independent PWA, Worker and D1 on `three-player-chess.beanroti.com`.
+- **D5 Product:** English-only; independent PWA and Worker on `three-player-chess.beanroti.com`.
 - **D6 Identity:** “Midnight Ring”, a dark boardroom palette with parchment, vermilion and ring motifs.
 
 The game engine is covered by the shared `Variant` conformance suite and named fixtures for ring movement,
@@ -24,7 +24,5 @@ three-player variant for lock-step comparison.
 
 - Computer opponents, lessons, rooms, quick match, clocks, saved PGN and review.
 - Alternative three-player board shapes and ending rules.
-- Production deployment and a live catalog link. The catalog source is now maintained at
-  `apps/beanroti/web/public/apps.json`; its entry points to this product. Cloudflare currently rejects the
-  required dedicated D1 database because the account is at its database limit, so neither site is published
-  yet.
+
+The owner approved publishing v1 on Cloudflare Workers Free with browser storage.

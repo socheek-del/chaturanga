@@ -9,7 +9,7 @@ family of variants rather than one standard game. Product plan: `docs/PLAN.md`.
 - **Rules:** `packages/threechess` (`RULES.md`); pure TypeScript, three seats (`w`, `b`, `r`), 8×12 ring.
 - **Web:** `web`; home, rules, pass-and-play board, move log, undo, promotion choice, saved local game, PWA,
   SEO, and sibling links. No computer opponent, online room, account, chat, or lesson flow in v1.
-- **Worker:** `worker`; static web assets and `/api/health`, plus the product's own D1 binding and migration.
+- **Worker:** `worker`; static web assets and `/api/health`. V1 saves games in the browser.
 - **Site address:** `web/site.config.ts` (override `THREECHESS_SITE_URL`) and the Worker route in
   `worker/wrangler.jsonc`.
 - **Commands:** `npm run dev:threechess`, `npm run build:threechess`, `npm run deploy:threechess`,

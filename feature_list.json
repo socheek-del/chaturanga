@@ -1,5 +1,5 @@
 {
-  "project": "Chaturanga — family of chess games (Makruk, Sittuyin, Xiangqi, Shogi, Chess and Janggi live; Three-player chess in progress)",
+  "project": "Chaturanga — family of chess games (Makruk, Sittuyin, Xiangqi, Shogi, Chess and Janggi live; Three-player chess live)",
   "last_updated": "2026-11-24",
   "rules": {
     "single_active_feature": true,
@@ -2858,18 +2858,17 @@
       "area": "deploy",
       "milestone": "M23",
       "title": "Deploy Three-player chess and list it in Beanroti apps",
-      "user_visible_behavior": "Three-player chess is live on its own Worker, D1 and subdomain and has a working entry on app.beanroti.com.",
-      "status": "blocked",
+      "user_visible_behavior": "Three-player chess is live on its own Worker and subdomain and has a working entry on app.beanroti.com.",
+      "status": "passing",
       "verification": [
-        "Create the dedicated threechess D1 and set its ID in the Worker configuration.",
-        "Deploy and smoke-check the Three-player chess site.",
-        "Deploy the Beanroti directory entry and verify its link reaches the live game."
+        "Deploy the Three-player chess Worker and verify its homepage and health endpoint over HTTPS.",
+        "Publish the Beanroti catalog and verify the live entry points to the game."
       ],
       "evidence": [
-        "2026-11-24: Cloudflare rejected D1 creation because the account has reached its 10-database limit. The repo requires a separate D1 per product; no existing game's database was reused.",
-        "2026-11-24: The Three-player chess entry is prepared in apps/beanroti/web/public/apps.json, but is not published until its destination is live."
+        "2026-11-24: Worker c108bfc6 deployed. Public DNS resolved and the homepage and health endpoint responded over HTTPS.",
+        "2026-11-24: Catalog Worker cc261c85 deployed; live apps.json lists Three-player chess as up and points to the game."
       ],
-      "notes": "Resume after Cloudflare can create a dedicated D1 (for example, after an account plan/limit change). Then deploy Three-player chess, publish the app directory, and run production smoke checks."
+      "notes": "Owner approved launching v1 on Workers Free without D1. Games save in the browser."
     }
   ]
 }

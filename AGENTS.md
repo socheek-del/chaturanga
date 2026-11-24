@@ -16,7 +16,7 @@ Chaturanga is a family of chess games. Each game is its own web PWA product:
 - **Janggi** (Korean chess): live (`apps/janggi/docs/PLAN.md`). Its design is "Dancheong"
   (`apps/janggi/docs/design.md`), proposed and awaiting owner approval. Passing and points made the platform
   learn decided repetitions and chosen start positions (`plat-019`).
-- **Three-player chess**: a three-person pass-and-play product in progress (`apps/threechess/docs/PLAN.md`).
+- **Three-player chess**: a live three-person pass-and-play product (`apps/threechess/docs/PLAN.md`).
   Its custom 96-cell ring rules are documented in `packages/threechess/RULES.md`; generic player seats
   (`plat-020`) support its three turns. It has no AI or online play in v1.
 - Others may follow.
@@ -168,7 +168,7 @@ broken starting state.
     (`RULES.md`), implementing the generic Variant with three named seats.
   - `apps/threechess/web`, `apps/threechess/worker`: the Three-player chess product
     (`apps/threechess/AGENTS.md`). English-only pass-and-play PWA, 8 files by 12 ranks, Worker on :8793,
-    and its own D1 and subdomain. No AI or online rooms in v1.
+    and its own subdomain. The owner approved launching v1 without D1 because games save in the browser.
   - `apps/beanroti/web/public/apps.json`: source catalog for app.beanroti.com, served by the independent
     `apps/beanroti/worker` Worker. Add directory entries here; only publish them after their destination is live.
   - `packages/uno` (`@chaturanga/uno`): the card game Uno as a pure, seeded, serialisable state machine with

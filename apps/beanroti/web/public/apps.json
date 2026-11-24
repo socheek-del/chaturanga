@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-23T17:19:18.000Z",
+  "generatedAt": "2026-11-24T01:36:58.321Z",
   "categories": [
     "Games",
     "Learn",
@@ -126,7 +126,7 @@
       "icon": "https://three-player-chess.beanroti.com/favicon.svg",
       "source": "worker",
       "service": "three-player-chess",
-      "up": false
+      "up": true
     },
     {
       "host": "wardrobe.beanroti.com",

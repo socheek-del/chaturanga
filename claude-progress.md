@@ -1122,3 +1122,9 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
 - Wrangler authenticated and listed ten D1 databases. New online releases need capacity under the dedicated-database design. No plan, database or DNS settings changed. Authored titles need permission or a suitable license for faithful publication.
 - Next feature is the classical Shatranj pilot. The rules source and release requirements are in the roadmap. Keep the catalog update behind production verification.
 - `./init.sh` passed under Node 22.23.1 after the fixture fix, including npm install and all workspace verification. Validated all 42 roadmap rows against the source, parsed the feature list as JSON, and ran `git diff --check`.
+
+### Session 034 (Melon deployment target)
+
+- Owner directed all deployments to Melon over SSH, with Cloudflare reserved for a confirmed Melon limitation. The earlier D1 quota is historical evidence and does not block Melon.
+- Verified Docker, Compose, Caddy and seven standalone workerd game containers through `ssh melon`. Makruk and Three-player Chess passed loopback health checks. No server state changed. Public routing, persisted online state across container replacement and the catalog release path still need verification.
+- Canceled the previous Actions run before any Cloudflare deploy completed. CI now verifies and builds. Subsequent releases use the Melon path. Recorded the platform preparation and revised rollout in the roadmap and feature list.

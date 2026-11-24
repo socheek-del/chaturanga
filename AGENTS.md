@@ -62,11 +62,13 @@ broken starting state.
   - locale content and its list of languages
   - PWA manifest, site address
   - README
-  - Worker and D1 database
+  - server service and isolated persistent storage for online play
 
   Adding a game must never edit another game's files.
-- **Separate products.** Each game has its own site on its own subdomain, brand, PWA, languages, Worker and
-  D1. Games link to each other only through a "more games" section (plat-006).
+- **Separate products.** Each game has its own subdomain, brand, PWA, languages, server service and
+  isolated online storage. Games link to each other only through a "more games" section (plat-006).
+- **Deployment.** Deploy all games and the app directory on Melon via `ssh melon`. Use Cloudflare only
+  when a documented Melon limitation prevents delivery. See `docs/CHESS-LIKE-ROADMAP.md`.
 - **Design.** Each game has its own design identity built on shared component primitives. Never copy
   Duolingo's look (fonts, colours, chunky buttons, zig-zag path). This is an owner decision because of legal risk.
 - **Languages per product.** Makruk is Thai (default) and English. Sittuyin is Burmese (default, Unicode
@@ -178,16 +180,15 @@ broken starting state.
     and a Fairy-Stockfish game review; the site is cross-origin isolated for the engine's threads.
 - **Commands:**
   - `npm run verify`: lint, typecheck and unit tests in every workspace.
-  - `npm run dev` / `npm run e2e` / `npm run build` / `npm run deploy`: currently run the Makruk product.
-    `dev:makruk`, `build:makruk` and `deploy:makruk` name it explicitly.
-  - `npm run dev:threechess`, `npm run build:threechess`, `npm run deploy:threechess` for Three-player chess;
-    `npm run build:beanroti-apps` and `npm run deploy:beanroti-apps` for the app directory.
+  - `npm run dev`, `npm run e2e` and `npm run build` target Makruk. Product-specific commands include
+    `npm run dev:threechess`, `npm run build:threechess` and `npm run build:beanroti-apps`.
+  - Existing `npm run deploy:*` scripts target Cloudflare and are reserved for fallback.
   - `npm run test:deep -w packages/<game>`: perft to every depth plus 400 lock-step games against ffish.
 - **License:** GPL-3.0 (public repo; Fairy-Stockfish WASM is allowed).
 - **Source control:** remote `git@github-socheek-del:socheek-del/chaturanga.git` (renamed from `Makruk`;
   the old URL redirects). Branch `main`. Conventional Commits.
-- **CI:** `.github/workflows/ci.yml` runs verify and build on every push and PR, and on push to `main`
-  deploys each product whose own folders — or a shared package — changed.
+- **CI:** `.github/workflows/ci.yml` runs verify and build on main pushes and PRs. Deploy verified
+  increments to Melon and run production smoke before changing the live app directory.
   `.github/workflows/strength.yml` runs a bot ladder on demand for any of the bot packages.
 
 ## Required Artifacts

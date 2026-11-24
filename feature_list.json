@@ -2905,70 +2905,88 @@
         "Confirmed fill, glyph color, and shape in Chrome at widths of 390 and 1280 pixels and reviewed both screenshots. All three game browser tests passed."
       ]
     },
-  {
-    "id": "plat-021",
-    "product": "platform",
-    "priority": 138,
-    "area": "planning",
-    "milestone": "M24",
-    "title": "Plan the Wikipedia chess-like games rollout",
-    "user_visible_behavior": "The roadmap inventories each entry, specifies release order and minimum modes, and records delivery dependencies.",
-    "status": "passing",
-    "verification": [
-      "Compare the roadmap table to every entry in the Wikipedia section.",
-      "Check GitHub main, CI status and Cloudflare D1 capacity."
-    ],
-    "evidence": [
-      "2026-11-24: 42 entries reconciled, including 7 existing products and 35 new products. GitHub main and Actions reachable. Wrangler listed 10 D1 databases. See docs/CHESS-LIKE-ROADMAP.md."
-    ]
-  },
-  {
-    "id": "shatranj-001",
-    "product": "shatranj",
-    "priority": 139,
-    "area": "release",
-    "milestone": "M24",
-    "title": "Release Shatranj with bots and multiplayer",
-    "user_visible_behavior": "Players can complete classical Shatranj games against a bot, locally with another person, and in an online invite room.",
-    "status": "not_started",
-    "verification": [
-      "Pin and test classical rules and Variant conformance.",
-      "Verify human versus bot for both seats, local play, and an online game including reconnect.",
-      "Build and deploy the PWA and Worker, smoke the production site, and verify the catalog listing."
-    ],
-    "evidence": [],
-    "notes": "First new product in docs/CHESS-LIKE-ROADMAP.md. Dedicated Cloudflare D1 capacity is required for online release."
-  },
-  {
-    "id": "tpc-006",
-    "product": "threechess",
-    "priority": 140,
-    "area": "ai",
-    "milestone": "M24",
-    "title": "Play Three-player Chess against bots",
-    "user_visible_behavior": "One human can play as any seat with bots filling the other two.",
-    "status": "not_started",
-    "verification": [
-      "Play a complete game as each human seat and check bot legality, elimination, and legal fallback.",
-      "Verify existing local saves and pass-and-play in a browser."
-    ],
-    "evidence": []
-  },
-  {
-    "id": "tpc-007",
-    "product": "threechess",
-    "priority": 141,
-    "area": "online",
-    "milestone": "M24",
-    "title": "Play Three-player Chess in online invite rooms",
-    "user_visible_behavior": "Three people can join a private room and finish a server-validated game.",
-    "status": "blocked",
-    "verification": [
-      "Exercise three authenticated seats, reconnect, move rejection, elimination, and terminal game state.",
-      "Verify all three seats in production after the dedicated database and Worker deploy."
-    ],
-    "evidence": [],
-    "notes": "Cloudflare lists 10 databases, filling the current D1 allocation. The existing release uses browser storage."
-  }
+    {
+      "id": "plat-021",
+      "product": "platform",
+      "priority": 138,
+      "area": "planning",
+      "milestone": "M24",
+      "title": "Plan the Wikipedia chess-like games rollout",
+      "user_visible_behavior": "The roadmap inventories each entry, specifies release order and minimum modes, and records delivery dependencies.",
+      "status": "passing",
+      "verification": [
+        "Compare the roadmap table to every entry in the Wikipedia section.",
+        "Check GitHub main, CI status and Melon deployment access."
+      ],
+      "evidence": [
+        "2026-11-24: 42 entries reconciled, including 7 existing products and 35 new products. GitHub main and Actions reachable. SSH to Melon and two running Melon game origins verified. See docs/CHESS-LIKE-ROADMAP.md."
+      ]
+    },
+    {
+      "id": "plat-022",
+      "product": "platform",
+      "priority": 139,
+      "area": "infra",
+      "milestone": "M24",
+      "title": "Make Melon releases repeatable",
+      "user_visible_behavior": "A verified main revision can be deployed, checked and rolled back on Melon with separate routes and durable online state per game.",
+      "status": "not_started",
+      "verification": [
+        "Stage a release via ssh melon and validate its loopback health, assets and WebSocket handshake.",
+        "Verify HTTPS, online state after a container restart, backup and restore, and a route rollback.",
+        "Verify the Beanroti catalog release on Melon."
+      ],
+      "evidence": [
+        "2026-11-24: SSH, Docker, Caddy and all seven self-hosted workerd game origins identified. Makruk and Three-player Chess loopback health passed."
+      ]
+    },
+    {
+      "id": "shatranj-001",
+      "product": "shatranj",
+      "priority": 140,
+      "area": "release",
+      "milestone": "M24",
+      "title": "Release Shatranj with bots and multiplayer",
+      "user_visible_behavior": "Players can complete classical Shatranj games against a bot, locally with another person, and in an online invite room.",
+      "status": "not_started",
+      "verification": [
+        "Pin and test classical rules and Variant conformance.",
+        "Verify human versus bot for both seats, local play, and an online game including reconnect.",
+        "Build and deploy the PWA and server on Melon, smoke the production site, and verify the catalog listing."
+      ],
+      "evidence": [],
+      "notes": "First new product in docs/CHESS-LIKE-ROADMAP.md. Online release uses the Melon deployment path."
+    },
+    {
+      "id": "tpc-006",
+      "product": "threechess",
+      "priority": 141,
+      "area": "ai",
+      "milestone": "M24",
+      "title": "Play Three-player Chess against bots",
+      "user_visible_behavior": "One human can play as any seat with bots filling the other two.",
+      "status": "not_started",
+      "verification": [
+        "Play a complete game as each human seat and check bot legality, elimination, and legal fallback.",
+        "Verify existing local saves and pass-and-play in a browser."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "tpc-007",
+      "product": "threechess",
+      "priority": 142,
+      "area": "online",
+      "milestone": "M24",
+      "title": "Play Three-player Chess in online invite rooms",
+      "user_visible_behavior": "Three people can join a private room and finish a server-validated game.",
+      "status": "not_started",
+      "verification": [
+        "Exercise three authenticated seats, reconnect, move rejection, elimination, and terminal game state.",
+        "Verify all three seats in production after the Melon service and isolated store are deployed."
+      ],
+      "evidence": [],
+      "notes": "Depends on Melon deployment and durable per-game online storage. The existing release uses browser storage."
+    }
   ]
 }

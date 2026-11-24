@@ -1,9 +1,11 @@
 # Chaturanga platform plan
 
+Deployment decision, 2026-11-24. Deploy every product and the app directory to Melon over SSH. Use Cloudflare only if a documented Melon limitation prevents delivery. The existing standalone workerd origins and Caddy routing are the starting point. The rollout and release checks are in [the chess-like games roadmap](CHESS-LIKE-ROADMAP.md).
+
 Owner decisions, 2026-09-14:
 
 - One monorepo for a family of traditional strategy games. It will be renamed from `Makruk` to **`chaturanga`**, after the common ancestor of Makruk, Sittuyin, Shogi and Xiangqi.
-- Every game is a **separate product**: its own site, brand, PWA, languages, lessons, Worker and D1 database. Games never share one UI. The only link between them is a "more games" section and footer.
+- Every game is a **separate product**: its own site, brand, PWA, languages, lessons, server service and isolated persistent storage for online play. Games never share one UI. The only link between them is a "more games" section and footer.
 - Sites live on **subdomains** for now. Parent domains are temporary, so no code, image or doc hardcodes them. Each app reads its address from its own config, as Makruk does today with `apps/web/site.config.ts`.
 - **Sittuyin (Burmese chess)** is the second game. Its languages are Burmese (default) and English. Makruk stays Thai (default) and English.
 - **Xiangqi (Chinese chess)** is the third game, planned 2026-09-15. Its languages are Simplified Chinese (default) and English. Full plan: `apps/xiangqi/docs/PLAN.md`. It is the first game to break the 8x8-board and pieces-on-squares assumptions the platform code carried from Makruk and Sittuyin (9x10 board, pieces on intersections); the platform-prep features `plat-007..010` remove those assumptions generically before Xiangqi's own features (`xq-001..011`) build on them.
@@ -25,7 +27,7 @@ A game's identity lives in its app:
 - locale content: `pieces`, `about`, `seo`
 - the list of languages, the default language and fonts
 - PWA manifest, site address, README, `AGENTS.md`
-- Worker name and D1 database
+- Server service and isolated online storage
 
 Adding a game must never edit another game's files.
 
@@ -102,7 +104,7 @@ export default { id: 'sittuyin', locales: ['my', 'en'], defaultLocale: 'my', fon
 
 ## Order of work
 
-Every step leaves Makruk green: `npm run verify`, `npm run e2e`, CI deploy.
+Every step leaves Makruk green: `npm run verify`, `npm run e2e`, and production smoke after a Melon release.
 
 1. **Sittuyin rules engine (M9: sit-001..003).** A new pure package checked against Fairy-Stockfish's `sittuyin` variant, the way Makruk was. Nothing else changes. A second real engine is what the shared interface gets designed from.
 2. **Platform extraction (M10: plat-002..006).**

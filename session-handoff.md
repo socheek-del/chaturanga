@@ -20,3 +20,5 @@ plat-022 passed. The 8ee28c4 Makruk and Beanroti stages, migrations and repeat r
 ## Shatranj
 
 The classical engine, rule fixtures and seeded Fairy-Stockfish comparison are complete in `packages/shatranj`. Next build the bot and product, then verify the tutorial, both human bot seats, local and invite play, and the public Melon release.
+
+Update: Shatranj now has its bot, PWA, tutorial and server. Local Playwright passed all five scenarios. Stage the pushed product on Melon and verify production build assets and a real room. Public DNS for `shatranj.beanroti.com` was absent and the available token lacks DNS edit. The existing game certificate covers seven explicit names and omits Shatranj. Once DNS resolves to Melon, configure Caddy to obtain TLS for the new hostname, run public HTTPS and WebSocket smoke, then publish the directory entry.

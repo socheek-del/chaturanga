@@ -1151,3 +1151,5 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
 - Added classical Shatranj in `packages/shatranj`. The rules contract documents setup, alfil leaps, ferz promotion, decisive stalemate, reciprocal baring and digital draw conventions.
 - Node 22 typecheck passed. Shatranj tests passed 21/21, including Variant conformance and 12 seeded Fairy-Stockfish games up to 160 plies. Shared result tests passed 36/36.
 - The Shatranj feature remains in progress. Next is a bounded bot using ai-core, followed by the tutorial, local and online UI and the Melon release.
+- Added the bounded bot and the Shatranj PWA with local play, both bot sides, an interactive tutorial, and server-validated invite rooms. Bot tests passed 2/2, tutorial validation passed 11/11, Playwright passed 5/5, and the production build and Worker dry run passed. Reviewed desktop and phone renders.
+- Public rollout still needs a DNS record for `shatranj.beanroti.com` and a certificate for the new name. The available zone credential is read-only. DNS access was requested while Melon staging continues. Directory publication stays behind public smoke.

@@ -2959,9 +2959,10 @@
         "Build and deploy the PWA and server on Melon, smoke the production site, and verify the catalog listing."
       ],
       "evidence": [
-        "2026-11-24: Node 22 typecheck passed; 21 Shatranj rules and conformance tests passed, including 12 seeded Fairy-Stockfish games. Shared rules-core tests passed 36/36."
+        "2026-11-24: Node 22 typecheck passed; 21 Shatranj rules and conformance tests passed, including 12 seeded Fairy-Stockfish games. Shared rules-core tests passed 36/36.",
+        "2026-11-24: Bot tests passed 2/2, tutorial data passed 11/11, Playwright passed 5/5 for tutorial completion, both bot seats, local persistence, and invite reconnect. The PWA build and server dry run passed."
       ],
-      "notes": "First new product in docs/CHESS-LIKE-ROADMAP.md. Online release uses the Melon deployment path."
+      "notes": "First new product in docs/CHESS-LIKE-ROADMAP.md. Online release uses the Melon deployment path. Public DNS for shatranj.beanroti.com is pending; the available zone login is read-only."
     },
     {
       "id": "tpc-008",

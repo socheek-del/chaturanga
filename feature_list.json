@@ -3125,7 +3125,8 @@
       "evidence": [
         "2026-11-24: Node 22 typecheck and all 35 rules tests passed. Rules-core passed 37 checks and protocol passed 3 with the generic goal-square result.",
         "2026-11-24: The board and shell regression checks passed, bot checks passed 2/2, tutorial checks passed 16/16 and local browser scenarios passed 6/6, including a saved citadel draw and both bot sides.",
-        "2026-11-24: Melon stage f1206a7 on port 19906 applied its migration and passed all seven browser scenarios, including a persisted citadel draw and offline play. Full repository verification passed."
+        "2026-11-24: Melon stage f1206a7 on port 19906 applied its migration and passed all seven browser scenarios, including a persisted citadel draw and offline play. Full repository verification passed.",
+        "2026-11-24: Updated Melon stage a48a53d on port 19907 improves contrast of pawn identities for both sides. All seven checks passed again and the phone board was visually verified."
       ],
       "notes": "Melon stage is ready. Public launch requires DNS for tamerlane.beanroti.com before TLS, promotion and public smoke."
     },
@@ -3137,7 +3138,7 @@
       "milestone": "M28",
       "title": "Release traditional Mongolian Shatar",
       "user_visible_behavior": "Players learn the traditional setup, bers and checking rules, then play either side against a bot, locally or through private online rooms.",
-      "status": "in_progress",
+      "status": "blocked",
       "verification": [
         "Verify the traditional setup, promotion and the history-sensitive mate outcomes against Fairy-Stockfish, plus Variant conformance.",
         "Complete the interactive tutorial and verify both bot sides, local saves and private room reconnect.",
@@ -3145,8 +3146,26 @@
       ],
       "evidence": [
         "2026-11-24: Node 22 typecheck and all 26 Shatar tests passed, including shared conformance, eight seeded stock Fairy-Stockfish comparisons and four exact reference endings. Shared rules-core and protocol checks also passed.",
-        "2026-11-24: Bot checks 3/3, tutorial checks 13/13 and local browser scenarios 7/7 passed, including both restricted-mate outcomes and online reconnect."
-      ]
+        "2026-11-24: Bot checks 3/3, tutorial checks 13/13 and local browser scenarios 7/7 passed, including both restricted-mate outcomes and online reconnect.",
+        "2026-11-24: Melon stage 0581e7b on port 19908 applied its migration and passed all eight browser scenarios, including offline play and both restricted-mate results."
+      ],
+      "notes": "Melon stage is ready. Public launch requires DNS for shatar.beanroti.com before TLS, promotion and public smoke."
+    },
+    {
+      "id": "hia-001",
+      "product": "hiashatar",
+      "priority": 170,
+      "area": "release",
+      "milestone": "M29",
+      "title": "Release Hiashatar",
+      "user_visible_behavior": "Players learn the bodyguard zone and play the ten-file game against a bot, locally or in a private online room.",
+      "status": "in_progress",
+      "verification": [
+        "Pin the bodyguard interpretation and verify both zone entry and starting inside it, pawn advances and every en passant target, and Variant conformance.",
+        "Complete the interactive tutorial and verify both bot sides, local saves and private room reconnect.",
+        "Stage on Melon, verify public HTTPS and WebSocket play, then publish the catalog entry."
+      ],
+      "evidence": []
     }
   ]
 }

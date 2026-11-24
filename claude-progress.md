@@ -1232,3 +1232,11 @@ Select the traditional bers, fixed double d-pawn opening and history-sensitive m
 Shatar’s rule package passed typecheck and all 26 tests. It matched the stock oracle across seeded play and four exact mate outcomes. The engine persists both checking streaks. Next wire the PWA, bot and lessons. The independent Tamerlane product checkpoint also passed full repository verification.
 
 Shatar’s PWA, bot, tutorial and isolated invite-room server are locally verified. Bot checks passed 3/3, tutorial checks 13/13 and local browser scenarios 7/7. Those browser checks include the different saved outcomes for a lone horse mate and a camel mate without shak. Stage the production build next.
+
+Shatar stage 0581e7b is healthy on Melon port 19908 in `~/chaturanga-release.shatar.dkiN4E`. It applied its migration and passed all eight staged browser checks. Public DNS remains absent.
+
+Tamerlane's higher contrast pawn badges now pass on a phone. Promote the newer stage a48a53d on port 19907 in `~/chaturanga-release.tamerlane.i0KJt0` once DNS is ready. All seven staged browser checks passed again.
+
+### Hiashatar
+
+Select Mats Winther’s documented reconstruction of the 10×10 game. Use enemy-only bodyguard zones, retain the horse exemption, and exclude the hia from checking the noyon. Implement single, double and triple initial pawn advances and the two possible en passant targets after a triple advance. Verify the starting array and pawn promotion against the same reconstruction.

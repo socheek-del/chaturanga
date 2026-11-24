@@ -27,6 +27,12 @@ docker run --rm --user "$(id -u):$(id -g)" --env HOME=/release \
     node scripts/melon/stage-config.mjs "$1"
   ' sh "$product" "$runtime"
 
+# Only the transient migration container can reach its loopback SQL worker.
+docker run --rm --network none --user "$(id -u):$(id -g)" \
+  --mount "type=bind,src=$stage,dst=/release" \
+  --mount type=bind,src=/etc/ssl/certs,dst=/etc/ssl/certs,readonly \
+  --workdir "/release/apps/$product/worker" "$image" node /release/scripts/melon/migrate.mjs
+
 docker run --detach --name "$container" --label "chaturanga.revision=$revision" \
   --user "$(id -u):$(id -g)" --network host \
   --mount "type=bind,src=$stage,dst=/release" \

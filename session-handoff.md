@@ -11,7 +11,7 @@
 - `./init.sh` passed using Node 22.23.1 from `/private/tmp/node22/node_modules/.bin` on this machine.
 - All seven Melon origins returned HTTP 200 on ports 19787–19793. The existing Caddy and workerd containers are live.
 - The isolated Makruk probe on port 19887 verified static assets, authenticated room creation, WebSocket state and recovery after restarting the container. Its state and bundle scratch directory are separate from production.
-- `scripts/melon/stage.sh <product> <full-commit-sha> <free-loopback-port>` builds a committed archive and starts a separate stage. It does not modify Caddy. Use product health and assets to confirm the stage, then record evidence.
+- `scripts/melon/stage.sh <product> <full-commit-sha> <free-loopback-port>` builds a pinned commit and starts a separate stage. It does not modify Caddy. Use product health and assets to confirm the stage, then record evidence.
 
 ## Remaining release verification
 

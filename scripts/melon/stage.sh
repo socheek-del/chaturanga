@@ -13,11 +13,19 @@ cd "$(git rev-parse --show-toplevel)"
 git cat-file -e "$revision:apps/$product/worker/wrangler.jsonc"
 git cat-file -e "$revision:scripts/melon/run-stage.sh"
 
-# All fields passed to the remote shell are validated above.
-git archive "$revision" | ssh melon "set -eu
+origin=$(git remote get-url origin)
+if [[ ! $origin =~ ^https://github\.com/[a-zA-Z0-9_.-]+/[a-zA-Z0-9_.-]+$ ]]; then
+  echo 'Set origin to the repository HTTPS URL before staging on Melon.' >&2
+  exit 2
+fi
+
+# Melon fetches the pinned commit directly from GitHub.
+ssh melon "set -eu
   umask 077
   stage=\$(mktemp -d \"\$HOME/chaturanga-release.$product.XXXXXX\")
   printf 'Stage directory: %s\\n' \"\$stage\"
-  tar -xf - -C \"\$stage\"
   cd \"\$stage\"
+  git init -q
+  git fetch -q --depth=1 --no-tags $origin $revision
+  git -c advice.detachedHead=false checkout -q --detach FETCH_HEAD
   exec bash scripts/melon/run-stage.sh $product $revision $port"

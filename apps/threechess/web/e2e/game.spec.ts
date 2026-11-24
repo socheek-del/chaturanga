@@ -48,3 +48,38 @@ test('keeps the board inside a phone viewport', async ({ page }) => {
   expect(dimensions.document).toBeLessThanOrEqual(dimensions.viewport);
   expect(dimensions.board).toBeLessThanOrEqual(dimensions.viewport);
 });
+
+for (const width of [390, 1280]) {
+  test(`teaches the complete guided tutorial at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 844 });
+    await page.getByRole('button', { name: 'Start tutorial' }).click();
+    const next = () => page.getByRole('button', { name: 'Continue', exact: true }).click();
+    await next();
+    for (const [from, to] of [['d10', 'd9'], ['j4', 'i5'], ['d4', 'e4']]) {
+      await page.getByTestId(`cell-${from}`).click();
+      await page.getByTestId(`cell-${to}`).click();
+      await expect(page.getByRole('status')).toHaveAttribute('data-result', 'correct');
+      await next();
+    }
+    await next();
+    const promotion = async (piece: string) => {
+      await page.getByTestId('cell-f2').click();
+      await page.getByTestId('cell-f1').click();
+      await page.getByRole('button', { name: `Promote to ${piece}` }).click();
+    };
+    await promotion('queen');
+    await expect(page.getByRole('status')).toHaveAttribute('data-result', 'wrong');
+    await promotion('knight');
+    await expect(page.getByRole('status')).toHaveAttribute('data-result', 'correct');
+    await next();
+    await page.getByTestId('cell-i1').click();
+    await page.getByTestId('cell-g2').click();
+    await expect(page.getByRole('status')).toHaveAttribute('data-result', 'correct');
+    await next();
+    await page.getByRole('button', { name: 'Their turn passes' }).click();
+    await page.getByRole('button', { name: 'Check answer' }).click();
+    await next();
+    await expect(page.getByRole('heading', { name: 'Tutorial complete' })).toBeVisible();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+  });
+}

@@ -262,3 +262,36 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px soli
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
+
+.tutorial-link {
+  margin-left: 1rem;
+  border: 0;
+  background: none;
+  color: var(--gold);
+  font-size: .9rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.tutorial-link:hover { text-decoration: underline; }
+.tutorial-layout {
+  width: min(100% - 1.4rem, 43rem);
+  margin: 1.3rem auto 3rem;
+  display: grid;
+  justify-items: start;
+  gap: .85rem;
+}
+.tutorial-header { display: flex; width: 100%; align-items: baseline; justify-content: space-between; gap: .8rem; }
+.tutorial-layout h1 { margin: 0; font: 500 clamp(1.65rem, 4vw, 2.5rem) Georgia, serif; }
+.tutorial-header span { white-space: nowrap; color: var(--gold); font-size: .78rem; }
+.tutorial-layout .board-frame { width: min(100%, 31rem); justify-self: center; }
+.tutorial-prompt { margin: 0; color: var(--ink); max-width: 60ch; }
+.tutorial-choices { display: flex; flex-wrap: wrap; gap: .5rem; }
+.tutorial-choices .quiet-button { width: auto; padding-inline: .85rem; }
+.tutorial-choices .quiet-button[aria-pressed='true'] { border-color: var(--gold); color: var(--gold); }
+.tutorial-feedback { margin: 0; font-weight: 700; }
+.tutorial-feedback.correct { color: #b7d3a9; }
+.tutorial-feedback.wrong { color: #ffaf9f; }
+
+@media (max-width: 380px) {
+  .tutorial-link { margin: .9rem 0 0; display: block; }
+}

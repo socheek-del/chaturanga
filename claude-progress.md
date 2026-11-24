@@ -1155,3 +1155,8 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
 - Public rollout still needs a DNS record for `shatranj.beanroti.com` and a certificate for the new name. The available zone credential is read-only. DNS access was requested while Melon staging continues. Directory publication stays behind public smoke.
 - `npm run verify` passed across the workspace. Melon stage `9232a07` is healthy on loopback port 19897 under `chaturanga-stage-shatranj-19897`. Its database migration applied. Playwright against the staged build over SSH passed 6/6, including offline play and result settlement.
 - Shatranj is blocked on public DNS and new-host TLS. Keep the staged container and isolated state available. After public HTTPS and multiplayer smoke, announce Shatranj in the live catalog and mark shatranj-001 passing. The next active feature is the Three-player Chess tutorial (tpc-008).
+
+### Session 038 (Three-player Chess tutorial)
+
+- Added an eight-step tutorial on the existing hex board. It teaches the three pawn directions, piece movement, promotion, checkmate elimination and stalemate, with incorrect-answer feedback. The tutorial keeps the local game save separate.
+- Node 22 typecheck passed, web unit tests passed 3/3 and local Playwright passed 5/5, including the full tutorial at 390px and 1280px. Melon release is next. Shatranj public DNS is still pending.

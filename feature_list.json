@@ -2976,9 +2976,12 @@
       "status": "in_progress",
       "verification": [
         "Validate tutorial positions and answers against the hex rules engine.",
-        "Complete the tutorial from the home page on desktop and mobile and verify feedback for incorrect answers."
+        "Complete the tutorial from the home page on desktop and mobile and verify feedback for incorrect answers.",
+        "Deploy and complete the tutorial smoke against the Melon release."
       ],
-      "evidence": []
+      "evidence": [
+        "2026-11-24: Typecheck, 3 web unit tests, and all 5 local browser scenarios passed. Tutorial completed at both 390px and 1280px."
+      ]
     },
     {
       "id": "tpc-006",

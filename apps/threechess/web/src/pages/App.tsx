@@ -1,28 +1,14 @@
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MoreGames } from '@chaturanga/game-shell/ui';
-import { Game, hexAt, RADIUS, SIZE, parseSquare, squareName, threechess } from '@chaturanga/threechess';
-import type { Player, PieceType, SeatStatus } from '@chaturanga/threechess';
+import { Game, threechess } from '@chaturanga/threechess';
+import type { Player, SeatStatus } from '@chaturanga/threechess';
+import { GLYPHS, HexBoard, parseUci, PromotionPicker, type ParsedMove } from './HexBoard';
+import { Tutorial } from './Tutorial';
 
-type Screen = 'home' | 'game';
-type ParsedMove = { uci: string; from: number; to: number; promotion?: Exclude<PieceType, 'p' | 'k'> };
+type Screen = 'home' | 'game' | 'tutorial';
 const STORAGE_KEY = 'threechess:hex:v1';
 const PLAYERS: readonly Player[] = ['w', 'b', 'r'];
-const FILES = 'abcdefghijk';
-const GLYPHS: Record<Player, Record<PieceType, string>> = {
-  w: { k: '♔', q: '♕', r: '♖', b: '♗', n: '♘', p: '♙' },
-  b: { k: '♚', q: '♛', r: '♜', b: '♝', n: '♞', p: '♟' },
-  r: { k: '♚', q: '♛', r: '♜', b: '♝', n: '♞', p: '♟' },
-};
-
-function parseUci(uci: string): ParsedMove | null {
-  const match = /^([a-k](?:1[01]|[1-9]))([a-k](?:1[01]|[1-9]))([qrbn])?$/.exec(uci);
-  if (!match) return null;
-  const from = parseSquare(match[1]!);
-  const to = parseSquare(match[2]!);
-  if (from === null || to === null) return null;
-  return { uci, from, to, ...(match[3] ? { promotion: match[3] as ParsedMove['promotion'] } : {}) };
-}
 
 function loadGame(): Game {
   try {
@@ -62,11 +48,6 @@ function statusLabel(status: SeatStatus, t: (key: string) => string): string {
     winner: t('players.winner'),
   };
   return labels[status] ?? labels.playing;
-}
-
-function getPieceLabel(piece: ReturnType<Game['pieceAt']>, t: (key: string, options?: Record<string, string>) => string) {
-  if (!piece) return '';
-  return ` · ${t('pieces.withOwner', { player: t(`players.${piece.color}`), piece: t(`pieces.${piece.type}`) })}`;
 }
 
 export function App() {
@@ -164,6 +145,7 @@ export function App() {
               <button className="primary-button" onClick={() => { setScreen('game'); setRevision((value) => value + 1); }}>
                 {t('home.play')}<span aria-hidden="true">↗</span>
               </button>
+              <button className="tutorial-link" type="button" onClick={() => setScreen('tutorial')}>{t('tutorial.start')} <span aria-hidden>↗</span></button>
               <p className="play-note">{t('home.note')}</p>
             </div>
             <div className="hero-art" aria-hidden="true">
@@ -194,6 +176,8 @@ export function App() {
           </section>
           <MoreGames sites={__FAMILY__} locale="en" variant="section" />
         </main>
+      ) : screen === 'tutorial' ? (
+        <Tutorial onExit={() => setScreen('home')} />
       ) : (
         <main className="game-layout">
           <div className="game-heading">
@@ -221,56 +205,11 @@ export function App() {
 
           <div className="play-area">
             <section className="board-column" aria-label={t('game.turn', { player: t(`players.${game.turn}`) })}>
-              <div className="board-frame">
-                <div className="board-grid" role="grid" aria-label={t('game.turn', { player: t(`players.${game.turn}`) })}>
-                  {Array.from({ length: SIZE }, (_, rank) => rank).map((rank) => (
-                    <div className="board-row" role="row" key={rank} aria-label={t('game.boardLabel', { rank: rank + 1 })}>
-                      {Array.from({ length: SIZE }, (_, file) => {
-                        const q = file - RADIUS;
-                        const r = rank - RADIUS;
-                        const square = hexAt(q, r);
-                        if (square === null) return null;
-                        const shade = ((q - r) % 3 + 3) % 3;
-                        const piece = game.pieceAt(square);
-                        const destinationMoves = destinations.filter((move) => move.to === square);
-                        const capture = destinationMoves.length > 0 && !!piece;
-                        const isLast = square === lastParsed?.from || square === lastParsed?.to;
-                        const ariaPiece = getPieceLabel(piece, t);
-                        return (
-                          <button
-                            type="button"
-                            role="gridcell"
-                            key={square}
-                            data-testid={`cell-${squareName(square)}`}
-                            data-legal={destinationMoves.length > 0 || undefined}
-                            aria-label={t('game.squareLabel', { file: FILES[file], rank: rank + 1, piece: ariaPiece })}
-                            aria-pressed={selected === square}
-                            onClick={() => onSquareClick(square)}
-                            style={{ left: `${50 + (q + r / 2) * 100 / SIZE}%`, top: `${50 + r * 75 / 8.5}%` }}
-                            className={`square hex-shade-${shade} ${selected === square ? 'is-selected' : ''} ${destinationMoves.length ? 'is-destination' : ''} ${capture ? 'is-capture' : ''} ${isLast ? 'is-last-move' : ''}`}
-                          >
-                            {piece && <span className={`piece seat-token piece-${piece.color}`} aria-hidden="true">{GLYPHS[piece.color][piece.type]}</span>}
-                            {!piece && destinationMoves.length > 0 && <span className="move-dot" aria-hidden="true" />}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  ))}
-                </div>
-                {promotion && (
-                  <div className="promotion-popover" role="dialog" aria-label={t('game.promotion')}>
-                    <p>{t('game.promotion')}</p>
-                    <div className="promotion-options">
-                      {promotion.moves.map((move) => (
-                        <button key={move.uci} className="promotion-piece" onClick={() => playMove(move)} aria-label={t('game.promoteTo', { piece: t(`pieces.${move.promotion}`) })}>
-                          <span className={`seat-token piece-${game.turn}`} aria-hidden="true">{GLYPHS[game.turn][move.promotion!]}</span>
-                        </button>
-                      ))}
-                    </div>
-                    <button className="promotion-cancel" onClick={() => setPromotion(null)}>{t('game.cancel')}</button>
-                  </div>
-                )}
-              </div>
+              <HexBoard game={game} selected={selected} destinations={destinations} lastMove={lastParsed} onSquareClick={onSquareClick}>
+                {promotion && <PromotionPicker
+                  player={game.turn} moves={promotion.moves} onMove={playMove} onCancel={() => setPromotion(null)}
+                />}
+              </HexBoard>
               <p className="board-hint">{t('game.selectPiece')}</p>
             </section>
 

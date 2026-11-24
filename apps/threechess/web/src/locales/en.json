@@ -11,6 +11,34 @@
     "ruleBody": "Play on 91 hexagonal cells. Each army starts on a different edge. White moves first, then Black, then Red.",
     "details": "Read the rules"
   },
+  "tutorial": {
+    "title": "Learn the hex board",
+    "start": "Start tutorial",
+    "progress": "Step {{step}} of {{count}}",
+    "steps": {
+      "welcome": "Win by being the last king in play. Three armies start on different edges of a 91-cell hexagon. White goes first, then Black, then Red.",
+      "white": "White’s pawns advance away from White’s edge. Move the pawn from d10 to d9.",
+      "black": "Black’s pawns advance in a different direction. Move the pawn from j4 to i5.",
+      "red": "Red faces the third direction. Move the pawn from d4 to e4.",
+      "pieces": "Rooks follow hex edges, bishops follow corners, and queens do both. Kings take a single rook or bishop step. Knights jump two steps in one direction and one along a neighboring direction. Pawns capture on their two forward flanks.",
+      "promote": "At the far boundary, a pawn can become a queen, rook, bishop or knight. Move f2 to f1 and choose a knight.",
+      "mate": "Checkmate eliminates a player and leaves their remaining pieces as blockers. Red is already out. Move White’s queen from i1 to g2 to mate Black and win.",
+      "stalemate": "What happens when a player has no legal move and their king is safe?"
+    },
+    "choicesLabel": "Choose an answer",
+    "choices": {
+      "win": "They win",
+      "out": "They are eliminated",
+      "pass": "Their turn passes"
+    },
+    "correct": "Correct.",
+    "wrong": "That’s a different answer. Try again.",
+    "check": "Check answer",
+    "next": "Continue",
+    "complete": "Tutorial complete",
+    "summary": "You’ve practiced the three pawn directions, promotion and checkmate.",
+    "finish": "Back to game home"
+  },
   "game": {
     "turn": "{{player}} to move",
     "check": "Check — find a safe square",

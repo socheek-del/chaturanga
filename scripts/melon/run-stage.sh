@@ -16,9 +16,11 @@ if ss -ltnH "sport = :$port" | grep -q .; then
 fi
 
 npm_cache=$HOME/.cache/chaturanga/npm
-mkdir -p state "$npm_cache"
-docker run --rm --user "$(id -u):$(id -g)" --env HOME=/release --env npm_config_cache=/npm-cache \
-  --mount "type=bind,src=$npm_cache,dst=/npm-cache" \n  --mount "type=bind,src=$stage,dst=/release" --workdir /release "$image" \
+mkdir -p state .npm/_cacache "$npm_cache/_cacache"
+docker run --rm --user "$(id -u):$(id -g)" --env HOME=/release \
+  --mount "type=bind,src=$stage,dst=/release" \
+  --mount "type=bind,src=$npm_cache/_cacache,dst=/release/.npm/_cacache" \
+  --workdir /release "$image" \
   sh -ec '
     npx -y npm@11 ci --prefer-offline
     if [ -f "apps/$1/web/package.json" ]; then

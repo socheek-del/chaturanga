@@ -3059,7 +3059,9 @@
         "Complete the interactive tutorial and verify both bot roles, local play, and online reconnect in the browser.",
         "Stage on Melon, verify public HTTPS and WebSocket play, then publish the catalog entry."
       ],
-      "evidence": []
+      "evidence": [
+        "2026-11-24: Node 22 typecheck and all 18 rules tests passed, including Variant conformance, checkmates for both sides, and six seeded comparisons against configured Fairy-Stockfish."
+      ]
     }
   ]
 }

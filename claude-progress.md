@@ -1186,3 +1186,7 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
 - Chaturanga typecheck and 20/20 engine tests passed, including Variant conformance and eight seeded comparisons against a configured Fairy-Stockfish move oracle. Its stock Chaturanga variant uses different rules. Next add the bot, tutorial, PWA and online modes.
 - Chaturanga’s independent PWA, bounded bot Worker, tutorial and invite room server passed web and bot tests, five local Chromium scenarios and the production build. Reviewed desktop and phone visuals. Exact-SHA Melon stage and offline browser smoke are next. Public DNS for both Chaturanga and Shatranj is absent.
 - Staged exact Chaturanga revision 89604bb on Melon port 19902 and applied its database migration. Six staged Chromium tests passed, including offline PWA play. ctg-001 is blocked on DNS and TLS, like Shatranj. Keep both staging releases available. Next active feature is mhs-001.
+
+### Maharajah and the Sepoys rules
+
+The rule package passes typecheck and all 18 tests, including shared conformance, both checkmate outcomes and six seeded Fairy-Stockfish comparisons. Next add bots for both roles, an interactive tutorial and the PWA with invite rooms.

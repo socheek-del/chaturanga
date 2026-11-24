@@ -34,3 +34,5 @@ Online invite rooms are live from fe0b009 on Melon port 19901. Its database migr
 ## Next game
 
 Implement the two-player [al-Adli reconstruction](https://ludii.games/details.php?keyword=Chaturanga+%28al-Adli%29). Ludii documents orthogonal two-cell elephant leaps, opposite king files, victory for the stalemated king, and immediate bare-king victory. The preset Fairy-Stockfish Chaturanga differs, so configure an independent reference for the shared move rules and test the historical endings separately.
+
+The Chaturanga rules engine is in `packages/chaturanga` and passed 20 tests, including eight seeded reference playouts with a rules-matched Fairy-Stockfish configuration. Continue ctg-001 with the bot and its own web and worker product. Keep Shatranj staged pending DNS.

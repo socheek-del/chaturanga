@@ -3038,7 +3038,9 @@
         "Complete the tutorial and play local, both bot seats and a synchronized room in the browser.",
         "Stage on Melon, verify public HTTPS and WebSocket play, and publish the catalog entry."
       ],
-      "evidence": [],
+      "evidence": [
+        "2026-11-24: Node 22 typecheck and all 20 rules tests passed, including Variant conformance and eight seeded games against a Fairy-Stockfish configuration with the reconstructed setup and elephant move."
+      ],
       "notes": "Selected the documented al-Adli reconstruction. New public hostname and TLS need DNS edit access. Continue implementation while Shatranj public DNS is pending."
     }
   ]

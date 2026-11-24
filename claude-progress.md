@@ -1179,3 +1179,8 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
 - Full workspace verification passed. The Melon stage at port 19901 applied its database migration and passed all 11 browser scenarios. A fresh SSH tunnel fixed a transport timeout. A container restart preserved all three guest seats and the existing ply, and the connected browsers resumed play.
 - Promoted fe0b009 to the public Three-player Chess route. All 11 public Chromium checks passed. Published catalog revision 886f994 after public smoke and verified the live description. tpc-007 is passing. The renderer, rules fidelity, verified persistence and handoff meet the evaluator rubric.
 - Next is ctg-001, the documented al-Adli Chaturanga reconstruction. Its movement and endings are pinned in the handoff. Shatranj remains ready on port 19897 pending public DNS.
+
+### Session 041 (Chaturanga historical reconstruction)
+
+- Selected Ludii’s al-Adli reconstruction and verified its published model’s asymmetric king setup. Implemented orthogonal elephant leaps, immediate bare-king victory, and victory for a stalemated king. The rule contract documents far-rank promotion and digital draw conventions.
+- Chaturanga typecheck and 20/20 engine tests passed, including Variant conformance and eight seeded comparisons against a configured Fairy-Stockfish move oracle. Its stock Chaturanga variant uses different rules. Next add the bot, tutorial, PWA and online modes.

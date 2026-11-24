@@ -2981,7 +2981,8 @@
       ],
       "evidence": [
         "2026-11-24: Typecheck, 3 web unit tests, and all 5 local browser scenarios passed. Tutorial completed at both 390px and 1280px.",
-        "2026-11-24: Main CI passed for 35460b7. Melon staged and promoted the release to port 19898. All five browser scenarios passed on the public site, including both tutorial viewport sizes."
+        "2026-11-24: Main CI passed for 35460b7. Melon staged and promoted the release to port 19898. All five browser scenarios passed on the public site, including both tutorial viewport sizes.",
+        "2026-11-24: Coordinate labels from 3154fc8 are live on Melon port 19899. All five public tutorial and regression checks passed again."
       ]
     },
     {
@@ -2995,9 +2996,12 @@
       "status": "in_progress",
       "verification": [
         "Play a complete game as each human seat and check bot legality, elimination, and legal fallback.",
-        "Verify existing local saves and pass-and-play in a browser."
+        "Verify existing local saves and pass-and-play in a browser.",
+        "Deploy the bot build to Melon and run the public browser suite."
       ],
-      "evidence": []
+      "evidence": [
+        "2026-11-24: Bot tests 5/5 and browser tests 9/9 passed. All human seats played and restored separate saves, took back their last turn, and completed a checkmate from engine-validated endgames. The production PWA and Worker build passed."
+      ]
     },
     {
       "id": "tpc-007",

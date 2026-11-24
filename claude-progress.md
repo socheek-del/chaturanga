@@ -1162,3 +1162,9 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
 - Node 22 typecheck passed, web unit tests passed 3/3 and local Playwright passed 5/5, including the full tutorial at 390px and 1280px. Melon release is next. Shatranj public DNS is still pending.
 - Main CI passed at 35460b7. Promoted the tutorial on Melon port 19898 and verified the exact public bundle. All five public browser checks passed. Old origin retained for rollback.
 - tpc-008 is passing. Follow-up 3154fc8 adds labels for the two tutorial cells named in each prompt, verified in all five local browser tests. It is staging separately. Next active feature is Three-player Chess bots (tpc-006).
+
+### Session 039 (Three-player Chess bots)
+
+- Promoted 3154fc8 to port 19899 on Melon. All five public tutorial and local-mode regression checks passed.
+- Added a bounded three-seat Max-n opponent in a Web Worker. A human can choose any seat, play two bots, reload that seat's save and take back their last turn without touching pass-and-play.
+- Bot tests passed 5/5, typecheck and lint passed, and local Chromium passed 9/9. Verified all human seats, legal bot moves, fallback, persistence and checkmate endings. Production PWA build and server dry run passed. Bot mode remains in progress until staged and public smoke.

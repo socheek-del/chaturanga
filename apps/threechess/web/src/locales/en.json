@@ -39,6 +39,14 @@
     "summary": "You’ve practiced the three pawn directions, promotion and checkmate.",
     "finish": "Back to game home"
   },
+  "bot": {
+    "start": "Play two bots",
+    "choose": "Choose your seat",
+    "you": "{{player}} · You",
+    "seat": "{{player}} · Bot",
+    "thinking": "Bot is thinking…",
+    "note": "One player · Two computer opponents"
+  },
   "game": {
     "turn": "{{player}} to move",
     "check": "Check — find a safe square",

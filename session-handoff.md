@@ -27,4 +27,4 @@ Melon stage 9232a07 is healthy as `chaturanga-stage-shatranj-19897` in `~/chatur
 
 ## Three-player Chess
 
-The tutorial is live from 35460b7 on Melon port 19898 and all five public browser checks passed. Coordinate-label polish 3154fc8 passed local checks and is staging on port 19899. Before the next release, verify which build is currently routed. The next feature adds a human seat choice and two bots with independent browser saves.
+The tutorial and coordinate labels are live from 3154fc8 on Melon port 19899, with five public browser checks passing. Bot mode is implemented and passed five bot tests, nine local browser tests and the production build. It is ready to stage and promote before moving to tpc-007 online rooms.

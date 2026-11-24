@@ -85,3 +85,61 @@ for (const width of [390, 1280]) {
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
   });
 }
+
+for (const [seat, key, prior] of [['White', 'w', 0], ['Black', 'b', 1], ['Red', 'r', 2]] as const) {
+  test(`plays two computer opponents as ${seat} and restores its own save`, async ({ page }) => {
+    const enter = async () => {
+      await page.getByRole('button', { name: 'Play two bots' }).click();
+      await page.getByRole('button', { name: seat, exact: true }).click();
+    };
+    await enter();
+    await expect(page.getByText(`${seat} · You`, { exact: true })).toBeVisible();
+    await expect(page.locator('.turn-pill')).toContainText(`${seat} to move`);
+    await expect(page.locator('.move-entry')).toHaveCount(prior);
+
+    const fen = await page.evaluate((seatKey) => {
+      const value = localStorage.getItem(`threechess:hex:v1:bot:${seatKey}`);
+      return value ? (JSON.parse(value) as { fen: string }).fen : null;
+    }, key);
+    const { Game } = await import('@chaturanga/threechess');
+    const game = new Game(fen ?? undefined);
+    const move = game.legalUci()[0]!;
+    const [from, to] = move.match(/[a-k]\d{1,2}/g)!;
+    await page.getByTestId(`cell-${from}`).click();
+    await page.getByTestId(`cell-${to}`).click();
+    await expect(page.locator('.move-entry')).toHaveCount(prior + 3);
+    await expect(page.locator('.turn-pill')).toContainText(`${seat} to move`);
+    await page.reload();
+    await enter();
+    await expect(page.locator('.move-entry')).toHaveCount(prior + 3);
+    await page.getByRole('button', { name: 'Take back' }).click();
+    await expect(page.locator('.move-entry')).toHaveCount(prior);
+    await expect(page.locator('.turn-pill')).toContainText(`${seat} to move`);
+    await page.getByRole('link', { name: 'Game home' }).click();
+    await page.getByRole('button', { name: 'Set the board' }).click();
+    await expect(page.locator('.move-entry')).toHaveCount(0);
+  });
+}
+
+test('finishes a bot game by checkmate from every human seat', async ({ page }) => {
+  const { hexAt, parseSquare, RADIUS, SIZE } = await import('@chaturanga/threechess');
+  const players = [['w', 'White'], ['b', 'Black'], ['r', 'Red']] as const;
+  for (const [index, [seat, name]] of players.entries()) {
+    const victim = players[(index + 1) % players.length]![0];
+    const eliminated = players[(index + 2) % players.length]![0];
+    const board = Array.from({ length: SIZE * SIZE }, (_, square): string =>
+      hexAt(square % SIZE - RADIUS, Math.floor(square / SIZE) - RADIUS) === null ? '.' : '-');
+    board[parseSquare('f1')!] = victim + 'k';
+    board[parseSquare('h1')!] = seat + 'k';
+    board[parseSquare('i1')!] = seat + 'q';
+    const position = Array.from({ length: SIZE }, (_, row) => board.slice(row * SIZE, (row + 1) * SIZE).join(',')).join('/');
+    await page.evaluate(({ seat, fen }) => localStorage.setItem(`threechess:hex:v1:bot:${seat}`, fen),
+      { seat, fen: `${position} ${seat} - ${eliminated} -` });
+    await page.getByRole('button', { name: 'Play two bots' }).click();
+    await page.getByRole('button', { name, exact: true }).click();
+    await page.getByTestId('cell-i1').click();
+    await page.getByTestId('cell-g2').click();
+    await expect(page.locator('.result-card')).toContainText(`${name} wins`);
+    await page.getByRole('link', { name: 'Game home' }).click();
+  }
+});

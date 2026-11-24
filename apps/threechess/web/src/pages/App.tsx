@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MoreGames } from '@chaturanga/game-shell/ui';
 import { Game, threechess } from '@chaturanga/threechess';
@@ -6,13 +6,15 @@ import type { Player, SeatStatus } from '@chaturanga/threechess';
 import { GLYPHS, HexBoard, parseUci, PromotionPicker, type ParsedMove } from './HexBoard';
 import { Tutorial } from './Tutorial';
 
-type Screen = 'home' | 'game' | 'tutorial';
+type Screen = 'home' | 'game' | 'tutorial' | 'botSetup';
+type Mode = 'local' | Player;
 const STORAGE_KEY = 'threechess:hex:v1';
+const saveKey = (mode: Mode): string => mode === 'local' ? STORAGE_KEY : `${STORAGE_KEY}:bot:${mode}`;
 const PLAYERS: readonly Player[] = ['w', 'b', 'r'];
 
-function loadGame(): Game {
+function loadGame(mode: Mode): Game {
   try {
-    const saved = localStorage.getItem(STORAGE_KEY);
+    const saved = localStorage.getItem(saveKey(mode));
     if (saved) {
       try {
         const data: unknown = JSON.parse(saved);
@@ -32,9 +34,9 @@ function loadGame(): Game {
   }
 }
 
-function persistGame(game: Game) {
+function persistGame(game: Game, mode: Mode) {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ version: 2, fen: game.fen(), moves: game.moves().map(({ uci }) => uci) }));
+    localStorage.setItem(saveKey(mode), JSON.stringify({ version: 2, fen: game.fen(), moves: game.moves().map(({ uci }) => uci) }));
   } catch { /* Private browsing can disable local storage. */ }
 }
 
@@ -53,7 +55,8 @@ function statusLabel(status: SeatStatus, t: (key: string) => string): string {
 export function App() {
   const { t } = useTranslation();
   const [screen, setScreen] = useState<Screen>('home');
-  const [game, setGame] = useState(loadGame);
+  const [mode, setMode] = useState<Mode>('local');
+  const [game, setGame] = useState(() => loadGame('local'));
   const [revision, setRevision] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [promotion, setPromotion] = useState<{ moves: ParsedMove[]; target: number } | null>(null);
@@ -66,6 +69,35 @@ export function App() {
   const lastParsed = lastMove ? parseUci(lastMove.uci) : null;
   const result = game.status();
   const isFinished = game.isGameOver();
+  const thinking = screen === 'game' && mode !== 'local' && !isFinished && game.turn !== mode;
+  const canUndo = mode === 'local' ? game.moves().length > 0 : game.moves().some((move) => move.color === mode);
+
+  useEffect(() => {
+    if (!thinking) return;
+    const fallback = game.legalUci()[0];
+    if (!fallback) return;
+    let active = true;
+    const worker = new Worker(new URL('./bot.worker.ts', import.meta.url), { type: 'module' });
+    const respond = (suggested: string | null) => {
+      if (!active) return;
+      active = false;
+      const move = suggested && game.legalUci().includes(suggested) ? suggested : fallback;
+      game.move(move);
+      persistGame(game, mode);
+      setRevision((value) => value + 1);
+      setSelected(null);
+      setPromotion(null);
+    };
+    worker.onmessage = (event: MessageEvent<string | null>) => respond(event.data);
+    worker.onerror = () => respond(null);
+    worker.postMessage({ fen: game.fen(), earlierFens: game.moves().map((move) => move.fenAfter) });
+    const timeout = window.setTimeout(() => respond(null), 2000);
+    return () => {
+      active = false;
+      window.clearTimeout(timeout);
+      worker.terminate();
+    };
+  }, [game, mode, revision, thinking]);
 
   function refresh(next: Game = game) {
     setGame(next);
@@ -76,12 +108,12 @@ export function App() {
 
   function playMove(move: ParsedMove) {
     game.move(move.uci);
-    persistGame(game);
+    persistGame(game, mode);
     refresh();
   }
 
   function onSquareClick(square: number) {
-    if (isFinished || promotion) return;
+    if (isFinished || thinking || promotion) return;
     const options = selected === null ? [] : legalMoves.filter((move) => move.from === selected && move.to === square);
     if (options.length > 1) {
       setPromotion({ moves: options, target: square });
@@ -98,15 +130,23 @@ export function App() {
 
   function startNewGame(skipConfirm = false) {
     if (!skipConfirm && game.moves().length && !window.confirm(t('game.confirmReset'))) return;
-    try { localStorage.removeItem(STORAGE_KEY); } catch { /* Private browsing can disable local storage. */ }
+    try { localStorage.removeItem(saveKey(mode)); } catch { /* Private browsing can disable local storage. */ }
     refresh(new Game(threechess.startFen));
     setScreen('game');
     setResetOpen(false);
   }
 
+  function openGame(next: Mode) {
+    setMode(next);
+    refresh(loadGame(next));
+    setScreen('game');
+  }
+
   function takeBack() {
-    if (!game.undo()) return;
-    persistGame(game);
+    if (!canUndo) return;
+    let undone = game.undo();
+    while (mode !== 'local' && undone && undone.color !== mode) undone = game.undo();
+    persistGame(game, mode);
     refresh();
   }
 
@@ -125,7 +165,7 @@ export function App() {
         </a>
         {screen === 'game' && (
           <div className="top-actions">
-            <button className="quiet-button" onClick={takeBack} disabled={!game.moves().length} aria-label={t('game.undo')}>
+            <button className="quiet-button" onClick={takeBack} disabled={!canUndo} aria-label={t('game.undo')}>
               <span aria-hidden="true">↶</span><span className="button-label">{t('game.undo')}</span>
             </button>
             <button className="quiet-button" onClick={() => setResetOpen(true)} aria-label={t('game.newGame')}>
@@ -142,9 +182,10 @@ export function App() {
               <p className="eyebrow"><span className="eyebrow-dot" />{t('home.eyebrow')}</p>
               <h1>{t('home.title').split('\n').map((line) => <span key={line}>{line}</span>)}</h1>
               <p className="hero-description">{t('home.description')}</p>
-              <button className="primary-button" onClick={() => { setScreen('game'); setRevision((value) => value + 1); }}>
+              <button className="primary-button" onClick={() => openGame('local')}>
                 {t('home.play')}<span aria-hidden="true">↗</span>
               </button>
+              <button className="tutorial-link" type="button" onClick={() => setScreen('botSetup')}>{t('bot.start')} <span aria-hidden>↗</span></button>
               <button className="tutorial-link" type="button" onClick={() => setScreen('tutorial')}>{t('tutorial.start')} <span aria-hidden>↗</span></button>
               <p className="play-note">{t('home.note')}</p>
             </div>
@@ -176,13 +217,23 @@ export function App() {
           </section>
           <MoreGames sites={__FAMILY__} locale="en" variant="section" />
         </main>
+      ) : screen === 'botSetup' ? (
+        <main className="tutorial-layout">
+          <h1>{t('bot.choose')}</h1>
+          <div className="tutorial-choices">
+            {PLAYERS.map((player) => <button
+              key={player} type="button" className="quiet-button" onClick={() => openGame(player)}>
+              {t(`players.${player}`)}
+            </button>)}
+          </div>
+        </main>
       ) : screen === 'tutorial' ? (
         <Tutorial onExit={() => setScreen('home')} />
       ) : (
         <main className="game-layout">
           <div className="game-heading">
             <div>
-              <p className="eyebrow"><span className="eyebrow-dot" />{t('home.note')}</p>
+              <p className="eyebrow"><span className="eyebrow-dot" />{t(mode === 'local' ? 'home.note' : 'bot.note')}</p>
               <h1>{t('brand')}</h1>
             </div>
             <div className={`turn-pill player-${game.turn} ${game.inCheck() ? 'is-check' : ''}`} aria-live="polite">
@@ -196,7 +247,7 @@ export function App() {
               return (
                 <article key={player} className={`player-card player-${player} ${game.turn === player && !isFinished ? 'is-active' : ''} ${status === 'eliminated' ? 'is-out' : ''}`}>
                   <span className={`player-crown seat-token piece-${player}`} aria-hidden="true">{GLYPHS[player].k}</span>
-                  <div className="player-copy"><strong>{t(`players.${player}`)}</strong><small>{statusLabel(status, t)}</small></div>
+                  <div className="player-copy"><strong>{t(mode === 'local' ? `players.${player}` : player === mode ? 'bot.you' : 'bot.seat', { player: t(`players.${player}`) })}</strong><small>{statusLabel(status, t)}</small></div>
                   {game.turn === player && !isFinished && <span className="active-dot" aria-label={t('game.turn', { player: t(`players.${player}`) })} />}
                 </article>
               );
@@ -205,12 +256,12 @@ export function App() {
 
           <div className="play-area">
             <section className="board-column" aria-label={t('game.turn', { player: t(`players.${game.turn}`) })}>
-              <HexBoard game={game} selected={selected} destinations={destinations} lastMove={lastParsed} onSquareClick={onSquareClick}>
+              <HexBoard game={game} selected={selected} destinations={destinations} lastMove={lastParsed} onSquareClick={!thinking && !isFinished ? onSquareClick : undefined}>
                 {promotion && <PromotionPicker
                   player={game.turn} moves={promotion.moves} onMove={playMove} onCancel={() => setPromotion(null)}
                 />}
               </HexBoard>
-              <p className="board-hint">{t('game.selectPiece')}</p>
+              <p className="board-hint" aria-live="polite">{t(thinking ? 'bot.thinking' : 'game.selectPiece')}</p>
             </section>
 
             <aside className="move-panel">

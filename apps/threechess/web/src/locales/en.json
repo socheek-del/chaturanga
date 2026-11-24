@@ -47,6 +47,43 @@
     "thinking": "Bot is thinking…",
     "note": "One player · Two computer opponents"
   },
+  "online": {
+    "title": "Play online",
+    "intro": "Create a room and share its link with two friends. You keep your seat if you reconnect.",
+    "create": "Create room",
+    "creating": "Creating room…",
+    "join": "Join room",
+    "roomCode": "Room code",
+    "room": "Room {{code}}",
+    "invite": "Invite link",
+    "copy": "Copy invite link",
+    "copied": "Link copied",
+    "copyFailed": "Select and copy the invite link.",
+    "you": "You",
+    "seats": "Room seats",
+    "presence": {
+      "empty": "Open",
+      "online": "Connected",
+      "offline": "Disconnected"
+    },
+    "back": "Back to lobby",
+    "connecting": "Connecting…",
+    "reconnecting": "Reconnecting…",
+    "full": "This room already has three players.",
+    "notFound": "Room not found.",
+    "waiting": "Waiting for all three players",
+    "invalid": "Enter a six-character room code.",
+    "unavailable": "The room service is unavailable.",
+    "errors": {
+      "bad-message": "The move could not be read.",
+      "room-full": "This room is full.",
+      "waiting": "Wait for the other players.",
+      "finished": "The game has ended.",
+      "wrong-turn": "It is not your turn.",
+      "stale": "The board has changed. Try again.",
+      "illegal-move": "That move is not legal."
+    }
+  },
   "game": {
     "turn": "{{player}} to move",
     "check": "Check — find a safe square",

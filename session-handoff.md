@@ -28,3 +28,5 @@ Melon stage 9232a07 is healthy as `chaturanga-stage-shatranj-19897` in `~/chatur
 ## Three-player Chess
 
 The tutorial and coordinate labels are live from 3154fc8 on Melon port 19899, with five public browser checks passing. Bot mode is live from 8771c1c on Melon port 19900. All nine browser tests passed locally, on the stage and on the public site. Port 19899 still serves the preceding tutorial release for rollback. Next implement three-seat online invites and reconnects with isolated persisted state.
+
+Online implementation is on main after the local 11-scenario browser pass. Stage the exact online revision, verify the persisted room through a container restart, and run public HTTPS/WebSocket smoke. Current rollback origin is port 19900 (bots and tutorial).

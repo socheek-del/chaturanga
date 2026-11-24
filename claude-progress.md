@@ -1170,3 +1170,9 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
 - Bot tests passed 5/5, typecheck and lint passed, and local Chromium passed 9/9. Verified all human seats, legal bot moves, fallback, persistence and checkmate endings. Production PWA build and server dry run passed. Bot mode remains in progress until staged and public smoke.
 - Promoted bot revision 8771c1c on Melon port 19900. All nine browser scenarios passed on the exact stage and on public HTTPS. tpc-006 passes. Rubric accepted with all applicable checks verified against the authored hex rules; there is no Fairy-Stockfish equivalent for this three-seat format.
 - Active feature is tpc-007. Prev origin on port 19899 remains available for rollback. Shatranj remains staged and blocked on public DNS.
+
+### Session 040 (Three-player Chess invite rooms)
+
+- Implemented private three-seat rooms with guest identities, an engine-validated sequence of moves, room presence, and durable per-game storage. No chat. Room and bot modes keep their state separate from pass-and-play.
+- Worker and web typechecks passed. Room-state tests passed 3/3, local Chromium passed 11/11, and the production PWA build and Worker dry run passed. Covered out-of-turn, illegal and stale moves, checkmate, three-seat synchronization, reconnect, and rejection of a fourth player.
+- Public release and restart persistence are pending. Stage this revision on Melon on port 19901. Current public rollback is 8771c1c on port 19900.

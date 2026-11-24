@@ -19,7 +19,9 @@
     "i18next": "^26.4.2",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
-    "react-i18next": "^17.0.13"
+    "react-i18next": "^17.0.13",
+    "@chaturanga/protocol": "*",
+    "zod": "^4.6.4"
   },
   "devDependencies": {
     "@playwright/test": "^1.63.0",

@@ -7,8 +7,42 @@
     "directory": "../web/dist",
     "binding": "ASSETS",
     "not_found_handling": "single-page-application",
-    "run_worker_first": ["/api/*"]
+    "run_worker_first": [
+      "/api/*",
+      "/ws/*"
+    ]
   },
-  "routes": [{ "pattern": "three-player-chess.beanroti.com", "custom_domain": true }],
-  "observability": { "enabled": true }
+  "routes": [
+    {
+      "pattern": "three-player-chess.beanroti.com",
+      "custom_domain": true
+    }
+  ],
+  "observability": {
+    "enabled": true
+  },
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "ROOMS",
+        "class_name": "ThreeChessRoom"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": [
+        "ThreeChessRoom"
+      ]
+    }
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "threechess",
+      "database_id": "c80c2548-07eb-4a97-ba65-ebfeda38d05f",
+      "migrations_dir": "migrations"
+    }
+  ]
 }

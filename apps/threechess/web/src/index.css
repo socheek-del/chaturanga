@@ -307,3 +307,22 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px soli
   font: 700 clamp(.54rem, 1.4vw, .72rem)/1.2 ui-monospace, monospace;
   pointer-events: none;
 }
+
+.online-form { display: flex; align-items: end; gap: .5rem; width: 100%; }
+.online-form label { display: grid; gap: .28rem; flex: 1; min-width: 0; color: var(--muted); font-size: .85rem; }
+.online-form input {
+  width: 100%;
+  min-height: 42px;
+  padding: .45rem .6rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #172630;
+  color: var(--ink);
+}
+.online-form .quiet-button { width: auto; min-height: 42px; padding-inline: .75rem; }
+.online-seats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; gap: .45rem; }
+.online-seats .player-card { display: grid; gap: .2rem; min-height: 0; align-content: start; }
+.online-seats small { color: var(--muted); }
+.online-room .turn-pill { max-width: 100%; }
+.online-room .tutorial-link { margin: 0; padding: .35rem 0; }
+.online-moves { display: flex; flex-wrap: wrap; gap: .55rem 1.5rem; font: .8rem ui-monospace, monospace; color: var(--muted); }

@@ -66,7 +66,7 @@ export default defineConfig({
       },
     }),
   ],
-  server: { port: 5193, proxy: { '/api': 'http://127.0.0.1:8793' } },
+  server: { port: 5193, proxy: { '/api': 'http://127.0.0.1:8793', '/ws': { target: 'http://127.0.0.1:8793', ws: true } } },
   preview: { port: 4193 },
   test: { include: ['src/**/*.test.{ts,tsx}'] },
 });

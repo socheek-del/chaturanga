@@ -3017,7 +3017,9 @@
         "Exercise three authenticated seats, reconnect, move rejection, elimination, and terminal game state.",
         "Verify all three seats in production after the Melon service and isolated store are deployed."
       ],
-      "evidence": [],
+      "evidence": [
+        "2026-11-24: Three room-state tests and eleven browser tests passed locally. Verified all three seats, synchronized moves, reconnect, full rooms, terminal state, and rejection of stale, illegal and out-of-turn moves. Production build and dry run passed."
+      ],
       "notes": "Depends on Melon deployment and durable per-game online storage. The existing release uses browser storage."
     }
   ]

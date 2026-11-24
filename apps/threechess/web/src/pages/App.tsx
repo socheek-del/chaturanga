@@ -5,8 +5,9 @@ import { Game, threechess } from '@chaturanga/threechess';
 import type { Player, SeatStatus } from '@chaturanga/threechess';
 import { GLYPHS, HexBoard, parseUci, PromotionPicker, type ParsedMove } from './HexBoard';
 import { Tutorial } from './Tutorial';
+import { Online, requestedRoom } from './Online';
 
-type Screen = 'home' | 'game' | 'tutorial' | 'botSetup';
+type Screen = 'home' | 'game' | 'tutorial' | 'botSetup' | 'online';
 type Mode = 'local' | Player;
 const STORAGE_KEY = 'threechess:hex:v1';
 const saveKey = (mode: Mode): string => mode === 'local' ? STORAGE_KEY : `${STORAGE_KEY}:bot:${mode}`;
@@ -54,7 +55,7 @@ function statusLabel(status: SeatStatus, t: (key: string) => string): string {
 
 export function App() {
   const { t } = useTranslation();
-  const [screen, setScreen] = useState<Screen>('home');
+  const [screen, setScreen] = useState<Screen>(() => requestedRoom() ? 'online' : 'home');
   const [mode, setMode] = useState<Mode>('local');
   const [game, setGame] = useState(() => loadGame('local'));
   const [revision, setRevision] = useState(0);
@@ -150,6 +151,13 @@ export function App() {
     refresh();
   }
 
+  function goHome() {
+    const url = new URL(location.href);
+    url.searchParams.delete('room');
+    history.replaceState(null, '', url);
+    setScreen('home');
+  }
+
   function resultText() {
     if (result.kind === 'checkmate') return t('game.winner', { player: t(`players.${result.winner}`) });
     if (result.kind === 'stalemate') return t('game.draw');
@@ -159,7 +167,7 @@ export function App() {
   return (
     <div className="app-shell">
       <header className="topbar">
-        <a className="wordmark" href="#home" onClick={(event) => { event.preventDefault(); setScreen('home'); }} aria-label={t('game.home')}>
+        <a className="wordmark" href="#home" onClick={(event) => { event.preventDefault(); goHome(); }} aria-label={t('game.home')}>
           <span className="mark">3</span>
           <span className="wordmark-copy"><b>THREE</b><small>PLAYER CHESS</small></span>
         </a>
@@ -186,6 +194,7 @@ export function App() {
                 {t('home.play')}<span aria-hidden="true">↗</span>
               </button>
               <button className="tutorial-link" type="button" onClick={() => setScreen('botSetup')}>{t('bot.start')} <span aria-hidden>↗</span></button>
+              <button className="tutorial-link" type="button" onClick={() => setScreen('online')}>{t('online.title')} <span aria-hidden>↗</span></button>
               <button className="tutorial-link" type="button" onClick={() => setScreen('tutorial')}>{t('tutorial.start')} <span aria-hidden>↗</span></button>
               <p className="play-note">{t('home.note')}</p>
             </div>
@@ -227,6 +236,8 @@ export function App() {
             </button>)}
           </div>
         </main>
+      ) : screen === 'online' ? (
+        <Online />
       ) : screen === 'tutorial' ? (
         <Tutorial onExit={() => setScreen('home')} />
       ) : (

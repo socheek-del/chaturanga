@@ -24,7 +24,7 @@ describe('resultFromStatus', () => {
     expect(resultFromStatus({ kind: 'perpetual-chase', winner: 'b' })).toEqual({ winner: 'b', reason: 'perpetual-chase' });
   });
 
-  it.each(['repetition', 'counting', 'fifty-move', 'insufficient-material', 'goal-square'] as const)('%s is a plain draw', (kind) => {
+  it.each(['repetition', 'counting', 'fifty-move', 'insufficient-material', 'goal-square', 'restricted-mate'] as const)('%s is a plain draw', (kind) => {
     expect(resultFromStatus({ kind } as GameStatus)).toEqual({ winner: null, reason: kind });
   });
 });
@@ -53,6 +53,7 @@ describe('isUndoableResult', () => {
     const positionBased = RESULT_REASONS.filter((r) => !FINAL_REASONS.includes(r));
     expect(positionBased).toEqual([
       'checkmate',
+      'restricted-mate',
       'stalemate',
       'repetition',
       'counting',

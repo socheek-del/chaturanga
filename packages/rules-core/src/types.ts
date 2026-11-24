@@ -15,6 +15,8 @@ export interface Piece<T extends string = string, C extends string = Color> {
 export type GameStatus<C extends string = Color> =
   | { kind: 'ongoing' }
   | { kind: 'checkmate'; winner: C }
+  /** A geometrical mate that fails additional winning conditions. */
+  | { kind: 'restricted-mate'; winner?: C }
   /** A draw for Makruk and Sittuyin; a win for the side left with moves in a variant like Xiangqi. */
   | { kind: 'stalemate'; winner?: C }
   /** A draw, unless the variant settles it by points (Janggi): then that side wins. */

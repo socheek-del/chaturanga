@@ -8,6 +8,7 @@ import type { Color, GameStatus } from './types';
  */
 export const RESULT_REASONS = [
   'checkmate',
+  'restricted-mate',
   'stalemate',
   'repetition',
   'counting',
@@ -45,6 +46,7 @@ export function resultFromStatus(status: GameStatus): GameResult | null {
     case 'double-pass':
       return { winner: status.winner, reason: status.kind };
     case 'stalemate':
+    case 'restricted-mate':
     case 'repetition':
     case 'fifty-move':
     case 'bare-king':

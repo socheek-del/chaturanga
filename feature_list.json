@@ -3125,7 +3125,7 @@
       "evidence": [
         "2026-11-24: Node 22 typecheck and all 35 rules tests passed. Rules-core passed 37 checks and protocol passed 3 with the generic goal-square result.",
         "2026-11-24: The board and shell regression checks passed, bot checks passed 2/2, tutorial checks passed 16/16 and local browser scenarios passed 6/6, including a saved citadel draw and both bot sides.",
-        "2026-11-24: Melon stage f1206a7 on port 19906 applied its migration and passed all seven browser scenarios, including a persisted citadel draw and offline play."
+        "2026-11-24: Melon stage f1206a7 on port 19906 applied its migration and passed all seven browser scenarios, including a persisted citadel draw and offline play. Full repository verification passed."
       ],
       "notes": "Melon stage is ready. Public launch requires DNS for tamerlane.beanroti.com before TLS, promotion and public smoke."
     },
@@ -3143,7 +3143,9 @@
         "Complete the interactive tutorial and verify both bot sides, local saves and private room reconnect.",
         "Stage on Melon, verify public HTTPS and WebSocket play, then publish the catalog entry."
       ],
-      "evidence": []
+      "evidence": [
+        "2026-11-24: Node 22 typecheck and all 26 Shatar tests passed, including shared conformance, eight seeded stock Fairy-Stockfish comparisons and four exact reference endings. Shared rules-core and protocol checks also passed."
+      ]
     }
   ]
 }

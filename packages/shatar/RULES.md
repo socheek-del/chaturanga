@@ -1,0 +1,9 @@
+# Traditional Mongolian Shatar
+
+The game starts from the customary position after d4 and d5, with White to move. No other pawn double-step is permitted. There is no castling or en passant. The bers slides orthogonally like a rook or steps one square diagonally. The king, camel (bishop), horse (knight) and cart (rook) move like their international chess equivalents. A pawn reaching the last rank becomes a bers.
+
+A check by a rook, bers or knight counts as **shak**. A geometrical mate delivered only by a knight loses for its mover. A bishop or pawn mate wins if at least one shak occurred in that attacker's current unbroken checking sequence. Without shak, it is a draw, called **niol**. Rook and bers mates give shak themselves. An intervening move by the attacker without check resets that attacker's sequence. Each side has its own sequence.
+
+A bare king and stalemate are draws. Threefold repetition and 100 halfmoves without a pawn move or capture are digital draw conventions. This edition uses the traditional move set and fixed opening in the [Shatar rules](https://en.wikipedia.org/wiki/Shatar#Game_rules), with the outcomes used by [Fairy-Stockfish's preset and mate evaluator](https://github.com/fairy-stockfish/Fairy-Stockfish/blob/master/src/position.h). The sources describe other regional openings, mate conventions and scoring customs. This edition uses a single game result and omits regional scoring.
+
+The bers uses `j` in FEN and UCI, including as the forced promotion suffix. The third FEN field carries `S` or `s` for an active shak sequence by White or Black. It is a hyphen when neither side has an active sequence. The fourth field is a hyphen. The stock reference comparison strips the sequence flags for FEN comparison and verifies result equivalence separately on complete check sequences.

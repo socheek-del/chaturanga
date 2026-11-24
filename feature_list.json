@@ -2930,14 +2930,15 @@
       "milestone": "M24",
       "title": "Make Melon releases repeatable",
       "user_visible_behavior": "A verified main revision can be deployed, checked and rolled back on Melon with separate routes and durable online state per game.",
-      "status": "not_started",
+      "status": "in_progress",
       "verification": [
         "Stage a release via ssh melon and validate its loopback health, assets and WebSocket handshake.",
         "Verify HTTPS, online state after a container restart, backup and restore, and a route rollback.",
         "Verify the Beanroti catalog release on Melon."
       ],
       "evidence": [
-        "2026-11-24: SSH, Docker, Caddy and all seven self-hosted workerd game origins identified. Makruk and Three-player Chess loopback health passed."
+        "2026-11-24: SSH, Docker, Caddy and all seven self-hosted workerd game origins identified. All seven loopback health endpoints returned 200.",
+        "2026-11-24: Isolated Makruk workerd probe served assets, created a guest room, delivered state through WebSocket, and recovered the room after restart with --data-dir. Pinned Node ./init.sh passed."
       ]
     },
     {

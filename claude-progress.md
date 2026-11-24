@@ -1134,3 +1134,9 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
 - The owner requires a tutorial for every game. The rollout now requires interactive instruction and guided practice in every declared language, with browser completion and rules validation before release.
 - Six existing games have lesson implementations. Three-player Chess has no lesson player, so recorded its tutorial as tpc-008. The Shatranj pilot includes the tutorial in its acceptance checks.
 - Verified the roadmap still contains all 42 entries, the feature list parses, and the documentation diff passes `git diff --check`.
+
+### Session 036 (Melon release implementation)
+
+- Active feature is plat-022. The pinned Node 22.23.1 `./init.sh` passed and all seven existing Melon origins returned HTTP 200 on loopback.
+- An isolated Makruk container on port 19887 served assets, delivered room state through WebSocket, and recovered the room after a container restart with `workerd --data-dir`. The stage needs writable bundle scratch space and the host CA mount used by the live origins. No production route or container changed.
+- Added `scripts/melon/stage.sh` to build and run a Git archive on Melon with dedicated stage state. Remaining checks include the script on a fresh release, D1 migration and restore, Caddy HTTPS promotion and rollback, and the catalog. The feature remains in progress.

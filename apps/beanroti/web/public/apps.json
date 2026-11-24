@@ -132,7 +132,7 @@
       "host": "three-player-chess.beanroti.com",
       "url": "https://three-player-chess.beanroti.com/",
       "name": "Three-player chess",
-      "description": "Three-player chess for three friends around one screen. Pass-and-play on a 91-cell hexagonal board.",
+      "description": "Learn the hex board, play two bots, share one screen, or invite two friends online.",
       "category": "Games",
       "signIn": false,
       "icon": "https://three-player-chess.beanroti.com/favicon.svg",

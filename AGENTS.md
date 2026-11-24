@@ -67,6 +67,8 @@ broken starting state.
   Adding a game must never edit another game's files.
 - **Separate products.** Each game has its own subdomain, brand, PWA, languages, server service and
   isolated online storage. Games link to each other only through a "more games" section (plat-006).
+- **Tutorials.** Every game ships an interactive tutorial that teaches its selected rules and is
+  available in every declared language.
 - **Deployment.** Deploy all games and the app directory on Melon via `ssh melon`. Use Cloudflare only
   when a documented Melon limitation prevents delivery. See `docs/CHESS-LIKE-ROADMAP.md`.
 - **Design.** Each game has its own design identity built on shared component primitives. Never copy

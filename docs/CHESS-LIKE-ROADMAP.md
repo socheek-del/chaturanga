@@ -1,6 +1,6 @@
 # Chess and chess-like games rollout
 
-Scope snapshot, 2026-11-24. The [Wikipedia section](https://en.wikipedia.org/wiki/List_of_abstract_strategy_games#Chess_and_chess-like_games) lists 42 entries. Six existing products already provide bots, local multiplayer and online rooms. Three-player Chess is live with local multiplayer and needs bots and online rooms. The other 35 entries need new products, including one representative of the Shogi variants entry.
+Scope snapshot, 2026-11-24. The [Wikipedia section](https://en.wikipedia.org/wiki/List_of_abstract_strategy_games#Chess_and_chess-like_games) lists 42 entries. Six existing products already provide tutorials, bots, local multiplayer and online rooms. Three-player Chess is live with local multiplayer and needs a tutorial, bots and online rooms. The other 35 entries need new products, including one representative of the Shogi variants entry.
 
 The section defines the catalog. For each game, use its linked description and primary rules where available. Record the selected edition, source, setup, turn, edge cases and outcomes in the product rules document before implementing. Prefer the most widely played documented variant when supported by evidence. Where usage data is missing, use an established tournament edition or a clearly identified reconstruction. The selections below are planning defaults. Confirm incomplete or conflicting rules before committing an engine.
 
@@ -8,13 +8,13 @@ The section defines the catalog. For each game, use its linked description and p
 
 | Wikipedia entry | Work |
 | --- | --- |
-| Chess | Keep standard international chess and existing modes |
+| Chess | Keep standard international chess, its lessons and existing modes |
 | Janggi | Keep current Korean chess rules and existing modes |
 | Makruk | Keep current Thai chess rules and existing modes |
 | Shogi | Keep standard 9×9 rules and existing modes |
 | Sittuyin | Keep current Burmese chess rules and existing modes |
 | Xiangqi | Keep current Chinese chess rules and existing modes |
-| Three-player chess | Keep the owner's 91-cell hex game. Add one-human/two-bot play and three-seat invite rooms. Preserve existing saves and local play |
+| Three-player chess | Keep the owner's 91-cell hex game. Add an interactive tutorial, one-human/two-bot play and three-seat invite rooms. Preserve existing saves and local play |
 
 ## Build order
 
@@ -65,9 +65,10 @@ For newly authored or published titles, establish permission or an applicable li
 ## Release checks
 
 - Implement one shipped PWA per game with its own site config, server service, rules and assets. Use English initially for new products unless another language is specified. Complete each declared locale.
+- Ship an interactive tutorial for the selected ruleset. Make it easy to find from the home page and teach the objective, legal actions, turn order, how the game ends, and defining mechanics with guided practice and feedback. Complete it in every declared language. Reuse the shared lesson player where it supports the game’s board and actions.
 - Ship a full game against bots and same-device play when private information or simultaneous inputs can be preserved. Provide private online invite rooms wherever applicable. Hidden-state and simultaneous games can use a private handoff when practical, with online rooms for mechanics that need separate devices or concurrent input.
-- Online rooms validate every action server-side and test seat assignment, reconnect, private information, turn or phase resolution, and completion. Keep the no-chat rule. Quick match, ranked play, tutorials and multiple difficulties are outside the initial minimum.
-- Record rules fixtures, Variant conformance, bot legality and responsiveness, and browser tests for a complete game, multiplayer and mobile PWA. Use reference engine comparison when it implements the selected rules. Verify live HTTPS, modes and server health before publishing the directory entry.
+- Online rooms validate every action server-side and test seat assignment, reconnect, private information, turn or phase resolution, and completion. Keep the no-chat rule. Quick match, ranked play and multiple difficulties are outside the initial minimum.
+- Record rules fixtures, Variant conformance, bot legality and responsiveness, and browser tests for tutorial completion, a complete game, multiplayer and mobile PWA. Use reference engine comparison when it implements the selected rules. Verify live HTTPS, modes and server health before publishing the directory entry.
 - Commit each verified increment directly to main. Keep game deployment and later directory publication distinct where the destination must be verified first. After CI passes, deploy to Melon via SSH. Configure secrets, the product hostname and isolated persistent storage for online play. Keep the previous healthy release available for rollback.
 
 ## Deployment on Melon
@@ -81,4 +82,4 @@ Verified on 2026-11-24. SSH access works. The server is Linux x86_64 with Docker
 1. Turn the existing standalone container setup into a repeatable release command. Build a verified main SHA, run it under a spare loopback port, and smoke the assets, API, PWA and WebSocket handshake before switching Caddy. Release one product at a time. Keep the previous container and Caddy route available for rollback.
 2. Verify an isolated persistent volume per game. Confirm the standalone runtime's database and Durable Object storage behavior against the selected configuration. If a binding lacks the required durability, adapt that server layer to a Melon-hosted store. Test migrations, an online game, reconnect and state across container recreation, plus backup and restore, before calling online deployment ready.
 3. Review Caddy, DNS and TLS for each hostname and validate a real HTTPS and WebSocket session. Inventory the Beanroti catalog origin and publish its update on Melon only after the target URL passes production smoke.
-4. Use classical Shatranj to prove the full path. Follow it with Three-player Chess bots and online rooms. Check CPU and memory with realistic concurrent games as more containers are added, then consolidate hosting processes if needed while preserving product routes and state isolation.
+4. Use classical Shatranj to prove the full path. Follow it with the Three-player Chess tutorial, bots and online rooms. Check CPU and memory with realistic concurrent games as more containers are added, then consolidate hosting processes if needed while preserving product routes and state isolation.

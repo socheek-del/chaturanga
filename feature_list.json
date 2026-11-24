@@ -2947,10 +2947,11 @@
       "area": "release",
       "milestone": "M24",
       "title": "Release Shatranj with bots and multiplayer",
-      "user_visible_behavior": "Players can complete classical Shatranj games against a bot, locally with another person, and in an online invite room.",
+      "user_visible_behavior": "Players can learn classical Shatranj in an interactive tutorial and complete games against a bot, locally with another person, and in an online invite room.",
       "status": "not_started",
       "verification": [
         "Pin and test classical rules and Variant conformance.",
+        "Complete the interactive tutorial in the browser and verify its moves and answers against the engine.",
         "Verify human versus bot for both seats, local play, and an online game including reconnect.",
         "Build and deploy the PWA and server on Melon, smoke the production site, and verify the catalog listing."
       ],
@@ -2958,9 +2959,24 @@
       "notes": "First new product in docs/CHESS-LIKE-ROADMAP.md. Online release uses the Melon deployment path."
     },
     {
-      "id": "tpc-006",
+      "id": "tpc-008",
       "product": "threechess",
       "priority": 141,
+      "area": "learn",
+      "milestone": "M24",
+      "title": "Learn Three-player Chess in a guided tutorial",
+      "user_visible_behavior": "New players can practice moving on the hex board, taking turns, and winning through elimination.",
+      "status": "not_started",
+      "verification": [
+        "Validate tutorial positions and answers against the hex rules engine.",
+        "Complete the tutorial from the home page on desktop and mobile and verify feedback for incorrect answers."
+      ],
+      "evidence": []
+    },
+    {
+      "id": "tpc-006",
+      "product": "threechess",
+      "priority": 142,
       "area": "ai",
       "milestone": "M24",
       "title": "Play Three-player Chess against bots",
@@ -2975,7 +2991,7 @@
     {
       "id": "tpc-007",
       "product": "threechess",
-      "priority": 142,
+      "priority": 143,
       "area": "online",
       "milestone": "M24",
       "title": "Play Three-player Chess in online invite rooms",

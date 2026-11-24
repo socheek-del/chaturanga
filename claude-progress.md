@@ -1128,3 +1128,9 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
 - Owner directed all deployments to Melon over SSH, with Cloudflare reserved for a confirmed Melon limitation. The earlier D1 quota is historical evidence and does not block Melon.
 - Verified Docker, Compose, Caddy and seven standalone workerd game containers through `ssh melon`. Makruk and Three-player Chess passed loopback health checks. No server state changed. Public routing, persisted online state across container replacement and the catalog release path still need verification.
 - Canceled the previous Actions run before any Cloudflare deploy completed. CI now verifies and builds. Subsequent releases use the Melon path. Recorded the platform preparation and revised rollout in the roadmap and feature list.
+
+### Session 035 (tutorial release requirement)
+
+- The owner requires a tutorial for every game. The rollout now requires interactive instruction and guided practice in every declared language, with browser completion and rules validation before release.
+- Six existing games have lesson implementations. Three-player Chess has no lesson player, so recorded its tutorial as tpc-008. The Shatranj pilot includes the tutorial in its acceptance checks.
+- Verified the roadmap still contains all 42 entries, the feature list parses, and the documentation diff passes `git diff --check`.

@@ -44,3 +44,9 @@ Next is the traditional single royal Maharajah against a conventional army, with
 The Maharajah rules package now passes all 18 tests. Fairy-Stockfish needs `promotionRegionBlack = -` in addition to disabling promotion choices. Next wire the bot and PWA to this engine.
 
 The PWA and Worker are implemented and locally verified. Run the full browser suite against the staged PWA with `MAHARAJAH_E2E_URL`. Public DNS for `maharajah.beanroti.com` was absent at the local verification checkpoint.
+
+The exact Maharajah product revision e4e04fb is staged, migrated and verified on Melon as `chaturanga-stage-maharajah-19903` in `~/chaturanga-release.maharajah.ezafRG`. Six staged browser scenarios passed. Promote after DNS and TLS provision, verify public play, then publish the catalog entry.
+
+## Courier Chess
+
+Next active feature is `courier-001`. Use the [medieval rules](https://en.wikipedia.org/wiki/Courier_chess#Medieval_rules) on 12×8 and begin with the customary joyleaps already applied. Select immediate ferz promotion and a draw by stalemate. Move orthodox pawns one square only and omit castling and en passant. Use rules-core’s variable-width coordinates and do not reuse the 8×8 move tables. The [Ströbeck museum rules](https://www.schachmuseum-loeberitz.de/images/stories/Dateien/Kurier-Schach.pdf) are a separate documented reconstruction.

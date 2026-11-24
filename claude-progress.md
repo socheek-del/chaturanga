@@ -1192,3 +1192,9 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
 The rule package passes typecheck and all 18 tests, including shared conformance, both checkmate outcomes and six seeded Fairy-Stockfish comparisons. Next add bots for both roles, an interactive tutorial and the PWA with invite rooms.
 
 The English PWA, original board and icon, interactive tutorial, browser bot and server-validated rooms are implemented. Bot tests passed 2/2, lesson tests passed 11/11 and local browser play passed 5/5. Stage this revision on Melon and run all six scenarios against production assets.
+
+Maharajah stage e4e04fb is healthy on Melon port 19903 in `~/chaturanga-release.maharajah.ezafRG`. Its SQL migration and all six production-asset browser scenarios passed. The home screen fit 375px and 1440px. Public DNS remains absent for Maharajah, Chaturanga and Shatranj. Keep their stages ready while beginning Courier Chess.
+
+### Courier Chess
+
+Use the medieval 12×8 rules in the linked Wikipedia article. Begin after the obligatory joyleaps, with kings on f1/f8 and ferzes on g3/g6. Select immediate ferz promotion from the documented alternatives and use a draw for stalemate because its historical resolution is unknown. The museum rules describe a different promotion practice. Record the reconstruction in the engine and teach these choices explicitly.

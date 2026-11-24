@@ -3053,7 +3053,7 @@
       "milestone": "M24",
       "title": "Release Maharajah and the Sepoys",
       "user_visible_behavior": "Players learn the asymmetric rules and play either the lone Maharajah or the Sepoy army against a bot, locally or in a private online room.",
-      "status": "in_progress",
+      "status": "blocked",
       "verification": [
         "Pin the historical rules, validate both roles, and run shared conformance and reference playouts.",
         "Complete the interactive tutorial and verify both bot roles, local play, and online reconnect in the browser.",
@@ -3061,8 +3061,26 @@
       ],
       "evidence": [
         "2026-11-24: Node 22 typecheck and all 18 rules tests passed, including Variant conformance, checkmates for both sides, and six seeded comparisons against configured Fairy-Stockfish.",
-        "2026-11-24: Bot tests 2/2, tutorial checks 11/11 and local browser scenarios 5/5 passed. The tutorial was completed at phone width, with both bot roles, local saves, and online reconnect verified."
-      ]
+        "2026-11-24: Bot tests 2/2, tutorial checks 11/11 and local browser scenarios 5/5 passed. The tutorial was completed at phone width, with both bot roles, local saves, and online reconnect verified.",
+        "2026-11-24: Melon stage e4e04fb on port 19903 applied its migration. All six staged browser checks passed. Reviewed the home screen at 375px and 1440px."
+      ],
+      "notes": "Melon stage is ready. Public launch requires DNS for maharajah.beanroti.com before TLS, promotion and public smoke."
+    },
+    {
+      "id": "courier-001",
+      "product": "courier",
+      "priority": 150,
+      "area": "release",
+      "milestone": "M25",
+      "title": "Release medieval Courier Chess",
+      "user_visible_behavior": "Players can learn the 12×8 game and play against a bot, on one device, or through private online rooms.",
+      "status": "in_progress",
+      "verification": [
+        "Verify the twelve-file setup, eight movement types plus pawns, king safety, mates, and pawn promotion using rule fixtures and shared conformance.",
+        "Verify a complete interactive tutorial, both bot sides, local save and invite-room reconnect in the browser.",
+        "Stage on Melon, verify public HTTPS and WebSocket play, then publish the catalog entry."
+      ],
+      "evidence": []
     }
   ]
 }

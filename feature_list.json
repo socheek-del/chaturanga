@@ -3083,7 +3083,7 @@
       "evidence": [
         "2026-11-24: Node 22 typecheck and all 18 engine tests passed, including Variant conformance and six seeded twelve-file comparisons against configured Fairy-Stockfish.",
         "2026-11-24: Bot checks 2/2, tutorial checks 12/12 and local browser scenarios 5/5 passed, including phone-width promotion, both bot roles, local saves and online reconnect.",
-        "2026-11-24: Melon stage dc1feb1 on port 19904 applied its migration and passed all six browser scenarios, including offline play and online reconnect."
+        "2026-11-24: Melon stage dc1feb1 on port 19904 applied its migration and passed all six browser scenarios, including offline play and online reconnect. Full repository verification also passed."
       ],
       "notes": "Melon stage is ready. Public launch requires DNS for courier.beanroti.com before TLS, promotion and public smoke."
     },
@@ -3101,7 +3101,9 @@
         "Complete the tutorial and verify each bot side, same-device play and private rooms in the browser.",
         "Stage on Melon, verify public HTTPS and WebSocket play, then publish the catalog entry."
       ],
-      "evidence": []
+      "evidence": [
+        "2026-11-24: Node 22 typecheck and all 22 rules checks passed, including Variant conformance, independent movement and ending fixtures, and six seeded replay and undo games."
+      ]
     }
   ]
 }

@@ -1,0 +1,211 @@
+@import "tailwindcss";
+@source '../../../../packages/ui/src';
+@source '../../../../packages/board-ui/src';
+@source '../../../../packages/game-shell/src/ui';
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+@theme {
+  --color-canvas: #e5edf3;
+  --color-surface: #f9f6e9;
+  --color-surface-2: #dde5d5;
+  --color-line: #a3afbf;
+  --color-ink: #162e40;
+  --color-muted: #435669;
+  --color-primary: #245478;
+  --color-primary-shadow: #1b4162;
+  --color-primary-soft: #d7e6f0;
+  --color-secondary: #385452;
+  --color-secondary-soft: #dce7e5;
+  --color-danger: #ad314f;
+  --color-danger-soft: #f5dbe2;
+  --color-warning: #a97421;
+  --color-warning-shadow: #7d5415;
+  --color-warning-soft: #f5e4c5;
+  --color-gold: #c88b33;
+  --color-on-accent: #f9f6e9;
+  --color-on-warning: #162e40;
+  --color-on-gold: #162e40;
+  --color-scrim: #162e40;
+  --shadow-card: 0 5px 16px #77513522;
+}
+
+:root {
+  color-scheme: light;
+  color: var(--color-ink);
+  background: var(--color-canvas);
+  font: 16px/1.45 ui-sans-serif, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background: radial-gradient(ellipse at 76% 10%, #c0d3e2 0%, transparent 51%), var(--color-canvas);
+}
+
+.mast {
+  width: min(82rem, 100% - 3rem);
+  margin-inline: auto;
+  padding-block: 1.1rem;
+  border-bottom: 1px solid var(--color-line);
+  font: 1.2rem Baskerville, Georgia, serif;
+}
+
+.mast span {
+  margin-right: .3rem;
+  color: var(--color-primary);
+}
+
+main {
+  padding: clamp(1rem, 4vw, 3rem) clamp(.75rem, 4vw, 2rem);
+}
+
+.home {
+  width: min(75rem, 100%);
+  margin-inline: auto;
+  min-height: min(70vh, 44rem);
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+  align-items: center;
+  gap: clamp(2rem, 6vw, 7rem);
+}
+
+.home-copy h1 {
+  font: 400 clamp(3.1rem, 7vw, 6.7rem)/.94 Baskerville, Georgia, serif;
+  letter-spacing: -.06em;
+  margin: 0 0 .27em;
+}
+
+.home-copy p {
+  color: var(--color-muted);
+  max-width: 31ch;
+  font-size: clamp(1rem, 2vw, 1.21rem);
+}
+
+.home-actions {
+  margin-top: 2.25rem;
+  display: grid;
+  max-width: 24rem;
+}
+
+.home-actions a:not(.primary-link),
+.choices a {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--color-line);
+  padding: .9rem .2rem;
+  transition: color 140ms;
+}
+
+.home-actions a:hover,
+.choices a:hover { color: var(--color-primary); }
+.home-actions a span { color: var(--color-primary); }
+
+.primary-link {
+  justify-self: start;
+  color: var(--color-on-accent);
+  border-radius: .2rem;
+  background: var(--color-primary);
+  padding: .8rem 1.2rem;
+  margin-bottom: .7rem;
+  font-weight: 700;
+}
+
+.home-actions .primary-link:hover { color: var(--color-on-accent); background: #1c4569; }
+
+.completion { color: var(--color-secondary); font-size: .84rem; }
+
+.home-board {
+  border: .31rem double #7c6337;
+  padding: clamp(.5rem, 2vw, 1.5rem);
+  background: #25466a;
+  box-shadow: 0 1.5rem 2.8rem #77513560, inset 0 0 0 2px #dfc480;
+  rotate: 0deg;
+}
+
+.home-grid {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  aspect-ratio: 1;
+}
+
+.home-grid > div {
+  display: grid;
+  place-items: center;
+  background: #e9dabb;
+}
+
+.home-grid > [data-tone="0"] { background: #6e94b8; }
+.home-grid .piece { width: 82%; height: 82%; }
+
+.chequer {
+  width: 100%;
+  height: 100%;
+  background: conic-gradient(#e9dabb 25%, #6e94b8 0 50%, #e9dabb 0 75%, #6e94b8 0);
+  background-size: 25% 25%;
+  background-position: 0 0;
+}
+
+.piece {
+  display: grid;
+  place-items: center;
+  filter: drop-shadow(0 1px 1px #1c130c);
+  --piece: #fff4d3;
+  --engraving: #aa8044;
+}
+
+.piece[data-side="b"] {
+  --piece: #1c3049;
+  --engraving: #7c96b9;
+}
+
+.piece i {
+  display: block;
+  width: 72%;
+  height: 75%;
+  background: linear-gradient(155deg, var(--engraving), var(--piece) 26% 72%, var(--engraving));
+  clip-path: polygon(50% 0,68% 25%,65% 60%,85% 77%,91% 100%,9% 100%,15% 77%,35% 60%,32% 25%);
+}
+
+.piece[data-kind="n"] i { clip-path: polygon(31% 4%,70% 4%,91% 35%,60% 49%,58% 68%,86% 79%,87% 100%,7% 100%,10% 78%,31% 52%,10% 43%); }
+.piece[data-kind="k"] i { clip-path: polygon(36% 0,64% 0,64% 17%,83% 17%,83% 33%,68% 33%,69% 65%,92% 78%,92% 100%,8% 100%,8% 78%,31% 65%,32% 33%,17% 33%,17% 17%,36% 17%); }
+
+.prepare {
+  max-width: 32rem;
+  margin: 8vh auto;
+  border-block: 1px solid var(--color-line);
+  padding: 2rem 0;
+}
+
+.prepare h1 {
+  margin-bottom: 1.5rem;
+  font: 400 2.5rem/1.15 Baskerville, Georgia, serif;
+}
+
+.site-footer { text-align: center; }
+.mobile-back { display: none; }
+
+.choices { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+a:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 4px; }
+
+@media (max-width: 45rem) {
+  .home { grid-template-columns: 1fr; gap: 2.5rem; padding: .7rem .8rem 1.8rem; }
+  .home-actions { max-width: none; }
+  .home-board { width: min(100%, 27rem); justify-self: center; rotate: 0deg; }
+  .focused .mast { display: none; }
+  .mobile-back { display: inline-flex; align-items: center; min-height: 2.2rem; color: var(--color-primary); }
+  .focused main { padding-top: 0; }
+}
+
+
+.piece[data-kind="j"] i {
+  width: 83%;
+  clip-path: polygon(17% 22%,17% 0,37% 15%,63% 15%,83% 0,83% 22%,95% 43%,79% 63%,63% 65%,67% 79%,89% 87%,91% 100%,9% 100%,11% 87%,33% 79%,37% 65%,21% 63%,5% 43%);
+}
+
+.piece[data-kind="b"] i {
+  clip-path: polygon(11% 53%,25% 35%,40% 42%,53% 28%,67% 41%,77% 15%,94% 8%,99% 27%,88% 42%,88% 73%,81% 97%,67% 97%,66% 71%,43% 71%,39% 97%,23% 97%,22% 68%,9% 74%,0 61%);
+}
+
+.piece[data-kind="r"] i {
+  clip-path: polygon(9% 19%,26% 19%,31% 36%,70% 36%,75% 19%,92% 19%,87% 57%,74% 61%,78% 72%,90% 83%,79% 98%,64% 98%,55% 80%,42% 80%,33% 98%,18% 98%,7% 83%,21% 72%,25% 61%,15% 57%);
+}

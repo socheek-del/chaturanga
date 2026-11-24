@@ -1230,3 +1230,5 @@ Tamerlane stage f1206a7 is healthy on Melon port 19906 in `~/chaturanga-release.
 Select the traditional bers, fixed double d-pawn opening and history-sensitive mate rules of Fairy-Stockfish’s Shatar preset. Begin after the required d4/d5. Rook, bers and knight checks count as shak. A mate delivered solely by a knight loses for its mover in the selected engine. A bishop or pawn mate without a shak in its unbroken check sequence is drawn. A bare king is also a draw.
 
 Shatar’s rule package passed typecheck and all 26 tests. It matched the stock oracle across seeded play and four exact mate outcomes. The engine persists both checking streaks. Next wire the PWA, bot and lessons. The independent Tamerlane product checkpoint also passed full repository verification.
+
+Shatar’s PWA, bot, tutorial and isolated invite-room server are locally verified. Bot checks passed 3/3, tutorial checks 13/13 and local browser scenarios 7/7. Those browser checks include the different saved outcomes for a lone horse mate and a camel mate without shak. Stage the production build next.

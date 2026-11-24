@@ -82,3 +82,5 @@ Tamerlane revision f1206a7 is running and migrated as `chaturanga-stage-tamerlan
 The active feature is `shatar-001`. Match the [traditional movement and opening](https://en.wikipedia.org/wiki/Shatar#Game_rules) and the [Fairy-Stockfish mate rule](https://github.com/fairy-stockfish/Fairy-Stockfish/blob/master/src/position.h), distinguishing an only-knight mate from a double check. Keep each attacker's shak streak in the game state and compare with the stock `shatar` oracle. Document the result choice for a prohibited knight mate and the omission of regional scoring customs.
 
 Shatar engine complete and verified with 26 checks. Preserve both sides’ shak streaks in bot position keys and saved games. The UI should explain the restricted-mate result as a draw without shak or a loss after a sole knight mate.
+
+The Shatar product is implemented and locally verified. Run the eight browser scenarios with `SHATAR_E2E_URL` against Melon. Public DNS must exist before the product can be announced or added to the catalog.

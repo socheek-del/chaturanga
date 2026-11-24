@@ -3144,7 +3144,8 @@
         "Stage on Melon, verify public HTTPS and WebSocket play, then publish the catalog entry."
       ],
       "evidence": [
-        "2026-11-24: Node 22 typecheck and all 26 Shatar tests passed, including shared conformance, eight seeded stock Fairy-Stockfish comparisons and four exact reference endings. Shared rules-core and protocol checks also passed."
+        "2026-11-24: Node 22 typecheck and all 26 Shatar tests passed, including shared conformance, eight seeded stock Fairy-Stockfish comparisons and four exact reference endings. Shared rules-core and protocol checks also passed.",
+        "2026-11-24: Bot checks 3/3, tutorial checks 13/13 and local browser scenarios 7/7 passed, including both restricted-mate outcomes and online reconnect."
       ]
     }
   ]

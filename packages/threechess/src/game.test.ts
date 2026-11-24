@@ -1,99 +1,58 @@
 import { describeVariantConformance } from '@chaturanga/rules-core/testing';
 import { describe, expect, it } from 'vitest';
-import { Game, parseSquare, squareName, threechess } from './game';
+import { Game, parseSquare, threechess } from './game';
+import { SIZE, hexAt, hexOf } from './hex';
+import type { Player } from './types';
 
-function fen(pieces: Array<[string, 'w' | 'b' | 'r', string, boolean?]>, turn: 'w' | 'b' | 'r' = 'w', ep = '-', eliminated = '-', result = '-') {
-  const board = Array.from({ length: 12 }, () => Array.from({ length: 8 }, () => '-'));
-  for (const [square, color, type, moved = false] of pieces) {
-    const index = parseSquare(square)!;
-    board[Math.floor(index / 8)]![index % 8] = `${color}${type}${moved ? '!' : ''}`;
-  }
-  return `${board.map((rank) => rank.join(',')).join('/')} ${turn} ${ep} ${eliminated} ${result}`;
+function fen(pieces: Array<[string, Player, string]>, eliminated = '-') {
+  const board = Array.from({ length: SIZE * SIZE }, (_, square) => hexAt(...hexOf(square)) === null ? '.' : '-');
+  for (const [cell, color, type] of pieces) board[parseSquare(cell)!] = color + type;
+  const rows = Array.from({ length: SIZE }, (_, row) => board.slice(row * SIZE, (row + 1) * SIZE).join(','));
+  return `${rows.join('/')} w - ${eliminated} -`;
 }
 
-const mateFen = fen([
-  ['a1', 'b', 'k'],
-  ['c2', 'w', 'k'],
-  ['b4', 'w', 'q'],
-  ['a6', 'w', 'r'],
-  ['b6', 'w', 'r'],
-], 'w', '-', 'r');
+const mateFen = fen([['f1', 'b', 'k'], ['h1', 'w', 'k'], ['i1', 'w', 'q']], 'r');
 
 describeVariantConformance(threechess, {
-  fens: [threechess.startFen, fen([['a1', 'w', 'k'], ['e5', 'b', 'k'], ['e9', 'r', 'k']], 'b')],
+  fens: [threechess.startFen, mateFen],
   invalidFens: ['not a position', '8/8 w - - -', `${threechess.startFen} extra`],
-  illegalMoves: ['a2a5', 'a1a2', 'z1a2', 'e2e4q'],
-  checkmate: { fen: mateFen, move: 'b4b3', winner: 'w' },
+  illegalMoves: ['d10d8', 'a1a2', 'z1a2', 'd10d9q'],
+  checkmate: { fen: mateFen, move: 'i1g2', winner: 'w' },
 });
 
-describe('Three-player chess on the ring', () => {
-  it('has 96 squares, three full armies and a legal turn for every seat', () => {
-    expect(threechess.files * threechess.ranks).toBe(96);
-    expect(threechess.players).toEqual(['w', 'b', 'r']);
-    const game = threechess.createGame();
-    expect(game.pieces()).toHaveLength(48);
-    expect(game.legalUci().length).toBeGreaterThan(20);
-    game.move('e2e4');
+describe('Hex-cell chess', () => {
+  it('starts three equal armies and advances through rotated pawn directions', () => {
+    const game = new Game();
+    expect(game.pieces()).toHaveLength(36);
+    game.move('d10d9');
     expect(game.turn).toBe('b');
-    expect(game.legalUci().length).toBeGreaterThan(20);
-    game.move('e6e8');
+    game.move('j4i5');
     expect(game.turn).toBe('r');
-    expect(game.legalUci().length).toBeGreaterThan(20);
+    expect(game.legalUci()).toContain('d4e4');
   });
 
-  it('wraps rank movement across the ring seam while files stay bounded', () => {
-    const game = new Game(fen([['e1', 'w', 'k'], ['e5', 'b', 'k'], ['e9', 'r', 'k'], ['a1', 'w', 'r']]));
-    expect(game.legalUci()).toContain('a1a12');
-    expect(squareName(parseSquare('h12')!)).toBe('h12');
-    expect(parseSquare('i1')).toBeNull();
+  it('moves a rook along six edge lines and stops at a blocker', () => {
+    const game = new Game(fen([['f6', 'w', 'r'], ['h6', 'w', 'p']]));
+    expect(game.attackedSquares('w')).toEqual(expect.arrayContaining(['g6', 'e6', 'g5', 'f5', 'e7', 'f7'].map(parseSquare)));
+    expect(game.legalUci()).not.toContain('f6i6');
+    expect(parseSquare('a1')).toBeNull();
   });
 
-  it('detects checks from every living opponent', () => {
-    const game = new Game(fen([['a1', 'w', 'k'], ['a6', 'b', 'r'], ['h5', 'b', 'k'], ['h9', 'r', 'k']]));
-    expect(game.inCheck()).toBe(true);
-    expect(game.checkedKingSquare()).toBe(parseSquare('a1'));
-    expect(game.attackedSquares('b')).toContain(parseSquare('a1'));
+  it('moves a bishop along six corner lines', () => {
+    const game = new Game(fen([['f6', 'w', 'b']]));
+    expect(game.attackedSquares('w')).toEqual(expect.arrayContaining(['g7', 'h5', 'g4', 'e5', 'd7', 'e8'].map(parseSquare)));
+    expect(game.legalUci()).not.toContain('f6g6');
   });
 
-  it('supports en passant on the shared ring and removes the passed pawn', () => {
-    const game = new Game(fen([['e1', 'w', 'k'], ['e5', 'b', 'k'], ['e9', 'r', 'k'], ['e4', 'w', 'p'], ['d2', 'b', 'p']], 'b', 'e3'));
-    expect(game.legalUci()).toContain('d2e3');
-    game.move('d2e3');
-    expect(game.pieceAt(parseSquare('e4')!)).toBeNull();
-    expect(game.pieceAt(parseSquare('e3')!)).toMatchObject({ color: 'b', type: 'p' });
+  it('gives the knight twelve destinations from the center', () => {
+    const game = new Game(fen([['f6', 'w', 'n']]));
+    expect(game.legalUci()).toHaveLength(12);
   });
 
-  it('promotes on the next sector and permits all four choices', () => {
-    const game = new Game(fen([['e1', 'w', 'k'], ['e5', 'b', 'k'], ['e9', 'r', 'k'], ['d4', 'w', 'p']]));
-    expect(game.legalUci()).toEqual(expect.arrayContaining(['d4d5q', 'd4d5r', 'd4d5b', 'd4d5n']));
-    game.move('d4d5');
-    expect(game.pieceAt(parseSquare('d5')!)).toMatchObject({ color: 'w', type: 'q', promoted: true });
-  });
-
-  it('castles on a home rank and moves the rook with the king', () => {
-    const game = new Game(fen([['e1', 'w', 'k'], ['a1', 'w', 'r'], ['h1', 'w', 'r'], ['e5', 'b', 'k'], ['e9', 'r', 'k']]));
-    expect(game.legalUci()).toEqual(expect.arrayContaining(['e1g1', 'e1c1']));
-    game.move('e1g1');
-    expect(game.pieceAt(parseSquare('g1')!)).toMatchObject({ type: 'k', moved: true });
-    expect(game.pieceAt(parseSquare('f1')!)).toMatchObject({ type: 'r', moved: true });
-  });
-
-  it('eliminates a mated seat and ends when only one king remains', () => {
-    const game = new Game(mateFen);
-    game.move('b4b3');
-    expect(game.isEliminated('b')).toBe(true);
-    expect(game.winnerPlayer()).toBe('w');
-    expect(game.status()).toEqual({ kind: 'checkmate', winner: 'w' });
-    expect(game.isGameOver()).toBe(true);
-  });
-
-  it('undo restores the previous seat, board and legal moves', () => {
-    const game = threechess.createGame();
-    const start = game.fen();
-    game.move('e2e4');
-    expect(game.undo()).not.toBeNull();
-    expect(game.fen()).toBe(start);
-    expect(game.turn).toBe('w');
-    expect(game.undo()).toBeNull();
+  it('allows four promotions when a pawn reaches its far boundary', () => {
+    const game = new Game(fen([['f2', 'w', 'p'], ['a10', 'w', 'k'], ['k5', 'b', 'k'], ['k1', 'r', 'k']]));
+    expect(game.legalUci()).toEqual(expect.arrayContaining(['f2f1q', 'f2f1r', 'f2f1b', 'f2f1n']));
+    game.move('f2f1n');
+    expect(game.pieceAt(parseSquare('f1')!)).toMatchObject({ type: 'n', promoted: true });
   });
 });

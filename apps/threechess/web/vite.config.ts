@@ -47,7 +47,7 @@ export default defineConfig({
         id: '/',
         name: 'Three-player chess',
         short_name: 'Three chess',
-        description: 'Three armies on one shared ring. Play with friends on one screen.',
+        description: 'Three armies on one hexagonal board. Play with friends on one screen.',
         lang: 'en',
         start_url: '/',
         scope: '/',

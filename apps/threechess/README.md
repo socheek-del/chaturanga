@@ -1,10 +1,9 @@
 # Three-player chess
 
-Three players share a 96-cell ring board. White, Black and Red move in order; checkmate removes a player, and
-the last king standing wins. This release is a pass-and-play PWA for three people on one device.
+White, Black and Red play on a 91-cell hexagonal board. Each army starts on a different edge. The last
+active king wins. Three people share one device, and progress saves in the browser.
 
-Three-player chess has many published rules and board shapes. This site implements one named house-rule set,
-the **Chaturanga Ring**. Read the complete rules in [`packages/threechess/RULES.md`](../../packages/threechess/RULES.md).
+[Full rules](../../packages/threechess/RULES.md)
 
 ## Run locally
 

@@ -26,14 +26,14 @@ describe('Three-player chess app', () => {
     localStorage.clear();
   });
 
-  it('explains the ring game and opens a 96-square board', async () => {
+  it('explains the hex game and opens a 91-cell board', async () => {
     await act(async () => root.render(<App />));
     expect(container.textContent).toContain('A game for three');
 
     const play = [...container.querySelectorAll('button')].find((button) => button.textContent?.includes('Set the board'));
     expect(play).toBeDefined();
     await act(async () => play!.click());
-    expect(container.querySelectorAll('[role="gridcell"]').length).toBe(96);
+    expect(container.querySelectorAll('[role="gridcell"]').length).toBe(91);
   });
 
   it('advances the turn after a legal move and saves the position', async () => {
@@ -41,14 +41,14 @@ describe('Three-player chess app', () => {
     const play = [...container.querySelectorAll('button')].find((button) => button.textContent?.includes('Set the board'));
     await act(async () => play!.click());
 
-    const e2 = container.querySelector<HTMLButtonElement>('[data-testid="cell-e2"]')!;
-    const e4 = container.querySelector<HTMLButtonElement>('[data-testid="cell-e4"]')!;
-    await act(async () => e2.click());
-    await act(async () => e4.click());
+    const d10 = container.querySelector<HTMLButtonElement>('[data-testid="cell-d10"]')!;
+    const d9 = container.querySelector<HTMLButtonElement>('[data-testid="cell-d9"]')!;
+    await act(async () => d10.click());
+    await act(async () => d9.click());
 
     expect(container.querySelector('.turn-pill')?.textContent).toContain('Black to move');
-    const saved = JSON.parse(localStorage.getItem('threechess:ring:v2')!);
-    expect(saved.fen).toContain(' b e3 - -');
-    expect(saved.moves).toEqual(['e2e4']);
+    const saved = JSON.parse(localStorage.getItem('threechess:hex:v1')!);
+    expect(saved.fen).toContain(' b - - -');
+    expect(saved.moves).toEqual(['d10d9']);
   });
 });

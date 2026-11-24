@@ -4,35 +4,35 @@ test.beforeEach(async ({ page }) => {
   await page.goto('/');
 });
 
-test('plays White, Black and Red in order on 96 squares', async ({ page }) => {
+test('plays White, Black and Red in order on 91 hexagonal cells', async ({ page }) => {
   await page.getByRole('button', { name: 'Set the board' }).click();
-  await expect(page.getByRole('gridcell')).toHaveCount(96);
+  await expect(page.getByRole('gridcell')).toHaveCount(91);
 
-  await page.getByTestId('cell-e2').click();
-  await expect(page.getByTestId('cell-e4')).toHaveAttribute('data-legal', 'true');
-  await page.getByTestId('cell-e4').click();
+  await page.getByTestId('cell-d10').click();
+  await expect(page.getByTestId('cell-d9')).toHaveAttribute('data-legal', 'true');
+  await page.getByTestId('cell-d9').click();
   await expect(page.locator('.turn-pill')).toContainText('Black to move');
 
-  await page.getByTestId('cell-e6').click();
-  await expect(page.getByTestId('cell-e8')).toHaveAttribute('data-legal', 'true');
-  await page.getByTestId('cell-e8').click();
+  await page.getByTestId('cell-j4').click();
+  await expect(page.getByTestId('cell-i5')).toHaveAttribute('data-legal', 'true');
+  await page.getByTestId('cell-i5').click();
   await expect(page.locator('.turn-pill')).toContainText('Red to move');
 });
 
 test('saves a position across reloads and can take back the last move', async ({ page }) => {
   await page.getByRole('button', { name: 'Set the board' }).click();
-  await page.getByTestId('cell-e2').click();
-  await page.getByTestId('cell-e4').click();
+  await page.getByTestId('cell-d10').click();
+  await page.getByTestId('cell-d9').click();
   await page.reload();
   await page.getByRole('button', { name: 'Set the board' }).click();
   await expect(page.locator('.turn-pill')).toContainText('Black to move');
 
-  await page.getByTestId('cell-e6').click();
-  await page.getByTestId('cell-e8').click();
+  await page.getByTestId('cell-j4').click();
+  await page.getByTestId('cell-i5').click();
   await expect(page.locator('.turn-pill')).toContainText('Red to move');
   await page.getByRole('button', { name: 'Take back' }).click();
   await expect(page.locator('.turn-pill')).toContainText('Black to move');
-  await expect(page.locator('.move-list')).toContainText('e2e4');
+  await expect(page.locator('.move-list')).toContainText('d10d9');
 });
 
 test('keeps the board inside a phone viewport', async ({ page }) => {

@@ -4,11 +4,11 @@
   "home": {
     "eyebrow": "A game for three",
     "title": "Chess has\na third side.",
-    "description": "Three armies circle the same board. Every move changes two rivalries. Only one king is left standing.",
+    "description": "Three armies enter from different edges of a hexagonal board. The last king in play wins.",
     "play": "Set the board",
     "note": "Pass-and-play · Three people · One device",
-    "ruleTitle": "The ring rules",
-    "ruleBody": "A 96-square ring with three four-rank home sectors. White, Black, then Red. Move clockwise and watch both sides.",
+    "ruleTitle": "Hex board rules",
+    "ruleBody": "Play on 91 hexagonal cells. Each army starts on a different edge. White moves first, then Black, then Red.",
     "details": "Read the rules"
   },
   "game": {
@@ -25,7 +25,7 @@
     "logEyebrow": "Round log",
     "emptyMoves": "Moves will appear here.",
     "note": "Three seats. One king standing.",
-    "ringNote": "Ranks wrap from 12 back to 1.",
+    "boardNote": "Pawns advance away from their home edge.",
     "selectPiece": "Choose a piece, then a highlighted square.",
     "promotion": "Choose promotion",
     "promoteTo": "Promote to {{piece}}",
@@ -56,9 +56,9 @@
     "withOwner": "{{player}} {{piece}}"
   },
   "rules": {
-    "board": "The 8 by 12 board wraps after rank 12. Files a–h stay in place.",
-    "turns": "White moves, then Black, then Red. All pawns move clockwise.",
-    "pieces": "Pieces keep their usual moves. Pawns promote to a queen on the next home sector.",
+    "board": "The board has six sides and 91 hexagonal cells. Players start on alternating edges.",
+    "turns": "White moves, then Black, then Red. Each army’s pawns advance in its own direction.",
+    "pieces": "Rooks follow edges and bishops follow corners. Knights jump two steps in one direction and one step along a neighboring direction. Kings can take one rook or bishop step. Pawns advance one cell, capture to either forward flank, and promote on the far boundary.",
     "elimination": "Checkmate takes a player out. Their pieces become still blockers. The last king wins."
   }
 }

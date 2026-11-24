@@ -1,15 +1,14 @@
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MoreGames } from '@chaturanga/game-shell/ui';
-import { Game, parseSquare, squareName, threechess } from '@chaturanga/threechess';
+import { Game, hexAt, RADIUS, SIZE, parseSquare, squareName, threechess } from '@chaturanga/threechess';
 import type { Player, PieceType, SeatStatus } from '@chaturanga/threechess';
 
 type Screen = 'home' | 'game';
 type ParsedMove = { uci: string; from: number; to: number; promotion?: Exclude<PieceType, 'p' | 'k'> };
-const STORAGE_KEY = 'threechess:ring:v2';
-const LEGACY_STORAGE_KEY = 'threechess:ring:v1';
+const STORAGE_KEY = 'threechess:hex:v1';
 const PLAYERS: readonly Player[] = ['w', 'b', 'r'];
-const FILES = 'abcdefgh';
+const FILES = 'abcdefghijk';
 const GLYPHS: Record<Player, Record<PieceType, string>> = {
   w: { k: '♔', q: '♕', r: '♖', b: '♗', n: '♘', p: '♙' },
   b: { k: '♚', q: '♛', r: '♜', b: '♝', n: '♞', p: '♟' },
@@ -17,7 +16,7 @@ const GLYPHS: Record<Player, Record<PieceType, string>> = {
 };
 
 function parseUci(uci: string): ParsedMove | null {
-  const match = /^([a-h](?:1[0-2]|[1-9]))([a-h](?:1[0-2]|[1-9]))([qrbn])?$/.exec(uci);
+  const match = /^([a-k](?:1[01]|[1-9]))([a-k](?:1[01]|[1-9]))([qrbn])?$/.exec(uci);
   if (!match) return null;
   const from = parseSquare(match[1]!);
   const to = parseSquare(match[2]!);
@@ -41,8 +40,7 @@ function loadGame(): Game {
       }
       return new Game(saved);
     }
-    const legacy = localStorage.getItem(LEGACY_STORAGE_KEY);
-    return legacy ? new Game(legacy) : new Game(threechess.startFen);
+    return new Game(threechess.startFen);
   } catch {
     return new Game(threechess.startFen);
   }
@@ -120,7 +118,6 @@ export function App() {
   function startNewGame(skipConfirm = false) {
     if (!skipConfirm && game.moves().length && !window.confirm(t('game.confirmReset'))) return;
     try { localStorage.removeItem(STORAGE_KEY); } catch { /* Private browsing can disable local storage. */ }
-    try { localStorage.removeItem(LEGACY_STORAGE_KEY); } catch { /* Private browsing can disable local storage. */ }
     refresh(new Game(threechess.startFen));
     setScreen('game');
     setResetOpen(false);
@@ -224,18 +221,20 @@ export function App() {
 
           <div className="play-area">
             <section className="board-column" aria-label={t('game.turn', { player: t(`players.${game.turn}`) })}>
-              <div className="sector-caption caption-r">{t('players.r')} <span>09—12</span></div>
               <div className="board-frame">
                 <div className="board-grid" role="grid" aria-label={t('game.turn', { player: t(`players.${game.turn}`) })}>
-                  {Array.from({ length: 12 }, (_, visualRow) => 11 - visualRow).map((rank) => (
+                  {Array.from({ length: SIZE }, (_, rank) => rank).map((rank) => (
                     <div className="board-row" role="row" key={rank} aria-label={t('game.boardLabel', { rank: rank + 1 })}>
-                      {Array.from({ length: 8 }, (_, file) => {
-                        const square = rank * 8 + file;
+                      {Array.from({ length: SIZE }, (_, file) => {
+                        const q = file - RADIUS;
+                        const r = rank - RADIUS;
+                        const square = hexAt(q, r);
+                        if (square === null) return null;
+                        const shade = ((q - r) % 3 + 3) % 3;
                         const piece = game.pieceAt(square);
                         const destinationMoves = destinations.filter((move) => move.to === square);
                         const capture = destinationMoves.length > 0 && !!piece;
                         const isLast = square === lastParsed?.from || square === lastParsed?.to;
-                        const isLight = (rank + file) % 2 === 0;
                         const ariaPiece = getPieceLabel(piece, t);
                         return (
                           <button
@@ -247,10 +246,9 @@ export function App() {
                             aria-label={t('game.squareLabel', { file: FILES[file], rank: rank + 1, piece: ariaPiece })}
                             aria-pressed={selected === square}
                             onClick={() => onSquareClick(square)}
-                            className={`square ${isLight ? 'square-light' : 'square-dark'} sector-${piece?.color ?? (rank < 4 ? 'r' : rank < 8 ? 'b' : 'w')} ${rank === 7 || rank === 3 ? 'sector-cut' : ''} ${selected === square ? 'is-selected' : ''} ${destinationMoves.length ? 'is-destination' : ''} ${capture ? 'is-capture' : ''} ${isLast ? 'is-last-move' : ''}`}
+                            style={{ left: `${50 + (q + r / 2) * 100 / SIZE}%`, top: `${50 + r * 75 / 8.5}%` }}
+                            className={`square hex-shade-${shade} ${selected === square ? 'is-selected' : ''} ${destinationMoves.length ? 'is-destination' : ''} ${capture ? 'is-capture' : ''} ${isLast ? 'is-last-move' : ''}`}
                           >
-                            {file === 0 && <span className="rank-label" aria-hidden="true">{rank + 1}</span>}
-                            {rank === 0 && <span className="file-label" aria-hidden="true">{FILES[file]}</span>}
                             {piece && <span className={`piece piece-${piece.color}`} aria-hidden="true">{GLYPHS[piece.color][piece.type]}</span>}
                             {!piece && destinationMoves.length > 0 && <span className="move-dot" aria-hidden="true" />}
                           </button>
@@ -273,10 +271,6 @@ export function App() {
                   </div>
                 )}
               </div>
-              <div className="sector-key">
-                <span className="sector-caption caption-b">{t('players.b')} <span>05—08</span></span>
-                <span className="sector-caption caption-w">{t('players.w')} <span>01—04</span></span>
-              </div>
               <p className="board-hint">{t('game.selectPiece')}</p>
             </section>
 
@@ -292,7 +286,7 @@ export function App() {
                 ))}
               </ol>
               {isFinished && <div className="result-card"><span className="result-star">✦</span><strong>{resultText()}</strong><p>{t('game.note')}</p><button className="primary-button compact" onClick={() => setResetOpen(true)}>{t('game.newGame')}</button></div>}
-              <div className="panel-footer"><span className="turn-ring" aria-hidden="true">◉</span><span>{t('game.ringNote')}</span></div>
+              <div className="panel-footer"><span className="turn-ring" aria-hidden="true">◉</span><span>{t('game.boardNote')}</span></div>
             </aside>
           </div>
           <MoreGames sites={__FAMILY__} locale="en" variant="footer" />

@@ -2869,6 +2869,25 @@
         "2026-11-24: Catalog Worker cc261c85 deployed; live apps.json lists Three-player chess as up and points to the game."
       ],
       "notes": "Owner approved launching v1 on Workers Free without D1. Games save in the browser."
+    },
+    {
+      "id": "tpc-004",
+      "product": "threechess",
+      "priority": 136,
+      "area": "play",
+      "milestone": "M23",
+      "title": "Three-player chess on hexagonal cells",
+      "user_visible_behavior": "Three players share a 91-cell hexagon with rotated starting edges and movement adapted to hex cells.",
+      "status": "passing",
+      "verification": [
+        "Run threechess rules conformance and the web and browser suites.",
+        "Build and deploy the Worker and confirm the catalog describes the live hex board."
+      ],
+      "evidence": [
+        "19 engine and conformance tests, 2 web unit tests, and 3 Playwright browser checks passed.",
+        "Cloudflare Worker 5a47d737 served the hex edition and the live Beanroti entry advertised the 91-cell hex board."
+      ],
+      "notes": "The hex edition uses a new browser storage key. Existing ring positions are not transferred."
     }
   ]
 }

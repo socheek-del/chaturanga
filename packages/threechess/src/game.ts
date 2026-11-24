@@ -1,22 +1,17 @@
 import { FenError, IllegalMoveError, type GameStatus, type Variant, type VariantGame, type VariantMoveRecord } from '@chaturanga/rules-core';
 import type { GameStatusName, Move, PieceType, Player, SeatStatus, ThreePiece } from './types';
 
-const FILES = 8;
-const RANKS = 12;
+import { DIAGONALS, EDGES, KNIGHTS, RADIUS, SIZE, hexAt, hexOf, seatHex, step, type Hex } from './hex';
+
+const FILES = SIZE;
+const RANKS = SIZE;
 const PLAYERS: readonly Player[] = ['w', 'b', 'r'];
 const PROMOTIONS = ['q', 'r', 'b', 'n'] as const;
-const START_ORDER: readonly PieceType[] = ['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'];
-const KING_STEPS = [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]] as const;
-const KNIGHT_STEPS = [[1, 2], [1, -2], [-1, 2], [-1, -2], [2, 1], [2, -1], [-2, 1], [-2, -1]] as const;
-const ROOK_RAYS = [[1, 0], [-1, 0], [0, 1], [0, -1]] as const;
-const BISHOP_RAYS = [[1, 1], [1, -1], [-1, 1], [-1, -1]] as const;
+const START_ORDER: readonly PieceType[] = ['r', 'n', 'b', 'q', 'k', 'r'];
+const KING_STEPS = [...EDGES, ...DIAGONALS];
+const FORWARD: Hex = [0, -1];
+const PAWN_CAPTURES: readonly Hex[] = [[1, -1], [-1, 0]];
 const LETTERS: Record<PieceType, string> = { p: '', n: 'N', b: 'B', r: 'R', q: 'Q', k: 'K' };
-
-interface DoublePawn {
-  square: number;
-  passed: number;
-  eligible: Player;
-}
 
 interface Snapshot {
   board: Array<ThreePiece | null>;
@@ -24,29 +19,27 @@ interface Snapshot {
   eliminated: Set<Player>;
   result: 'win' | 'draw' | null;
   winner: Player | null;
-  enPassant: DoublePawn | null;
   history: VariantMoveRecord<Player>[];
 }
 
 const rowOf = (square: number): number => Math.floor(square / FILES);
 const fileOf = (square: number): number => square % FILES;
-const mod = (value: number, length: number): number => ((value % length) + length) % length;
-const squareAt = (file: number, rank: number): number => mod(rank, RANKS) * FILES + file;
-const homeRank = (player: Player): number => PLAYERS.indexOf(player) * 4;
-const pawnRank = (player: Player): number => homeRank(player) + 1;
-const promotionRank = (player: Player): number => mod(homeRank(player) + 4, RANKS);
+const squareAt = (file: number, rank: number): number => rank * FILES + file;
+const isCell = (square: number): boolean => hexAt(...hexOf(square)) !== null;
+const promotes = (square: number, player: Player): boolean => step(square, seatHex(FORWARD, player)) === null;
 const nextPlayer = (player: Player): Player => PLAYERS[(PLAYERS.indexOf(player) + 1) % PLAYERS.length]!;
 const clonePiece = (piece: ThreePiece | null): ThreePiece | null => (piece ? { ...piece } : null);
 
 export function squareName(square: number): string {
-  if (square < 0 || square >= FILES * RANKS) throw new RangeError(`Invalid square: ${square}`);
+  if (square < 0 || square >= FILES * RANKS || !isCell(square)) throw new RangeError(`Invalid square: ${square}`);
   return `${String.fromCharCode(97 + fileOf(square))}${rowOf(square) + 1}`;
 }
 
 export function parseSquare(name: string): number | null {
-  const match = /^([a-h])(1[0-2]|[1-9])$/.exec(name);
+  const match = /^([a-k])(1[01]|[1-9])$/.exec(name);
   if (!match) return null;
-  return (Number(match[2]) - 1) * FILES + match[1]!.charCodeAt(0) - 97;
+  const square = (Number(match[2]) - 1) * FILES + match[1]!.charCodeAt(0) - 97;
+  return isCell(square) ? square : null;
 }
 
 function encodeMove(move: Move): string {
@@ -54,7 +47,7 @@ function encodeMove(move: Move): string {
 }
 
 function parseMove(uci: string): Move | null {
-  const match = /^([a-h](?:1[0-2]|[1-9]))([a-h](?:1[0-2]|[1-9]))([qrbn])?$/.exec(uci);
+  const match = /^([a-k](?:1[01]|[1-9]))([a-k](?:1[01]|[1-9]))([qrbn])?$/.exec(uci);
   if (!match) return null;
   const from = parseSquare(match[1]!);
   const to = parseSquare(match[2]!);
@@ -65,10 +58,10 @@ function parseMove(uci: string): Move | null {
 function startPosition(): Array<ThreePiece | null> {
   const board: Array<ThreePiece | null> = Array(FILES * RANKS).fill(null);
   for (const player of PLAYERS) {
-    const home = homeRank(player);
-    for (let file = 0; file < FILES; file++) {
-      board[squareAt(file, home)] = { color: player, type: START_ORDER[file]!, promoted: false, moved: false };
-      board[squareAt(file, home + 1)] = { color: player, type: 'p', promoted: false, moved: false };
+    for (const [index, type] of START_ORDER.entries()) {
+      const q = index - RADIUS;
+      board[hexAt(...seatHex([q, RADIUS], player))!] = { color: player, type, promoted: false, moved: false };
+      board[hexAt(...seatHex([q, RADIUS - 1], player))!] = { color: player, type: 'p', promoted: false, moved: false };
     }
   }
   return board;
@@ -77,7 +70,9 @@ function startPosition(): Array<ThreePiece | null> {
 function serializeBoard(board: readonly (ThreePiece | null)[]): string {
   return Array.from({ length: RANKS }, (_, rank) =>
     Array.from({ length: FILES }, (_, file) => {
-      const piece = board[squareAt(file, rank)];
+      const square = squareAt(file, rank);
+      if (!isCell(square)) return '.';
+      const piece = board[square];
       return piece ? `${piece.color}${piece.type}${piece.moved ? '!' : ''}` : '-';
     }).join(','),
   ).join('/');
@@ -86,7 +81,6 @@ function serializeBoard(board: readonly (ThreePiece | null)[]): string {
 function readFen(fen: string): {
   board: Array<ThreePiece | null>;
   turn: Player;
-  enPassant: DoublePawn | null;
   eliminated: Set<Player>;
   result: 'win' | 'draw' | null;
   winner: Player | null;
@@ -104,6 +98,10 @@ function readFen(fen: string): {
     if (cells.length !== FILES) fail(`Rank ${rank + 1} must have ${FILES} cells`);
     for (let file = 0; file < FILES; file++) {
       const token = cells[file]!;
+      if (!isCell(squareAt(file, rank))) {
+        if (token !== '.') fail('Expected a gap outside the hexagon');
+        continue;
+      }
       if (token === '-') continue;
       const match = /^([wbr])([pnbrqk])(!?)$/.exec(token);
       if (!match) throw new FenError(`Invalid piece token: ${token}`, fen);
@@ -117,8 +115,7 @@ function readFen(fen: string): {
   }
   const turn = fields[1] as Player;
   if (!PLAYERS.includes(turn)) fail(`Invalid turn: ${fields[1]}`);
-  const enPassantSquare = fields[2] === '-' ? null : parseSquare(fields[2]!);
-  if (fields[2] !== '-' && enPassantSquare === null) fail(`Invalid en-passant square: ${fields[2]}`);
+  if (fields[2] !== '-') fail('Reserved field must be empty');
   const eliminated = new Set<Player>();
   if (fields[3] !== '-') {
     for (const seat of fields[3]!) {
@@ -134,27 +131,20 @@ function readFen(fen: string): {
     winner = fields[4]!.slice(-1) as Player;
     if (eliminated.has(winner)) fail('The winner cannot also be eliminated');
   } else if (fields[4] !== '-') fail(`Invalid result: ${fields[4]}`);
-  const enPassant = enPassantSquare === null ? null : {
-    square: squareAt(fileOf(enPassantSquare), rowOf(enPassantSquare) + 1),
-    passed: enPassantSquare,
-    eligible: turn,
-  };
-  return { board, turn, enPassant, eliminated, result, winner };
+  return { board, turn, eliminated, result, winner };
 }
 
-/** A small three-seat rules engine. Coordinates wrap at the rank seam, never across files. */
 export class Game implements VariantGame<Player> {
   private board: Array<ThreePiece | null>;
   private turnValue: Player;
   private eliminated = new Set<Player>();
   private result: 'win' | 'draw' | null = null;
   private winner: Player | null = null;
-  private enPassant: DoublePawn | null = null;
   private history: VariantMoveRecord<Player>[] = [];
   private undoStack: Snapshot[] = [];
 
   constructor(fen?: string) {
-    if (!fen) {
+    if (fen === undefined) {
       this.board = startPosition();
       this.turnValue = 'w';
       return;
@@ -162,7 +152,6 @@ export class Game implements VariantGame<Player> {
     const parsed = readFen(fen);
     this.board = parsed.board;
     this.turnValue = parsed.turn;
-    this.enPassant = parsed.enPassant;
     this.eliminated = parsed.eliminated;
     this.result = parsed.result;
     this.winner = parsed.winner;
@@ -175,7 +164,7 @@ export class Game implements VariantGame<Player> {
   fen(): string {
     const eliminated = PLAYERS.filter((player) => this.eliminated.has(player)).join('') || '-';
     const outcome = this.result === 'draw' ? 'draw' : this.result === 'win' ? `win${this.winner}` : '-';
-    return `${serializeBoard(this.board)} ${this.turnValue} ${this.enPassant ? squareName(this.enPassant.passed) : '-'} ${eliminated} ${outcome}`;
+    return `${serializeBoard(this.board)} ${this.turnValue} - ${eliminated} ${outcome}`;
   }
 
   pieceAt(square: number): ThreePiece | null {
@@ -205,13 +194,8 @@ export class Game implements VariantGame<Player> {
     this.undoStack.push(this.snapshot());
     const player = this.turnValue;
     const movingPiece = this.board[move.from]!;
-    const captured = move.special === 'en-passant' && this.enPassant ? this.board[this.enPassant.square] : this.board[move.to];
+    const captured = this.board[move.to];
     this.applyBoardMove(move);
-    this.enPassant = null;
-    if (movingPiece.type === 'p' && Math.abs(rowOf(move.to) - rowOf(move.from)) === 2) {
-      const passedRank = mod(rowOf(move.from) + 1, RANKS);
-      this.enPassant = { square: move.to, passed: squareAt(fileOf(move.from), passedRank), eligible: nextPlayer(player) };
-    }
     this.turnValue = nextPlayer(player);
     this.advanceToPlayableSeat();
     const outcome = this.result === 'win' ? '#' : this.result === 'draw' ? '=' : this.inCheckColor(this.turnValue) ? '+' : '';
@@ -313,7 +297,6 @@ export class Game implements VariantGame<Player> {
       eliminated: new Set(this.eliminated),
       result: this.result,
       winner: this.winner,
-      enPassant: this.enPassant ? { ...this.enPassant } : null,
       history: [...this.history],
     };
   }
@@ -324,30 +307,15 @@ export class Game implements VariantGame<Player> {
     this.eliminated = new Set(snapshot.eliminated);
     this.result = snapshot.result;
     this.winner = snapshot.winner;
-    this.enPassant = snapshot.enPassant ? { ...snapshot.enPassant } : null;
     this.history = [...snapshot.history];
   }
 
   private applyBoardMove(move: Move): void {
     const piece = this.board[move.from];
     if (!piece) return;
-    if (move.special === 'en-passant' && this.enPassant) this.board[this.enPassant.square] = null;
     this.board[move.from] = null;
     const placed: ThreePiece = { ...piece, moved: true };
-    if (move.special === 'castle-kingside') {
-      const rookFrom = squareAt(7, rowOf(move.from));
-      const rookTo = squareAt(5, rowOf(move.from));
-      const rook = this.board[rookFrom];
-      this.board[rookFrom] = null;
-      if (rook) this.board[rookTo] = { ...rook, moved: true };
-    } else if (move.special === 'castle-queenside') {
-      const rookFrom = squareAt(0, rowOf(move.from));
-      const rookTo = squareAt(3, rowOf(move.from));
-      const rook = this.board[rookFrom];
-      this.board[rookFrom] = null;
-      if (rook) this.board[rookTo] = { ...rook, moved: true };
-    }
-    if (piece.type === 'p' && rowOf(move.to) === promotionRank(piece.color)) {
+    if (move.promotion) {
       placed.type = move.promotion ?? 'q';
       placed.promoted = true;
     }
@@ -369,6 +337,7 @@ export class Game implements VariantGame<Player> {
       if (this.inCheckColor(candidate)) {
         this.eliminated.add(candidate);
         const active = this.activePlayers();
+        checked = 0;
         if (active.length === 1) {
           this.result = 'win';
           this.winner = active[0]!;
@@ -399,128 +368,48 @@ export class Game implements VariantGame<Player> {
   }
 
   private pseudoMoves(from: number, piece: ThreePiece): Move[] {
-    if (piece.type === 'p') return this.pawnMoves(from, piece);
     const moves: Move[] = [];
-    if (piece.type === 'n') {
-      for (const [dr, df] of KNIGHT_STEPS) this.addStepMove(moves, from, piece, dr, df);
-      return moves;
+    if (piece.type === 'p') {
+      const one = step(from, seatHex(FORWARD, piece.color));
+      if (one !== null && !this.board[one]) this.addPawnMove(moves, from, one, piece);
     }
-    if (piece.type === 'k') {
-      for (const [dr, df] of KING_STEPS) this.addStepMove(moves, from, piece, dr, df);
-      moves.push(...this.castlingMoves(from, piece));
-      return moves;
-    }
-    const rays = piece.type === 'r' ? ROOK_RAYS : piece.type === 'b' ? BISHOP_RAYS : [...ROOK_RAYS, ...BISHOP_RAYS];
-    for (const [dr, df] of rays) {
-      let rank = rowOf(from);
-      let file = fileOf(from);
-      for (let step = 0; step < RANKS; step++) {
-        rank = mod(rank + dr, RANKS);
-        file += df;
-        if (file < 0 || file >= FILES) break;
-        const to = squareAt(file, rank);
-        if (to === from) break;
-        const target = this.board[to];
-        if (target?.color === piece.color) break;
-        if (!target || target.type !== 'k' || this.eliminated.has(target.color)) moves.push({ from, to });
-        if (target) break;
-      }
-    }
-    return moves;
-  }
-
-  private pawnMoves(from: number, piece: ThreePiece): Move[] {
-    const moves: Move[] = [];
-    const file = fileOf(from);
-    const nextRank = mod(rowOf(from) + 1, RANKS);
-    const one = squareAt(file, nextRank);
-    if (!this.board[one]) {
-      this.addPawnMove(moves, from, one, piece);
-      const two = squareAt(file, mod(nextRank + 1, RANKS));
-      if (!piece.moved && rowOf(from) === pawnRank(piece.color) && !this.board[two]) moves.push({ from, to: two });
-    }
-    for (const deltaFile of [-1, 1]) {
-      const captureFile = file + deltaFile;
-      if (captureFile < 0 || captureFile >= FILES) continue;
-      const to = squareAt(captureFile, nextRank);
+    for (const to of this.attacksFrom(from, piece)) {
       const target = this.board[to];
-      if (target && target.color !== piece.color && (target.type !== 'k' || this.eliminated.has(target.color))) {
-        this.addPawnMove(moves, from, to, piece);
-      } else if (!target && this.enPassant?.eligible === piece.color && this.enPassant.passed === to) {
-        moves.push({ from, to, special: 'en-passant' });
+      if (target?.color === piece.color || (target?.type === 'k' && !this.eliminated.has(target.color))) continue;
+      if (piece.type === 'p') {
+        if (target) this.addPawnMove(moves, from, to, piece);
+      } else {
+        moves.push({ from, to });
       }
     }
     return moves;
   }
 
   private addPawnMove(moves: Move[], from: number, to: number, piece: ThreePiece): void {
-    if (rowOf(to) === promotionRank(piece.color)) for (const promotion of PROMOTIONS) moves.push({ from, to, promotion });
-    else moves.push({ from, to });
-  }
-
-  private addStepMove(moves: Move[], from: number, piece: ThreePiece, dr: number, df: number): void {
-    const file = fileOf(from) + df;
-    if (file < 0 || file >= FILES) return;
-    const to = squareAt(file, rowOf(from) + dr);
-    if (to === from) return;
-    const target = this.board[to];
-    if (target?.color === piece.color || (target?.type === 'k' && !this.eliminated.has(target.color))) return;
-    moves.push({ from, to });
-  }
-
-  private castlingMoves(from: number, king: ThreePiece): Move[] {
-    const rank = rowOf(from);
-    if (king.moved || rank !== homeRank(king.color) || fileOf(from) !== 4 || this.inCheckColor(king.color)) return [];
-    const moves: Move[] = [];
-    for (const side of ['kingside', 'queenside'] as const) {
-      const rookFile = side === 'kingside' ? 7 : 0;
-      const rook = this.board[squareAt(rookFile, rank)];
-      if (!rook || rook.color !== king.color || rook.type !== 'r' || rook.moved) continue;
-      const kingFiles = side === 'kingside' ? [5, 6] : [3, 2];
-      const betweenFiles = side === 'kingside' ? [5, 6] : [3, 2, 1];
-      if (betweenFiles.some((file) => this.board[squareAt(file, rank)])) continue;
-      if (kingFiles.some((file) => this.isAttackedByOpponent(squareAt(file, rank), king.color))) continue;
-      moves.push({
-        from,
-        to: squareAt(side === 'kingside' ? 6 : 2, rank),
-        special: side === 'kingside' ? 'castle-kingside' : 'castle-queenside',
-      });
+    if (promotes(to, piece.color)) {
+      for (const promotion of PROMOTIONS) moves.push({ from, to, promotion });
+    } else {
+      moves.push({ from, to });
     }
-    return moves;
   }
 
   private attacksFrom(from: number, piece: ThreePiece): number[] {
-    if (piece.type === 'p') {
-      return [-1, 1]
-        .map((df) => fileOf(from) + df)
-        .filter((file) => file >= 0 && file < FILES)
-        .map((file) => squareAt(file, rowOf(from) + 1));
+    if (piece.type === 'p' || piece.type === 'n' || piece.type === 'k') {
+      const steps = piece.type === 'p' ? PAWN_CAPTURES.map((direction) => seatHex(direction, piece.color))
+        : piece.type === 'n' ? KNIGHTS : KING_STEPS;
+      return steps.map((direction) => step(from, direction)).filter((to) => to !== null);
     }
-    if (piece.type === 'n') return KNIGHT_STEPS.flatMap(([dr, df]) => this.validStep(from, dr, df));
-    if (piece.type === 'k') return KING_STEPS.flatMap(([dr, df]) => this.validStep(from, dr, df));
-    const rays = piece.type === 'r' ? ROOK_RAYS : piece.type === 'b' ? BISHOP_RAYS : [...ROOK_RAYS, ...BISHOP_RAYS];
+    const rays = piece.type === 'r' ? EDGES : piece.type === 'b' ? DIAGONALS : KING_STEPS;
     const attacks: number[] = [];
-    for (const [dr, df] of rays) {
-      let rank = rowOf(from);
-      let file = fileOf(from);
-      for (let step = 0; step < RANKS; step++) {
-        rank = mod(rank + dr, RANKS);
-        file += df;
-        if (file < 0 || file >= FILES) break;
-        const to = squareAt(file, rank);
-        if (to === from) break;
+    for (const direction of rays) {
+      let to = step(from, direction);
+      while (to !== null) {
         attacks.push(to);
         if (this.board[to]) break;
+        to = step(to, direction);
       }
     }
     return attacks;
-  }
-
-  private validStep(from: number, dr: number, df: number): number[] {
-    const file = fileOf(from) + df;
-    if (file < 0 || file >= FILES) return [];
-    const to = squareAt(file, rowOf(from) + dr);
-    return to === from ? [] : [to];
   }
 
   private inCheckColor(player: Player): boolean {

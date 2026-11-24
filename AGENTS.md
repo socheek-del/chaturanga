@@ -17,7 +17,7 @@ Chaturanga is a family of chess games. Each game is its own web PWA product:
   (`apps/janggi/docs/design.md`), proposed and awaiting owner approval. Passing and points made the platform
   learn decided repetitions and chosen start positions (`plat-019`).
 - **Three-player chess**: a live three-person pass-and-play product (`apps/threechess/docs/PLAN.md`).
-  Its custom 96-cell ring rules are documented in `packages/threechess/RULES.md`; generic player seats
+  Its hex-cell rules are documented in `packages/threechess/RULES.md`; generic player seats
   (`plat-020`) support its three turns. It has no AI or online play in v1.
 - Others may follow.
 
@@ -164,10 +164,10 @@ broken starting state.
   - `apps/chess/web`, `apps/chess/worker`: the chess product (`apps/chess/AGENTS.md`). English only, the
     "Marble" identity, 16 lessons, online rooms, PWA, saved games with PGN, and a Stockfish game review. The Worker runs on :8791 and deploys on its own
     subdomain and D1 (ch-008).
-  - `packages/threechess` (`@chaturanga/threechess`): pure, serialisable three-player ring-chess rules
+  - `packages/threechess` (`@chaturanga/threechess`): pure, serialisable three-player hex-cell rules
     (`RULES.md`), implementing the generic Variant with three named seats.
   - `apps/threechess/web`, `apps/threechess/worker`: the Three-player chess product
-    (`apps/threechess/AGENTS.md`). English-only pass-and-play PWA, 8 files by 12 ranks, Worker on :8793,
+    (`apps/threechess/AGENTS.md`). English-only pass-and-play PWA, 91 hexagonal cells, Worker on :8793,
     and its own subdomain. The owner approved launching v1 without D1 because games save in the browser.
   - `apps/beanroti/web/public/apps.json`: source catalog for app.beanroti.com, served by the independent
     `apps/beanroti/worker` Worker. Add directory entries here; only publish them after their destination is live.

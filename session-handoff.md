@@ -5,7 +5,7 @@ Updated 2026-11-24 after Three-player chess work.
 ## Verified now
 
 - `main` contains the six existing game products. Three-player chess is live.
-- Three-player rules: custom Chaturanga Ring, 8 files × 12 ranks, three clockwise seats, checkmate eliminates,
+- Three-player rules: 91 hexagonal cells, three rotated starting edges, checkmate eliminates,
   stalemate passes, and the last king wins. See `apps/threechess/docs/PLAN.md` and
   `packages/threechess/RULES.md`.
 - `plat-020`, `tpc-001` and `tpc-002` are passing in `feature_list.json`. Full `npm run verify` passed with

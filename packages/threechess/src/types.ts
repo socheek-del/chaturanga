@@ -7,7 +7,6 @@ export interface Move {
   from: number;
   to: number;
   promotion?: Exclude<PieceType, 'p' | 'k'>;
-  special?: 'en-passant' | 'castle-kingside' | 'castle-queenside';
 }
 export type SeatStatus = 'playing' | 'check' | 'checkmate' | 'stalemate' | 'eliminated' | 'winner';
 export type GameStatusName = 'playing' | 'check' | 'win' | 'draw';

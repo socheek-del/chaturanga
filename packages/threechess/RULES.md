@@ -1,44 +1,31 @@
-# Three-player chess (Chaturanga Ring)
+# Three-player chess on hexagonal cells
 
-This product uses one clear house-rule variant from the wider family of three-player chess. It is built for
-three people sharing one screen. The board is 8 files by 12 ranks: three four-rank sectors joined into a
-continuous ring. Every sector has one full chess army (back rank and pawns), and White, Black and Red move
-in that order. A pawn's forward direction is clockwise around the ring.
+This is an original interpretation of the hex-cell board category described in the
+[three-player chess overview](https://en.wikipedia.org/wiki/Three-player_chess#Boards_with_hexagonal_cells).
 
-## Board and setup
+## Board and moves
 
-- Files are `a`–`h`; ranks are `1`–`12`. Ranks 1–4, 5–8 and 9–12 are the White, Black and Red home sectors.
-- Each army starts on the first two ranks of its sector, in the usual `RNBQKBNR` order with pawns in front.
-- Rank 12 wraps to rank 1 for movement. Files do not wrap.
-- The three sectors are tinted blue, charcoal and vermilion. Their colours identify seats and do not change ownership.
+- There are 91 playable cells on a regular hexagon, with six cells along each edge. White, Black and Red
+  take turns in that order. Their starting positions are rotations of the same six-piece back row and
+  six-pawn front row, on alternating edges.
+- Rooks slide along any of the six edge directions. Bishops slide along the six corner directions. A
+  queen combines both. Sliding pieces stop at the first occupied cell on their path.
+- Kings can take one rook or bishop step. Knights jump two edge steps in one direction and then one
+  step in either neighboring direction, for twelve possible jumps before board boundaries.
+- Pawns take one forward edge step and capture on either immediately neighboring edge direction.
+  Each army has its own forward direction. When a pawn lands where it cannot step farther forward
+  because of the board boundary, it promotes to a queen, rook, bishop or knight.
+- The rules have no double pawn step, en passant or castling.
 
-## Moves and endings
+## Endings
 
-- Rooks, bishops, queens, knights and kings use their usual chess moves on the 8×12 ring. Sliding moves stop at
-  the first occupied square. A knight wraps over the rank seam like any other piece.
-- Pawns move one rank clockwise, may move two from their initial rank if both squares are clear, and capture
-  one file to either side. En passant is available to the next seat after a two-square pawn move.
-- A pawn that reaches the next player's home rank promotes automatically to a queen.
-- Castling is available on each army's back rank under the familiar clear-path, unmoved-piece and unattacked-path
-  conditions.
-- A king is never captured. A player in check must resolve it on their turn. If they have no legal move then,
-  they are checkmated and eliminated. Their remaining pieces stay as inert blockers and can be captured.
-- A player with no legal move while not in check is stalemated and passes. If every remaining player is
-  stalemated, the game is a draw. The last king standing wins.
-- There is no repetition or move-count draw in this first release.
+A move must leave the mover's king safe. A player who begins their turn in check and cannot escape
+is eliminated. Their remaining pieces block movement, can be captured and have no attacks.
+A stalemated player passes. If all active players are stalemated the game is drawn. The last active
+king wins. The game has no automatic repetition or move-count draw.
 
-These rules deliberately specify one playable interpretation rather than imply there is a single standard.
-Wikipedia describes multiple three-player boards and endings. The 96-square hexagon is a common choice; this
-product keeps 96 cells but lays them out as a ring so the three equal four-rank sectors and clockwise pawn
-direction are explicit.
+## Engine
 
-## Engine notes
-
-The engine implements the shared `Variant` interface with a three-seat turn list. No Fairy-Stockfish variant
-models this custom three-seat ring, so it is verified by the shared conformance suite plus its own board,
-move, check, elimination and promotion fixtures instead of a two-player lock-step run.
-
-## Sources
-
-- [Three-player chess variants](https://en.wikipedia.org/wiki/Three-player_chess)
-- [A 96-square three-player layout and one set of rules](https://www.bigboard.games/games/chess/3-players)
+The shared Variant uses an 11×11 coordinate envelope (a–k, 1–11), with 30 unused positions outside
+the hexagon. The engine rejects moves to those positions. FEN uses dots outside the board and hyphens
+for empty playable cells. Hex saves use a separate browser storage key from the original ring.

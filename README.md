@@ -65,7 +65,7 @@ checkmate does not. Korean · English — [about this game](apps/janggi/README.m
 
 More games may follow.
 
-**[Three-player chess][threechess]** — a three-seat 96-cell ring board, built for three people sharing one
+**[Three-player chess][threechess]** — a three-seat 91-cell hexagonal board, built for three people sharing one
 device. English — [about this game](apps/threechess/README.md)
 
 ## What you get

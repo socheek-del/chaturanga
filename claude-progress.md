@@ -1097,3 +1097,13 @@ Implemented the Shogi plan written in session 015. The site is live and every fe
 - Chrome e2e passed 3/3. Public DNS resolved the game, its homepage and health endpoint responded over HTTPS,
   and the live catalog JSON returned the enabled listing. Worker versions are recorded under tpc-003.
 - Regenerated the workspace lockfile to fix the missing Vite React plugin entry reported by npm ci.
+
+### Session 031 (Three-player chess on hexagonal cells)
+
+- Owner selected the hexagonal-cell category from the Wikipedia article. Replaced the ring with an original
+  91-cell regular hexagon and three rotated home edges. The rules now use axial movement and promotion at
+  the far boundary. The ring and hex save keys are separate.
+- Engine suite and Variant conformance passed 19/19. Web unit tests passed 2/2 and Chrome e2e passed 3/3
+  for turn order, persistence, takeback and mobile layout.
+- The production build and Worker deploy passed. Public DNS and HTTPS smoke checks confirmed the hex game
+  (version 5a47d737), and the live Beanroti catalog confirmed the updated listing.

@@ -14,6 +14,7 @@ export const RESULT_REASONS = [
   'fifty-move',
   'insufficient-material',
   'bare-king',
+  'goal-square',
   'perpetual-check',
   'perpetual-chase',
   'bikjang',
@@ -47,6 +48,7 @@ export function resultFromStatus(status: GameStatus): GameResult | null {
     case 'repetition':
     case 'fifty-move':
     case 'bare-king':
+    case 'goal-square':
       return { winner: status.winner ?? null, reason: status.kind };
     default:
       return { winner: null, reason: status.kind };

@@ -1218,3 +1218,5 @@ Grande Acedrex stage 5adadf2 is healthy on Melon port 19905 in `~/chaturanga-rel
 ### Tamerlane Chess
 
 Select the common 11×10 array in the Wikipedia rules. Use the two true citadels, typed pawn upgrades, lone-royal mate, the checked shah's exchange and the three promotions of the pawn of pawns. Encode the board as eleven ordinary files within a thirteen-column grid. Research sources disagree on the rare pawn redeployment and occupied home-square cases, so document the precise playable interpretation and confirm it with fixtures.
+
+Tamerlane's engine passed typecheck and all 35 rule checks. These cover the common rotation, typed pawns, all three special pawn stages, citadels and both royal exchanges. The shared goal-square result passed 37 rules-core tests and 3 protocol tests. Next integrate the board, bot and interactive lessons.

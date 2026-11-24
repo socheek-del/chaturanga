@@ -27,6 +27,8 @@ export type GameStatus<C extends string = Color> =
   | { kind: 'insufficient-material' }
   /** A king was left without other pieces. The variant may award a win or draw. */
   | { kind: 'bare-king'; winner?: C }
+  /** Reaching a designated board square ends the game. */
+  | { kind: 'goal-square'; winner?: C }
   /** A repeated position where the same side repeats check indefinitely; that side loses (Xiangqi). */
   | { kind: 'perpetual-check'; winner: C }
   /** A repeated position where the same side repeats an illegal chase indefinitely; that side loses (Xiangqi). */

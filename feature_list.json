@@ -3104,7 +3104,7 @@
       "evidence": [
         "2026-11-24: Node 22 typecheck and all 22 rules checks passed, including Variant conformance, independent movement and ending fixtures, and six seeded replay and undo games.",
         "2026-11-24: Bot checks 2/2, tutorial checks 13/13 and local browser scenarios 5/5 passed. The phone tutorial covered rank-12 promotion and mate, and the invite room synchronized a rank-12 king leap.",
-        "2026-11-24: Melon stage 5adadf2 on port 19905 applied its migration and passed all six browser scenarios, including offline play and online rank-12 play."
+        "2026-11-24: Melon stage 5adadf2 on port 19905 applied its migration and passed all six browser scenarios, including offline play and online rank-12 play. Full repository verification passed."
       ],
       "notes": "Melon stage is ready. Public launch requires DNS for acedrex.beanroti.com before TLS, promotion and public smoke."
     },
@@ -3122,7 +3122,9 @@
         "Complete the interactive tutorial and verify both bot sides and local and private online play in the browser.",
         "Stage on Melon, verify public HTTPS and WebSocket play, then publish the catalog entry."
       ],
-      "evidence": []
+      "evidence": [
+        "2026-11-24: Node 22 typecheck and all 35 rules tests passed. Rules-core passed 37 checks and protocol passed 3 with the generic goal-square result."
+      ]
     }
   ]
 }

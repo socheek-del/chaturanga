@@ -79,6 +79,8 @@ Verified on 2026-11-24. SSH access works. The server is Linux x86_64 with Docker
 
 ### First release on Melon
 
+Follow the [Melon release runbook](MELON-RELEASE.md).
+
 1. Turn the existing standalone container setup into a repeatable release command. Build a verified main SHA, run it under a spare loopback port, and smoke the assets, API, PWA and WebSocket handshake before switching Caddy. Release one product at a time. Keep the previous container and Caddy route available for rollback.
 2. Verify an isolated persistent volume per game. Confirm the standalone runtime's database and Durable Object storage behavior against the selected configuration. If a binding lacks the required durability, adapt that server layer to a Melon-hosted store. Test migrations, an online game, reconnect and state across container recreation, plus backup and restore, before calling online deployment ready.
 3. Review Caddy, DNS and TLS for each hostname and validate a real HTTPS and WebSocket session. Inventory the Beanroti catalog origin and publish its update on Melon only after the target URL passes production smoke.

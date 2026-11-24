@@ -2930,7 +2930,7 @@
       "milestone": "M24",
       "title": "Make Melon releases repeatable",
       "user_visible_behavior": "A verified main revision can be deployed, checked and rolled back on Melon with separate routes and durable online state per game.",
-      "status": "in_progress",
+      "status": "passing",
       "verification": [
         "Stage a release via ssh melon and validate its loopback health, assets and WebSocket handshake.",
         "Verify HTTPS, online state after a container restart, backup and restore, and a route rollback.",
@@ -2938,7 +2938,9 @@
       ],
       "evidence": [
         "2026-11-24: SSH, Docker, Caddy and all seven self-hosted workerd game origins identified. All seven loopback health endpoints returned 200.",
-        "2026-11-24: Isolated Makruk workerd probe served assets, created a guest room, delivered state through WebSocket, and recovered the room after restart with --data-dir. Pinned Node ./init.sh passed."
+        "2026-11-24: Isolated Makruk workerd probe served assets, created a guest room, delivered state through WebSocket, and recovered the room after restart with --data-dir. Pinned Node ./init.sh passed.",
+        "2026-11-24: 8ee28c4 staged Makruk and Beanroti from GitHub on Melon. Makruk SQL applied three migrations and the second pass applied none. A staged game served the migrated history endpoint and synchronized two legal moves over WebSocket. Makruk online browser suite passed 7/7.",
+        "2026-11-24: An offline backup restored a room in a new container. An isolated Caddy trusted HTTPS promotion passed and a deliberate 503 rolled back. Live Melon catalog HTTPS matched the staged apps.json SHA-256."
       ]
     },
     {
@@ -2949,7 +2951,7 @@
       "milestone": "M24",
       "title": "Release Shatranj with bots and multiplayer",
       "user_visible_behavior": "Players can learn classical Shatranj in an interactive tutorial and complete games against a bot, locally with another person, and in an online invite room.",
-      "status": "not_started",
+      "status": "in_progress",
       "verification": [
         "Pin and test classical rules and Variant conformance.",
         "Complete the interactive tutorial in the browser and verify its moves and answers against the engine.",

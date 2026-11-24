@@ -3,7 +3,7 @@
 ## Active work
 
 - Implement the [42-entry rollout](docs/CHESS-LIKE-ROADMAP.md) one product at a time. Every game requires an interactive tutorial, a bot mode and applicable multiplayer.
-- Current feature is `plat-022`. Next is `shatranj-001`, then the Three-player Chess tutorial, bots and online play. Record only verified evidence in `feature_list.json` and `claude-progress.md`.
+- Current feature is `shatranj-001`. Next are the Three-player Chess tutorial, bots and online play. Record only verified evidence in `feature_list.json` and `claude-progress.md`.
 - Push verified increments directly to main. Use GitHub Actions for verification and Melon over SSH for release. Cloudflare is a fallback when a documented Melon limitation prevents delivery.
 
 ## Verified
@@ -13,6 +13,6 @@
 - The isolated Makruk probe on port 19887 verified static assets, authenticated room creation, WebSocket state and recovery after restarting the container. Its state and bundle scratch directory are separate from production.
 - `scripts/melon/stage.sh <product> <full-commit-sha> <free-loopback-port>` builds a pinned commit and starts a separate stage. It does not modify Caddy. Use product health and assets to confirm the stage, then record evidence.
 
-## Remaining release verification
+## Melon release workflow
 
-Apply and verify SQL migrations in standalone workerd, test backup and restore, implement Caddy promotion and rollback, and confirm HTTPS plus WebSockets. Confirm the Beanroti catalog on Melon before publishing new entries. Keep the staging data isolated from production.
+plat-022 passed. The 8ee28c4 Makruk and Beanroti stages, migrations and repeat run, two-seat WebSockets, backup restore and HTTPS rollback were verified. Melon’s live catalog matches the staged data. Use [the runbook](docs/MELON-RELEASE.md) for Shatranj. Its release still needs its own hostname, public smoke and catalog update.

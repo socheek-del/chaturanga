@@ -53,7 +53,7 @@ rights.md`](../../apps/suffragetto/docs/reports/Suffragetto%20rules%20and%20righ
   Suffragette starts in Prison Yard; a released police piece starts in Hospital Grounds.
 - The initiating player chooses the number and matching ranks of the pairs. The original rules do not
   prescribe which individual captives to select; this is a digital convention.
-- The engine selects the oldest captives by holding-area coordinate, large pieces first, then small pieces.
+- The engine selects captives in ascending holding-area coordinate order, large pieces first, then small pieces.
   Released pieces occupy the lowest available staging coordinates in the same order. This deterministic
   convention lets moves replay identically.
 - No further exchange may be demanded while either staging area has any piece in it.

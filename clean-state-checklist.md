@@ -7,7 +7,10 @@
   no-move loss, serialization and undo/replay; focused tests passed 36/36 with shared Variant conformance.
 - [x] Full workspace `npm run verify` passed with `NODE_OPTIONS=--no-experimental-webstorage` and loopback
   access; Node 25.9 is installed instead of the `.nvmrc` Node 22.23.1.
-- [ ] Build the Suffragetto bot, independent PWA and online Worker; run product build/browser/Worker checks.
+- [x] Suffragetto AI typecheck and lint passed; 17 tests passed for all six bot levels as both roles, goal
+  wins, captures, exchanges, deterministic choice and search-state restoration. Two 32-ply seeded strength
+  smoke games completed with legal moves.
+- [ ] Build the Suffragetto independent PWA and online Worker; run product build/browser/Worker checks.
 
 - [x] Fortress's exact code revision passed GitHub `npm run verify` and all workspace builds. Crazyhouse startup `npm run verify` also passed locally under Node 22.23.1 when run outside the sandbox so Worker tests could bind loopback ports; `./init.sh` could not sync uncached npm@11 in offline mode.
 - [x] Fortress rules tests passed 23/23, bots 4/4, tutorial 2/2 and Worker room/schema checks 4/4; local browser and PWA checks passed before staging.

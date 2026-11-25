@@ -1,0 +1,19 @@
+{
+  "name": "@chaturanga/suffragetto-ai",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "GPL-3.0-or-later",
+  "exports": { ".": "./src/index.ts" },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:strength": "node scripts/strength.mjs"
+  },
+  "dependencies": {
+    "@chaturanga/ai-core": "*",
+    "@chaturanga/rules-core": "*",
+    "@chaturanga/suffragetto": "*"
+  },
+  "devDependencies": { "esbuild": "^0.28.1" }
+}

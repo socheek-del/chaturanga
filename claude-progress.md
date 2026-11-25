@@ -1428,3 +1428,10 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 - Exchanges use a distinct action notation (`X21@b1` means two small and one large pair). Shared board-ui parsing treats it as an action rather than a board route; protocol validation accepts it and lesson conformance understands action moves.
 - Focused Suffragetto tests and shared `Variant` conformance passed 36/36; board-ui passed 47/47; game-shell passed 93/93; protocol passed 6/6. Full workspace `npm run verify` passed with loopback access and `NODE_OPTIONS=--no-experimental-webstorage` under Node 25.9. `.nvmrc` Node 22.23.1 is not installed; `./init.sh` could not fetch npm@11 because registry DNS failed.
 - Next implement the Suffragetto AI package with bounded deterministic personas and exchange/capture coverage, then the product PWA/tutorial. Product build, browser, Worker, Melon and exact-SHA CI verification remain outstanding.
+
+### Session 067 (Suffragetto bots)
+
+- Added `@chaturanga/suffragetto-ai` with six deterministic, bounded bot personas on `@chaturanga/ai-core`. Its search adapter preserves long chained routes and exchange actions as lossless UCI strings.
+- Focused bot tests passed 17/17 across every level as both roles, including the six-cell winning move, Arena capture/transfer, exchange availability, seeded choice and restoring a supplied game after search. Typecheck, lint and the two-game 32-ply strength smoke passed.
+- Engine SHA `7f82b77d8fc1db3f049b89079772d578d04f20cd` is pushed to main; exact-SHA GitHub CI run `45629891192` passed.
+- Next read the `frontend-design` skill and build the original standalone English PWA, responsive board, interactive tutorial for every rule, bot play, local saves and offline installation. Then implement the private room Worker/D1 and deploy to Melon.

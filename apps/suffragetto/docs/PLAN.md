@@ -80,7 +80,9 @@ Bros. or Bodleian. The research is not worldwide copyright or trademark clearanc
 4. [x] Implement `@chaturanga/suffragetto` as a pure 17×17 `Variant` with rules tests, serialization,
    prisoner exchanges, shared conformance and replay/undo. Focused tests passed 36/36 and full workspace
    verification passed with the repository's Node 25 compatibility flag and loopback access.
-5. [ ] Add bounded bots and strength smoke; test both roles, chained hops and exchanges.
+5. [x] Add six bounded bot personas on ai-core. All 17 bot checks passed across both roles, including goal
+   victory, Arena capture/transfer, explicit exchange actions, seeded choice and state restoration; the
+   two-game 32-ply strength smoke passed.
 6. [ ] Build the independent PWA, original art, local play/save, responsive board, offline behavior and
    interactive tutorial; add web, locale, lesson, PWA and browser checks.
 7. [ ] Add the isolated Worker/D1, private rooms and quick match; verify legality, reconnect, restart and

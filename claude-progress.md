@@ -1532,3 +1532,11 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 - Primary scan evidence describes 5-1-2-6-K-6-2-1-5 back ranks, 3s facing players, orthogonal die tumbling with at most one right-angle turn, no passing, exact landing captures, and King/key-square wins. Starting side, die chirality, key-square timing, no-move, repetition and draws need verification/conventions.
 - No digital adaptation permission/license was found and present-day rights ownership is unresolved. Duell is blocked before implementation; an expired U.S. patent does not alone establish digital rights clearance. No rights-holder contact was sent.
 - The next roadmap entry is Ploy, standard two-player form first. Begin rules/variant/adoption and rights research before implementation. Dameo remains staged on Melon at port 19917; public promotion waits on absent DNS and trademark review.
+
+### Session 079 (Ploy research and rights gate)
+
+- Completed Ploy's primary-rules, variants/adoption and rights research; the cited synthesis is `apps/ploy/docs/reports/Ploy rules variants rights.md` with detailed source notes in the adjacent folder.
+- Selected the 1970 Frank Thibault / 3M rules. Use the two-player game as the default, without a popularity claim. The original manual also supports four-player individual and partnership modes; multiplayer is applicable if rights clear. The 9×9-point game uses 15 directional pieces per side, capture by landing, and wins by taking the Commander or all other units.
+- The manual does not settle rotation increments; later sources conflict. Seat/color mapping, tie/no-move conventions also need resolution before implementation.
+- No Ploy-specific chain of title or digital adaptation permission/license was found. Hasbro's generic digital guideline does not prove it owns Ploy. Block implementation pending rights clearance; no contact was sent.
+- The next roadmap product is Gliński's 91-cell Hexagonal chess. Start with variant/popularity, primary rules and rights research. Dameo remains staged on Melon at port 19917; public promotion waits on absent DNS and trademark review.

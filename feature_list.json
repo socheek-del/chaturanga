@@ -3484,7 +3484,7 @@
       "milestone": "M37",
       "title": "Release Ploy",
       "user_visible_behavior": "Players learn the selected two-player Ploy rules through an interactive tutorial and play a complete game against a bot, locally, and in a private online room.",
-      "status": "in_progress",
+      "status": "blocked",
       "verification": [
         "Research primary rules, editions/popularity evidence and rights boundary; select the standard two-player edition and record setup, movement, rotation, capture, end conditions and unresolved conventions before engine work.",
         "Implement a pure @chaturanga/ploy Variant with source-backed fixtures, shared conformance, deterministic replay/undo and focused coverage of all selected special rules.",
@@ -3495,9 +3495,35 @@
       ],
       "evidence": [
         "2026-11-26: Began as the next Wave 1 roadmap feature after Duell, which is blocked before implementation pending rights clearance.",
-        "2026-11-26: Research is active. Start with the standard two-player form; verify rules, variants/adoption and rights before engine work. Evaluate any documented multiplayer extension separately."
+        "2026-11-26: Research is active. Start with the standard two-player form; verify rules, variants/adoption and rights before engine work. Evaluate any documented multiplayer extension separately.",
+        "2026-11-26: Completed rules, editions/adoption and rights research. Synthesis: apps/ploy/docs/reports/Ploy rules variants rights.md; source notes are in apps/ploy/docs/research_notes/Ploy rules variants rights/.",
+        "2026-11-26: Selected the original 1970 Frank Thibault / 3M rules. Two-player is the main default without a popularity claim; original 3M manual also supports four-player individual and partnership modes. Candidate 9×9-point board, 15 directional units per side, landing captures, Commander or all-other-units victory.",
+        "2026-11-26: Rotation increment, seat/color mapping and draw/no-move details remain unclear. No Ploy-specific chain of title or digital adaptation license/permission found. Hasbro generic digital guidelines do not prove ownership. Blocked before implementation pending rights clearance; no contact was sent."
       ],
-      "notes": "Active feature. Research the standard two-player Ploy edition first. Document setup, piece orientations, rotate/move action sequences, captures, outcomes, variants/adoption and rights before implementation. Multiplayer extensions are optional only when rules sources support them. No game code until the rights boundary is clear."
+      "notes": "Blocked before implementation: Ploy-specific current ownership and chain of title are unresolved and no applicable digital adaptation license/permission was found. Hasbro’s policy does not establish it owns Ploy. Obtain evidence of current rights and written permission or an applicable license before implementation; no contact was sent. Candidate standard is 1970 Frank Thibault / 3M, 2-player default plus source-documented 4-player individual/partnership modes. Resolve rotation and seat rules if rights clear. Continue to Gliński Hexagonal chess."
+    },
+    {
+      "id": "hexagonal-chess-001",
+      "product": "hexagonal-chess",
+      "priority": 189,
+      "area": "release",
+      "milestone": "M38",
+      "title": "Release Hexagonal chess",
+      "user_visible_behavior": "Players learn Gliński’s 91-cell Hexagonal chess through an interactive tutorial and play a complete game against a bot, locally, and in a private online room.",
+      "status": "in_progress",
+      "verification": [
+        "Research the Gliński edition, adoption evidence and rights boundary; record board geometry/setup, movement, pawn and promotion rules, check/mate/stalemate, draws and source conflicts before engine work.",
+        "Implement a pure @chaturanga/hexagonal-chess Variant with source-backed board masks/fixtures, shared conformance, deterministic replay/undo and focused coverage of hex-specific movement and endings.",
+        "Add bounded bots for both roles and an interactive tutorial that teaches every selected rule; verify complete games and both human colors.",
+        "Ship an independent original PWA with responsive hex board, local saves, offline installation, complete locale keys and standalone site/service configuration.",
+        "Provide server-authoritative private rooms and isolated Melon storage; verify legal moves, reconnect, restart and copied-state restore.",
+        "Pass exact-SHA CI and Melon stage smoke; public route/catalog promotion requires DNS/TLS and HTTPS/WebSocket smoke."
+      ],
+      "evidence": [
+        "2026-11-26: Began as the next roadmap item after Ploy, which is blocked before implementation pending rights clearance.",
+        "2026-11-26: Research is the first active task; the roadmap selects Gliński’s 91-cell form as the best-known variant. Verify rules, adoption and rights before creating the engine."
+      ],
+      "notes": "Active feature. Research Gliński’s 91-cell game, the best-known hexagonal chess version. Confirm original rules/variant choice, adoption claims, rights and branding before engine work. The game needs hex geometry, distinct pawn rules, and the selected stalemate conventions documented before implementation."
     }
   ]
 }

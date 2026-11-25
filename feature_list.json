@@ -3165,7 +3165,12 @@
         "Complete the interactive tutorial and verify both bot sides, local saves and private room reconnect.",
         "Stage on Melon, verify public HTTPS and WebSocket play, then publish the catalog entry."
       ],
-      "evidence": []
+      "evidence": [
+        "2026-11-25: Node 22 rules tests passed 27/27 with shared Variant conformance, including both zone entry and starting inside it, horse exemption, hia limits, all three pawn strides, en passant targets and pins, promotion, checkmate, and seeded replay/undo. The selected Winther reconstruction has no matching Fairy-Stockfish preset.",
+        "2026-11-25: Hiashatar AI typecheck and tests passed 4/4, including tactical en passant selection. Web unit tests passed 17/17, the 15-step tutorial checks passed, and the production PWA build passed.",
+        "2026-11-25: Local Playwright browser checks passed 5/5, covering tutorial completion and retry, saved game reload, both bot seats, an invite room with triple advance, en passant, and guest reconnect. Root npm run verify passed across workspaces; final AI changes passed targeted typecheck and tests; repository lint passed. Desktop and phone layouts were visually reviewed."
+      ],
+      "notes": "Local implementation is verified. Pin this revision on Melon, run the staged browser suite including offline PWA and room restart, then wait for DNS for hiashatar.beanroti.com before public promotion."
     }
   ]
 }

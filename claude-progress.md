@@ -1240,3 +1240,5 @@ Tamerlane's higher contrast pawn badges now pass on a phone. Promote the newer s
 ### Hiashatar
 
 Select Mats Winther’s documented reconstruction of the 10×10 game. Use enemy-only bodyguard zones, retain the horse exemption, and exclude the hia from checking the noyon. Implement single, double and triple initial pawn advances and the two possible en passant targets after a triple advance. Verify the starting array and pawn promotion against the same reconstruction.
+
+The rules engine, bounded AI, original English PWA and 15-step interactive tutorial are complete. Rules passed 27/27, AI passed 4/4, web tests passed 17/17, and local browser checks passed 5/5. Full workspace verification passed; the final targeted AI change also passed typecheck and tests, and repository lint passed. The production build and desktop/phone review passed. Remaining before moving on: push the verified checkpoint, stage on Melon port 19909, and verify the built PWA, room reconnect/restart and offline mode. Keep the stage available pending public DNS, then begin Shatra from the next row in the roadmap.

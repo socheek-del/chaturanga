@@ -1,0 +1,25 @@
+{
+  "name": "hiashatar",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-01",
+  "assets": {
+    "directory": "../web/dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*", "/ws/*"]
+  },
+  "durable_objects": {
+    "bindings": [
+      { "name": "GAME_ROOM", "class_name": "GameRoom" },
+      { "name": "MATCHMAKER", "class_name": "Matchmaker" }
+    ]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["GameRoom", "Matchmaker"] }],
+  "d1_databases": [{
+    "binding": "DB",
+    "database_name": "hiashatar",
+    "database_id": "2f87c0d4-8cb6-4ba2-8b8f-709d2cc219a7",
+    "migrations_dir": "migrations"
+  }],
+  "vars": { "RECONNECT_GRACE_MS": "60000" }
+}

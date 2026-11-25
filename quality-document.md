@@ -21,8 +21,10 @@ needs work.
 |--------|-------|-------------|-----------------|---------------|----------|-------------|
 | Rules engine (Makruk) | A | Unit + perft + lock-step vs Fairy-Stockfish + Variant conformance | packages/makruk/RULES.md, typed API | Deterministic seeds | Array-scan movegen limits AI depth | 2026-09-14 |
 | Rules engine (Sittuyin) | A | Unit + perft + lock-step (FEN, counting, game over) vs Fairy-Stockfish + Variant conformance | packages/sittuyin/RULES.md, every rule an ffish-probed test | Deterministic seeds | Not used by any app yet | 2026-09-14 |
+| Rules engine (Hiashatar) | B | 27 unit and conformance checks; selected reconstruction has no matching Fairy-Stockfish preset | packages/hiashatar/RULES.md and isolated package | Seeded replay/undo | No external oracle | 2026-11-25 |
 | Local play & pass-and-play | A | Unit + E2E (moves, history, views, clocks) | GameScreen shared by all modes | Stable; fake clock for timers | — | 2026-09-13 |
 | Single player (AI) | A | Unit (tactics, repetition incl. opponent reply, root window, conversion) + E2E (worker, hints, takeback) + 20-game ladder per level pair on Actions | search/evaluate/bots split; ladder logs end reason + FEN per game | Ladder deterministic (node budgets, seeded openings); ~2 h for L6 vs L5 on Actions | No transposition table; Met-only mates vs bare Khun sometimes run out the count; browser strength follows time budgets, ladder follows node budgets | 2026-09-13 |
+| Single player (Hiashatar AI) | B | Four AI unit checks and browser play as both colors | packages/hiashatar-ai on ai-core | Seeded search | No strength ladder yet | 2026-11-25 |
 | Tutorials & gamification | A | Lesson content validated against engine; E2E lesson/path/guided | Lessons are plain TS data | Stable (no date-dependent logic) | Content reviewed by engineer, not a Makruk teacher | 2026-09-13 |
 | Online play | A | Pure room logic + workerd DO tests + two-browser E2E | Thin DO over pure reducer | Real wrangler dev in E2E | No spectator UI beyond read-only banner | 2026-09-13 |
 | Accounts & ratings | B | Glicko-2 reference test, workerd tests (register/confirm/login/lockout/reset, mocked Resend), E2E full account flow via dev outbox + rated game + guest carry-over | accounts/{routes,store,password,email}.ts | Local D1 via wrangler in E2E | Production email unverified (no Resend key); no per-IP rate limit on register/forgot-password | 2026-09-13 |
@@ -46,6 +48,10 @@ needs work.
 | CI & deploy | A | verify + deploy on main; scoped token; AUTH_SECRET as secret | .github/workflows/ci.yml | E2E not run in CI (needs browsers + wrangler) | 2026-09-13 |
 
 ## Change History
+
+### 2026-11-25
+
+- Added Hiashatar rules, bounded bot, interactive tutorial, PWA and private-room server. Local verification passed; Melon staging and public hostname remain to be completed.
 
 ### 2026-09-13
 

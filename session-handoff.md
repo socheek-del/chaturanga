@@ -2,7 +2,7 @@
 
 ## Active work
 
-Implement the [42-entry rollout](docs/CHESS-LIKE-ROADMAP.md) one product at a time. Interactive tutorials, bot play and applicable multiplayer are required. Current feature is `hia-001`, Hiashatar. Start its engine using [Mats Winther’s Hiashatar reconstruction](https://mats-winther.github.io/bg/hiashatar.htm) and the [Wikipedia overview](https://en.wikipedia.org/wiki/Shatar#Hiashatar). Confirm the 10×10 layout, enemy-only slowing, exempt horses, inability of the hia to check the noyon, and two en passant targets after a triple pawn advance.
+Implement the [42-entry rollout](docs/CHESS-LIKE-ROADMAP.md) one product at a time. Interactive tutorials, bot play and applicable multiplayer are required. Current feature is `hia-001`, Hiashatar. Its selected rules, bot, interactive tutorial, PWA and private-room Worker are implemented and locally verified. The next step is to push the checkpoint, stage it on Melon port 19909, and run the production-asset browser suite including offline play and room restart. After stage verification, start Shatra (`M30`) while Hiashatar waits for DNS at `hiashatar.beanroti.com`.
 
 Read `feature_list.json` for acceptance criteria and `claude-progress.md` for the complete log. Node 22.23.1 is available via `/private/tmp/node22/node_modules/.bin` on this machine. `./init.sh` passed at the initial baseline. Repository verification requires loopback sockets for the Worker pools. Keep browser artifacts in a temporary directory when running Playwright alongside ESLint.
 

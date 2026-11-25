@@ -66,3 +66,22 @@ Mark "n/a" for categories that do not apply to the feature.
 **Verdict:** Accept the Crazyhouse rules-engine increment. The full product remains in progress until its bot, tutorial, PWA, online rooms and Melon stage are verified.
 
 **Required follow-up:** Implement `@chaturanga/crazyhouse-ai`, then continue through the tutorial, product and online milestones. Run full CI after the engine commit.
+
+## Crazyhouse bot increment review — 2026-11-25
+
+| Category | Score | Notes |
+| --- | ---: | --- |
+| Correctness | 2 | Bot moves remain legal in board-only and pocket positions for both colors; mate-in-one drops are found. |
+| Rules fidelity | 2 | Search make/unmake, pocket state, promotion provenance, tactical drops and position keys are covered by rules fixtures and seeded bot tests. |
+| Verification | 2 | AI typecheck, targeted ESLint and all 5 package tests passed; base rules suite is included in passing full CI. |
+| Scope discipline | 2 | AI code and tests live only in the Crazyhouse AI package. |
+| Localization | n/a | The AI package adds no user-visible strings. |
+| UX & design | n/a | Product interface is not part of this increment. |
+| Product separation | 2 | Crazyhouse bots have their own six-level package and persona keys. |
+| Reliability | 2 | Search obeys a fixed node budget and returns deterministic seeded choices. |
+| Maintainability | 2 | The adapter, evaluator, persona table and public chooser are separate modules. |
+| Handoff readiness | 2 | CI SHA/run, test evidence and next PWA milestone are recorded in the handoff artifacts. |
+
+**Verdict:** Accept the Crazyhouse AI increment. Overall product work remains in progress.
+
+**Required follow-up:** Build the independent PWA with a complete interactive tutorial, then implement private online rooms and stage the exact verified SHA on Melon.

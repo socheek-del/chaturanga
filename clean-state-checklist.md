@@ -11,5 +11,7 @@
 - [x] `fortress.beanroti.com` has no DNS address. Public HTTPS/WebSocket smoke, Caddy promotion and catalog publication are recorded as blocked; no public route was changed.
 - [x] No secrets, `.dev.vars`, or local Wrangler state were committed.
 - [x] Record the Fortress DNS release gate and begin `crazyhouse-001` as the next roadmap product.
-- [x] Commit and push Crazyhouse selection/rules increment `a6e6602`; engine implementation passed package verification and is ready for its own incremental commit.
+- [x] Commit and push Crazyhouse plan `a6e6602` and engine `13f0baa`; exact engine SHA passed full GitHub CI run 45560562799.
+- [x] Crazyhouse engine typecheck/lint and 30 tests passed; bounded bot typecheck/lint and 5 tests passed for both colors.
+- [ ] Commit and push the verified Crazyhouse AI increment after updating the handoff.
 - [ ] Keep the Melon Fortress stage running until public DNS, TLS and smoke are available.

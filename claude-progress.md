@@ -1311,3 +1311,9 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 - Implemented `packages/crazyhouse` as a pure Variant package. It delegates orthodox board move generation to `@chaturanga/chess`, keeps Crazyhouse pockets and promoted-square provenance in its own state, adds legal drop generation/check blocking, canonical bracket-pocket FEN and independent repetition identity, and handles drop undo/replay and Crazyhouse SAN suffixes.
 - Typecheck and targeted ESLint passed. `npm test -w packages/crazyhouse` passed 30 tests: 18 shared conformance checks, 10 rules fixtures and a Fairy-Stockfish suite covering eight curated edge positions plus 16 seeded games. Each seeded ply compared legal moves, SAN, FEN, game-over and result; pawn drops occurred in the playouts.
 - Next implement `@chaturanga/crazyhouse-ai`, then wire the standalone PWA, lessons, saves, online Worker and Melon stage. The feature remains `in_progress` until the complete product is staged and restart/restore checks pass.
+
+### Session 050 (Crazyhouse bot)
+
+- Added `packages/crazyhouse-ai` on `@chaturanga/ai-core`: in-place search adapter for orthodox moves and drops, pockets/provenance in move make/unmake and repetition keys, pocket-aware evaluation, checking drops in quiescence, tactical drop ordering, conversion mode and bounded six-level personas.
+- AI typecheck and targeted ESLint passed. `npm test -w packages/crazyhouse-ai` passed 5 tests covering every level as both colors, positions with both pockets, mating pawn drops, pocket/provenance identity, deterministic seeded choices, bounded nodes and terminal positions.
+- GitHub CI run 45560562799 for exact engine SHA `13f0baaae3547b4a98a47d5e5796cae9fa0c6046` passed full repository verification and all workspace builds. Next build the standalone Crazyhouse PWA and interactive tutorial.

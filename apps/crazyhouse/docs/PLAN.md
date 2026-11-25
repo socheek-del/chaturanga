@@ -21,7 +21,7 @@ Use Crazyhouse FEN with bracketed pockets and `~` promoted-pawn markers. FEN dia
 ## Implementation sequence
 
 1. [x] Pure `@chaturanga/crazyhouse` rules package, FEN and full chess/drop behavior; shared Variant conformance, focused Fairy-Stockfish fixtures and 16 seeded lock-step games pass.
-2. Bounded single-player bot with pocket-aware evaluation and legal fallback; exercise play as both colors.
+2. [x] Bounded single-player bot with pocket-aware evaluation, legal fallback and drop-aware tactics; all six levels make legal moves as both colors.
 3. Standalone English PWA with custom Crazyhouse identity, board and hand trays, tutorial, local saves, takeback and pass-and-play.
 4. Server-validated invite rooms, two-seat reconnect and isolated persistent storage.
 5. Full CI, browser/offline checks, exact-SHA Melon stage, restart and backup/restore; public HTTPS/WebSocket smoke and catalog publication after DNS resolves.

@@ -24,7 +24,13 @@
 - [x] Add the isolated Dameo Worker, Durable Objects, product-local D1 archive, private rooms, quick match and server-authoritative draw offers. Worker tests passed 9/9, including illegal/wrong-turn rejection, same-seat reconnect, Durable Object eviction, quick match, draw agreement, D1 archive and chat rejection.
 - [x] Two-browser Dameo online smoke created and joined a room, synchronized a legal move, accepted an agreed draw, and found no 390px overflow or browser errors. The latest production PWA also passed offline tutorial and bot play.
 - [x] Full `NODE_OPTIONS=--no-experimental-webstorage npm run verify` passed with loopback enabled: ESLint, all workspace typechecks and all tests.
-- [ ] Commit/push the online increment, confirm exact-SHA CI, then stage on Melon and test restart plus copied-state restore. Keep public promotion gated on trademark review and DNS/TLS/HTTPS/WSS.
+- [x] Commit `6987d5b6a6e67938d27d55d1189c4ce43268bdd3` is pushed to main; exact-SHA CI run `45668832352` passed.
+- [x] Stage the pinned SHA on Melon at port 19917 in `/home/melon/chaturanga-release.dameo.dTpb5d`; isolated D1 migration, health and homepage passed.
+- [x] Built-stage browser smoke passed tutorial, bot-as-White/Black, private room, legal move sync, reload reconnect, draw agreement and mobile/error checks. Offline PWA smoke passed.
+- [x] Live room survived container restart; a stopped-state copy restored both seats and synchronized another legal move. Temporary restore state/container were removed; primary stage health passed.
+- [x] `dameo.beanroti.com` has no DNS answer and trademark clearance remains open. Public HTTPS/WSS, Caddy and catalog promotion remain blocked; no public route changed. Keep the verified stage running.
+- [x] Dameo release state and evidence are recorded in feature list, progress, handoff, product plan, quality notes and this checklist.
+- [ ] Continue with `gess-001` as the single active roadmap feature.
 
 - [x] Fortress's exact code revision passed GitHub `npm run verify` and all workspace builds. Crazyhouse startup `npm run verify` also passed locally under Node 22.23.1 when run outside the sandbox so Worker tests could bind loopback ports; `./init.sh` could not sync uncached npm@11 in offline mode.
 - [x] Fortress rules tests passed 23/23, bots 4/4, tutorial 2/2 and Worker room/schema checks 4/4; local browser and PWA checks passed before staging.

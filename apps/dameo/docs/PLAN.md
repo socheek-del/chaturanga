@@ -87,8 +87,12 @@ DNS/TLS and HTTPS/WebSocket checks.
    and no chat. Its 9 integration tests cover room setup, illegal/wrong-turn moves, same-seat reconnect,
    Durable Object eviction, quick match, agreement draws, finished-game archival, and chat rejection.
    A two-browser smoke synchronized a legal move and agreed draw without mobile overflow or browser errors.
-10. [ ] Pass exact-SHA CI and stage on Melon; verify tutorial, bots, online play, offline mode, restart and
-    copied-state restore. Publish only after the public gates in this plan pass.
+10. [x] Exact-SHA CI run 45668832352 passed for `6987d5b6a6e67938d27d55d1189c4ce43268bdd3`. Melon stage
+    `/home/melon/chaturanga-release.dameo.dTpb5d` on port 19917 passed isolated D1 migration, health/homepage,
+    built-stage tutorial, bot-as-both-colors, private room, legal move sync, reconnect, draw, mobile and error
+    checks. Offline PWA, container restart and isolated copied-state restore passed; temporary restore data was
+    removed and the primary stage is healthy. Public promotion remains blocked pending trademark review and
+    DNS/TLS/HTTPS/WSS (`dameo.beanroti.com` currently has no DNS answer). No public route/catalog entry changed.
 
 ## Sources
 

@@ -4,9 +4,9 @@
 
 Implement the [42-entry rollout](docs/CHESS-LIKE-ROADMAP.md) one product at a time, with an interactive tutorial, bots and applicable multiplayer. `shatra-001` is locally verified and staged on Melon at port 19910 from `7907568`; its CI, built-PWA smoke, two-seat restart recovery and copied-state restore passed. Stage directory: `~/chaturanga-release.shatra.Vw0eEp`. Public promotion is blocked because `shatra.beanroti.com` has no DNS record.
 
-Next roadmap row: Fortress Chess. Research the Russian rules sources, board extensions and starting setup, and establish the permission basis before coding.
+Active feature: `fortress-001`. The research gate is complete: implement Petrov's Russian four-handed edition as a labeled digital reconstruction. The rules and product scope are in `packages/fortress/RULES.md` and `apps/fortress/docs/PLAN.md`; next build the pure rules package and prove the 192-cell mask, walls and route examples before adding bots or UI. The original scan remains a research improvement, not a blocker. Public site target: `fortress.beanroti.com`; stage on Melon first.
 
-Read `feature_list.json` for acceptance criteria and `claude-progress.md` for the session log. Node 22.23.1 is available via `/private/tmp/node22/node_modules/.bin`. `./init.sh` recently hit `ENOTFOUND registry.npmjs.org`; full pinned-Node verification and CI passed. Repository verification needs loopback access for Worker pools.
+Read `feature_list.json` for acceptance criteria and `claude-progress.md` for the session log. Node 22.23.1 is available via `/private/tmp/node22/node_modules/.bin`. `./init.sh` completed with `npm_config_offline=true` after the direct registry attempt failed; it used the cached npm@11 package and all verification passed. Repository verification needs loopback access for Worker pools.
 
 ## Melon releases
 

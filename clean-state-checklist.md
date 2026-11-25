@@ -1,6 +1,6 @@
 # Clean State Checklist
 
-- [ ] `./init.sh` completed; this machine hit `ENOTFOUND registry.npmjs.org` installing npm@11.
+- [x] `./init.sh` completed with the pinned Node and cached npm@11 in offline mode; lint, typecheck and the full test suite passed.
 - [x] The standard verification path still runs (`npm run verify`); local and GitHub CI verification passed.
 - [x] E2E suite still passes if UI or worker code changed (`npm run e2e`); 6/6 passed against the Melon stage.
 - [x] Current progress is recorded in `claude-progress.md`.

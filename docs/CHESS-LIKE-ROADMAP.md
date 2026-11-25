@@ -31,7 +31,7 @@ Each row is one product. Complete and release one at a time. A source or permiss
 | 1 | Shatar | Standard Mongolian game, with a pinned mate and opening convention |
 | 1 | Hiashatar | Separate Mongolian game with bodyguards. Verify the bodyguard zone from the selected rules |
 | 1 | Shatra | Select the current Altai tournament form under the 1983 Shatra Code: Biy, Shatra, Batyr and fortress reserves. The English Wikipedia article describes a separate chess-piece army. Use the explicit 62-field setup with 14 active and 9 reserve Shatras per side; one 2015 paper says 11 reserves without a matching placement. Document the source conflict and the horizontal-return and gate-capture rules. [Current rules guide](https://vnbooks.ru/altai-shatra.pdf) · [1974 setup](https://igrovir.ucoz.ru/publ/altaj_shatra_pravila_igry/1-1-0-108) · [1983 tournament history](https://zvezdaaltaya.ru/2015/02/entuziast-i-razrabotchik-pravil/) · [2015 rules-engine paper](https://earchive.tpu.ru/jspui/bitstream/11683/17016/1/conference_tpu-2015-C04-v2-070.pdf) |
-| 1 | Fortress chess | Russian fortress variant. Pin a source covering the board extensions and setup |
+| 1 | Fortress chess | Russian four-handed Fortress Chess from Petrov's documented edition. No popularity winner is evidenced; use this best-documented ruleset and label the setup/ending conventions that sources leave open |
 | 1 | Crazyhouse | Standard two-player drop chess. Combine chess move semantics with hand/drop input |
 | 1 | Congo | Original two-player rules. Specify river, drowning, animal movement and promotions |
 | 1 | Jeson Mor | Documented Mongolian knight game. Verify the center-square win sequence |

@@ -1,6 +1,6 @@
 {
   "project": "Chaturanga — family of chess games (Makruk, Sittuyin, Xiangqi, Shogi, Chess and Janggi live; Three-player chess live)",
-  "last_updated": "2026-11-24",
+  "last_updated": "2026-11-25",
   "rules": {
     "single_active_feature": true,
     "passing_requires_evidence": true,
@@ -3196,6 +3196,27 @@
         "2026-11-25: Public DNS lookup for shatra.beanroti.com returned no address, so public HTTPS/WebSocket smoke, promotion and catalog publication remain blocked pending DNS."
       ],
       "notes": "Select the current Altai tournament form under the 1983 Shatra Code: one Biy, 14 active Shatras and 9 fortress reserves per side, plus promoted Batyry. The 2015 rules-engine paper says 11 reserves but gives no placement consistent with the explicit 62-field setup; record this discrepancy. The English Wikipedia article describes a separate chess-piece army. Melon staging is complete; public launch awaits DNS for shatra.beanroti.com."
+    },
+    {
+      "id": "fortress-001",
+      "product": "fortress",
+      "priority": 180,
+      "area": "release",
+      "milestone": "M31",
+      "title": "Release Russian Four-Handed Fortress Chess",
+      "user_visible_behavior": "Players learn Petrov's Russian Fortress Chess and play as any of four seats against three bots, locally or in a private four-seat invite room.",
+      "status": "in_progress",
+      "verification": [
+        "Implement the 192-cell board, fortress walls/gates, four seats and teams, reserve setup, move rules, checkmate elimination, endings and Variant conformance; test against Markov's published geometry examples.",
+        "Complete the interactive tutorial and verify human play as all four seats, legal bounded bot play, local saves and pass-and-play.",
+        "Verify four-seat invite rooms, server-side legality, reconnect and state after container restart on a Melon stage; verify the built PWA and offline behavior.",
+        "Promote and smoke public HTTPS/WebSocket and publish the catalog entry once the hostname resolves."
+      ],
+      "evidence": [
+        "2026-11-25: Selected Petrov's historical Russian four-player edition because the Wikipedia entry identifies it and Markov identifies Petrov's first-hand descriptions as the strongest rules source. No evidence establishes a most-popular edition.",
+        "2026-11-25: Research report, product plan and digital rules contract created under apps/fortress/ and packages/fortress/RULES.md. Original Petrov scans were not directly accessible; unresolved stalemate and special cases are called out as explicit reconstruction choices."
+      ],
+      "notes": "Four seats: top Red, right Blue, bottom White, left Black; Red+White vs Blue+Black. The English tutorial must label the selected stalemate and reserve-placement conventions as digital choices, not recovered historical rules. Use original prose and artwork. Melon is the target; public hostname is fortress.beanroti.com."
     }
   ]
 }

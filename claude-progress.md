@@ -1444,3 +1444,19 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 - A live two-seat room recovered both seats and its two-ply history after container restart; both clients reconnected, then played and synchronized another legal move. With the service stopped, the state directory was copied to an isolated restore container; the restored room accepted a second seat and a legal move. Removed the temporary restore container/state copy and confirmed the original stage healthy.
 - `suffragetto.beanroti.com` has no DNS answer. Public HTTPS/WSS smoke, Caddy promotion and app-directory publication are blocked; no route or catalog entry changed. `suffragetto-001` is blocked only at that public gate. Keep the stage running.
 - The next listed ready Wave 1 product is `dameo-001`; begin with rules, edition/popularity evidence and rights research before engine work.
+
+### Session 069 (Dameo research and rules contract)
+
+- Started the next Wave 1 product, `dameo-001`, after Suffragetto's exact-SHA CI, Melon stage and recovery checks passed. The staged Suffragetto release remains running; its only blocker is missing public DNS.
+- Completed separate research on Dameo's canonical rules, edition/popularity evidence and rights boundary. The synthesis report is `apps/dameo/docs/reports/Dameo rules variants rights.md`, with source notes in `apps/dameo/docs/research_notes/Dameo rules variants rights/`.
+- Selected Christian Freeling's standard 8×8 Dameo with 18 men per side as the canonical, best-documented form. Online activity and catalog counts show adoption but do not establish it as more popular than Big Dameo/community experiments. Do not claim a popularity winner.
+- Recorded the selected movement/capture/promotion rules in `packages/dameo/RULES.md` and the product plan. Compulsory maximum capture, captured-piece blockers until route end, no repeated captured piece in one route, and end-of-turn promotion must be encoded as full-turn behavior.
+- The primary rules say draws can come from undefined “mutual exhaustion of material”; another creator page names agreement/threefold; Wikipedia names threefold/no-possible-win. The plan pins threefold as automatic and a mutually accepted draw as the explicit digital adjudication for the undefined no-winner case. No 50-move or guessed material heuristic is added.
+- Rights notes require original rules/tutorial prose, board art and product branding; no reuse license was found on the official pages, and trademark clearance for `Dameo` as public branding remains outstanding.
+- Next encode and test the 8×8 setup/coordinate fixture before move generation. Then implement the pure Variant and continue through bots, interactive tutorial, PWA and the isolated Melon service.
+
+### Session 070 (Dameo setup fixture)
+
+- Added the `@chaturanga/dameo` package scaffold and machine-readable standard setup: all 64 squares, White/Black 18-man 8+6+4 trapezoids, vertical symmetry and `a1`-origin square naming.
+- The five layout tests assert every setup coordinate, side counts, non-overlap, mirror mapping, empty middle ranks and invalid coordinates. Focused tests passed 5/5; package typecheck and ESLint passed. The workspace lockfile now recognizes the new package.
+- Updated the plan, feature evidence and clean-state checklist. Next implement move generation, starting with line moves and compulsory maximum-capture route enumeration; keep complete capture turns serializable as one legal move.

@@ -8,6 +8,14 @@
 - [x] `suffragetto.beanroti.com` has no DNS answer. Public HTTPS/WSS smoke, Caddy promotion and directory publication are blocked; no public route or catalog entry changed. Keep the verified Melon stage running.
 - [x] Begin `dameo-001` as the next listed ready Wave 1 product; start with source, edition/popularity and rights research.
 
+### Dameo
+
+- [x] Compare primary rules, editions/popularity evidence and rights; report and source notes are saved under `apps/dameo/docs/`.
+- [x] Select canonical 8×8 Dameo with 18 men per side as the best-documented form; state that available evidence does not prove a popularity winner.
+- [x] Pin movement, compulsory maximum captures, delayed capture removal, Coup Turc, promotion, no-move loss and explicit draw conventions in the product plan and `packages/dameo/RULES.md`.
+- [x] Encode and test the exact 8×8 setup and coordinate convention: all 64 squares, both 18-man trapezoids, mirroring, empty center and invalid coordinates; 5 tests, package typecheck and lint passed.
+- [ ] Implement and verify the pure Dameo movement/capture engine before bot or UI work.
+
 - [x] Fortress's exact code revision passed GitHub `npm run verify` and all workspace builds. Crazyhouse startup `npm run verify` also passed locally under Node 22.23.1 when run outside the sandbox so Worker tests could bind loopback ports; `./init.sh` could not sync uncached npm@11 in offline mode.
 - [x] Fortress rules tests passed 23/23, bots 4/4, tutorial 2/2 and Worker room/schema checks 4/4; local browser and PWA checks passed before staging.
 - [x] The CI-only conformance allowance preserves all five 120-ply seeded games and every attack assertion; Fortress rules tests and both package typechecks passed locally.

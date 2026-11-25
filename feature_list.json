@@ -3378,7 +3378,7 @@
       "milestone": "M34",
       "title": "Release Dameo",
       "user_visible_behavior": "Players learn the selected Dameo rules through an interactive tutorial and play a complete game against a bot, locally, and in a private online room.",
-      "status": "not_started",
+      "status": "in_progress",
       "verification": [
         "Research primary rules, editions/popularity evidence and rights boundary; select one well-supported standard form and record setup, movement, captures, endings and unresolved conventions before engine work.",
         "Implement a pure @chaturanga/dameo Variant with source-backed fixtures, shared conformance, deterministic replay/undo and focused coverage of all selected special rules.",
@@ -3387,8 +3387,15 @@
         "Provide server-authoritative private rooms and isolated Melon storage; verify legal moves, reconnect, restart and copied-state restore.",
         "Pass exact-SHA CI and Melon stage smoke. Publish a public route and directory entry only after DNS/TLS and HTTPS/WebSocket smoke pass."
       ],
-      "evidence": [],
-      "notes": "Next listed ready Wave 1 product after Suffragetto in docs/CHESS-LIKE-ROADMAP.md. Begin with source, edition/popularity and rights research; do not assume a variant popularity winner without evidence."
+      "evidence": [
+        "2026-11-25: Began as the next listed ready Wave 1 product after Suffragetto in docs/CHESS-LIKE-ROADMAP.md.",
+        "2026-11-25: Completed rules, edition/popularity and rights research. Synthesis: apps/dameo/docs/reports/Dameo rules variants rights.md; source notes: apps/dameo/docs/research_notes/Dameo rules variants rights/.",
+        "2026-11-25: Selected Christian Freeling’s canonical 8×8/18-men game as the best-documented form. Community activity data show adoption but do not prove it is more popular than Big Dameo or experiments.",
+        "2026-11-25: Added the product plan, local AGENTS instructions and packages/dameo/RULES.md. They pin compulsory maximum-capture routes, delayed removal, Coup Turc, promotion timing, no-move loss, threefold repetition, and an explicit mutual-agreement draw convention for the undefined no-winner case. No 50-move or material heuristic is added.",
+        "2026-11-25: Rights research found no reuse license on official rules pages and no worldwide clearance; write original rules/tutorial prose and art, and complete trademark review before public branding.",
+        "2026-11-25: Added @chaturanga/dameo with a source-derived 8×8 setup fixture. It asserts all 64 squares, both exact 18-man 8+6+4 trapezoids, vertical mirroring, empty middle ranks and invalid coordinates; 5 tests, package typecheck and lint passed."
+      ],
+      "notes": "Active feature. Rules/editions/popularity and rights research is complete; the canonical 8×8/18-men standard is selected as best-documented, not a proven popularity winner. The product plan, local AGENTS, rules contract and five-test setup fixture are recorded. Next implement and verify full line moves, compulsory maximum-capture routes, delayed removal, Coup Turc, promotion and endings. Keep all prose/art original; trademark review remains a public-promotion gate."
     }
   ]
 }

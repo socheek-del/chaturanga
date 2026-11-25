@@ -20,7 +20,7 @@ import {
   isPinkArena,
   isPrisonOrHospital,
   isStagingArea,
-  square,
+  squareAt,
   squareName,
 } from './layout';
 
@@ -31,9 +31,9 @@ describe('Suffragetto board transcription', () => {
     expect(BOARD_SIZE).toBe(289);
     expect(BOARD_CELLS).toHaveLength(289);
     expect(new Set(BOARD_CELLS).size).toBe(289);
-    expect(square('a', 1)).toBe(0);
-    expect(square('q', 17)).toBe(288);
-    expect(squareName(square('q', 17))).toBe('q17');
+    expect(squareAt('a', 1)).toBe(0);
+    expect(squareAt('q', 17)).toBe(288);
+    expect(squareName(squareAt('q', 17))).toBe('q17');
   });
 
   it('keeps the goal buildings out of the pink Arena mask', () => {
@@ -42,10 +42,10 @@ describe('Suffragetto board transcription', () => {
     expect(ALBERT_HALL).toHaveLength(6);
     expect(PINK_ARENA).toHaveLength(141);
     expect(PINK_ARENA.every((target) => !isGoalCell(target))).toBe(true);
-    expect(isPinkArena(square('e', 1))).toBe(true);
-    expect(isPinkArena(square('m', 17))).toBe(true);
-    expect(isPinkArena(square('h', 13))).toBe(false);
-    expect(isPinkArena(square('j', 5))).toBe(false);
+    expect(isPinkArena(squareAt('e', 1))).toBe(true);
+    expect(isPinkArena(squareAt('m', 17))).toBe(true);
+    expect(isPinkArena(squareAt('h', 13))).toBe(false);
+    expect(isPinkArena(squareAt('j', 5))).toBe(false);
   });
 
   it('records the 21-cell holdings and six-cell staging areas', () => {
@@ -57,8 +57,8 @@ describe('Suffragetto board transcription', () => {
     expect(ORDINARY_CELLS).toHaveLength(235);
     for (const target of [...PRISON, ...HOSPITAL]) expect(isPrisonOrHospital(target)).toBe(true);
     for (const target of [...PRISON_YARD, ...HOSPITAL_GROUNDS]) expect(isStagingArea(target)).toBe(true);
-    expect(isHoldingOrStagingCell(square('b', 8))).toBe(false);
-    expect(isHoldingOrStagingCell(square('p', 11))).toBe(false);
+    expect(isHoldingOrStagingCell(squareAt('b', 8))).toBe(false);
+    expect(isHoldingOrStagingCell(squareAt('p', 11))).toBe(false);
   });
 
   it('matches all 21 marked starting cells and large-piece placement for both sides', () => {
@@ -74,8 +74,8 @@ describe('Suffragetto board transcription', () => {
   });
 
   it('rejects invalid file and rank coordinates', () => {
-    expect(() => square('r', 1)).toThrow(RangeError);
-    expect(() => square('a', 0)).toThrow(RangeError);
-    expect(() => square('q', 18)).toThrow(RangeError);
+    expect(() => squareAt('r', 1)).toThrow(RangeError);
+    expect(() => squareAt('a', 0)).toThrow(RangeError);
+    expect(() => squareAt('q', 18)).toThrow(RangeError);
   });
 });

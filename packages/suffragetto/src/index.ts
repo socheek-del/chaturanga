@@ -1,4 +1,15 @@
-/** Pure coordinate masks for the surviving Sargeant Bros. second-edition Suffragetto board. */
+/** Pure rules and coordinate masks for the surviving Sargeant Bros. second-edition Suffragetto board. */
+export { Game, suffragetto, suffragettoVariant } from './game';
+export { FenError, IllegalMoveError } from '@chaturanga/rules-core';
+export {
+  PIECE_TYPES,
+  START_FEN,
+  POLICE_START_FEN,
+  parseFen,
+  square,
+} from './position';
+export type { Piece, PieceType } from './position';
+/** Source-derived immutable coordinate masks for the historic board. */
 export {
   ALBERT_HALL,
   ARENA_ENVELOPE,
@@ -23,7 +34,7 @@ export {
   isStagingArea,
   onBoard,
   rankOf,
-  square,
+  squareAt,
   squareName,
 } from './layout';
 export type { Setup } from './layout';

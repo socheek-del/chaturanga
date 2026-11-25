@@ -366,6 +366,7 @@ function sameSquares(a: string, b: string, files: number): boolean {
   const pb = parseUci(b, files);
   if (!pa || !pb || pa.kind !== pb.kind) return false;
   if (pa.kind === 'drop') return pb.kind === 'drop' && pa.type === pb.type && pa.to === pb.to;
+  if (pa.kind === 'action') return pb.kind === 'action' && pa.uci === pb.uci;
   return pb.kind === 'move' && pa.from === pb.from && pa.to === pb.to &&
     pa.path.length === pb.path.length && pa.path.every((square, index) => square === pb.path[index]);
 }

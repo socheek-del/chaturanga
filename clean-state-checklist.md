@@ -3,7 +3,11 @@
 - [x] Suffragetto's source-derived board coordinate map is recorded in `apps/suffragetto/docs/board-coordinates.md`; goal/Arena membership and the complete S/P setup are explicit.
 - [x] Full baseline `npm run verify` passed with loopback access and `NODE_OPTIONS=--no-experimental-webstorage`; `./init.sh` could not fetch npm@11 because registry DNS failed, and Node 22 from `.nvmrc` is not installed here.
 - [x] Suffragetto layout fixture/typecheck passed (5/5); rules-core coordinates passed 40/40 and board-ui passed 46/46; all three packages typechecked.
-- [ ] Run full workspace verification and build after the Suffragetto engine and product are implemented.
+- [x] Suffragetto engine implements steps, chained hops/captures, exchanges, goal locks/wins, repetition,
+  no-move loss, serialization and undo/replay; focused tests passed 36/36 with shared Variant conformance.
+- [x] Full workspace `npm run verify` passed with `NODE_OPTIONS=--no-experimental-webstorage` and loopback
+  access; Node 25.9 is installed instead of the `.nvmrc` Node 22.23.1.
+- [ ] Build the Suffragetto bot, independent PWA and online Worker; run product build/browser/Worker checks.
 
 - [x] Fortress's exact code revision passed GitHub `npm run verify` and all workspace builds. Crazyhouse startup `npm run verify` also passed locally under Node 22.23.1 when run outside the sandbox so Worker tests could bind loopback ports; `./init.sh` could not sync uncached npm@11 in offline mode.
 - [x] Fortress rules tests passed 23/23, bots 4/4, tutorial 2/2 and Worker room/schema checks 4/4; local browser and PWA checks passed before staging.
@@ -59,4 +63,5 @@
 - [x] `jesonmor.beanroti.com` has no A or AAAA record. Public HTTPS/WSS smoke, Caddy promotion and app-directory publication are blocked; no public route or catalog entry changed. Keep the Melon stage running.
 - [x] Complete Suffragetto rules, editions and rights research; report and source notes are in `apps/suffragetto/docs/`.
 - [x] Record the selected second-edition rules, source/date limits and authored-content boundary in `apps/suffragetto/docs/PLAN.md`, `apps/suffragetto/AGENTS.md` and `packages/suffragetto/RULES.md`.
-- [ ] Before engine work, encode and verify the 17×17 board zone and S/P setup coordinates from the archival board, then commit the board-layout fixture and unresolved conventions.
+- [x] Encode and verify the 17×17 board zone and S/P setup coordinates from the archival board; map and
+  fixture are in `apps/suffragetto/docs/board-coordinates.md` and `packages/suffragetto/src/layout.ts`.

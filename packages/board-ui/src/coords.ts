@@ -5,6 +5,8 @@ import { type Square, squareOf } from '@chaturanga/rules-core';
 export { squareNameOf, squareOf } from '@chaturanga/rules-core';
 
 export type ParsedMove =
+  /** `X21@b1`: release two small and one large equal-rank pair, beginning at the given staging cell. */
+  | { kind: 'action'; action: 'exchange'; smallPairs: number; largePairs: number; to: Square; uci: string }
   /** `R@a1`: a piece placed from hand (type in lower case). */
   | { kind: 'drop'; type: string; to: Square; uci: string }
   /**
@@ -16,6 +18,15 @@ export type ParsedMove =
 
 /** Parses an engine move in Fairy-Stockfish coordinate notation. */
 export function parseUci(uci: string, files: number): ParsedMove | null {
+  const exchange = /^X([0-6])([0-6])@([a-z]\d{1,2})$/.exec(uci);
+  if (exchange) {
+    const smallPairs = Number(exchange[1]);
+    const largePairs = Number(exchange[2]);
+    const to = squareOf(exchange[3]!, files);
+    return smallPairs + largePairs >= 1 && smallPairs + largePairs <= 6 && to !== null
+      ? { kind: 'action', action: 'exchange', smallPairs, largePairs, to, uci }
+      : null;
+  }
   const drop = /^([A-Z])@([a-z]\d{1,2})$/.exec(uci);
   if (drop) {
     const to = squareOf(drop[2]!, files);

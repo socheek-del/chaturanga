@@ -1421,3 +1421,10 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 - Fixed shared square notation and board-ui parsing to support the 17th file `q`, and updated shared conformance coordinate extraction. Existing board-ui coordinate tests remain intact.
 - Focused verification passed: Suffragetto layout 5/5, rules-core 40/40, board-ui 46/46; all three package typechecks passed. Root workspace CI/local verification should run again after the engine is implemented.
 - Next implement the pure Variant movement engine and test setup/FEN, eight-direction steps, chained hops/captures, the reserved zones, exchanges, goal occupancy, repetition, undo/replay and shared conformance.
+
+### Session 066 (Suffragetto rules engine)
+
+- Implemented the pure 17×17 Suffragetto `Variant` in `packages/suffragetto`: setup/FEN, steps and chained hops, captures and prisoner transfers, forbidden zones and locked goals, exchanges, goal victory, repetition, no-move loss, move history and undo. Remaining source gaps are explicit digital conventions in `packages/suffragetto/RULES.md`.
+- Exchanges use a distinct action notation (`X21@b1` means two small and one large pair). Shared board-ui parsing treats it as an action rather than a board route; protocol validation accepts it and lesson conformance understands action moves.
+- Focused Suffragetto tests and shared `Variant` conformance passed 36/36; board-ui passed 47/47; game-shell passed 93/93; protocol passed 6/6. Full workspace `npm run verify` passed with loopback access and `NODE_OPTIONS=--no-experimental-webstorage` under Node 25.9. `.nvmrc` Node 22.23.1 is not installed; `./init.sh` could not fetch npm@11 because registry DNS failed.
+- Next implement the Suffragetto AI package with bounded deterministic personas and exchange/capture coverage, then the product PWA/tutorial. Product build, browser, Worker, Melon and exact-SHA CI verification remain outstanding.

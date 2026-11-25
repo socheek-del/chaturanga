@@ -22,16 +22,10 @@ rights.md`](../../apps/suffragetto/docs/reports/Suffragetto%20rules%20and%20righ
     12–17.
   - Suffragette setup: `g4`, `k4`; `e5`–`g5`, `k5`–`m5`; all files `c`–`o` on rank 6. Police setup is
     the rank-reflected arrangement: all files `c`–`o` on rank 12; `e13`–`g13`, `k13`–`m13`; `g14`, `k14`.
-- Both players have five large pieces on the marked front/second-row ends and center, plus 16 rank-and-file
-  pieces. Large Suffragette starts: `i6`, `c6`, `o6`, `e5`, `m5`; large Police starts: `i12`, `c12`, `o12`,
-  `e13`, `m13`. The first player is chosen by coin toss in the source; the product exposes a first-side
-  choice.
-- Each side starts with 16 rank-and-file and five large pieces: a Leader plus four assistants, or an
-  Inspector plus four constables. The `S` and `P` markings determine starting positions. The first player is
-  chosen by coin toss in the source; the product exposes a first-side choice.
-- In each side's marked arrangement, put one large piece in the middle cell of the front row and the other
-  four on the outermost cells of the front and second rows; the remaining marked cells receive the 16
-  rank-and-file pieces. The board coordinate map defines row direction and cell order.
+- Both players have 16 rank-and-file pieces and five large pieces: a Leader plus four assistants, or an
+  Inspector plus four constables. The `S` and `P` markings determine starting positions. Large Suffragette
+  starts: `i6`, `c6`, `o6`, `e5`, `m5`; large Police starts: `i12`, `c12`, `o12`, `e13`, `m13`. The first
+  player is chosen by coin toss in the source; the product exposes a first-side choice.
 
 ## Movement and capture
 
@@ -49,6 +43,8 @@ rights.md`](../../apps/suffragetto/docs/reports/Suffragetto%20rules%20and%20righ
   count toward exchange eligibility.
 - Capture takes effect during the chain. This digital convention removes the captured piece immediately so
   its former cell is empty for later hops; source wording does not specify timing within the route.
+- A landing square cannot be visited twice in one chain. The source does not limit repeated landings; this
+  digital convention prevents a route from looping indefinitely.
 
 ## Exchanges
 
@@ -57,10 +53,13 @@ rights.md`](../../apps/suffragetto/docs/reports/Suffragetto%20rules%20and%20righ
   Suffragette starts in Prison Yard; a released police piece starts in Hospital Grounds.
 - The initiating player chooses the number and matching ranks of the pairs. The original rules do not
   prescribe which individual captives to select; this is a digital convention.
+- The engine selects the oldest captives by holding-area coordinate, large pieces first, then small pieces.
+  Released pieces occupy the lowest available staging coordinates in the same order. This deterministic
+  convention lets moves replay identically.
 - No further exchange may be demanded while either staging area has any piece in it.
-- An exchange is one action/turn and must be serialized as a game move by the engine. Represent the
-  automatically released counterpart and both resulting staging placements in the serialized position and
-  move notation.
+- An exchange is one action/turn. Its move notation is `X<small-pairs><large-pairs>@<first-own-stage>`;
+  for example, `X21@b1` exchanges two small pairs and one large pair. It automatically releases both sides,
+  whose placements are serialized in the resulting board position.
 
 ## Endings and digital conventions
 

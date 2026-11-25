@@ -14,8 +14,7 @@ report](reports/Suffragetto%20rules%20and%20rights.md).
 - Board: 17×17 square grid; 9×17 central Arena envelope with the 3×2 House of Commons and Albert Hall
   goal buildings cut out of the pink capture area; 21-cell Prison and Hospital zones; six-cell Prison Yard
   and Hospital Grounds. Exact coordinates and S/P setup masks are in
-  [`board-coordinates.md`](board-coordinates.md). Build a machine-readable, tested fixture from this map
-  before implementing move generation.
+  [`board-coordinates.md`](board-coordinates.md) and the tested fixture in `packages/suffragetto/src/layout.ts`.
 - Each side has 21 pieces: 16 small rank-and-file and five large pieces. The Suffragette side has a Leader
   and four assistants; Police has an Inspector and four constables. The S/P markers on the surviving board
   determine setup. One large piece occupies the middle of the front row; the other four occupy the outermost
@@ -42,8 +41,11 @@ report](reports/Suffragetto%20rules%20and%20rights.md).
 - Repetition is a draw after three occurrences of the full position (board, prisoners, staging areas and
   side to move). No 50-move rule is added.
 - A player with no legal move loses. The historical source gives no no-move or repetition result.
-- The initiating player selects up to six matching-rank prisoner pairs; the opponent cannot refuse. The
-  original rules do not define which individual pieces are selected or a UI exchange protocol.
+- A chain cannot revisit a landing square, avoiding an unbounded loop; the source does not prohibit revisiting.
+- The initiating player selects counts of small and large pairs, totaling at most six. Captives are chosen in
+  holding-coordinate order, large first and then small; releases use ascending staging coordinates. The move
+  is serialized as `X<small><large>@<first-own-stage>`, for example `X21@b1`. The source does not prescribe
+  individual captives or a move notation.
 - Remove a captured piece from its Arena cell immediately during a chained hop so its cell becomes empty;
   the original prose does not state capture timing inside a chain.
 - The archival board resolves zone membership: both 3×2 buildings are uncolored cutouts from the pink
@@ -75,8 +77,9 @@ Bros. or Bodleian. The research is not worldwide copyright or trademark clearanc
 2. [x] Transcribe the archival board's exact coordinate masks and setup in `board-coordinates.md`.
 3. [x] Build and verify the TS fixture from that map before adding move generation. Its layout tests assert
    all 289 cells, each zone count, goal/Arena exclusions, both 21-cell setups and the five large-piece cells.
-4. [ ] Implement `@chaturanga/suffragetto` as a pure 17×17 `Variant` with rules tests, serialization,
-   prisoner exchanges, shared conformance and seeded replay/undo.
+4. [x] Implement `@chaturanga/suffragetto` as a pure 17×17 `Variant` with rules tests, serialization,
+   prisoner exchanges, shared conformance and replay/undo. Focused tests passed 36/36 and full workspace
+   verification passed with the repository's Node 25 compatibility flag and loopback access.
 5. [ ] Add bounded bots and strength smoke; test both roles, chained hops and exchanges.
 6. [ ] Build the independent PWA, original art, local play/save, responsive board, offline behavior and
    interactive tutorial; add web, locale, lesson, PWA and browser checks.

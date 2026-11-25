@@ -7,7 +7,7 @@ export const BOARD_CELLS: readonly Square[] = Object.freeze(Array.from({ length:
 
 const FILE_LETTERS = 'abcdefghijklmnopq';
 
-export function square(file: string, rank: number): Square {
+export function squareAt(file: string, rank: number): Square {
   const fileIndex = FILE_LETTERS.indexOf(file);
   if (fileIndex < 0 || fileIndex >= FILES || !Number.isInteger(rank) || rank < 1 || rank > RANKS)
     throw new RangeError(`Invalid Suffragetto coordinate: ${file}${rank}`);
@@ -25,13 +25,13 @@ function rectangle(firstFile: string, lastFile: string, firstRank: number, lastR
   const result: Square[] = [];
   for (let rank = firstRank; rank <= lastRank; rank++) {
     for (let file = FILE_LETTERS.indexOf(firstFile); file <= FILE_LETTERS.indexOf(lastFile); file++)
-      result.push(square(FILE_LETTERS[file]!, rank));
+      result.push(squareAt(FILE_LETTERS[file]!, rank));
   }
   return Object.freeze(result);
 }
 
 function fileRange(file: string, firstRank: number, lastRank: number): readonly Square[] {
-  return Object.freeze(Array.from({ length: lastRank - firstRank + 1 }, (_, offset) => square(file, firstRank + offset)));
+  return Object.freeze(Array.from({ length: lastRank - firstRank + 1 }, (_, offset) => squareAt(file, firstRank + offset)));
 }
 
 function combine(...groups: readonly (readonly Square[])[]): readonly Square[] {
@@ -76,7 +76,7 @@ const policeCells = combine(rectangle('c', 'o', 12, 12), rectangle('e', 'g', 13,
   rectangle('k', 'm', 13, 13), rectangle('g', 'g', 14, 14), rectangle('k', 'k', 14, 14));
 
 function setup(cells: readonly Square[], largeNames: readonly string[]): Setup {
-  const large = Object.freeze(largeNames.map((name) => square(name[0]!, Number(name.slice(1)))));
+  const large = Object.freeze(largeNames.map((name) => squareAt(name[0]!, Number(name.slice(1)))));
   const largeSet = asSet(large);
   return Object.freeze({
     cells,

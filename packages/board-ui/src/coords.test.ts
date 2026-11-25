@@ -8,6 +8,14 @@ describe('parseUci', () => {
     expect(parseUci('S@a2', 9)).toMatchObject({ kind: 'drop', type: 's', to: 9 });
   });
 
+  it('parses explicit variant actions without treating them as board routes', () => {
+    expect(parseUci('X21@b1', 17)).toMatchObject({
+      kind: 'action', action: 'exchange', smallPairs: 2, largePairs: 1, to: 1,
+    });
+    expect(parseUci('X00@b1', 17)).toBeNull();
+    expect(parseUci('X25@b1', 17)).toBeNull();
+  });
+
   it('parses every landing square in a capture chain on a wide board', () => {
     expect(parseUci('c5d6f7', 7)).toMatchObject({ kind: 'move', from: 30, to: 47, path: [38, 47], promotion: null });
     expect(parseUci('d13d14b', 7)).toMatchObject({ kind: 'move', from: 87, to: 94, path: [94], promotion: 'b' });

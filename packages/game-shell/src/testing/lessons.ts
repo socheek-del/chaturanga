@@ -53,7 +53,9 @@ export function describeLessons<L extends string, G extends VariantGame, Verify>
                 expect(step.solutions.length, 'a move step needs a solution').toBeGreaterThan(0);
                 const squares = (uci: string) => {
                   const parsed = parseUci(uci, variant.files);
-                  return parsed?.kind === 'drop' ? `${parsed.type}@${parsed.to}` : parsed && `${parsed.from}-${parsed.to}`;
+                  if (parsed?.kind === 'drop') return `${parsed.type}@${parsed.to}`;
+                  if (parsed?.kind === 'action') return parsed.uci;
+                  return parsed && `${parsed.from}-${parsed.to}`;
                 };
                 const legalSquares = legal.map(squares);
                 for (const s of step.solutions) expect(legalSquares, s).toContain(squares(s));

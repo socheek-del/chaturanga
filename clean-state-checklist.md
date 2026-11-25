@@ -17,7 +17,8 @@
 - [x] Implement the pure Dameo Variant. `npm test -w packages/dameo` passed 36/36 including shared conformance and five seeded 120-ply games; package typecheck and ESLint passed. Fixtures cover line shifts, maximum capture, delayed-removal blocking, route revisits, promotion, endings, replay/undo and attack maps. No Fairy-Stockfish oracle is available.
 - [x] Add six bounded Dameo bot levels. AI tests passed 16/16 across both colors, forced elimination, compulsory maximum capture, full-route IDs, reproducible choice, fixed budgets and live-game restoration; package typecheck and ESLint passed. Full workspace `npm run verify` passed with loopback enabled for Worker suites.
 - [x] Record Dameo's original route-atlas design brief in `apps/dameo/docs/design.md` before UI work.
-- [ ] Build the interactive tutorial covering every selected rule.
+- [x] Build nine interactive lessons covering the selected Dameo rules and digital conventions. Web lesson/locale tests passed 45/45; the production PWA built; typecheck and ESLint passed; full workspace `npm run verify` passed; headless browser smoke opened the tutorial, answered a quiz and found no overflow at 390px.
+- [ ] Complete Dameo play modes, local save/reload, offline install verification and the isolated Melon Worker; the current PWA increment is tutorial-only.
 
 - [x] Fortress's exact code revision passed GitHub `npm run verify` and all workspace builds. Crazyhouse startup `npm run verify` also passed locally under Node 22.23.1 when run outside the sandbox so Worker tests could bind loopback ports; `./init.sh` could not sync uncached npm@11 in offline mode.
 - [x] Fortress rules tests passed 23/23, bots 4/4, tutorial 2/2 and Worker room/schema checks 4/4; local browser and PWA checks passed before staging.

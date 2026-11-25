@@ -1,0 +1,74 @@
+{
+  "home": {
+    "edition": "THE STANDARD 8×8 EDITION",
+    "title": "Dameo",
+    "intro": "A field of moving lines and winding capture routes. Learn the rules, then find your way across the board.",
+    "startLearning": "Begin the field guide",
+    "allLessons": "Browse all lessons",
+    "lastResult": "Last lesson: {{stars}} stars",
+    "signature": "Lines shift together. Routes must be complete.",
+    "diagram": "OPENING POSITION · ROUTE STUDY",
+    "coordinates": "FILES A THROUGH H · RANKS 1 THROUGH 8",
+    "boardNote": "EIGHT FILES · EIGHT RANKS",
+    "brandNote": "A route atlas",
+    "indexLabel": "FIELD NOTES"
+  },
+  "nav": {
+    "label": "Main navigation",
+    "home": "Return to home",
+    "lessons": "Field guide",
+    "start": "Start lesson",
+    "leave": "Leave lesson"
+  },
+  "board": {
+    "label": "Dameo board",
+    "square": "{{square}}, {{piece}}"
+  },
+  "colors": { "w": "White", "b": "Black" },
+  "pieces": { "m": "man", "k": "king", "empty": "empty" },
+  "learn": {
+    "kicker": "A FIELD GUIDE IN THREE PARTS",
+    "title": "Learn the routes",
+    "intro": "Move through the rules in order, or open any lesson to study a specific position.",
+    "begin": "Begin",
+    "hint": "Show hint",
+    "exit": "Leave lesson",
+    "progress": "Lesson progress",
+    "check": "Check answer",
+    "continue": "Continue",
+    "correct": "Correct",
+    "wrong": "Try another route",
+    "tryAgain": "Try again",
+    "complete": "Lesson complete",
+    "stars": "{{count}} stars"
+  },
+  "play": {
+    "chooseRoute": "Choose a complete capture route"
+  },
+  "family": { "title": "More games" },
+  "feedback": {
+    "link": "Send feedback",
+    "title": "Send feedback",
+    "close": "Close feedback form",
+    "type": "What would you like to share?",
+    "bug": "Report a problem",
+    "idea": "Suggest an improvement",
+    "details": "Details",
+    "placeholder": "Describe what happened or what would help.",
+    "note": "Please leave out private information.",
+    "publicNote": "Feedback may be visible to the project team.",
+    "owner": "Project team",
+    "send": "Send feedback",
+    "sending": "Sending…",
+    "sent": "Feedback sent",
+    "failed": "Feedback could not be sent.",
+    "rateLimited": "Please wait before sending more feedback.",
+    "network": "Check your connection and try again.",
+    "queued": "Feedback saved and waiting to send.",
+    "challengeFailed": "The request could not be verified. Try again.",
+    "continue": "Continue",
+    "handoff": "Continue to feedback",
+    "handedOff": "Feedback form opened in another tab.",
+    "closeTab": "You can close this tab now."
+  }
+}

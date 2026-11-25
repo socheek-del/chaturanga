@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f2e8d2"/>
+  <path d="M0 496h1200M0 504h1200" stroke="#b85e3d" stroke-opacity=".35"/>
+  <text x="92" y="116" fill="#668574" font-family="sans-serif" font-size="20" font-weight="700" letter-spacing="5">THE STANDARD 8 × 8 EDITION</text>
+  <text x="84" y="290" fill="#23363a" font-family="Georgia,serif" font-size="142">Dameo</text>
+  <text x="96" y="360" fill="#496064" font-family="sans-serif" font-size="30">A field of moving lines and winding routes.</text>
+  <g transform="translate(760 72)" fill="#23363a" stroke="#9ba28f" stroke-width="1">
+    <rect width="352" height="352" fill="#23363a" stroke="#23363a"/>
+    <path d="M0 0h44v44H0zm88 0h44v44H88zm88 0h44v44h-44zm88 0h44v44h-44zM44 44h44v44H44zm88 0h44v44h-44zm88 0h44v44h-44zm88 0h44v44h-44zM0 88h44v44H0zm88 0h44v44H88zm88 0h44v44h-44zm88 0h44v44h-44zM44 132h44v44H44zm132 0h44v44h-44zM0 176h44v44H0zm88 0h44v44H88zm176 0h44v44h-44zM44 220h44v44H44zm132 0h44v44h-44zM0 264h44v44H0zm88 0h44v44H88zm176 0h44v44h-44zM44 308h44v44H44zm88 0h44v44h-44zm88 0h44v44h-44zm88 0h44v44h-44z" fill="#f7f1e4"/>
+    <path d="M110 242 154 198 198 154 242 110" fill="none" stroke="#b85e3d" stroke-width="4"/>
+    <circle cx="110" cy="242" r="9" fill="#b85e3d" stroke="none"/><circle cx="242" cy="110" r="9" fill="#b85e3d" stroke="none"/>
+  </g>
+  <text x="96" y="554" fill="#496064" font-family="sans-serif" font-size="19" letter-spacing="4">ROUTE ATLAS · LEARN THE RULES</text>
+</svg>

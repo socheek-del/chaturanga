@@ -74,9 +74,13 @@ DNS/TLS and HTTPS/WebSocket checks.
    under Node 25 with loopback enabled for the existing Cloudflare Worker suites.
 6. [x] Write the original product design brief in `docs/design.md`, including the route-atlas identity,
    local typography/art direction, board and responsive screen layouts, accessibility and public-name gate.
-7. [ ] Build an interactive tutorial that validates every selected rule: ordinary steps, line shifts, king
-   range, compulsory capture, maximum-route choice, delayed blockers/Coup Turc, promotion timing, blockage,
-   repetition and the agreed-draw convention.
+7. [x] Build an interactive tutorial that validates every selected rule: nine original lessons in three units
+   cover the setup and movement, line shifts, king range and captures, compulsory maximum routes, delayed
+   blockers, Coup Turc, promotion timing, blocked loss, repetition and agreed draws. `RULE_LESSONS` maps each
+   selected rule/convention to a lesson. Web content and locale checks passed 45/45; web typecheck, ESLint and
+   production PWA build passed. Headless browser smoke opened the home and first lesson, answered a rule quiz,
+   and found no horizontal overflow at 390px. Full workspace `npm run verify` also passed under Node 25.9 with
+   `NODE_OPTIONS=--no-experimental-webstorage` and loopback enabled for Worker tests.
 8. [ ] Ship the independent PWA with responsive play, local saves, offline install and complete locale keys.
 9. [ ] Add isolated server-authoritative private rooms/quick match and verify reconnect and rule validation.
 10. [ ] Pass exact-SHA CI and stage on Melon; verify tutorial, bots, online play, offline mode, restart and

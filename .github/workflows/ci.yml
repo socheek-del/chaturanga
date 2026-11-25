@@ -30,3 +30,4 @@ jobs:
       - run: npm run build -w apps/shatranj/web -w apps/shatranj/worker
       - run: npm run build -w apps/chaturanga/web -w apps/chaturanga/worker
       - run: npm run build:fortress
+      - run: npm run build:dameo

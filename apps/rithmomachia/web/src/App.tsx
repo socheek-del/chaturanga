@@ -1,12 +1,12 @@
-import { storageKey } from '@chaturanga/game-shell';
-import { GameScreen, undoAllowed, useFocusModeProvider } from '@chaturanga/game-shell/ui';
+import { createIdentity, storageKey, type TimeControlChoice } from '@chaturanga/game-shell';
+import { GameScreen, OnlineLobby, OnlineRoom, undoAllowed, useFocusModeProvider, type OnlineRoomContext, type OnlineScreenProps } from '@chaturanga/game-shell/ui';
 import { parseUci } from '@chaturanga/board-ui';
 import { Button, Card } from '@chaturanga/ui';
 import { Game, PIECE_TYPES, PYRAMID_COMPONENTS, START_FEN, rithmomachia, squareName } from '@chaturanga/rithmomachia';
 import { BOTS, botById } from '@chaturanga/rithmomachia-ai';
 import type { Color, Square } from '@chaturanga/rules-core';
 import { ArrowLeft, ArrowRight, ArrowUpRight, BookOpen, Bot, Compass, Moon, Sun, Users } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Navigate, Route as RouteView, Routes, useNavigate, useParams } from 'react-router';
 import { PRODUCT } from '../product.config';
@@ -18,6 +18,7 @@ import { useBotBlackSession, useBotWhiteSession, useLocalSession } from './store
 import { lessonStarsKey, RithmomachiaTutorial, tutorialStarsKey } from './tutorial';
 
 const hero = new Game(START_FEN);
+const identity = createIdentity(storageKey(PRODUCT, 'identity'));
 type Mode = 'bot' | 'local';
 type SessionStore = typeof useLocalSession;
 const PIECE_VALUES = Object.fromEntries(PIECE_TYPES.map((type) => [type, pieceInfo(type, 'w').value]));
@@ -37,6 +38,7 @@ function Home() {
         <div className="home-actions">
           <Link className="cabinet-primary" to="/play"><Bot size={17} aria-hidden />{t('home.play')}<ArrowUpRight size={16} aria-hidden /></Link>
           <Link className="cabinet-secondary" to="/play?mode=local"><Users size={16} aria-hidden />{t('home.playLocal')}<span>→</span></Link>
+          <Link className="cabinet-secondary" to="/online"><Users size={16} aria-hidden />{t('home.playOnline')}<span>→</span></Link>
           <Link className="cabinet-primary cabinet-learn" to="/tutorial"><BookOpen size={17} aria-hidden />{t('home.startLearning')}<ArrowUpRight size={16} aria-hidden /></Link>
           <Link className="cabinet-secondary" to="/learn">{t('home.allLessons')}<span>→</span></Link>
           {completed && <p className="completion-note">{t('home.lastResult', { stars: completed })}</p>}
@@ -173,6 +175,29 @@ function describePyramidRoute(uci: string, game: Game, t: ReturnType<typeof useT
   return route;
 }
 
+function OnlineGameView({ screen, context }: { screen: OnlineScreenProps<Game>; context: OnlineRoomContext<Game> }) {
+  const { t } = useTranslation();
+  const board = useBoardIdentity();
+  const game = context.session((state) => state.game);
+  return <GameScreen
+    {...screen}
+    variant={rithmomachia}
+    {...board}
+    pieceValues={PIECE_VALUES}
+    boardSizing="scroll"
+    avatarType="c2"
+    routeChoiceTitle={t('play.chooseCapture')}
+    describeRouteChoice={(uci) => describePyramidRoute(uci, game, t)}
+    describePromotion={(piece) => promotionName(piece.type, piece.color, t)}
+    handLabel={(color) => t('play.reserve', { color: t(`colors.${color}`) })}
+    describeHandPiece={(type, count) => {
+      const info = pieceInfo(type, 'w');
+      return t('play.reservePiece', { name: `${t(`shapes.${info.shape}`)} ${info.value}`, count });
+    }}
+    renderPositionDetails={(position, selected) => <PositionNotebook game={position as Game} selected={selected} />}
+  />;
+}
+
 function GameRoute() {
   const { mode: rawMode, side, level: rawLevel } = useParams();
   if ((rawMode !== 'bot' && rawMode !== 'local') || (side !== 'w' && side !== 'b')) return <Navigate to="/play" replace />;
@@ -306,6 +331,9 @@ function LessonRoute() {
 export function App() {
   const { t } = useTranslation();
   const { focus, FocusProvider } = useFocusModeProvider();
+  const navigate = useNavigate();
+  const [onlineTimeControl, setOnlineTimeControl] = useState<TimeControlChoice>({ kind: 'none' });
+  const [onlineColor, setOnlineColor] = useState<'w' | 'b' | 'random'>('random');
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     const saved = localStorage.getItem(storageKey(PRODUCT, 'theme'));
     return saved === 'light' || saved === 'dark'
@@ -322,9 +350,9 @@ export function App() {
         <span className="brand-seal" aria-hidden><Compass size={20} strokeWidth={1.5} /></span>
         <span><strong>{t('home.title')}</strong><small>{t('home.brandNote')}</small></span>
       </Link>
-      {focus ? <Link className="back-link" to={focus === 'game' ? '/' : '/learn'}><ArrowLeft size={16} aria-hidden />{focus === 'game' ? t('nav.leaveGame') : t('nav.leave')}</Link> :
+      {focus ? <Link className="back-link" to={focus === 'game' ? (location.pathname.startsWith('/online/') ? '/online' : '/') : '/learn'}><ArrowLeft size={16} aria-hidden />{focus === 'game' ? t('nav.leaveGame') : t('nav.leave')}</Link> :
         <div className="masthead-actions">
-          {!focus && <nav className="top-nav" aria-label={t('nav.label')}><Link to="/play">{t('nav.play')}</Link><Link to="/learn">{t('nav.lessons')}</Link><Link to="/tutorial">{t('nav.start')}</Link></nav>}
+          {!focus && <nav className="top-nav" aria-label={t('nav.label')}><Link to="/play">{t('nav.play')}</Link><Link to="/online">{t('modes.online')}</Link><Link to="/learn">{t('nav.lessons')}</Link><Link to="/tutorial">{t('nav.start')}</Link></nav>}
           <button className="theme-toggle" type="button" aria-label={t('theme.toggle')} title={t('theme.toggle')} onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
             {theme === 'light' ? <Moon size={15} aria-hidden /> : <Sun size={15} aria-hidden />}<span className="theme-label">{t(theme === 'light' ? 'theme.dark' : 'theme.light')}</span>
           </button>
@@ -337,8 +365,36 @@ export function App() {
       <RouteView path="lesson/:id" element={<LessonRoute />} />
       <RouteView path="play" element={<PlaySetup />} />
       <RouteView path="game/:mode/:side/:level" element={<GameRoute />} />
+      <RouteView path="online" element={<OnlineLobby
+        identity={identity}
+        timeControl={onlineTimeControl}
+        onTimeControlChange={setOnlineTimeControl}
+        color={onlineColor}
+        onColorChange={setOnlineColor}
+        onEnterRoom={(code) => navigate('/online/' + code)}
+      />} />
+      <RouteView path="online/:code" element={<OnlineRoomRoute />} />
       <RouteView path="*" element={<Navigate to="/" replace />} />
     </Routes></FocusProvider></main>
     {!focus && <footer className="site-footer"><span>{t('home.footer')}</span><Link to="/learn">{t('nav.lessons')}</Link></footer>}
   </div>;
+}
+
+function OnlineRoomRoute() {
+  const { code = '' } = useParams();
+  const navigate = useNavigate();
+  const enterRoom = useCallback((roomCode: string) => navigate('/online/' + roomCode), [navigate]);
+  const leaveRoom = useCallback(() => navigate('/online'), [navigate]);
+  if (!/^[A-HJ-NP-Z2-9]{6}$/i.test(code)) return <Navigate to="/online" replace />;
+  const normalized = code.toUpperCase();
+  return <OnlineRoom
+    key={normalized}
+    code={normalized}
+    variant={rithmomachia}
+    identity={identity}
+    roomUrl={(roomCode) => location.origin + '/online/' + roomCode}
+    onEnterRoom={enterRoom}
+    onLeave={leaveRoom}
+    renderGame={(screen, context) => <OnlineGameView screen={screen} context={context} />}
+  />;
 }

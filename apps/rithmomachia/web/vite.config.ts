@@ -68,7 +68,13 @@ export default defineConfig({
       },
     }),
   ],
-  server: { port: 5206 },
+  server: {
+    port: 5206,
+    proxy: {
+      '/api': { target: 'http://127.0.0.1:8816' },
+      '/ws': { target: 'http://127.0.0.1:8816', ws: true },
+    },
+  },
   preview: { port: 4206 },
   test: { include: ['src/**/*.test.{ts,tsx}'] },
 });

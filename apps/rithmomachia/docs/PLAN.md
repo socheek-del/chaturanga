@@ -72,7 +72,11 @@ modern-source text, tables, illustrations, or library scans.
    verified bot play and reply, a correct tutorial move, service-worker control and offline reload; at 390px
    there is no horizontal overflow and the 8×16 lesson board fits below its prompt. Full workspace
    verification passed with loopback access.
-7. [ ] Add isolated private rooms and the server-side rules engine.
+7. [x] Add isolated private rooms and the server-side rules engine. The dedicated Worker validates every
+   move through `@chaturanga/rithmomachia`, persists finished games in its own D1, and provides private
+   rooms plus quick match without chat. Worker tests passed 9/9. A two-client Chromium check created a
+   Black room, joined from the second client, and confirmed both clients received the accepted `f13-g12`
+   move with no browser errors.
 8. [ ] Pass workspace verification, exact-SHA CI, Melon stage, offline, room/restart/restore, and
    mobile browser checks; then recheck DNS/TLS and branding before promotion.
 
@@ -99,6 +103,23 @@ modern-source text, tables, illustrations, or library scans.
   review; no public domain or catalog entry is authorized by this design brief.
 - Next: implement the interactive tutorial and PWA from this brief, then verify 390px/1280px light/dark layouts
   before proceeding to rooms.
+
+## Verified online increment (2026-11-26)
+
+- `apps/rithmomachia/worker` is an independent Durable Object service with a product-specific namespace,
+  D1 database and migration. It uses the shared room state machine, quick-match service and protocol; all
+  online moves are replayed by the selected Rithmomachia Variant before state changes. Finished records
+  are stored in the product's own database. Chat is absent.
+- Worker app, room and matchmaker tests passed 9/9, including authority/illegal-move checks, reconnect,
+  eviction, draw archival and rejection of chat messages. The full workspace `npm run verify` passed under
+  Node 25.9 with `NODE_OPTIONS=--no-experimental-webstorage` and loopback access. The production build
+  includes the web PWA and Worker.
+- Headless Chromium at 390px opened two independent clients, created a private Black room, joined it from
+  the second seat and confirmed that both boards reflected the same accepted Black move (`f13` to `g12`);
+  neither client produced page or console errors.
+- Next: push the verified source, confirm exact-SHA GitHub CI, deploy a pinned isolated stage to Melon,
+  and verify health, online play, restart and copied-state restore. Keep public routing and the app catalog
+  unchanged until the product name, DNS/TLS and HTTPS/WSS checks pass.
 
 ## Sources
 

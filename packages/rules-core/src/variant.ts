@@ -9,6 +9,8 @@ export interface VariantMoveRecord<C extends string = Color> {
   /** The piece that moved or was placed, as it was before any promotion. */
   piece: Piece<string, C>;
   captured: Piece<string, C> | null;
+  /** The action kind when a variant has captures or drops that do not follow ordinary board movement. */
+  action?: 'move' | 'capture' | 'drop';
   /** Additional pieces removed by a multi-capture move, in route order. */
   captures?: Piece<string, C>[];
   /** True when a legal move's mover is removed at turn end, as with Congo river drowning. */

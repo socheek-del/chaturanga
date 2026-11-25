@@ -27,7 +27,7 @@ export function parseUci(uci: string, files: number): ParsedMove | null {
       ? { kind: 'action', action: 'exchange', smallPairs, largePairs, to, uci }
       : null;
   }
-  const drop = /^([A-Z])@([a-z]\d{1,2})$/.exec(uci);
+  const drop = /^([A-Z][A-Z0-9]*)@([a-z]\d{1,2})$/.exec(uci);
   if (drop) {
     const to = squareOf(drop[2]!, files);
     return to === null ? null : { kind: 'drop', type: drop[1]!.toLowerCase(), to, uci };

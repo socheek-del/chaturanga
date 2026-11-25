@@ -6,6 +6,7 @@ describe('parseUci', () => {
     expect(parseUci('e3e4', 8)).toMatchObject({ kind: 'move', from: 20, to: 28, path: [28], promotion: null });
     expect(parseUci('e7e8q', 8)).toMatchObject({ kind: 'move', from: 52, to: 60, path: [60], promotion: 'q' });
     expect(parseUci('S@a2', 9)).toMatchObject({ kind: 'drop', type: 's', to: 9 });
+    expect(parseUci('C100@a1', 8)).toMatchObject({ kind: 'drop', type: 'c100', to: 0 });
   });
 
   it('parses explicit variant actions without treating them as board routes', () => {

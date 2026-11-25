@@ -16,8 +16,7 @@ explicit digital conventions where the summaries leave choices open:
   24 occupied squares: 8 circles, 8 triangles, 7 squares, and one composite pyramid.
 - White's ranks 1–4 and Black's ranks 13–16 use the exact value layout in
   `packages/rithmomachia/src/layout.ts`. The setup is symmetrical in shape but the black values
-  are odd-sequence counterparts. Keep the fixture in code and cross-check it against the cited
-  setup diagram before adding movement.
+  are odd-sequence counterparts. The fixture and focused tests are checked against the cited setup diagram.
 - Circles move one diagonal step; triangles move exactly two orthogonal steps; squares move exactly
   three orthogonal steps. A pyramid can move by any of its surviving component shapes. All paths
   must be empty; pieces never jump. Movement endpoints must be empty.
@@ -61,8 +60,8 @@ modern-source text, tables, illustrations, or library scans.
 ## Sequence
 
 1. [x] Compare variants/adoption and rights; select the most common documented rules family.
-2. [ ] Check in the exact 8×16 setup fixture and source-backed value tests.
-3. [ ] Implement the pure Variant, including captures, reserve pieces, composite pyramids, victory,
+2. [x] Check in the exact 8×16 setup fixture and source-backed value tests.
+3. [x] Implement the pure Variant, including captures, reserve pieces, composite pyramids, victory,
    deterministic serialization, replay, undo, and conformance.
 4. [ ] Add bounded bots and position-level tests.
 5. [ ] Write the product design brief before UI implementation.
@@ -70,6 +69,17 @@ modern-source text, tables, illustrations, or library scans.
 7. [ ] Add isolated private rooms and the server-side rules engine.
 8. [ ] Pass workspace verification, exact-SHA CI, Melon stage, offline, room/restart/restore, and
    mobile browser checks; then recheck DNS/TLS and branding before promotion.
+
+## Verified engine increment (2026-11-26)
+
+- `@chaturanga/rithmomachia` implements Black-first 8×16 play, component movement, meeting/assault/
+  ambuscade/siege captures, capture-to-reserve and home-rank drops, partial/full pyramid capture,
+  great victory, no-action loss, threefold repetition, 200-ply counting, replay and undo.
+- The custom canonical `r1` FEN packs sorted board records and exact-value reserves into a short,
+  deterministic string (the start position is below the protocol's 200-character start-FEN limit).
+- Shared Variant conformance and focused engine checks passed. Full `npm run verify` passed under
+  Node 25.9 with `NODE_OPTIONS=--no-experimental-webstorage` and loopback permission.
+- Next: add deterministic bounded bots for both colors, then write the product design brief before UI work.
 
 ## Sources
 

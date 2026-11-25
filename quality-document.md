@@ -74,6 +74,7 @@ needs work.
 | Layer | Grade | Boundary Enforcement | Agent Legibility | Key Gaps | Last Updated |
 |-------|-------|---------------------|-----------------|----------|-------------|
 | `packages/rules-core` | A | Engine purity lint rule; Variant enforced by `satisfies` + shared conformance suite | variant, board8, attacks, errors, testing/ | — | 2026-09-14 |
+| `packages/rithmomachia` | A | Pure Variant, deterministic compact FEN, shared conformance, and focused movement/capture/end-condition checks | layout, position, movement, game, variant | No bot/product yet | 2026-11-26 |
 | `packages/makruk` | A | ESLint no-restricted-globals for src; clock is pure (`now` injected) | board, movegen, fen, game, clock, perft, variant | ffish is devDependency only | 2026-09-14 |
 | `packages/sittuyin` | A | Engine purity lint rule; depends only on rules-core | board, fen, movegen, game, perft, variant | — | 2026-09-14 |
 | `packages/ai` | B | Uses `@chaturanga/makruk/core` only | search/evaluate/bots/index | Strength ladder slow; own copy of the search until it migrates to ai-core (ladder re-run needed) | 2026-09-14 |
@@ -115,6 +116,10 @@ needs work.
 - Researched Copenhagen Hnefatafl rules, tournament adoption and rights. The primary rules page grants no digital license, so implementation is blocked and Rollerball is next.
 - Researched Cazaux's 40-square Rollerball rules, variants and rights. No digital permission was found and the source page was inaccessible, so Rollerball is blocked and Kruzno is next.
 - Reconciled Kruzno's main Wikipedia game with the separate Kruzno Checkers rules linked by the roadmap. Rights/adoption remain unverified, so Kruzno is blocked and Rithmomachia is next.
+
+### 2026-11-26
+
+- Added and fully verified Rithmomachia's pure rules Variant and focused shared conformance. Bot, product design, tutorial, PWA, multiplayer and Melon staging remain ahead.
 
 ### 2026-09-13
 

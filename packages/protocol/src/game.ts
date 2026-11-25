@@ -62,7 +62,7 @@ export type GameSnapshot = z.infer<typeof GameSnapshot>;
  * Suffragetto's explicit pair-exchange action (`X21@b1`). This is only a cheap shape guard — the room
  * always replays the move through its own rules engine before accepting it.
  */
-const UCI = z.string().regex(/^(?:X[0-6][0-6]@[a-z]\d{1,2}|[A-Z]@[a-z]\d{1,2}|(?:[a-z]\d{1,2}){2,}[+a-z]?)$/);
+const UCI = z.string().regex(/^(?:X[0-6][0-6]@[a-z]\d{1,2}|[A-Z][A-Z0-9]*@[a-z]\d{1,2}|(?:[a-z]\d{1,2}){2,}[+a-z]?)$/);
 
 export const ClientMessage = z.discriminatedUnion('type', [
   z.object({ type: z.literal('move'), uci: UCI, ply: z.number().int().min(0) }),

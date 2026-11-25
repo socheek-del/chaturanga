@@ -56,3 +56,7 @@ Position parsing, move generation, captures, replay, and undo are deterministic 
 The package has no DOM, network, timers, or ambient randomness. Source wording, modern summaries,
 tables, illustrations, and scans are not shipped; product copy and visual assets are authored
 independently.
+
+The compact canonical position format starts with `r1.` and contains sorted occupied-square records,
+side to move, plies since capture, and the two value-specific reserve lists. Start positions stay under
+the online protocol's 200-character start-FEN limit.

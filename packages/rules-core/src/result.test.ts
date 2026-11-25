@@ -31,6 +31,10 @@ describe('resultFromStatus', () => {
   it('reports elimination with the winning side', () => {
     expect(resultFromStatus({ kind: 'elimination', winner: 'w' })).toEqual({ winner: 'w', reason: 'elimination' });
   });
+
+  it('reports a completed formation or progression with the winning side', () => {
+    expect(resultFromStatus({ kind: 'progression', winner: 'b' })).toEqual({ winner: 'b', reason: 'progression' });
+  });
 });
 
 it.each(['repetition', 'fifty-move', 'bikjang', 'double-pass'] as const)('%s names the winner when points decide it, as in Janggi', (kind) => {
@@ -42,7 +46,7 @@ describe('isUndoableResult', () => {
     expect(isUndoableResult(null)).toBe(true);
   });
 
-  it.each(['checkmate', 'stalemate', 'repetition', 'counting', 'fifty-move', 'insufficient-material', 'perpetual-check', 'perpetual-chase'] as const)(
+  it.each(['checkmate', 'stalemate', 'repetition', 'counting', 'fifty-move', 'insufficient-material', 'perpetual-check', 'perpetual-chase', 'progression'] as const)(
     'allows takeback after the position-based ending %s',
     (reason) => {
       expect(isUndoableResult({ winner: 'w', reason })).toBe(true);
@@ -65,6 +69,7 @@ describe('isUndoableResult', () => {
       'insufficient-material',
       'bare-king',
       'goal-square',
+      'progression',
       'elimination',
       'perpetual-check',
       'perpetual-chase',

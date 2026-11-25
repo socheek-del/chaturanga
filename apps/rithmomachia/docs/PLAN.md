@@ -63,7 +63,7 @@ modern-source text, tables, illustrations, or library scans.
 2. [x] Check in the exact 8×16 setup fixture and source-backed value tests.
 3. [x] Implement the pure Variant, including captures, reserve pieces, composite pyramids, victory,
    deterministic serialization, replay, undo, and conformance.
-4. [ ] Add bounded bots and position-level tests.
+4. [x] Add bounded bots for both colors and position-level tests.
 5. [ ] Write the product design brief before UI implementation.
 6. [ ] Build the interactive tutorial and independent offline-capable PWA; verify English keys.
 7. [ ] Add isolated private rooms and the server-side rules engine.
@@ -79,7 +79,10 @@ modern-source text, tables, illustrations, or library scans.
   deterministic string (the start position is below the protocol's 200-character start-FEN limit).
 - Shared Variant conformance and focused engine checks passed. Full `npm run verify` passed under
   Node 25.9 with `NODE_OPTIONS=--no-experimental-webstorage` and loopback permission.
-- Next: add deterministic bounded bots for both colors, then write the product design brief before UI work.
+- `@chaturanga/rithmomachia-ai` supplies six fixed-node-budget personas. Its 16 checks cover all bots
+  as both colors, progression wins, captures, deterministic choices, action-string preservation, and
+  position restoration after search.
+- Next: write the product design brief before UI work, then build the interactive tutorial and PWA.
 
 ## Sources
 

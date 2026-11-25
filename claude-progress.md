@@ -1474,3 +1474,9 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 - All 16 bot tests passed: all six levels return legal moves as White and Black; the search finds immediate elimination and the mandatory maximum-capture route; full line routes survive ID encoding; seeded choices repeat; node limits are bounded; supplied live games are restored after search; terminal positions return null. Package typecheck and ESLint passed.
 - Updated `package-lock.json` and reinstalled workspace links offline. Full workspace `npm run verify` passed under Node 25 with `NODE_OPTIONS=--no-experimental-webstorage` and loopback enabled for the Cloudflare Worker test pools. No Actions run appeared for rules commit `c80e49b80f9bf7369ec73569b5860ec3a617942a`; the bot push will trigger the next exact-SHA full CI run for both increments.
 - Next read `frontend-design`, create the product's original design brief and comprehensive interactive tutorial, then build the PWA/local saves/offline install and isolated online Worker for Melon. Public branding still waits on trademark review.
+
+### Session 073 (Dameo product design)
+
+- Read the `frontend-design` skill before UI work and wrote `apps/dameo/docs/design.md` as the original route-atlas direction: paper/ink/copper palette, locally available typography, custom carved-token art, clear route states, responsive board-first screens, accessibility and reduced-motion requirements.
+- Recorded the design checkpoint in the product plan, feature evidence, quality grade, clean checklist and session handoff. No product UI has been added yet.
+- Next implement the complete interactive tutorial using the shared lesson player and the source-derived Dameo Variant. It must exercise men, line shifts, king range, compulsory/global-maximum capture, delayed blockers/Coup Turc, back-rank timing, blockage, repetition and the mutually agreed-draw convention.

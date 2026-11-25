@@ -3216,9 +3216,11 @@
         "2026-11-25: Selected Petrov's historical Russian four-player edition because the Wikipedia entry identifies it and Markov identifies Petrov's first-hand descriptions as the strongest rules source. No evidence establishes a most-popular edition.",
         "2026-11-25: Research report, product plan and digital rules contract created under apps/fortress/ and packages/fortress/RULES.md. Original Petrov scans were not directly accessible; unresolved stalemate and special cases are called out as explicit reconstruction choices.",
         "2026-11-25: The pure rules package passed typecheck and 23 tests, including shared Variant conformance, 192-cell geometry, all three published wall-end diagonal examples, four-seat reserve setup, correct en passant, axis castling, checkmate elimination, team victory, and seeded replay/undo. The shared conformance helper now handles arbitrary first seats and alternating setup turns.",
-        "2026-11-25: The new team-aware Fortress bot passed typecheck and 4 tests, including legal setup, bounded fallback, and a legal turn from each of the four seats. Product UI, tutorial, four-seat online rooms, full workspace verification, and Melon staging remain unfinished."
+        "2026-11-25: The team-aware Fortress bot passed typecheck and 4 tests, including legal setup, bounded fallback, and a legal turn from each seat. The English PWA, 12-step interactive tutorial, saved local/pass-and-play modes, four-seat authoritative Worker and isolated D1 archive are implemented.",
+        "2026-11-25: `./init.sh` completed under Node 22.23.1 and full `npm run verify` passed. Fortress rules 23/23, bot 4/4, tutorial 2/2 and Worker 4/4 passed; browser suite 9/9 and production-preview PWA install/offline checks 2/2 passed.",
+        "2026-11-25: Python Playwright visual review covered the home and live board at 390px and 1440px. The 192-cell board fits the phone viewport, the complete tutorial succeeds at both widths, and Chromium reports no PWA installability errors. Melon stage and restart/restore smoke remain."
       ],
-      "notes": "Four seats: top Red, right Blue, bottom White, left Black; Red+White vs Blue+Black. The English tutorial must label the selected stalemate and reserve-placement conventions as digital choices, not recovered historical rules. Use original prose and artwork. Melon is the target; public hostname is fortress.beanroti.com."
+      "notes": "Four seats: top Red, right Blue, bottom White, left Black; Red+White vs Blue+Black. The tutorial labels stalemate and reserve-placement conventions as digital choices, not recovered historical rules. Use original prose and artwork. Melon is the target; public hostname is fortress.beanroti.com."
     }
   ]
 }

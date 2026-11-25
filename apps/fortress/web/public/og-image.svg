@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#18201f"/>
+  <path d="M0 490H1200" stroke="#34403a" stroke-width="2"/>
+  <g opacity=".17" stroke="#d1b789">
+    <path d="M600 40v550M40 315h1120M210 80l780 470M990 80 210 550"/>
+    <circle cx="600" cy="315" r="205" fill="none"/>
+    <circle cx="600" cy="315" r="150" fill="none"/>
+  </g>
+  <g transform="translate(790 148)" fill="none" stroke="#d1b789" stroke-width="8">
+    <path d="M15 180h290M40 180V70l48 34 72-88 72 88 48-34v110M25 45h55m75-64h60m75 64h50"/>
+    <path d="M91 117h138M91 148h138" stroke="#b64431" stroke-width="6"/>
+  </g>
+  <text x="94" y="250" fill="#e8dfcc" font-family="Georgia,serif" font-size="76">Fortress Chess</text>
+  <text x="100" y="324" fill="#d1b789" font-family="Georgia,serif" font-size="29" letter-spacing="4">FOUR SEATS · TWO ALLIED PAIRS</text>
+  <text x="100" y="386" fill="#a9afa5" font-family="Arial,sans-serif" font-size="25">A 192-square Russian chess reconstruction</text>
+</svg>

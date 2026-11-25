@@ -23,9 +23,9 @@ Digital reconstruction choices are explicit: top Red starts; the three reserves 
 
 1. Pure rules package: board mask, wall edges, FEN, 4-seat setup and turns, movement, check, elimination, endings, serialization, and Variant conformance. **Implemented and locally verified.**
 2. Bot package: bounded team-aware search with legal fallback; exercise a human against bots from all four seats. **Implemented and locally verified at the package boundary.**
-3. Product shell: own design, 16×16 board rendering, setup input, saves, pass-and-play, bot play, move history and accessible tutorials.
-4. Worker: four-seat invite rooms, authoritative rules validation, reconnect and isolated database.
-5. CI/build and browser verification; stage exact passing SHA on Melon, test PWA and four-seat rooms across restart, then public HTTPS/WebSocket smoke when `fortress.beanroti.com` resolves.
+3. Product shell: own design, 16×16 board rendering, setup input, saves, pass-and-play, bot play, move history and accessible tutorials. **Implemented and verified in Chromium at phone and desktop sizes.**
+4. Worker: four-seat invite rooms, authoritative rules validation, reconnect and isolated database. **Implemented; unit tests and four-client browser play pass.**
+5. CI/build and browser verification; stage exact passing SHA on Melon, test PWA and four-seat rooms across restart, then public HTTPS/WebSocket smoke when the configured hostname resolves. **Local build, full workspace verification, tutorial/browser suite and offline PWA checks pass; Melon staging is next.**
 
 The shared alpha-beta search and room kit currently model two seats. Fortress uses its own team-aware Max-n bot and will follow the Three-player Chess product pattern for its four-seat worker, with all accepted moves replayed through this package.
 

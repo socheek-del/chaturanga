@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS games (
+  id TEXT PRIMARY KEY,
+  moves TEXT NOT NULL,
+  winner TEXT,
+  result TEXT NOT NULL,
+  ended_at INTEGER NOT NULL
+);

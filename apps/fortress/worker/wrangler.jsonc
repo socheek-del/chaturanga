@@ -1,0 +1,25 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "fortress-chess",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-01",
+  "assets": {
+    "directory": "../web/dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*", "/ws/*"],
+  },
+  "observability": { "enabled": true },
+  "durable_objects": {
+    "bindings": [{ "name": "ROOMS", "class_name": "FortressRoom" }],
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["FortressRoom"] }],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "fortress",
+      "database_id": "15e1537f-2ab0-4456-a5a1-00a6cb8523ce",
+      "migrations_dir": "migrations",
+    },
+  ],
+}

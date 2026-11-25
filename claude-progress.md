@@ -1277,3 +1277,10 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 - Added `@chaturanga/fortress-ai`, a bounded deterministic Max-n search where Red/White and Blue/Black share utility. Its 4 tests cover setup, all four seats and an exhausted-node legal fallback. Package typecheck and tests pass.
 - Updated the shared conformance suite to use each variant's first declared seat and accept repeated turns while a setup-phase hand remains. The Fortress plan marks the engine and bot package steps complete.
 - Next build the standalone English PWA: custom 16×16 board, interactive tutorial, saves, human-seat selection against three bots and pass-and-play. The shared online kit is still two-seat, so use a Fortress-specific worker patterned on Three-player Chess and verify server-side legality. Melon deployment and public DNS remain ahead.
+
+### Session 045 (Fortress product)
+
+- Completed the standalone Fortress PWA, custom 192-cell board, four-seat pass-and-play and save/reload, human-seat selection against three bounded team bots, 12-step rules tutorial and private four-seat invite rooms. The Worker replays every move through `@chaturanga/fortress`, stores each room in its own Durable Object and archives finished games in an isolated D1.
+- Added a regression test for the Fortress WebSocket move schema after browser testing exposed that coordinate moves were rejected; setup/drop and ordinary/promoting moves now validate, while malformed inputs fail.
+- `./init.sh` ran with Node 22.23.1 and completed the full repository `npm run verify`. `npm run build:fortress` passed. Fortress rules passed 23/23, bot 4/4, tutorial 2/2 and Worker 4/4. Local Chromium passed 9/9 scenarios (all four human seats, local saves, full tutorial, 4-seat invite/reconnect); production-preview PWA checks passed 2/2 (installability and offline tutorial/local play).
+- Python Playwright screenshots reviewed the home and live board at 390px and 1440px. Next add the verified CI build, push the release increment, and stage its exact SHA on Melon. Keep the feature `in_progress` until room state survives stage restart/restore; public DNS is a separate release gate.

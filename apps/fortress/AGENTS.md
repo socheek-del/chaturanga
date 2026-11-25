@@ -20,4 +20,4 @@ This app implements the Petrov-described Russian four-player fortress game as an
 
 ## Verification
 
-Run `npm run verify` under the pinned Node in `.nvmrc`, product build and browser checks. Record evidence in `feature_list.json` and `claude-progress.md`; do not mark the feature passing before all required checks and Melon stage smoke have completed. Public DNS/TLS can remain a documented release blocker while a healthy exact-SHA stage is kept available.
+Run `./init.sh` and `npm run verify` under the pinned Node in `.nvmrc`, then `npm run build:fortress`, `npm run e2e -w apps/fortress/web`, and `npm run e2e:pwa -w apps/fortress/web`. The local Worker uses port 8794; the web app uses port 5194. Record evidence in `feature_list.json` and `claude-progress.md`; do not mark the feature passing before Melon restart/restore smoke has completed. Public DNS/TLS can remain a documented release blocker while a healthy exact-SHA stage is kept available.

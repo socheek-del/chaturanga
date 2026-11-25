@@ -1,0 +1,214 @@
+{
+  "brand": "Fortress Chess",
+  "family": { "title": "More games" },
+  "home": {
+    "eyebrow": "Russian four-handed chess · Petrov reconstruction",
+    "title": "Mind the\ninner walls.",
+    "description": "Four seats face a field of 192 squares. Place your reserve pieces, find a route through the gates, and work with the player across the board.",
+    "botPlay": "Play three bots",
+    "passPlay": "Pass and play",
+    "tutorial": "Learn the rules",
+    "online": "Invite friends",
+    "boardLabel": "Four corner forts, one shared board",
+    "mapRanks": "01 — 16",
+    "mapFiles": "a — p",
+    "mapFigure": "FIG. 01",
+    "mapCaption": "THE FOUR FORTRESSES",
+    "mapCellCount": "192 CELLS",
+    "ruleTitle": "A different kind of four-player chess",
+    "ruleBody": "Red and White share a team. Blue and Black share the other. A player who is checkmated leaves the game, but their partner can keep fighting.",
+    "boardFact": "192 playable squares",
+    "teamFact": "Two allied pairs",
+    "sourceNote": "This is an independently authored reconstruction of the Russian rules described by Alexander Petrov. A few unresolved endings are identified in the tutorial.",
+    "footer": "A chess family game"
+  },
+  "bot": {
+    "title": "Choose your seat",
+    "intro": "You play one seat. The other three seats are controlled by bounded team bots.",
+    "you": "{{player}} · You",
+    "bot": "{{player}} · Bot",
+    "thinking": "The bot is considering its move…",
+    "note": "One player · Three computer opponents",
+    "start": "Take this seat",
+    "again": "Choose a different seat"
+  },
+  "game": {
+    "wordmark": "FORTRESS",
+    "wordmarkSubtitle": "RUSSIAN FOUR-HANDED CHESS",
+    "turn": "{{player}} to move",
+    "check": "{{player}} is in check",
+    "yourTurn": "Your turn as {{player}}",
+    "botTurn": "{{player}} is thinking",
+    "localTurn": "{{player}} moves next",
+    "boardLabel": "Russian Fortress Chess board, files a through p and ranks 1 through 16",
+    "seats": "Four seats around the board",
+    "selectPiece": "Select one of your pieces, then choose a marked square.",
+    "selectReserve": "Choose a reserve piece, then place it in your right fortress.",
+    "moves": "Move record",
+    "emptyMoves": "The opening moves will appear here.",
+    "moveCount": "{{count}} moves",
+    "undo": "Take back",
+    "newGame": "New game",
+    "home": "Game home",
+    "tutorial": "Tutorial",
+    "confirmReset": "Start a new game and replace this saved position?",
+    "resultTeam": "{{team}} wins",
+    "draw": "Draw · a player has no safe move",
+    "ongoing": "The game continues",
+    "note": "Four corners. Two teams. The last pair with a king wins.",
+    "reserveTitle": "Fortress reserve",
+    "reservePieces": "Reserve pieces in hand",
+    "reserveRemaining": "{{count}} left to place",
+    "placed": "Placed",
+    "checkmate": "Checkmated",
+    "eliminated": "Eliminated",
+    "playing": "In the game",
+    "winner": "Team winner",
+    "promotion": "Choose a promotion",
+    "promoteTo": "Promote to {{piece}}",
+    "cancel": "Cancel",
+    "square": "{{square}}{{piece}}",
+    "logLabel": "Move record",
+    "moveRejected": "That move is no longer available. Select it again.",
+    "recordEyebrow": "The game so far",
+    "setupNote": "{{player}} places a reserve piece. Other players wait for the setup to finish.",
+    "status": {
+      "playing": "In play",
+      "check": "In check",
+      "eliminated": "Eliminated",
+      "winner": "Winning team"
+    }
+  },
+  "players": {
+    "r": "Red",
+    "b": "Blue",
+    "w": "White",
+    "k": "Black",
+    "teamRedWhite": "Red + White",
+    "teamBlueBlack": "Blue + Black",
+    "team0": "Red + White",
+    "team1": "Blue + Black",
+    "redSide": "Sunward team",
+    "blueSide": "Moonward team"
+  },
+  "pieces": {
+    "p": "pawn",
+    "n": "knight",
+    "b": "bishop",
+    "r": "rook",
+    "q": "queen",
+    "k": "king"
+  },
+  "mode": {
+    "local": "Pass-and-play",
+    "bot": "Play three bots",
+    "online": "Private room",
+    "back": "Back to home"
+  },
+  "online": {
+    "title": "Invite friends",
+    "intro": "Create a private room and share the link with three other players. Your seat is restored if you reconnect.",
+    "create": "Create a four-seat room",
+    "creating": "Preparing room…",
+    "join": "Join room",
+    "roomCode": "Six-letter room code",
+    "room": "Room {{code}}",
+    "invite": "Private invite link",
+    "copy": "Copy link",
+    "copied": "Copied",
+    "copyFailed": "Select the invite link and copy it.",
+    "you": "You",
+    "seats": "Four seats",
+    "presence": { "empty": "Open seat", "online": "Connected", "offline": "Disconnected" },
+    "back": "Back to rooms",
+    "connecting": "Connecting…",
+    "reconnecting": "Reconnecting…",
+    "full": "All four seats are taken.",
+    "notFound": "Room not found.",
+    "waiting": "Waiting for all four players",
+    "invalid": "Enter a six-letter room code.",
+    "unavailable": "The room service is unavailable.",
+    "errors": {
+      "bad-message": "The move could not be read.",
+      "room-full": "This room is full.",
+      "waiting": "Wait until all four seats are filled.",
+      "finished": "The game has ended.",
+      "wrong-turn": "It is not your turn.",
+      "stale": "The board changed. Try the move again.",
+      "illegal-move": "That move is not legal."
+    }
+  },
+  "tutorial": {
+    "eyebrow": "A guided game",
+    "title": "Learn the fortress board",
+    "progress": "Lesson {{step}} of {{count}}",
+    "chooseAnswer": "Choose an answer",
+    "check": "Check answer",
+    "next": "Continue",
+    "correct": "That is right. The board has changed to show the result.",
+    "wrong": "That is not the lesson move. Try another choice.",
+    "completeEyebrow": "Ready to play",
+    "complete": "You know your way around the walls.",
+    "summary": "You have practiced the four-seat opening, fortress setup, special moves, checkmate and the selected draw rule.",
+    "finish": "Back to the game",
+    "choices": { "draw": "The game is drawn", "pass": "The turn passes", "win": "The stuck player wins" },
+    "steps": {
+      "welcome": {
+        "title": "Four seats, one board",
+        "body": "This version follows Alexander Petrov's Russian four-player description. It is an independent reconstruction; it does not reproduce historical board art or text."
+      },
+      "board": {
+        "title": "Read the 192 squares",
+        "body": "The board is a 12-by-12 central field joined to four corner fortresses. Each fort has two short walls and a gate route. A move cannot cross a wall or cut diagonally around a wall end."
+      },
+      "teams": {
+        "title": "Find your partner",
+        "body": "Turns move clockwise: Red at the top, Blue at the right, White at the bottom, then Black at the left. Red and White are partners; Blue and Black are partners."
+      },
+      "reserve": {
+        "title": "Place your reserve",
+        "body": "Each player places an extra bishop, knight and rook in distinct squares of the fortress on their right. Red begins. Select the bishop, then place it at a13."
+      },
+      "turns": {
+        "title": "Pawns face inward",
+        "body": "Each seat moves its pawns toward the centre. A pawn may advance two squares on its first move when both are clear. Red's pawn can move from e13 to e11; then Blue gets a turn."
+      },
+      "pieces": {
+        "title": "Use ordinary chess moves",
+        "body": "Rooks follow ranks and files; bishops follow diagonals; queens combine them. Kings step one square. Knights take one orthogonal step and one diagonal step in either order, while jumping pieces but respecting walls."
+      },
+      "walls": {
+        "title": "A wall blocks every route",
+        "body": "The raised wall is part of the rules. For example, a bishop cannot take the diagonal from n2 to m3, and cannot cut past the ends at n4–m5 or m4–n5. A gate is the open route around the inner wall."
+      },
+      "enPassant": {
+        "title": "Capture the two-square move",
+        "body": "A pawn may capture en passant only on the very next seat's turn after an opposing pawn advances two squares. Blue's pawn on f11 can take Red's pawn on e11 by moving to e12."
+      },
+      "castling": {
+        "title": "Castle along your rank",
+        "body": "The king moves two squares toward an unmoved rook and the rook crosses to the square beside it. The route must be clear, avoid walls, and keep the king out of check along the way."
+      },
+      "promotion": {
+        "title": "Promote on a home rank",
+        "body": "A pawn that reaches an ordinary home rank of another seat promotes to a queen, rook, bishop or knight. Promotion inside a fortress is left out because the surviving descriptions do not settle it."
+      },
+      "checkmate": {
+        "title": "Checkmate removes a seat",
+        "body": "A move must keep its own king safe; it does not have to protect its partner's king. At the start of a turn, a checked player with no escape is checkmated and all of their pieces leave the board. A team wins after both opposing seats are gone."
+      },
+      "stalemate": {
+        "title": "A safe king with no move",
+        "body": "The historical stalemate outcome is uncertain. This digital edition chooses an immediate draw when a player has no legal move and is not in check. Which result does this edition use?"
+      }
+    }
+  },
+  "rules": {
+    "title": "How Fortress Chess works",
+    "board": "A 192-square board with a central field and four corner forts. Walls block lines and the forbidden diagonal shortcuts around wall ends.",
+    "teams": "Red and White are allied against Blue and Black. Turns move clockwise from Red.",
+    "setup": "Place a bishop, knight and rook in distinct cells of your right-hand fortress before ordinary moves begin.",
+    "endings": "Checkmate removes one seat. A team wins after both opposing seats are removed. This edition treats stalemate as a draw.",
+    "source": "Petrov's surviving rules are the historical basis. Stalemate, reserve placement and some special-move details are labeled digital choices."
+  }
+}

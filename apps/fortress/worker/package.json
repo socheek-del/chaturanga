@@ -1,0 +1,26 @@
+{
+  "name": "@chaturanga/fortress-worker",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "GPL-3.0-or-later",
+  "scripts": {
+    "dev": "mkdir -p ../web/dist && wrangler d1 migrations apply fortress --local && wrangler dev --port 8794 --var AUTH_SECRET:fortress-local-development-only",
+    "build": "wrangler deploy --dry-run --outdir dist",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@cloudflare/workers-types": "^5.20260911.1",
+    "@chaturanga/fortress": "*",
+    "@chaturanga/protocol": "*",
+    "@chaturanga/rules-core": "*",
+    "@chaturanga/server-kit": "*",
+    "hono": "^4.13.7",
+    "zod": "^4.6.4"
+  },
+  "devDependencies": {
+    "wrangler": "^4.131.1"
+  }
+}

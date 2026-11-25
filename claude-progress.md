@@ -1595,3 +1595,10 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 - Added 16 checks covering every bot as both White and Black, legal action output, immediate great victory, a winning capture, value-specific drop UCI, reproducible choices, position identity, and live-game restoration after search.
 - Full `NODE_OPTIONS=--no-experimental-webstorage npm run verify` passed again with the AI workspace included: ESLint, all workspace typechecks, and all package/app tests. The first AI verification attempt failed before loading because npm's package-only lock sync did not create the ignored workspace symlink; `npm install --ignore-scripts --offline` linked it successfully without registry access.
 - `feature_list.json`, `session-handoff.md`, quality grades and the Rith plan now record the verified bot milestone. Next: write the design brief before UI implementation, then build the tutorial/PWA, private service, and Melon stage.
+
+### Session 087 (Rithmomachia product design)
+
+- Wrote `apps/rithmomachia/docs/design.md` before UI implementation. The Number Cabinet direction defines the responsive 8×16 board, original patterned tokens, readable numeric faces, progression trace, explicit pyramid-component choice, tutorial coverage, accessibility, and standalone offline PWA constraints.
+- Verified Literata and IBM Plex upstream font notices use SIL Open Font License 1.1 and linked those notices from the brief. Font assets will be self-hosted with their notices during the web implementation.
+- Updated the product plan, feature evidence, quality snapshot and session handoff. No design review or public name approval is claimed; the product name remains provisional.
+- Next: implement the interactive tutorial and local/offline product. Then add private online rooms and deploy a pinned stage on Melon. The app-directory/public route remain gated on domain and brand review.

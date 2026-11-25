@@ -64,7 +64,7 @@ modern-source text, tables, illustrations, or library scans.
 3. [x] Implement the pure Variant, including captures, reserve pieces, composite pyramids, victory,
    deterministic serialization, replay, undo, and conformance.
 4. [x] Add bounded bots for both colors and position-level tests.
-5. [ ] Write the product design brief before UI implementation.
+5. [x] Write the product design brief before UI implementation (`docs/design.md`, proposal).
 6. [ ] Build the interactive tutorial and independent offline-capable PWA; verify English keys.
 7. [ ] Add isolated private rooms and the server-side rules engine.
 8. [ ] Pass workspace verification, exact-SHA CI, Melon stage, offline, room/restart/restore, and
@@ -82,7 +82,17 @@ modern-source text, tables, illustrations, or library scans.
 - `@chaturanga/rithmomachia-ai` supplies six fixed-node-budget personas. Its 16 checks cover all bots
   as both colors, progression wins, captures, deterministic choices, action-string preservation, and
   position restoration after search.
-- Next: write the product design brief before UI work, then build the interactive tutorial and PWA.
+- Next: build the interactive tutorial and PWA from the design brief; add the private Worker service after local play is complete.
+
+## Product design proposal (2026-11-26)
+
+- `docs/design.md` sets the “Number Cabinet” direction: a modern arithmetic instrument with a tall 8×16 field,
+  high-visibility values, patterned original tokens, and a progression trace. It includes responsive layouts,
+  explicit pyramid capture choices, tutorial coverage, accessibility, and offline/service constraints.
+- The proposal is written before UI implementation. Keep the product name provisional until the separate name
+  review; no public domain or catalog entry is authorized by this design brief.
+- Next: implement the interactive tutorial and PWA from this brief, then verify 390px/1280px light/dark layouts
+  before proceeding to rooms.
 
 ## Sources
 

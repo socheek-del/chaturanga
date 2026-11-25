@@ -14,7 +14,8 @@
 - [x] Select canonical 8×8 Dameo with 18 men per side as the best-documented form; state that available evidence does not prove a popularity winner.
 - [x] Pin movement, compulsory maximum captures, delayed capture removal, Coup Turc, promotion, no-move loss and explicit draw conventions in the product plan and `packages/dameo/RULES.md`.
 - [x] Encode and test the exact 8×8 setup and coordinate convention: all 64 squares, both 18-man trapezoids, mirroring, empty center and invalid coordinates; 5 tests, package typecheck and lint passed.
-- [ ] Implement and verify the pure Dameo movement/capture engine before bot or UI work.
+- [x] Implement the pure Dameo Variant. `npm test -w packages/dameo` passed 36/36 including shared conformance and five seeded 120-ply games; package typecheck and ESLint passed. Fixtures cover line shifts, maximum capture, delayed-removal blocking, route revisits, promotion, endings, replay/undo and attack maps. No Fairy-Stockfish oracle is available.
+- [ ] Add bounded bots and build an interactive tutorial that teaches every selected rule.
 
 - [x] Fortress's exact code revision passed GitHub `npm run verify` and all workspace builds. Crazyhouse startup `npm run verify` also passed locally under Node 22.23.1 when run outside the sandbox so Worker tests could bind loopback ports; `./init.sh` could not sync uncached npm@11 in offline mode.
 - [x] Fortress rules tests passed 23/23, bots 4/4, tutorial 2/2 and Worker room/schema checks 4/4; local browser and PWA checks passed before staging.

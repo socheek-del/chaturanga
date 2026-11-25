@@ -62,8 +62,12 @@ DNS/TLS and HTTPS/WebSocket checks.
 3. [x] Encode the exact board setup and coordinate convention before move generation. The `@chaturanga/dameo`
    layout fixture covers all 64 squares, both 18-man trapezoids, mirroring, spacing and invalid coordinates;
    all 5 layout tests, package typecheck and lint passed.
-4. [ ] Implement `@chaturanga/dameo` as a pure 8×8 `Variant`, including line moves, compulsory maximum
+4. [x] Implement `@chaturanga/dameo` as a pure 8×8 `Variant`, including line moves, compulsory maximum
    capture routes, delayed capture removal, Coup Turc, promotion, endings, serialization and replay/undo.
+   `npm test -w packages/dameo` passed 36/36, including shared conformance with five seeded 120-ply games,
+   route/line fixtures, blocked repeated captures, promotion timing, status, replay/undo and attack maps;
+   package typecheck and ESLint passed. No compatible Fairy-Stockfish Dameo preset is available, so the
+   engine uses source-derived fixtures rather than claiming an external move oracle.
 5. [ ] Add bounded bots for both roles and validate every selected rule through an interactive tutorial.
 6. [ ] Ship the independent PWA with responsive play, local saves, offline install and complete locale keys.
 7. [ ] Add isolated server-authoritative private rooms/quick match and verify reconnect and rule validation.

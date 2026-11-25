@@ -1460,3 +1460,10 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 - Added the `@chaturanga/dameo` package scaffold and machine-readable standard setup: all 64 squares, White/Black 18-man 8+6+4 trapezoids, vertical symmetry and `a1`-origin square naming.
 - The five layout tests assert every setup coordinate, side counts, non-overlap, mirror mapping, empty middle ranks and invalid coordinates. Focused tests passed 5/5; package typecheck and ESLint passed. The workspace lockfile now recognizes the new package.
 - Updated the plan, feature evidence and clean-state checklist. Next implement move generation, starting with line moves and compulsory maximum-capture route enumeration; keep complete capture turns serializable as one legal move.
+
+### Session 071 (Dameo rules engine)
+
+- Implemented `@chaturanga/dameo` as a pure 8×8 `Variant` with canonical FEN, men/line movement, queenwise kings, compulsory global maximum capture, multi-capture routes, delayed captured-piece removal/blocking, no repeated capture, empty-square revisiting, end-of-turn promotion, elimination/no-move/threefold outcomes, history, replay and undo.
+- Added source-derived fixtures for starting counts, FEN rejection/round-trip, each movement class, line promotion, mandatory/global maximum capture, long king captures, delayed-removal blocking, passing the back rank, termination, repetition and attack-map semantics. The attack map marks occupied targets, including defended friendly pieces, in keeping with the shared interface.
+- `npm test -w packages/dameo` passed 36/36 (two test files, including shared Variant conformance and five seeded 120-ply games); `npm run typecheck -w packages/dameo` and `npx eslint packages/dameo` passed. No compatible Fairy-Stockfish Dameo preset is available, so there is no external move oracle.
+- The product-layer mutual-agreement draw action remains for app/online integration. Next add bounded bots for both sides, then read the frontend-design skill before designing the independent English PWA and interactive lessons.

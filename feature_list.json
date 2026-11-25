@@ -3350,9 +3350,11 @@
       ],
       "evidence": [
         "2026-11-25: Selected as the next ready Wave 1 product after Jeson Mor in docs/CHESS-LIKE-ROADMAP.md. The user requires one selected variant, an interactive tutorial, bots, applicable multiplayer and Melon deployment.",
-        "2026-11-25: Rules, provenance and rights research is in progress under apps/suffragetto/docs/research_notes/Suffragetto rules and rights/. No game engine or product code has been started."
+        "2026-11-25: Completed three research tracks and the synthesis report at apps/suffragetto/docs/reports/Suffragetto rules and rights.md, with source notes under apps/suffragetto/docs/research_notes/Suffragetto rules and rights/. Select the surviving WSPU/Sargeant Bros. second-edition two-player rules as the best-documented form; the evidence does not prove a statistically most-popular variant. WSPU/Sargeant provenance is documented, but the first-edition date conflicts (about 1907–08, c.1909, or a surviving copy catalogued 1917).",
+        "2026-11-25: Pinned the source-backed rules and scoped rights boundary in apps/suffragetto/docs/PLAN.md, packages/suffragetto/RULES.md and apps/suffragetto/AGENTS.md. The digital contract covers a 17×17 grid, 9×17 Arena, 21 pieces per side, chained 8-direction hops over either side, Arena/rank-specific captures, prisoner exchanges and six-cell opposing-goal victory. Digital conventions (first-player choice, immediate removal during a chain, exchange selection, threefold draw and no-move loss) are called out.",
+        "2026-11-25: Before engine implementation, extract and test the archival diagram's exact coordinate masks and S/P setup. The rules prose does not provide a full cell-coordinate map; goal/Arena membership and edge cases need explicit resolution."
       ],
-      "notes": "Active feature. Research the original published two-player game, compare later interpretations, and record the rights scope in game-local docs before implementing code. Jeson Mor remains staged and available on Melon; its public route is separately blocked by missing DNS."
+      "notes": "Active feature. The original two-player second-edition rules are selected and the report, scoped rights review, plan, rules contract and local AGENTS file are recorded. Next derive an exact 17×17 playable/zone/setup map from the archival board without reusing its image, lock the remaining implementation conventions in fixtures, then implement the pure engine. No Suffragetto game code exists yet. Jeson Mor remains staged on Melon; its public route is separately blocked by missing DNS."
     }
   ]
 }

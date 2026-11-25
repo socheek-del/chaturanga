@@ -1404,5 +1404,6 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 
 ### Session 063 (Suffragetto source and rights research)
 
-- Started the next Wave 1 feature, `suffragetto-001`, after Jeson Mor's Melon stage was verified. The roadmap selects the original published two-player rules. Research is split across primary rules/provenance, edition interpretations/popularity evidence, and rights scope.
-- Research notes are being collected in `apps/suffragetto/docs/research_notes/Suffragetto rules and rights/`. Next synthesize the report under the product's docs, pin source-backed rules and unresolved conventions in its plan/rules contract, and only then begin engine implementation. No Suffragetto game code has been written.
+- Started the next Wave 1 feature, `suffragetto-001`, after Jeson Mor's Melon stage was verified. Completed parallel research on the original rules/provenance, later interpretations/popularity evidence, and rights scope; the report is `apps/suffragetto/docs/reports/Suffragetto rules and rights.md` with notes beside it.
+- Selected the surviving WSPU/Sargeant Bros. second-edition two-player form as the best-documented default, not a statistically proven popularity winner. The date record conflicts (circa 1907–08, c.1909, and a surviving second edition catalogued 1917). Authored rules, art and brand will be original; source scans/prose are not product assets and the rights note is not worldwide clearance.
+- Recorded the rules/rights boundary in the plan, Variant contract and local AGENTS instructions. No game code has been written. Before the engine, derive and test the full 17×17 zone and S/P setup coordinate map from the archival board, then resolve goal/Arena membership and chain/exchange conventions in fixtures.

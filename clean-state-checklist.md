@@ -52,4 +52,6 @@
 - [x] Stage Jeson Mor on Melon at port 19915 in `/home/melon/chaturanga-release.jesonmor.s1Jcyr`; the isolated migration, health endpoint and homepage passed.
 - [x] Built-stage browser smoke passed 6/6; the active two-seat room continued after container restart and after a copied-state restore. Temporary restore resources were removed, and the primary stage is healthy.
 - [x] `jesonmor.beanroti.com` has no A or AAAA record. Public HTTPS/WSS smoke, Caddy promotion and app-directory publication are blocked; no public route or catalog entry changed. Keep the Melon stage running.
-- [x] Begin the next Wave 1 product, Suffragetto. Its research notes are in `apps/suffragetto/docs/research_notes/Suffragetto rules and rights/`; record original rules and rights before engine implementation.
+- [x] Complete Suffragetto rules, editions and rights research; report and source notes are in `apps/suffragetto/docs/`.
+- [x] Record the selected second-edition rules, source/date limits and authored-content boundary in `apps/suffragetto/docs/PLAN.md`, `apps/suffragetto/AGENTS.md` and `packages/suffragetto/RULES.md`.
+- [ ] Before engine work, encode and verify the 17×17 board zone and S/P setup coordinates from the archival board, then commit the board-layout fixture and unresolved conventions.

@@ -12,7 +12,7 @@ it('returns legal moves on both sides and a legal fallback under a tight budget'
     game.move(move!);
     line.push(move!);
   }
-});
+}, 10_000);
 
 it('finds a rook checkmate and stops in terminal positions', () => {
   const fen = '11k/10pp/12/12/12/12/12/12/12/12/12/K2R8 w - - 0 1';

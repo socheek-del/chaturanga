@@ -21,8 +21,8 @@ test('Shogi links to every sibling game at its configured address, in the site l
   await expect(section.getByRole('heading')).toHaveText('ほかのゲーム');
   for (const site of siblings) {
     const name = site.names[HOME]!;
-    await expect(section.getByRole('link', { name })).toHaveAttribute('href', href(site, HOME));
-    await expect(page.getByTestId('family-footer').getByRole('link', { name })).toHaveAttribute('href', href(site, HOME));
+    await expect(section.getByRole('link', { name, exact: true })).toHaveAttribute('href', href(site, HOME));
+    await expect(page.getByTestId('family-footer').getByRole('link', { name, exact: true })).toHaveAttribute('href', href(site, HOME));
   }
 
   // The footer is on every page, not only the home page.
@@ -30,7 +30,7 @@ test('Shogi links to every sibling game at its configured address, in the site l
   const footer = page.getByTestId('family-footer');
   await expect(footer).toContainText('More games');
   for (const site of siblings) {
-    await expect(footer.getByRole('link', { name: site.names[OTHER]! })).toHaveAttribute('href', href(site, OTHER));
+    await expect(footer.getByRole('link', { name: site.names[OTHER]!, exact: true })).toHaveAttribute('href', href(site, OTHER));
   }
 
   // Only the siblings' names cross over: one link each, none back to this site, and no name in a language

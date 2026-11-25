@@ -29,5 +29,11 @@
 - [x] `@chaturanga/congo` typecheck and 31 rules/conformance tests passed; full repository `npm run verify` passed. Package lock updated.
 - [x] Implement the standalone Congo PWA, eight-step interactive tutorial, six bot levels, local save/reload/takeback, and Congo-only server-authoritative rooms/quick match. Web 35/35, Worker 9/9, protocol 6/6, Playwright 5/5 and offline PWA 1/1 passed.
 - [x] `npm run build:congo` and full `npm run verify` passed under Node 22.23.1.
-- [ ] Commit Congo, confirm exact-SHA GitHub CI, stage on Melon, and verify online smoke/restart/copied-state restore; publish only after public DNS/TLS smoke.
+- [x] Commit runtime SHA `77cfac9949333c2f075e84c0f2ec185601366e3d`; exact-SHA GitHub CI run `45590944839` passed its verify/build matrix.
+- [x] Stage Congo on Melon at port 19913 in `/home/melon/chaturanga-release.congo.yFqc4U`; its D1 migration, health and homepage passed.
+- [x] Built-stage browser smoke passed tutorial/bot/mobile/invite/move-sync/reconnect 5/5 and installed offline PWA 1/1. Online scenario waits for both WebSockets to open before moves.
+- [x] Active room recovered both seats through container restart and continued; copied stopped-state restore recovered both seats and continued online play. Removed temporary restore resources and left primary stage healthy.
+- [x] `congo.beanroti.com` has no DNS answer. Public HTTPS/WSS, Caddy promotion and catalog publication are blocked; no public route or catalog entry was changed.
+- [x] Update feature evidence, plan, progress, rubric, quality and handoff state; keep the Congo stage running.
+- [ ] Research Jeson Mor rules and rights as the next Wave 1 product before implementation.
 - [x] Congo bot package typecheck/lint and 3 tests passed for both colors, terminal Lion capture, Monkey route and river positions.

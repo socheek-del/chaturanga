@@ -19,7 +19,7 @@ Use Demian Freeling's 1982 two-player 7×7 Congo chess variant, not the similarl
 3. [x] Added six bounded deterministic bot levels on ai-core; verified legal choices as both players, a direct Lion capture, Monkey routes and river-deadline positions (3 bot tests).
 4. [x] Built the independent English PWA with original river board and animal seals, eight interactive lessons, save/reload/takeback, pass-and-play, six bot levels and offline install. Web tests pass 35/35, Playwright 5/5, and offline PWA 1/1.
 5. [x] Added the Congo-only Durable Object/D1 Worker and private rooms/quick match. Worker tests pass 9/9, including illegal-move rejection, server-validated Monkey multi-capture, reconnect recovery, finished-game persistence and no chat. Shared protocol now accepts complete route notation.
-6. [ ] Pass exact-SHA CI, stage on Melon, and verify the production assets, tutorial, bots, rooms, restart and copied-state restore. Add the public route and directory entry only after DNS/TLS and HTTPS/WebSocket smoke.
+6. [x] Runtime commit `77cfac9949333c2f075e84c0f2ec185601366e3d` passed exact-SHA GitHub CI run `45590944839` and was staged on Melon. Production tutorial/bot/mobile/invite/reconnect smoke passed 5/5, offline install/reload passed 1/1, and an active room survived container restart and copied-state restore. Public route and directory entry wait for DNS/TLS and HTTPS/WebSocket smoke.
 
 ## Rules decisions
 
@@ -30,4 +30,6 @@ The package contract is [`packages/congo/RULES.md`](../../../packages/congo/RULE
 - Hostname: `congo.beanroti.com`, read from this product's `site.config.ts` setting.
 - Reserve local web/Worker ports `5196`/`8796` unless a later port inventory finds a conflict.
 - Deployment target: Melon via `ssh melon`. Keep a separate Workerd data directory and D1 for this product.
+- Stage: port `19913`, directory `/home/melon/chaturanga-release.congo.yFqc4U`, container `chaturanga-stage-congo-19913`; dedicated migration applied and primary stage restored to healthy/running after restart and copied-state verification.
+- Release status: `congo.beanroti.com` has no DNS answer. Keep the stage running; do not change Caddy or the family/catalog directory until DNS/TLS and public mode smoke pass.
 - Do not add Congo to the family catalog until the public route and product smoke pass.

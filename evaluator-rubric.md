@@ -174,3 +174,20 @@ Mark "n/a" for categories that do not apply to the feature.
 | Handoff readiness | 2 | Feature evidence, checklist, progress log and exact next release gate are recorded. |
 
 **Verdict:** Accept the Congo product and online-service increment locally. Keep the overall feature in progress until exact-SHA CI and Melon staging/recovery checks pass; public promotion and directory publication require DNS/TLS.
+
+## Congo Melon release checkpoint — 2026-11-25
+
+| Category | Score | Notes |
+| --- | ---: | --- |
+| Correctness | 2 | Built tutorial, bots and two-seat server play passed against the staged production build. |
+| Rules fidelity | 2 | Room moves are validated by the selected Congo Variant, including the Monkey route syntax covered by Worker tests. |
+| Verification | 2 | Exact runtime SHA passed CI; Melon browser smoke 5/5, offline PWA 1/1, restart recovery and copied-state restore passed. |
+| Scope discipline | 2 | The test-only follow-up waits for socket readiness; no runtime behavior changed after the pinned stage build. |
+| Localization | 2 | English copy remains complete through the declared locale. |
+| UX & design | 2 | Responsive tutorial, animal board and offline PWA verified on the staged build. |
+| Product separation | 2 | Congo remains on its isolated Worker, DO, D1 and stage directory. |
+| Reliability | 2 | A room continued after restart and after state was copied to an independent restore container. |
+| Maintainability | 2 | Exact SHA, CI run, stage path/port, verification and DNS blocker are recorded across handoff artifacts. |
+| Handoff readiness | 2 | Congo's public gate is isolated; Jeson Mor is the next active Wave 1 product. |
+
+**Verdict:** Accept the Congo Melon staging checkpoint. Keep `congo-001` blocked only at public DNS/TLS, HTTPS/WebSocket smoke and directory publication because `congo.beanroti.com` has no DNS answer. The stage remains running.

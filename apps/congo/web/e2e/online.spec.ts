@@ -30,6 +30,8 @@ test('invites a second player, synchronizes Congo moves, and reconnects', async 
   await friend.getByRole('button', { name: 'Join', exact: true }).click();
   await expect(host.getByRole('grid')).toHaveAttribute('data-orientation', 'w');
   await expect(friend.getByRole('grid')).toHaveAttribute('data-orientation', 'b');
+  await expect(host.getByTestId('connection-status')).toHaveCount(0);
+  await expect(friend.getByTestId('connection-status')).toHaveCount(0);
 
   await play(host, 'a2', 'a3');
   await expect(moveList(friend)).toHaveCount(1);

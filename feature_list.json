@@ -3267,7 +3267,7 @@
       "milestone": "M33",
       "title": "Release Congo",
       "user_visible_behavior": "Players learn the selected two-player Congo rules with an interactive tutorial and play against a bot, locally, or in a private online room.",
-      "status": "in_progress",
+      "status": "blocked",
       "verification": [
         "Research sources and rights; document the selected two-player rules, setup, river and drowning, animal movement, promotion, endings and open conventions before engine implementation.",
         "Implement a pure @chaturanga/congo Variant with focused rule tests, shared conformance, seeded replay and an external rules oracle where one matches the selected edition.",
@@ -3286,9 +3286,36 @@
         "2026-11-25: Added `@chaturanga/congo-ai` on ai-core with six deterministic, budgeted personas, Congo material/position evaluation, Monkey multi-capture ordering, Lion-win terminals, promotion, repetition and river-state identity. Typecheck/lint and 3 bot tests passed; each level returned legal choices for both colors and tests covered immediate Lion capture, Monkey and river positions, seeded choice, node caps and terminal no-move results.",
         "2026-11-25: Built the standalone English Congo PWA with original field-guide visual identity, animal seals, seven-by-seven river board, six bot levels, pass-and-play, local save/reload/takeback and eight interactive lessons. Web tests passed 35/35; Playwright passed 5/5 (tutorial, persistence, bot as Black, mobile overflow and online invite/reconnect); installed offline PWA smoke passed 1/1.",
         "2026-11-25: Added an isolated Congo Worker, Durable Object and D1 migration for private rooms and quick match. Worker tests passed 9/9, including authoritative rejection, a complete Monkey multi-capture route, reconnect recovery, finished-game persistence and no chat. Shared protocol tests passed 6/6 after adding route-move notation.",
-        "2026-11-25: `npm run build:congo` passed for the PWA and Workerd configuration. Full repository `npm run verify` passed under Node 22.23.1 (lint, typecheck and every workspace test). Next: commit, exact-SHA CI and Melon staging/restart/restore smoke; public DNS/TLS and catalog publication remain gated on the hostname."
+        "2026-11-25: `npm run build:congo` passed for the PWA and Workerd configuration. Full repository `npm run verify` passed under Node 22.23.1 (lint, typecheck and every workspace test). Next: commit, exact-SHA CI and Melon staging/restart/restore smoke; public DNS/TLS and catalog publication remain gated on the hostname.",
+        "2026-11-25: Exact runtime commit 77cfac9949333c2f075e84c0f2ec185601366e3d passed GitHub CI run 45590944839, including full npm run verify and the repository build matrix.",
+        "2026-11-25: Staged that revision on Melon at 127.0.0.1:19913 in /home/melon/chaturanga-release.congo.yFqc4U; the Congo-only D1 migration applied and the health endpoint and PWA homepage returned 200.",
+        "2026-11-25: Production build smoke on Melon passed 5/5 tutorial, bot, mobile-layout, invite, synchronized-move and reconnect scenarios, plus 1/1 installed offline reload. The room sync scenario now waits for both client WebSockets to be open before sending its move.",
+        "2026-11-25: Restarted the staged container with a live two-seat room; both seats recovered two plies and accepted another move. Copied the stopped stage state to a separate restore container on port 19914; both stored seat identities recovered and continued synchronized four-ply play. Removed the restore container and copy; the primary stage is running and healthy.",
+        "2026-11-25: congo.beanroti.com has no DNS answer. No Caddy route or catalog entry was changed. Marked the feature blocked only at public DNS/TLS, HTTPS/WSS smoke and directory publication; keep the Melon stage running."
       ],
-      "notes": "Roadmap default: Demian Freeling's original two-player Congo. Rules engine, six-level bounded bot, eight-lesson tutorial, standalone English PWA and authoritative private-room service are implemented and locally verified. Next exact-SHA CI and Melon stage/restart/restore smoke; publish a public route/catalog entry only after DNS/TLS works. No matching external engine oracle exists, so source-backed fixtures are used. Public deployment uses Melon; do not use Cloudflare without documenting a concrete Melon limitation."
+      "notes": "Roadmap default: Demian Freeling's original two-player Congo. Rules, bounded bot, eight-lesson interactive tutorial, independent English PWA, local persistence and authoritative private rooms are implemented. Runtime commit 77cfac9949333c2f075e84c0f2ec185601366e3d passed exact-SHA GitHub CI and Melon stage smoke, restart and copied-state restore. Public release is blocked because congo.beanroti.com has no DNS answer; do not change Caddy or the catalog until DNS/TLS and public HTTPS/WebSocket smoke work. No matching external engine oracle exists, so source-backed fixtures are used. Use Melon; do not use Cloudflare without documenting a concrete Melon limitation."
+    },
+    {
+      "id": "jesonmor-001",
+      "product": "jesonmor",
+      "priority": 183,
+      "area": "release",
+      "milestone": "M33",
+      "title": "Release Jeson Mor",
+      "user_visible_behavior": "Players learn the selected Jeson Mor rules and play against a bot or on one device, with private online play when supported by the selected edition.",
+      "status": "in_progress",
+      "verification": [
+        "Research source and rights; select the documented Mongolian knight-game edition and record its center-square victory sequence and any unresolved conventions before engine implementation.",
+        "Implement a pure @chaturanga/jesonmor Variant with focused rules, shared conformance, seeded replay and source-backed fixtures.",
+        "Ship an interactive tutorial that teaches and validates every selected rule; verify pass-and-play and bounded bots for both sides.",
+        "Ship an independent original PWA with install and offline behavior, responsive mobile play, locale completeness and its own product configuration.",
+        "Provide server-authoritative private rooms and isolated storage when applicable; verify legal moves, reconnect, restart and copied-state recovery.",
+        "Pass exact-SHA CI and Melon stage smoke. Publish a public route and app-directory entry only after DNS/TLS and HTTPS/WebSocket smoke pass."
+      ],
+      "evidence": [
+        "2026-11-25: Selected as the next Wave 1 product after Congo in docs/CHESS-LIKE-ROADMAP.md; rules, source rights and a product contract have not yet been researched or implemented."
+      ],
+      "notes": "Next roadmap entry: Jeson Mor. Start with primary and credible rules sources plus a rights review; independently author rules prose, tutorials, UI and art. The roadmap calls it a documented Mongolian knight game and requires verifying its center-square win sequence. Use Melon for deployment; do not use Cloudflare without a documented Melon limitation."
     }
   ]
 }

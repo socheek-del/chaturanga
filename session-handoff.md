@@ -10,7 +10,9 @@ Implement the [42-entry rollout](docs/CHESS-LIKE-ROADMAP.md) one product at a ti
 
 `dameo.beanroti.com` has no DNS answer, and trademark clearance remains open; public HTTPS/WSS, Caddy and directory publication are blocked. No route/catalog entry changed. The standard form is best-documented, not proven most popular; no compatible Fairy-Stockfish oracle is available. `./init.sh` still cannot fetch npm@11 because registry DNS returned ENOTFOUND; this checkout verified under Node 25.9 with `NODE_OPTIONS=--no-experimental-webstorage`.
 
-Active feature: `gess-001`. It is the next listed product after Dameo in Wave 1. Start with source, edition/popularity and rights research before creating an engine. Dameo is blocked only at its public promotion gate; keep its stage running while work continues.
+`gess-001` has a completed rules/edition/popularity/rights research record. The 1994 Archimedeans rules are the best-documented candidate, not a proven popularity winner. No digital adaptation license or written permission was found; the old text-repost permission is limited to the rules text. Gess is blocked before implementation pending written adaptation permission or an applicable license. No contact was sent. See `apps/gess/docs/PLAN.md` and its report. Keep the exact setup and no-move/repetition questions open until the rights gate clears.
+
+Active feature: `duell-001`, the next Wave 1 entry after Gess. Begin with primary rules, edition/popularity and rights research before implementing. Dameo remains staged on Melon at port 19917; public promotion waits on DNS and trademark review. Keep the stage running.
 
 `fortress-001` is implemented and verified on Melon at port 19911 from `fc5577d3a53e6c90a572457bb24750b3b0e34e52`. CI run 45552897158 passed; the built PWA, illegal-move rejection, four-seat reconnect, restart, copied-state restore and offline behavior all passed. Its feature status is `blocked` only at public DNS/HTTPS/WSS smoke because `fortress.beanroti.com` has no DNS record. Stage directory: `~/chaturanga-release.fortress.Gz3JGZ`.
 

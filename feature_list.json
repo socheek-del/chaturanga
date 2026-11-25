@@ -3432,7 +3432,7 @@
       "milestone": "M35",
       "title": "Release Gess",
       "user_visible_behavior": "Players learn the selected Gess rules through an interactive tutorial and play a complete game against a bot, locally, and in a private online room.",
-      "status": "in_progress",
+      "status": "blocked",
       "verification": [
         "Research primary rules, editions/popularity evidence and rights boundary; select one well-supported standard form and record setup, movement, captures, endings and unresolved conventions before engine work.",
         "Implement a pure @chaturanga/gess Variant with source-backed fixtures, shared conformance, deterministic replay/undo and focused coverage of all selected special rules.",
@@ -3443,9 +3443,35 @@
       ],
       "evidence": [
         "2026-11-26: Began as the next listed ready Wave 1 product after Dameo in docs/CHESS-LIKE-ROADMAP.md. Dameo remains staged on Melon and is blocked only at its public hostname/trademark gate.",
-        "2026-11-26: Research is the first active task. Do not implement an engine until rules, edition/popularity evidence, and rights boundary are recorded in the Gess product folders."
+        "2026-11-26: Research is the first active task. Do not implement an engine until rules, edition/popularity evidence, and rights boundary are recorded in the Gess product folders.",
+        "2026-11-26: Completed separate primary-rules, variant/adoption and rights research. Synthesis: apps/gess/docs/reports/Gess rules variants rights.md; source notes are in apps/gess/docs/research_notes/Gess rules variants rights/.",
+        "2026-11-26: Selected the 1994 Archimedeans rules as the best-documented candidate, not a proven most-popular version. Candidate: 18×18 board, 43 stones per side, 3×3 formation moves, collision captures and ring-pattern victory. Exact setup, center-only footprint conflict, no-move/repetition endings need resolution before engine design.",
+        "2026-11-26: No applicable license or written permission for a digital adaptation was found. The 1995 permission note is limited to reposting the rules text. Blocked before implementation under AGENTS.md pending written adaptation permission or an applicable license; no contact was sent."
       ],
-      "notes": "Active feature. Start with primary rules, variant/popularity and rights research. Then pin setup, formation movement, capture, ring victory, end conditions and any digital conventions in a product plan and RULES.md before implementation. Dameo remains staged on Melon at port 19917; its public promotion is blocked by absent DNS and pending trademark review."
+      "notes": "Blocked before engine/product implementation: no applicable license or written digital-adaptation permission was found. The 1995 text repost permission does not grant digital-game rights. Confirm the current rights holder and obtain written permission for the adaptation or establish an applicable license; no contact was sent. Candidate 1994 Archimedeans rules are best documented, not proven most popular. If the rights gate clears, settle exact setup, center-only footprint conflict, and no-move/repetition outcomes before engine work. Continue to the next ready roadmap game, Duell."
+    },
+    {
+      "id": "duell-001",
+      "product": "duell",
+      "priority": 187,
+      "area": "release",
+      "milestone": "M36",
+      "title": "Release Duell",
+      "user_visible_behavior": "Players learn the selected 1976 Duell rules through an interactive tutorial and play a complete game against a bot, locally, and in a private online room.",
+      "status": "in_progress",
+      "verification": [
+        "Research primary rules, editions/popularity evidence and rights boundary; select one well-supported form and record setup, movement, die-orientation state, rolls, captures, endings and unresolved conventions before engine work.",
+        "Implement a pure @chaturanga/duell Variant with source-backed fixtures, shared conformance, deterministic seeded rolls, replay/undo and focused coverage of selected rules.",
+        "Add bounded bots for both roles and an interactive tutorial that teaches and validates every selected rule; verify complete games and same-device play.",
+        "Ship an independent original PWA with responsive layout, saved play, install/offline behavior, complete locale keys and standalone site/service configuration.",
+        "Provide server-authoritative private rooms and isolated Melon storage; verify roll/action validation, seat privacy as applicable, reconnect, restart and copied-state restore.",
+        "Pass exact-SHA CI and Melon stage smoke. Publish a public route and directory entry only after DNS/TLS and HTTPS/WebSocket smoke pass."
+      ],
+      "evidence": [
+        "2026-11-26: Began as the next Wave 1 roadmap product after Gess. Gess is blocked before implementation pending digital-adaptation permission or an applicable license.",
+        "2026-11-26: Research is the active task. Do not implement until the 1976 edition, setup, die/movement semantics, endings, digital conventions and rights boundary are documented."
+      ],
+      "notes": "Active feature. Start with the 1976 edition, primary rules, variants/adoption and rights. Determine the exact setup, die orientation and roll/action sequence, movement, capture and endings before coding. Respect the rights gate for newly authored/published titles; no digital implementation before required permission or license is evidenced."
     }
   ]
 }

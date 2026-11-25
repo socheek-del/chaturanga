@@ -30,7 +30,14 @@
 - [x] Live room survived container restart; a stopped-state copy restored both seats and synchronized another legal move. Temporary restore state/container were removed; primary stage health passed.
 - [x] `dameo.beanroti.com` has no DNS answer and trademark clearance remains open. Public HTTPS/WSS, Caddy and catalog promotion remain blocked; no public route changed. Keep the verified stage running.
 - [x] Dameo release state and evidence are recorded in feature list, progress, handoff, product plan, quality notes and this checklist.
-- [ ] Continue with `gess-001` as the single active roadmap feature.
+- [x] Move the single active roadmap feature to `duell-001` after Gess's rights blocker was confirmed.
+
+### Gess
+
+- [x] Complete primary-rule, variant/adoption and rights research; synthesis and evidence notes are saved under `apps/gess/docs/`.
+- [x] Record the 1994 Archimedeans rules as the best-documented candidate without claiming it is most popular; list setup transcription, center-only footprint, no-move and repetition gaps.
+- [x] Mark Gess blocked before engine work because no applicable digital-adaptation license or written permission was found. The repost permission covers text republication only; no contact was sent.
+- [x] Advance the active feature to `duell-001`, the next Wave 1 entry. Start with rules, edition/popularity and rights research.
 
 - [x] Fortress's exact code revision passed GitHub `npm run verify` and all workspace builds. Crazyhouse startup `npm run verify` also passed locally under Node 22.23.1 when run outside the sandbox so Worker tests could bind loopback ports; `./init.sh` could not sync uncached npm@11 in offline mode.
 - [x] Fortress rules tests passed 23/23, bots 4/4, tutorial 2/2 and Worker room/schema checks 4/4; local browser and PWA checks passed before staging.

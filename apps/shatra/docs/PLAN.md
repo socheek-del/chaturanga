@@ -14,6 +14,6 @@
 - [x] Route-aware board input and shared route choice dialogs
 - [x] Product shell, bot, tutorial, pass-and-play, PWA, and invite rooms
 - [x] Build, lint, typecheck, unit and browser verification
-- [ ] Push verified increments to `main`; confirm CI
-- [ ] Stage on Melon, play and reconnect through two seats, restart, and restore the staged state
+- [x] Push verified increments to `main`; confirm CI
+- [x] Stage on Melon, play and reconnect through two seats, restart, and restore the staged state
 - [ ] Public HTTPS/WebSocket smoke and family catalog entry after DNS is ready

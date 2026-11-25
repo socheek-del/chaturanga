@@ -1253,10 +1253,12 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 - `shatra-001` remains active. Next: add `packages/shatra/RULES.md`, then implement and verify the engine before AI, tutorial, PWA, invite rooms and Melon stage.
 
 
-### Session 039 (Shatra product implementation)
+### Session 042 (Shatra product implementation)
 
 - Completed the independent Altai Shatra product: custom 62-field board and piece art, English PWA, human vs bot as either color, pass-and-play saves, a 16-step interactive tutorial, and isolated server-validated private rooms. Shared board input now retains multi-capture routes and offers a route choice; the lesson player uses the same route dialog.
 - Rules tests passed 24/24, AI 3/3, board-ui 45/45 and rules-core 38/38. Tutorial validation passed 16/16. Web and Worker typechecks passed; local Chromium passed 5/5. Production-preview PWA install/offline check passed 1/1. `npm run build:shatra` and full `npm run verify` passed under pinned Node 22.23.1.
 - Visual review covered desktop and phone. `./init.sh` initially could not reach npm registry (`ENOTFOUND registry.npmjs.org`); installed workspace dependencies were already available, and the full verification then passed locally.
 - Commit `5eeaa70` pushed to main. CI failed in the existing `packages/acedrex-ai/src/bot.test.ts` because a full eight-ply bot test took 5.24s on GitHub, just above Vitest’s default 5s limit. The targeted test passed locally; the hosted run terminated before completing its eight plies. Follow-up keeps every assertion and raises that test’s timeout to 10s for hosted runner variance; targeted test passed locally in 3.39s. Push this narrow CI fix and rerun the workflow before Melon staging.
-- Next after CI: stage the exact passing SHA on Melon port 19910, then verify HTTP assets, two-seat WebSocket play/reconnect, restart recovery and backup restore. DNS lookup for `shatra.beanroti.com` returned no record; public TLS and catalog publication wait for DNS readiness.
+- CI passed for `7907568` (run 45536274512). Staged the exact SHA on Melon port 19910 in `~/chaturanga-release.shatra.Vw0eEp`; migration applied and the origin returns healthy HTTP. All six built-PWA browser scenarios passed over SSH, including offline reload and two-seat online play.
+- Restarted the stage during an active room; both guest seats reconnected with the one-ply history and continued play. Stopped the service, copied its isolated state, and restored the room in a separate container on port 19911; both seats were recognized and continued. Removed the temporary restore container and backup. The original port 19910 stage is running and healthy.
+- DNS lookup for `shatra.beanroti.com` returned no address. Marked `shatra-001` blocked at public HTTPS/WebSocket smoke, route promotion and catalog publication; keep the stage ready.

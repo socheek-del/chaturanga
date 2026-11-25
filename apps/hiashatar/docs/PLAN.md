@@ -12,6 +12,6 @@ Implement the documented 10×10 reconstruction in `packages/hiashatar/RULES.md`.
 - [x] English PWA and tutorial
 - [x] Same-device saves, private invite rooms and isolated Worker service
 - [x] Full repository verification and browser checks
-- [ ] Push the verified revision and stage it on Melon
-- [ ] Verify the stage, reconnect and offline PWA
+- [x] Push the verified revision and stage it on Melon
+- [x] Verify the stage, reconnect and offline PWA
 - [ ] Public TLS smoke and catalog entry after hostname DNS points to Melon

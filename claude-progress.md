@@ -1242,3 +1242,12 @@ Tamerlane's higher contrast pawn badges now pass on a phone. Promote the newer s
 Select Mats Winther’s documented reconstruction of the 10×10 game. Use enemy-only bodyguard zones, retain the horse exemption, and exclude the hia from checking the noyon. Implement single, double and triple initial pawn advances and the two possible en passant targets after a triple advance. Verify the starting array and pawn promotion against the same reconstruction.
 
 The rules engine, bounded AI, original English PWA and 15-step interactive tutorial are complete. Rules passed 27/27, AI passed 4/4, web tests passed 17/17, and local browser checks passed 5/5. Full workspace verification passed; the final targeted AI change also passed typecheck and tests, and repository lint passed. The production build and desktop/phone review passed. Remaining before moving on: push the verified checkpoint, stage on Melon port 19909, and verify the built PWA, room reconnect/restart and offline mode. Keep the stage available pending public DNS, then begin Shatra from the next row in the roadmap.
+
+Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on port 19909 in `~/chaturanga-release.hiashatar.ea0qfu`; its migration applied, all six built-PWA browser checks passed, and an unfinished room recovered and continued after a container restart. Public promotion waits for DNS. Shatra is now active: select the documented current tournament form of Altai Shatra and resolve its 62-square board, setup, reserve, capture, Biy and ending rules before coding.
+
+
+### Session 038 (Shatra rules contract)
+
+- Selected the current Altai tournament form under the 1983 Shatra Code. Local history says current competitions use that code; the detailed board guide documents 62 numbered fields, 14 active and 9 reserve Shatras per side, Biy/Batyr reserve access, horizontal-return timing and gate capture rights.
+- Resolved the 2015 paper's 11-reserve statement in favor of the explicit 9-field fortress setup: it does not explain where extra pieces go, while the documented 62-field position is complete. The separate English Wikipedia chess-piece army is not the selected Altai tournament form.
+- `shatra-001` remains active. Next: add `packages/shatra/RULES.md`, then implement and verify the engine before AI, tutorial, PWA, invite rooms and Melon stage.

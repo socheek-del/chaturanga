@@ -3159,7 +3159,7 @@
       "milestone": "M29",
       "title": "Release Hiashatar",
       "user_visible_behavior": "Players learn the bodyguard zone and play the ten-file game against a bot, locally or in a private online room.",
-      "status": "in_progress",
+      "status": "blocked",
       "verification": [
         "Pin the bodyguard interpretation and verify both zone entry and starting inside it, pawn advances and every en passant target, and Variant conformance.",
         "Complete the interactive tutorial and verify both bot sides, local saves and private room reconnect.",
@@ -3168,9 +3168,27 @@
       "evidence": [
         "2026-11-25: Node 22 rules tests passed 27/27 with shared Variant conformance, including both zone entry and starting inside it, horse exemption, hia limits, all three pawn strides, en passant targets and pins, promotion, checkmate, and seeded replay/undo. The selected Winther reconstruction has no matching Fairy-Stockfish preset.",
         "2026-11-25: Hiashatar AI typecheck and tests passed 4/4, including tactical en passant selection. Web unit tests passed 17/17, the 15-step tutorial checks passed, and the production PWA build passed.",
-        "2026-11-25: Local Playwright browser checks passed 5/5, covering tutorial completion and retry, saved game reload, both bot seats, an invite room with triple advance, en passant, and guest reconnect. Root npm run verify passed across workspaces; final AI changes passed targeted typecheck and tests; repository lint passed. Desktop and phone layouts were visually reviewed."
+        "2026-11-25: Local Playwright browser checks passed 5/5, covering tutorial completion and retry, saved game reload, both bot seats, an invite room with triple advance, en passant, and guest reconnect. Root npm run verify passed across workspaces; final AI changes passed targeted typecheck and tests; repository lint passed. Desktop and phone layouts were visually reviewed.",
+        "2026-11-25: Commit 2858c15 passed GitHub CI (full npm run verify plus repository builds) and was staged on Melon port 19909 in ~/chaturanga-release.hiashatar.ea0qfu. All 6 staged browser checks passed. Restarted the stage during an unfinished invite game; both seats reconnected with their history and continued play."
       ],
-      "notes": "Local implementation is verified. Pin this revision on Melon, run the staged browser suite including offline PWA and room restart, then wait for DNS for hiashatar.beanroti.com before public promotion."
+      "notes": "Melon stage is ready. Public HTTPS, WebSocket smoke, promotion and catalog publication await DNS for hiashatar.beanroti.com."
+    },
+    {
+      "id": "shatra-001",
+      "product": "shatra",
+      "priority": 175,
+      "area": "release",
+      "milestone": "M30",
+      "title": "Release Altai Shatra",
+      "user_visible_behavior": "Players learn Shatra I, the 62-square Altai tournament game, and play it against a bot, locally or through private invite rooms.",
+      "status": "in_progress",
+      "verification": [
+        "Pin the current tournament edition and test the 62-square board, reserve, capture chains, Biy, promotion, end conditions and Variant conformance.",
+        "Complete the interactive tutorial and verify both bot sides, local saves and invite-room reconnect.",
+        "Stage on Melon, verify HTTPS and WebSocket play when DNS is ready, and publish the catalog entry after public smoke."
+      ],
+      "evidence": [],
+      "notes": "Select the current Altai tournament form under the 1983 Shatra Code: one Biy, 14 active Shatras and 9 fortress reserves per side, plus promoted Batyry. The 2015 rules-engine paper says 11 reserves but gives no placement consistent with the explicit 62-field setup; record this discrepancy. The English Wikipedia article describes a separate chess-piece army."
     }
   ]
 }

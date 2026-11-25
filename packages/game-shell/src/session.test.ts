@@ -33,6 +33,15 @@ describe('game session on a Variant (plat-005b)', () => {
     expect(store.getState().result).toEqual({ winner: 'b', reason: 'resign' });
   });
 
+  it('ends a live game as an agreed draw and does not replace an existing result', () => {
+    const store = createGameSession(makruk);
+    store.getState().start(null);
+    store.getState().agreeDraw();
+    expect(store.getState().result).toEqual({ winner: null, reason: 'agreement' });
+    store.getState().resign('w');
+    expect(store.getState().result).toEqual({ winner: null, reason: 'agreement' });
+  });
+
   it('restores a saved game after a reload and starts fresh from unreadable state', () => {
     const first = createGameSession(sittuyin, 'test.sittuyin');
     first.getState().start(null);

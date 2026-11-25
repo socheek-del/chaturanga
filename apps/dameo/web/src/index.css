@@ -127,6 +127,62 @@ main { flex: 1; }
 .is-focused main { display: flex; flex-direction: column; }
 .is-focused [data-testid="lesson-player"] { width: min(100% - 32px, 680px); margin: 0 auto; }
 
+.play-setup { width: min(820px, calc(100% - 48px)); margin: 0 auto; padding: 42px 0 72px; }
+.play-setup .page-heading { padding-bottom: 27px; }
+.play-setup .page-heading h1 { font-size: clamp(48px, 7vw, 78px); }
+.setup-section { padding: 27px 0; border-bottom: 1px solid #c5bda7; }
+.setup-label { margin: 0 0 8px; color: #668574; font-size: 9px; font-weight: 700; letter-spacing: .18em; }
+.play-mode-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.play-mode { min-height: 92px; display: flex; align-items: flex-start; gap: 14px; padding: 17px; color: #23363a; text-align: left; background: #fbf7ed; border: 1px solid #c5bda7; cursor: pointer; transition: background 140ms ease, border 140ms ease, transform 140ms ease; }
+.play-mode:hover { transform: translateY(-1px); }
+.play-mode.is-selected { background: #e7eddf; border-color: #668574; box-shadow: inset 3px 0 #b85e3d; }
+.play-mode > svg { flex: 0 0 auto; width: 22px; height: 22px; color: #b85e3d; }
+.play-mode strong, .play-mode small { display: block; }
+.play-mode strong { font: 600 17px/1.25 "Iowan Old Style", Georgia, serif; }
+.play-mode small { margin-top: 6px; color: #566468; font-size: 11px; line-height: 1.5; }
+.setup-section-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.setup-section-heading h2 { margin: 0; font: 500 24px/1.2 "Iowan Old Style", Georgia, serif; }
+.setup-section-heading p:not(.setup-label) { max-width: 58ch; margin: 6px 0 0; color: #566468; font-size: 12px; }
+.level-stamp { flex: 0 0 auto; padding: 6px 9px; color: #566468; border: 1px solid #c5bda7; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; }
+.bot-levels { margin-top: 20px; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 7px; }
+.bot-level { min-height: 66px; padding: 8px 5px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: #566468; background: #fbf7ed; border: 1px solid #c5bda7; cursor: pointer; font-size: 10px; }
+.bot-level.is-selected { color: #23363a; background: #e7eddf; border-color: #668574; }
+.bot-level-number { color: #b85e3d; font-size: 9px; font-weight: 700; letter-spacing: .16em; }
+.side-choice-heading { margin-top: 26px; }
+.side-choice { display: flex; gap: 9px; margin-top: 13px; }
+.side-option { min-height: 46px; min-width: 138px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; color: #566468; background: #fbf7ed; border: 1px solid #c5bda7; cursor: pointer; font-size: 12px; }
+.side-option .dameo-token { width: 29px; height: 29px; }
+.side-option.is-selected { color: #23363a; background: #e7eddf; border-color: #668574; }
+.setup-note { margin: 11px 0 0; color: #566468; font-size: 11px; }
+.local-mode-note { margin-top: 22px; display: flex; align-items: flex-start; gap: 12px; }
+.local-mode-note > svg { flex: 0 0 auto; color: #b85e3d; }
+.local-mode-note p { margin: 0; color: #566468; font-size: 13px; }
+.setup-actions { display: flex; justify-content: flex-end; padding-top: 23px; }
+.game-page { width: min(1120px, calc(100% - 32px)); margin: 0 auto; padding: 15px 0 38px; }
+.game-heading { max-width: 1024px; margin: 0 auto 15px; display: flex; align-items: end; justify-content: space-between; gap: 18px; }
+.game-heading .atlas-kicker { margin: 0 0 6px; font-size: 9px; }
+.game-heading h1 { margin: 0; font: 500 clamp(26px, 4vw, 40px)/1.1 "Iowan Old Style", Georgia, serif; }
+.live-note { display: inline-flex; align-items: center; gap: 7px; color: #566468; font-size: 10px; white-space: nowrap; }
+.live-note i { width: 7px; height: 7px; border-radius: 50%; background: #668574; }
+.thinking-note { margin: 0; padding: 4px 0; min-height: 27px; color: #668574; text-align: center; font-size: 12px; }
+.thinking-note.is-idle { opacity: 0; }
+.draw-offer-card { display: flex; flex-direction: column; gap: 10px; }
+.draw-offer-card p { margin: 0; color: #566468; font-size: 12px; }
+.draw-offer-card > div { display: flex; flex-wrap: wrap; gap: 8px; }
+
+@media (max-width: 760px) {
+  .play-setup { width: calc(100% - 32px); padding-top: 25px; }
+  .play-setup .page-heading { padding-bottom: 17px; }
+  .setup-section { padding: 21px 0; }
+  .play-mode-grid { grid-template-columns: 1fr; gap: 8px; }
+  .play-mode { min-height: 78px; padding: 13px; }
+  .bot-levels { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .setup-section-heading h2 { font-size: 21px; }
+  .game-heading { align-items: center; margin-bottom: 8px; }
+  .game-heading h1 { font-size: 27px; }
+  .live-note { font-size: 9px; }
+}
+
 @media (max-width: 760px) {
   .site-masthead { width: calc(100% - 32px); min-height: 66px; }
   .brand strong { font-size: 19px; }

@@ -3,6 +3,11 @@
     "edition": "THE STANDARD 8×8 EDITION",
     "title": "Dameo",
     "intro": "A field of moving lines and winding capture routes. Learn the rules, then find your way across the board.",
+    "play": "Play Dameo",
+    "playBot": "Play against a bot",
+    "playLocal": "Pass and play on this device",
+    "botTitle": "Against a bot",
+    "localTitle": "Two players · one device",
     "startLearning": "Begin the field guide",
     "allLessons": "Browse all lessons",
     "lastResult": "Last lesson: {{stars}} stars",
@@ -16,9 +21,11 @@
   "nav": {
     "label": "Main navigation",
     "home": "Return to home",
+    "play": "Play",
     "lessons": "Field guide",
     "start": "Start lesson",
-    "leave": "Leave lesson"
+    "leave": "Leave lesson",
+    "leaveGame": "Leave game"
   },
   "board": {
     "label": "Dameo board",
@@ -43,7 +50,74 @@
     "stars": "{{count}} stars"
   },
   "play": {
-    "chooseRoute": "Choose a complete capture route"
+    "chooseRoute": "Choose a complete capture route",
+    "turn": "{{color}} to move",
+    "check": "Check",
+    "captured": "Captured",
+    "clockOf": "{{color}}’s clock",
+    "moves": "Moves",
+    "noMoves": "No moves yet",
+    "first": "First move",
+    "back": "Previous move",
+    "forward": "Next move",
+    "last": "Latest move",
+    "flip": "Flip board",
+    "undo": "Take back",
+    "resign": "Resign",
+    "backToLive": "Return to the current position",
+    "newGame": "New game",
+    "rematch": "Play again",
+    "review": "Review moves",
+    "cancel": "Cancel",
+    "resignConfirm": "Resign for {{color}}?",
+    "result": { "whiteWins": "White wins", "blackWins": "Black wins", "draw": "Draw" },
+    "reason": {
+      "stalemate": "The player with no legal move loses.",
+      "elimination": "All opposing men and kings were captured.",
+      "repetition": "The same position occurred for the third time.",
+      "timeout": "Time ran out.",
+      "resign": "A player resigned.",
+      "agreement": "Both players agreed to a draw."
+    },
+    "offerDraw": "Offer a draw",
+    "drawOffered": "Draw offered. Make your move; your opponent can accept or decline.",
+    "drawOfferReceived": "Your opponent offers a draw.",
+    "acceptDraw": "Accept draw",
+    "declineDraw": "Decline"
+  },
+  "setup": {
+    "kicker": "CHOOSE YOUR TABLE",
+    "title": "Set up a game",
+    "intro": "Choose a computer opponent or share the board with someone beside you.",
+    "mode": "PLAY MODE",
+    "botMode": "Play a bot",
+    "botHint": "Six strengths, from a first guide to a strong challenger.",
+    "localMode": "Pass and play",
+    "localHint": "Take turns on the same board and device.",
+    "strength": "BOT STRENGTH",
+    "levelCount": "{{count}} levels",
+    "seat": "YOUR SIDE",
+    "playAs": "Play as",
+    "blackNote": "Black moves second, so your bot will make the opening move.",
+    "localPassNote": "White moves first. Pass the device after each turn. The game saves on this device, so you can return later.",
+    "start": "Start game"
+  },
+  "game": {
+    "botEyebrow": "COMPUTER · {{name}}",
+    "localEyebrow": "PASS AND PLAY · THIS DEVICE",
+    "savedOnDevice": "Saved on this device"
+  },
+  "computer": {
+    "you": "You",
+    "thinking": "{{name}} is thinking…"
+  },
+  "bots": {
+    "learner": { "name": "Learner", "description": "A gentle place to begin. It sometimes misses a useful continuation." },
+    "wanderer": { "name": "Wanderer", "description": "Finds simple routes and gives you room to explore." },
+    "tactician": { "name": "Tactician", "description": "Looks for captures and short combinations." },
+    "captain": { "name": "Captain", "description": "Plans routes and guards valuable pieces." },
+    "master": { "name": "Master", "description": "A careful opponent that searches several moves ahead." },
+    "champion": { "name": "Champion", "description": "The strongest Dameo opponent in this edition." }
   },
   "family": { "title": "More games" },
   "feedback": {

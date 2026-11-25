@@ -36,6 +36,8 @@ export interface GameSessionState<G extends VariantGame = VariantGame> {
   move: (move: string, now?: number) => MoveRecordOf<G> | null;
   undo: (now?: number) => void;
   resign: (color: Color, now?: number) => void;
+  /** Ends a game as a draw by mutual agreement. */
+  agreeDraw: (now?: number) => void;
   tick: (now?: number) => void;
   setViewPly: (ply: number | null) => void;
   flip: () => void;
@@ -141,6 +143,16 @@ function sessionCreator<G extends VariantGame>(variant: Variant<G>): StateCreato
       if (result) return;
       set((s) => ({
         result: { winner: color === 'w' ? 'b' : 'w', reason: 'resign' },
+        clock: clock ? stopClock(clock, now) : null,
+        version: s.version + 1,
+      }));
+    },
+
+    agreeDraw: (now = Date.now()) => {
+      const { result, clock } = get();
+      if (result) return;
+      set((s) => ({
+        result: { winner: null, reason: 'agreement' },
         clock: clock ? stopClock(clock, now) : null,
         version: s.version + 1,
       }));

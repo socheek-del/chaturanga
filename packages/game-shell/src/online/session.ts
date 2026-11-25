@@ -95,6 +95,8 @@ export function createOnlineSession<G extends VariantGame>(variant: Variant<G>):
     },
 
     resign: () => sender({ type: 'resign' }),
+    // Local draw agreement has no authority online; the room owns draw-offer acceptance.
+    agreeDraw: () => {},
     setViewPly: (ply) => {
       const total = get().game.moves().length;
       set({ viewPly: ply === null || ply >= total ? null : Math.max(0, ply) });

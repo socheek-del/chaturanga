@@ -18,8 +18,9 @@
 - [x] Add six bounded Dameo bot levels. AI tests passed 16/16 across both colors, forced elimination, compulsory maximum capture, full-route IDs, reproducible choice, fixed budgets and live-game restoration; package typecheck and ESLint passed. Full workspace `npm run verify` passed with loopback enabled for Worker suites.
 - [x] Record Dameo's original route-atlas design brief in `apps/dameo/docs/design.md` before UI work.
 - [x] Build nine interactive lessons covering the selected Dameo rules and digital conventions. Web lesson/locale tests passed 45/45; the production PWA built; typecheck and ESLint passed; full workspace `npm run verify` passed; headless browser smoke opened the tutorial, answered a quiz and found no overflow at 390px.
-- [ ] Correct the Dameo nested `@vitejs/plugin-react@6.3.0` lock entry; `npm ci --ignore-scripts --dry-run --offline` passes, but exact-SHA CI run 45658443801 stopped before verification at `npm ci`. Push the correction and confirm CI.
-- [ ] Complete Dameo play modes, local save/reload, offline install verification and the isolated Melon Worker; the current PWA increment is tutorial-only.
+- [x] Correct the Dameo nested `@vitejs/plugin-react@6.3.0` lock entry; `npm ci --ignore-scripts --dry-run --offline` and exact-SHA CI run 45658960096 pass.
+- [x] Add Dameo pass-and-play, six worker-based bot strengths for both sides, replay-saved local sessions and mutual draw agreement. Focused game-shell tests 94/94, web tests 45/45, typecheck, lint, production PWA build, and Chromium bot/move/reload/draw/mobile smoke pass.
+- [ ] Complete Dameo offline install/reload verification, isolated server-authoritative rooms/quick match and Melon restart/restore stage checks; the PWA still has no Dameo Worker.
 
 - [x] Fortress's exact code revision passed GitHub `npm run verify` and all workspace builds. Crazyhouse startup `npm run verify` also passed locally under Node 22.23.1 when run outside the sandbox so Worker tests could bind loopback ports; `./init.sh` could not sync uncached npm@11 in offline mode.
 - [x] Fortress rules tests passed 23/23, bots 4/4, tutorial 2/2 and Worker room/schema checks 4/4; local browser and PWA checks passed before staging.

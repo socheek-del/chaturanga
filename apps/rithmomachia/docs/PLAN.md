@@ -77,8 +77,9 @@ modern-source text, tables, illustrations, or library scans.
    rooms plus quick match without chat. Worker tests passed 9/9. A two-client Chromium check created a
    Black room, joined from the second client, and confirmed both clients received the accepted `f13-g12`
    move with no browser errors.
-8. [ ] Pass workspace verification, exact-SHA CI, Melon stage, offline, room/restart/restore, and
-   mobile browser checks; then recheck DNS/TLS and branding before promotion.
+8. [x] Pass workspace verification, exact-SHA CI, private Melon stage, offline, room/restart/restore, and
+   mobile browser checks. Before public promotion, recheck DNS/TLS and branding; the provisional hostname
+   currently has no A/AAAA record and the name review remains open.
 
 ## Verified engine increment (2026-11-26)
 
@@ -120,6 +121,27 @@ modern-source text, tables, illustrations, or library scans.
 - Next: push the verified source, confirm exact-SHA GitHub CI, deploy a pinned isolated stage to Melon,
   and verify health, online play, restart and copied-state restore. Keep public routing and the app catalog
   unchanged until the product name, DNS/TLS and HTTPS/WSS checks pass.
+
+## Verified Melon stage (2026-11-26)
+
+- Exact revision `840ff3defe743726b8ddc6353fa63c3b9b84039d` passed GitHub CI run `45711966827` (including
+  full workspace verification and `npm run build:rithmomachia`). The isolated stage is
+  `chaturanga-stage-rithmomachia-19918` at `127.0.0.1:19918`, pinned in
+  `/home/melon/chaturanga-release.rithmomachia.7MoXIr`. Its product D1 migration `DB/0001_games.sql`,
+  health endpoint and PWA homepage passed.
+- Headless Chromium through an SSH tunnel verified the built PWA at 390×844: no horizontal overflow,
+  service-worker control, offline lesson navigation, a legal circle tutorial exercise, and the Black bot's
+  opening move. Two clients created and joined a private room, synchronized Black's legal `f13-g12` move,
+  then both seats reconnected after a container restart with that move preserved.
+- Copied-state restore passed with a stopped primary writer: the room and guest seat tokens restored in a
+  separate container, and White's legal `b5-c4` reply synchronized to both clients. The temporary restore
+  container and copied state were removed; the primary stage resumed with its original room intact.
+- Public promotion is still blocked: Melon DNS resolves no A/AAAA address for
+  `rithmomachia.beanroti.com`; product-name review remains open. No Caddy route or app-directory entry was
+  added. The install audit found zero production dependency advisories (`npm audit --omit=dev`); the full
+  development dependency graph reports five advisories, including one high `happy-dom` test dependency.
+- Build passes with a non-blocking 546.23 kB minified entry-chunk warning (172.53 kB gzip). Revisit code
+  splitting if the app grows.
 
 ## Sources
 

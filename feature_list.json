@@ -3615,7 +3615,7 @@
       "milestone": "M42",
       "title": "Release Rithmomachia",
       "user_visible_behavior": "Players learn one clearly identified Rithmomachia historical rules reconstruction through an interactive tutorial and play a complete game against a bot, locally, and in a private online room.",
-      "status": "in_progress",
+      "status": "blocked",
       "verification": [
         "Select one historical reconstruction and record source provenance, board/setup, piece values/movement, numerical captures, scoring and victory conditions; research variants/adoption and rights before engine work.",
         "Implement a pure @chaturanga/rithmomachia Variant with source-backed fixtures, shared conformance, deterministic replay/undo and focused tests of arithmetic captures and terminal conditions.",
@@ -3636,9 +3636,36 @@
       "2026-11-26: Full NODE_OPTIONS=--no-experimental-webstorage npm run verify passed under Node 25.9 with loopback permission: ESLint, all workspace typechecks, and app/package suites. Production PWA build passed and precached 16 assets including self-hosted fonts and license notices.",
       "2026-11-26: Headless Chromium production-preview checks at 390px confirmed zero horizontal overflow on home/setup/game/tutorial, a bot move and reply, correct tutorial practice feedback, service-worker control, and successful offline reload. The 8×16 lesson board fits below its visible prompt; no page or console errors.",
       "2026-11-26: Added the dedicated server-authoritative Worker, product-specific Durable Objects and D1 migration. Worker tests passed 9/9 for move authority, illegal moves, reconnect, eviction, archive, quick match and chat rejection. Full workspace lint, typecheck and tests passed.",
-      "2026-11-26: Two-client headless Chromium at 390px created a Black private room, joined from a second browser context and confirmed both boards synchronized accepted move f13-g12; no page or console errors."
+        "2026-11-26: Two-client headless Chromium at 390px created a Black private room, joined from a second browser context and confirmed both boards synchronized accepted move f13-g12; no page or console errors.",
+        "2026-11-26: Exact SHA 840ff3defe743726b8ddc6353fa63c3b9b84039d passed GitHub CI run 45711966827, including full workspace verification and the dedicated Rithmomachia web/Worker build.",
+        "2026-11-26: Staged the pinned SHA on Melon at 127.0.0.1:19918 in /home/melon/chaturanga-release.rithmomachia.7MoXIr (container chaturanga-stage-rithmomachia-19918); its D1 migration, health and homepage passed. Built-stage Chromium verified 390px no-overflow, offline lesson navigation, a legal tutorial move, Black bot opening, private room/join and synchronized f13-g12.",
+        "2026-11-26: Melon restart recovery preserved the active room and both seats. A stopped-writer copy restored in a separate container; a legal White b5-c4 reply synchronized to both clients. Temporary recovery state/container were removed and the primary stage resumed with its original room. Melon DNS resolves no A/AAAA for rithmomachia.beanroti.com; no public route or catalog entry changed.",
+        "2026-11-26: npm audit --omit=dev reported zero production dependency advisories. The full development dependency graph reports five advisories (4 moderate, 1 high in test-only happy-dom); production build also reports a non-blocking 546.23 kB minified entry chunk."
       ],
-    "notes": "Active feature. The selected common medieval/Renaissance rules, source comparison, rights boundary, and digital conventions are recorded in apps/rithmomachia/docs/PLAN.md and packages/rithmomachia/RULES.md. The pure Variant, six deterministic bots, standalone English PWA, 13 interactive lessons and server-authoritative private rooms are verified. Local saves, pass-and-play, bot play, offline reload and two-client online move replication passed. The Number Cabinet design proposal and product name still await owner review. Next: exact-SHA CI and a pinned Melon stage with health, room, restart and copied-state restore smoke. `./init.sh` previously could not fetch npm@11 due registry DNS; use Node 25.9/npm 11 and loopback for Worker tests. Do not promote publicly before name review, DNS/TLS and HTTPS/WSS checks."
+    "notes": "Implementation, tutorial, bots, online rooms, exact-SHA CI and isolated Melon stage are verified. Status is blocked only at public promotion: Melon DNS resolves no A/AAAA for rithmomachia.beanroti.com, and product-name/design review remains open. No Caddy route or app-directory entry was added. Keep the stage running at port 19918 in /home/melon/chaturanga-release.rithmomachia.7MoXIr. Zero production dependency advisories; the full development graph has five advisories including high-severity test-only happy-dom. See apps/rithmomachia/docs/PLAN.md. Continue with Chu Shogi research."
+    },
+    {
+      "id": "chu-shogi-001",
+      "product": "chu-shogi",
+      "priority": 194,
+      "area": "release",
+      "milestone": "M43",
+      "title": "Release Chu Shogi",
+      "user_visible_behavior": "Players learn the selected Chu Shogi rules through an interactive tutorial and play a complete game against a bot, locally, and in private online rooms.",
+      "status": "in_progress",
+      "verification": [
+        "Compare Chu Shogi rules editions, source provenance, adoption and rights; select a clearly documented form before implementation.",
+        "Record the 12×12 setup, all piece movements, promotions, lion restrictions, drops and endings in packages/chu-shogi/RULES.md.",
+        "Implement a pure @chaturanga/chu-shogi Variant with source-backed fixtures, shared conformance, deterministic replay/undo and focused special-move tests.",
+        "Add bounded bots for both roles and an interactive tutorial teaching every selected rule; verify legal play for both human colors.",
+        "Ship an independent original PWA with responsive board, local saves, offline install, complete locale keys and standalone site/service configuration.",
+        "Provide server-authoritative private rooms and isolated Melon storage; verify legality, reconnect, restart and copied-state restore.",
+        "Pass exact-SHA CI and Melon stage smoke; public route/catalog promotion requires DNS/TLS and HTTPS/WebSocket smoke."
+      ],
+      "evidence": [
+        "2026-11-26: Started as the next ready Wave 2 product after Rithmomachia; the roadmap selects Chu Shogi as an established large-board Shogi variant. Verify sources, adoption, movement/promotion rules and rights before engine work."
+      ],
+      "notes": "Research is active. Read docs/CHESS-LIKE-ROADMAP.md, apps/shogi/AGENTS.md, apps/shogi/docs/PLAN.md and packages/shogi/RULES.md. Establish the rules edition, documented popularity, rights boundary, board/interface fit and lion-move semantics before writing the engine."
     }
   ]
 }

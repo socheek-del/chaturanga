@@ -27,6 +27,10 @@ describe('resultFromStatus', () => {
   it.each(['repetition', 'counting', 'fifty-move', 'insufficient-material', 'goal-square', 'restricted-mate'] as const)('%s is a plain draw', (kind) => {
     expect(resultFromStatus({ kind } as GameStatus)).toEqual({ winner: null, reason: kind });
   });
+
+  it('reports elimination with the winning side', () => {
+    expect(resultFromStatus({ kind: 'elimination', winner: 'w' })).toEqual({ winner: 'w', reason: 'elimination' });
+  });
 });
 
 it.each(['repetition', 'fifty-move', 'bikjang', 'double-pass'] as const)('%s names the winner when points decide it, as in Janggi', (kind) => {
@@ -61,6 +65,7 @@ describe('isUndoableResult', () => {
       'insufficient-material',
       'bare-king',
       'goal-square',
+      'elimination',
       'perpetual-check',
       'perpetual-chase',
       'bikjang',

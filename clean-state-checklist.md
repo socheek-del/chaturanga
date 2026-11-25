@@ -34,9 +34,17 @@
 - [x] Built-stage browser smoke passed tutorial/bot/mobile/invite/move-sync/reconnect 5/5 and installed offline PWA 1/1. Online scenario waits for both WebSockets to open before moves.
 - [x] Active room recovered both seats through container restart and continued; copied stopped-state restore recovered both seats and continued online play. Removed temporary restore resources and left primary stage healthy.
 - [x] `congo.beanroti.com` has no DNS answer. Public HTTPS/WSS, Caddy promotion and catalog publication are blocked; no public route or catalog entry was changed.
-- [x] Update feature evidence, plan, progress, rubric, quality and handoff state; keep the Congo stage running.
-- [ ] After the patched Congo runtime passes CI and Melon stage smoke, begin Jeson Mor edition and rights research before implementation.
+- [x] Update feature evidence, plan, progress, rubric, quality and handoff state; keep the verified Congo stage running.
+- [x] After the patched Congo runtime passed exact-SHA CI, begin Jeson Mor edition and rights research before implementation. Research and rights notes are saved under `apps/jesonmor/docs/`.
 - [x] A post-stage npm audit found Hono 4.13.7 and Zod 4.6.4 advisories in production dependencies. Updated the shared lock to Hono 4.13.22/Zod 4.6.7; production audit is clean. No force update was used.
 - [x] Full workspace verification, Congo production build, staged browser E2E 5/5 and offline PWA 1/1 passed after the compatible dependency updates.
-- [ ] Commit the patched lock, confirm exact-SHA CI, and rebuild/re-stage Congo at port 19914; the currently running port 19913 stage still uses the old runtime lock.
+- [x] Commit the patched lock as `fdf1325efcd7b3d63c3ac1eb20c86fe6fa28f176`; exact-SHA GitHub CI run `45599461942` passed, then the revision was rebuilt/re-staged on Melon at port 19914 in `/home/melon/chaturanga-release.congo.350fpC`.
+- [x] Patched Melon stage applied its isolated migration and returned healthy; production dependency audit reported zero findings; staged browser checks passed 5/5 and installed offline PWA passed 1/1.
+- [x] Melon DNS lookup returned no IPv4 or IPv6 address for `congo.beanroti.com`; public HTTPS/WSS, Caddy promotion and directory publication remain blocked, with no public route changed. Keep the patched stage running and continue with Jeson Mor.
 - [x] Congo bot package typecheck/lint and 3 tests passed for both colors, terminal Lion capture, Monkey route and river positions.
+- [x] Jeson Mor source selection, rights boundary, product plan and rules contract are documented under `apps/jesonmor/` and `packages/jesonmor/`.
+- [x] `@chaturanga/jesonmor` passes 28 focused/conformance checks; `@chaturanga/jesonmor-ai` passes 15 checks covering all six levels for both colors, capture-all and center wins, deterministic seeds and node limits.
+- [x] Full repository `npm run verify` passed under Node 22.23.1 after adding the Jeson Mor rules and bot packages.
+- [ ] Build the Jeson Mor independent PWA with original art, first-player selection, bot/pass-and-play, local persistence and an interactive tutorial covering every selected rule.
+- [ ] Add the isolated online Worker and D1; verify legal moves, reconnect, restart and copied-state restore.
+- [ ] Run exact-SHA CI for the current increment, deploy the complete product to Melon and record the stage smoke before starting another game.

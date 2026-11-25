@@ -16,6 +16,7 @@ export const RESULT_REASONS = [
   'insufficient-material',
   'bare-king',
   'goal-square',
+  'elimination',
   'perpetual-check',
   'perpetual-chase',
   'bikjang',
@@ -44,6 +45,8 @@ export function resultFromStatus(status: GameStatus): GameResult | null {
     case 'perpetual-chase':
     case 'bikjang':
     case 'double-pass':
+      return { winner: status.winner, reason: status.kind };
+    case 'elimination':
       return { winner: status.winner, reason: status.kind };
     case 'stalemate':
     case 'restricted-mate':

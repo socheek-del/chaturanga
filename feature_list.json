@@ -3267,7 +3267,7 @@
       "milestone": "M33",
       "title": "Release Congo",
       "user_visible_behavior": "Players learn the selected two-player Congo rules with an interactive tutorial and play against a bot, locally, or in a private online room.",
-      "status": "in_progress",
+      "status": "blocked",
       "verification": [
         "Research sources and rights; document the selected two-player rules, setup, river and drowning, animal movement, promotion, endings and open conventions before engine implementation.",
         "Implement a pure @chaturanga/congo Variant with focused rule tests, shared conformance, seeded replay and an external rules oracle where one matches the selected edition.",
@@ -3292,9 +3292,12 @@
         "2026-11-25: Production build smoke on Melon passed 5/5 tutorial, bot, mobile-layout, invite, synchronized-move and reconnect scenarios, plus 1/1 installed offline reload. The room sync scenario now waits for both client WebSockets to be open before sending its move.",
         "2026-11-25: Restarted the staged container with a live two-seat room; both seats recovered two plies and accepted another move. Copied the stopped stage state to a separate restore container on port 19914; both stored seat identities recovered and continued synchronized four-ply play. Removed the restore container and copy; the primary stage is running and healthy.",
         "2026-11-25: congo.beanroti.com has no DNS answer. No Caddy route or catalog entry was changed. Marked the feature blocked only at public DNS/TLS, HTTPS/WSS smoke and directory publication; keep the Melon stage running.",
-        "2026-11-25: Melon install audit found production Hono 4.13.7 and Zod 4.6.4 advisories. Updated the lock with compatible Hono 4.13.22 and Zod 4.6.7; `npm audit --omit=dev` reports zero production advisories. No `--force` update was used. The complete `npm run verify`, `npm run build:congo`, staged-runtime browser suite 5/5 and offline PWA 1/1 passed against the updated dependencies locally. Full `npm audit` still reports 5 build/test-only advisories (4 moderate in Workbox glob/minimatch and 1 high in happy-dom); npm only offers a forced downgrade/major change for those, so they remain a documented non-production gap. The current Melon stage still runs the pre-patch runtime and must be replaced after CI."
+        "2026-11-25: Melon install audit found production Hono 4.13.7 and Zod 4.6.4 advisories. Updated the lock with compatible Hono 4.13.22 and Zod 4.6.7; `npm audit --omit=dev` reports zero production advisories. No `--force` update was used. The complete `npm run verify`, `npm run build:congo`, staged-runtime browser suite 5/5 and offline PWA 1/1 passed against the updated dependencies locally. Full `npm audit` still reports 5 build/test-only advisories (4 moderate in Workbox glob/minimatch and 1 high in happy-dom); npm only offers a forced downgrade/major change for those, so they remain a documented non-production gap. The current Melon stage still runs the pre-patch runtime and must be replaced after CI.",
+        "2026-11-25: Dependency patch commit fdf1325efcd7b3d63c3ac1eb20c86fe6fa28f176 passed exact-SHA GitHub CI run 45599461942, including full npm run verify and all workspace builds.",
+        "2026-11-25: Melon staged fdf1325efcd7b3d63c3ac1eb20c86fe6fa28f176 at 127.0.0.1:19914 in /home/melon/chaturanga-release.congo.350fpC; its isolated D1 migration, health and homepage passed. The staged production dependency audit found zero advisories; Playwright passed 5/5 (tutorial, bot as Black, mobile lessons, private invite, synced moves/reconnect) and installed offline PWA passed 1/1.",
+        "2026-11-25: Melon DNS lookup returned no IPv4 or IPv6 address for congo.beanroti.com. Public HTTPS/WSS smoke, Caddy promotion and directory publication remain blocked; no public route or catalog entry was changed."
       ],
-      "notes": "Roadmap default: Demian Freeling's original two-player Congo. Rules, bounded bot, eight-lesson interactive tutorial, independent English PWA, local persistence and authoritative private rooms are implemented. Runtime commit 77cfac9949333c2f075e84c0f2ec185601366e3d passed exact-SHA CI and Melon smoke/recovery. The refreshed lock pins patched Hono 4.13.22 and Zod 4.6.7; production audit is clean and local full verification/build/browser/offline checks pass. Commit and pass CI for the patch, then replace the loopback stage before treating the runtime checkpoint as complete. Public release remains blocked because congo.beanroti.com has no DNS answer; no Caddy/catalog change. Five audit findings remain only in dev/test dependencies and require breaking forced updates. No external engine oracle exists; use source-backed fixtures."
+      "notes": "Roadmap default: Demian Freeling’s original two-player Congo. Rules, bounded bot, eight-lesson interactive tutorial, standalone English PWA, local persistence and authoritative private rooms are implemented. The patched runtime commit fdf1325efcd7b3d63c3ac1eb20c86fe6fa28f176 passed exact-SHA CI run 45599461942 and Melon stage smoke at port 19914 in /home/melon/chaturanga-release.congo.350fpC. Production dependency audit is clean; five remaining audit findings affect only build/test dependencies (four moderate in Workbox glob/minimatch and one high in happy-dom), and npm offered only forced major/downgrade changes. Status is blocked only at missing congo.beanroti.com DNS and resulting public HTTPS/WSS and directory checks. Do not change Caddy or catalog until DNS/TLS and public mode smoke pass. No external engine oracle exists; use source-backed fixtures."
     },
     {
       "id": "jesonmor-001",
@@ -3304,7 +3307,7 @@
       "milestone": "M33",
       "title": "Release Jeson Mor",
       "user_visible_behavior": "Players learn the selected Jeson Mor rules and play against a bot or on one device, with private online play when supported by the selected edition.",
-      "status": "not_started",
+      "status": "in_progress",
       "verification": [
         "Research source and rights; select the documented Mongolian knight-game edition and record its center-square victory sequence and any unresolved conventions before engine implementation.",
         "Implement a pure @chaturanga/jesonmor Variant with focused rules, shared conformance, seeded replay and source-backed fixtures.",
@@ -3314,9 +3317,13 @@
         "Pass exact-SHA CI and Melon stage smoke. Publish a public route and app-directory entry only after DNS/TLS and HTTPS/WebSocket smoke pass."
       ],
       "evidence": [
-        "2026-11-25: Selected as the next Wave 1 product after Congo in docs/CHESS-LIKE-ROADMAP.md; rules, source rights and a product contract have not yet been researched or implemented."
+        "2026-11-25: Selected as the next Wave 1 product after Congo in docs/CHESS-LIKE-ROADMAP.md.",
+        "2026-11-25: Research is complete in apps/jesonmor/docs/reports/Jeson Mor rules selection.md and its source/rights notes. Implement the best-documented traditional 9×9 checkerboard form; sources do not establish a popularity ranking. Each side has nine chess knights on its first rank; win by capturing all opposing pieces or having the same knight reach e5, survive the opponent reply, then leave e5 on its next turn. The timing is an explicit digital convention because the cited traditional wording is ambiguous. Author original rules prose, tutorial, code, art and branding; no worldwide rights clearance was established.",
+        "2026-11-25: Added packages/jesonmor with 9×9 FEN, legal knight moves/captures, the same-knight e5 attempt/reply/escape sequence, capture-all, threefold repetition convention, no-move loss, alternate first-player FEN, replay and undo. Focused tests and shared Variant conformance passed 28/28.",
+        "2026-11-25: Added packages/jesonmor-ai on ai-core with six deterministic bounded personas. Fifteen tests passed, covering legal moves for all six levels as both colors, capture-all and center-escape wins, seeded choice and root-state restoration.",
+        "2026-11-25: Full repository npm run verify passed under Node 22.23.1: ESLint, every workspace typecheck, and all workspace tests, including the new Jeson Mor rules and AI suites."
       ],
-      "notes": "Next Wave 1 entry after Congo. Rules, source rights and selected edition have not yet been researched or implemented. Start that work after the current Congo dependency patch is CI-verified and staged."
+      "notes": "Active feature. Research, rights boundary, product plan, rules contract, pure 9×9 Variant and six-level bounded bot are in place. Full workspace verification is green. Next build the independent PWA with original visual identity, tutorial, first-player selection, local game saving and bot play; then add and verify the isolated online Worker."
     }
   ]
 }

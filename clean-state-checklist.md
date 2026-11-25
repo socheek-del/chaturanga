@@ -18,6 +18,10 @@
 - [x] Crazyhouse PWA and Worker have product-local configuration, migration, README, local dev/build scripts and isolated online storage; no secrets or generated build output are staged.
 - [x] Crazyhouse rules, AI, 14 lessons, all English UI strings, private rooms, quick match, server-side drops, no-chat policy and local reconnect are covered by the local full verification and browser suites.
 - [x] Crazyhouse online lobby was reviewed at desktop and 390px; time-control labels are complete and the screen has no horizontal overflow.
-- [ ] Commit and push the completed Crazyhouse PWA/Worker increment after checking the final diff; wait for exact-SHA GitHub CI.
-- [ ] Stage that exact SHA on Melon; migrate its isolated D1; smoke the built PWA, tutorial, bot, private rooms, illegal moves, reconnect, container restart and copied-state restore.
-- [ ] Keep the Crazyhouse Melon stage available. Check `crazyhouse.beanroti.com` DNS/TLS and only promote its Caddy route or catalog entry after public HTTPS/WebSocket smoke passes.
+- [x] Commit `0b160b035447083d390b999aced2d216688abefb` is pushed to main and exact-SHA GitHub CI run `45569846694` passed.
+- [x] Stage Crazyhouse on Melon at port 19912 in `~/chaturanga-release.crazyhouse.KzM8xm`; isolated D1 migration and health endpoint passed.
+- [x] Built-PWA smoke passed for tutorial, bot as Black, offline reload, invite room, capture-to-pocket, legal `P@e4`, reconnect and no-chat behavior.
+- [x] Active room recovered through container restart and continued. Copied stopped-state restore in a separate container recovered both seats and accepted capture/drop play. Removed temporary restore resources; primary stage is healthy.
+- [x] Crazyhouse state, CI evidence, stage pin and DNS blocker are recorded in `feature_list.json`, `claude-progress.md`, `session-handoff.md`, the product plan and this checklist.
+- [x] `crazyhouse.beanroti.com` has no DNS answer; public HTTPS/WebSocket smoke, Caddy promotion and catalog publication remain blocked, with no public route changed.
+- [ ] Keep the Crazyhouse Melon stage running. Resume public route and catalog work after DNS/TLS and HTTPS/WebSocket smoke are available; continue with the next ready roadmap product in the meantime.

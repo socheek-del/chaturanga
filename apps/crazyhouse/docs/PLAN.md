@@ -24,7 +24,8 @@ Use Crazyhouse FEN with bracketed pockets and `~` promoted-pawn markers. FEN dia
 2. [x] Bounded single-player bot with pocket-aware evaluation, legal fallback and drop-aware tactics; all six levels make legal moves as both colors.
 3. [x] Standalone English PWA with custom Crazyhouse identity, board and hand trays, 14 interactive lessons, local saves, takeback and pass-and-play; production-preview install/offline checks pass.
 4. [x] Server-validated two-seat invite rooms and quick match, reconnect, Crazyhouse pocket/drop moves, chat-free play and isolated persistent storage.
-5. Full CI, browser/offline checks, exact-SHA Melon stage, restart and backup/restore; public HTTPS/WebSocket smoke and catalog publication after DNS resolves.
+5. [x] Full CI, browser/offline checks, exact-SHA Melon stage, restart and copied-state restore. Stage: `0b160b035447083d390b999aced2d216688abefb`, port `19912`, `~/chaturanga-release.crazyhouse.KzM8xm`.
+6. Public HTTPS/WebSocket smoke and catalog publication after DNS resolves. `crazyhouse.beanroti.com` currently has no DNS answer; keep the stage running and do not change Caddy or the catalog until the public route passes smoke.
 
 ## Open release risks
 

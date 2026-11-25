@@ -104,3 +104,22 @@ Mark "n/a" for categories that do not apply to the feature.
 **Verdict:** Revise before release acceptance. Local implementation is complete; deployment evidence is not.
 
 **Required follow-up:** Commit and push the product increment, wait for exact-SHA CI, then stage that SHA on Melon and verify the built PWA, migration, rooms, restart and copied-state restore. DNS/TLS and public HTTPS/WebSocket smoke remain the final route/catalog gate.
+
+## Crazyhouse Melon stage checkpoint review — 2026-11-25
+
+| Category | Score | Notes |
+| --- | ---: | --- |
+| Correctness | 2 | Tutorial, bot, browser PWA, capture-to-pocket, server-validated drop and reconnect work on the staged build. |
+| Rules fidelity | 2 | The staged room uses the same Crazyhouse Variant already checked against Fairy-Stockfish and shared conformance. |
+| Verification | 2 | Exact-SHA CI passed; Melon migration, production assets, offline reload, two-seat play, restart and copied-state restore passed. |
+| Scope discipline | 2 | Stage and temporary restore used Crazyhouse's isolated state; no Caddy route or catalog entry changed. |
+| Localization | 2 | All declared English strings, including shared online controls, are covered by locale tests. |
+| UX & design | 2 | Desktop/phone visual review and staged tutorial/PWA smoke passed. |
+| Product separation | 2 | Independent site, Worker, Durable Objects, D1 and Melon stage directory. |
+| Reliability | 2 | An active room survived container restart and a copied-state restore, and both continued play. |
+| Maintainability | 2 | Stage pin, path, port, evidence and DNS gate are written in the handoff artifacts. |
+| Handoff readiness | 2 | The next Wave 1 game is Congo; the rules and rights review must precede its engine. |
+
+**Verdict:** Accept the Crazyhouse implementation and Melon staging checkpoint. Keep `crazyhouse-001` blocked only at public HTTPS/WebSocket smoke and catalog publication because `crazyhouse.beanroti.com` has no DNS answer.
+
+**Required follow-up:** Add the product hostname through the authorized DNS path, verify TLS and public HTTPS/WebSocket play on Melon, then publish the app-directory entry. Continue with Congo while that public-route gate is unavailable.

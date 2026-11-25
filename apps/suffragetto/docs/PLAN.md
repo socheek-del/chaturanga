@@ -21,15 +21,15 @@ report](reports/Suffragetto%20rules%20and%20rights.md).
   cells of the front and second rows. The source uses a coin toss for first move; the product exposes a
   first-player choice.
 - Players alternate one piece per turn. A piece moves one adjacent empty cell in any of eight directions,
-  or hops over one occupied adjacent cell into the empty cell beyond. A turn may chain hops, changing
+  or hops over one occupied adjacent cell into an empty cell beyond. A turn may chain hops, changing
   direction; either side's pieces may be hopped over. Each destination must satisfy the zone restrictions.
 - Prison, Prison Yard, Hospital and Hospital Grounds are not ordinary landing or crossing destinations.
   Suffragettes may not enter Albert Hall; police may not enter the House of Commons. A piece in the
   opponent's goal building may move within it but may not leave.
 - Opponents may be arrested/disabled only while in a pink Arena cell and only by a hop. Goal buildings are
-  not pink Arena cells. Rank-and-file pieces capture
-  on diagonal hops; Leaders/Inspectors capture in any direction. A jumped opponent outside the Arena, or
-  reached by a non-capturing hop direction, is not captured. Captures transfer a piece to Prison or Hospital.
+  not pink Arena cells. Rank-and-file pieces capture on diagonal hops; Leaders/Inspectors capture in any
+  direction. A jumped opponent outside the Arena, or reached by a non-capturing hop direction, is not
+  captured. Captures transfer a piece to Prison or Hospital.
 - If both Prison and Hospital hold at least 12 pieces, either player can demand an exchange of up to six
   equal-rank pairs. No consent is required. Released pieces go to the respective staging areas; another
   exchange cannot occur until both are clear.
@@ -60,12 +60,13 @@ Bros. or Bodleian. The research is not worldwide copyright or trademark clearanc
 
 ## Product contract
 
-- Standalone English PWA with an original visual identity and board/piece art.
+- Standalone English PWA with an original visual identity and board/piece art; design direction in
+  [`design.md`](design.md).
 - Complete play against bounded bots as either side, local pass-and-play and saved/reloaded games.
 - Interactive tutorial for every selected mechanic, including hops, Arena captures, rank-specific capture,
   Prison/Hospital, exchanges, goal occupancy and victory.
 - Private online rooms and quick match, with server validation through the same pure rules engine and
-  isolated Suffragetto D1 storage. No chat.
+  isolated Suffragetto storage. No chat.
 - Installable offline-capable PWA; all strings keyed in the English locale.
 - Reserved local ports: web `5201`, PWA preview `4201`, Worker `8811` (recheck listeners before use).
 - Melon deployment only. Keep the route/catalog unpublished until DNS/TLS and public HTTPS/WSS smoke pass.
@@ -83,10 +84,11 @@ Bros. or Bodleian. The research is not worldwide copyright or trademark clearanc
 5. [x] Add six bounded bot personas on ai-core. All 17 bot checks passed across both roles, including goal
    victory, Arena capture/transfer, explicit exchange actions, seeded choice and state restoration; the
    two-game 32-ply strength smoke passed.
-6. [ ] Build the independent PWA, original art, local play/save, responsive board, offline behavior and
-   interactive tutorial; add web, locale, lesson, PWA and browser checks.
-7. [ ] Add the isolated Worker/D1, private rooms and quick match; verify legality, reconnect, restart and
-   copied-state restore.
+6. [x] Build the independent PWA, original art, local play/save, responsive board, offline behavior and
+   interactive tutorial. Web tests passed 34/34; browser smoke passed 5/5; installed offline PWA smoke
+   passed 1/1; the product build passed.
+7. [x] Add the isolated Worker and private rooms. Worker tests passed 9/9, including authoritative exchange
+   validation, reconnect, archive and no-chat checks. Full workspace verification passed.
 8. [ ] Pass exact-SHA CI and stage on Melon. Verify built PWA, tutorial, bots, online play, offline mode,
    restart and copied-state restore. Publish only after public DNS/TLS and HTTPS/WSS smoke pass.
 

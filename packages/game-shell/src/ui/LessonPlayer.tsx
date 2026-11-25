@@ -30,6 +30,8 @@ export interface LessonPlayerProps<G extends VariantGame, Verify = never> {
   describeSquare: (square: string, piece: Piece | null) => string;
   /** Product-translated title for selecting between different legal capture routes. */
   routeChoiceTitle?: string;
+  /** Describes a game-specific legal action (for example, a piece exchange) in a move lesson. */
+  describeAction?: (uci: string) => ReactNode;
   /** Drawn beside the prompt; omit for a product without a mascot. */
   renderMascot?: (mood: LessonMood, className: string) => ReactNode;
   /** Markings drawn across the board, such as the diagonals a Sittuyin Ne promotes on. */
@@ -390,6 +392,15 @@ function MoveStep<G extends VariantGame, Verify>(props: StepProps<G, Verify, Ext
       onAnswer(step.solutions.some((s) => sameSquares(s, record.uci, props.variant.files)));
     },
   });
+  const legalActions = game.legalUci().flatMap((uci) => {
+    const parsed = parseUci(uci, props.variant.files);
+    return parsed?.kind === 'action' ? [uci] : [];
+  });
+  const playAction = (uci: string) => {
+    const record = game.move(uci);
+    setVersion((v) => v + 1);
+    onAnswer(step.solutions.some((solution) => sameSquares(solution, record.uci, props.variant.files)));
+  };
   const last = game.lastMove();
   // A record names only its destination, because a drop has no origin; the origin comes from the move string.
   const parsedLast = last ? parseUci(last.uci, props.variant.files) : null;
@@ -441,6 +452,15 @@ function MoveStep<G extends VariantGame, Verify>(props: StepProps<G, Verify, Ext
             <Button block variant="warning" data-testid="promote-in-place" onClick={() => input.promoteInPlace()}>
               {t('play.promote')}
             </Button>
+          )}
+          {legalActions.length > 0 && feedback === null && (
+            <div className="flex flex-wrap gap-2" data-testid="lesson-actions-legal">
+              {legalActions.map((uci) => (
+                <Button key={uci} variant="outline" data-testid="lesson-action" onClick={() => playAction(uci)}>
+                  {props.describeAction?.(uci) ?? uci}
+                </Button>
+              ))}
+            </div>
           )}
           {feedback !== null && (
             <Footer

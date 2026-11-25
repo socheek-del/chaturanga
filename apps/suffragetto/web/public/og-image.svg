@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#eee9df"/>
+  <path d="M0 0h1200v34H0z" fill="#294d40"/>
+  <rect x="60" y="70" width="1080" height="500" rx="22" fill="#fbf8f0" stroke="#b9ad9b" stroke-width="2"/>
+  <text x="110" y="140" fill="#a55756" font-family="sans-serif" font-size="22" font-weight="700" letter-spacing="5">A CONTEST IN SIX PLACES</text>
+  <text x="106" y="245" fill="#2d332f" font-family="Georgia,serif" font-size="88">Suffragetto</text>
+  <text x="110" y="302" fill="#59645d" font-family="sans-serif" font-size="27">Thread the Arena. Exchange captives. Occupy the opposing building.</text>
+  <g transform="translate(825 115)">
+    <rect width="265" height="265" rx="8" fill="#d6c8b4"/>
+    <rect x="62" width="141" height="265" fill="#ce9695"/>
+    <rect x="109" y="32" width="47" height="31" fill="#d6b780"/>
+    <rect x="109" y="202" width="47" height="31" fill="#8da0a6"/>
+    <g fill="#294d40" stroke="#f5ead6" stroke-width="3">
+      <circle cx="70" cy="82" r="19"/><circle cx="117" cy="82" r="19"/><circle cx="164" cy="82" r="19"/><circle cx="211" cy="82" r="19"/>
+    </g>
+    <g fill="#334b62" stroke="#e5edf1" stroke-width="3">
+      <circle cx="70" cy="182" r="19"/><circle cx="117" cy="182" r="19"/><circle cx="164" cy="182" r="19"/><circle cx="211" cy="182" r="19"/>
+    </g>
+  </g>
+  <text x="110" y="490" fill="#294d40" font-family="sans-serif" font-size="20" font-weight="700" letter-spacing="2">RULES · TUTORIAL · BOT · PRIVATE ROOMS</text>
+  <text x="110" y="535" fill="#777d75" font-family="sans-serif" font-size="17">An original digital adaptation of the documented second-edition rules.</text>
+</svg>

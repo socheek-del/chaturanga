@@ -1,0 +1,247 @@
+{
+  "brand": "Suffragetto",
+  "app": {
+    "name": "Suffragetto",
+    "subtitle": "A contest in six places",
+    "home": "Suffragetto home"
+  },
+  "nav": {
+    "label": "Main navigation",
+    "back": "Back",
+    "play": "Play",
+    "learn": "Learn",
+    "rules": "Rules"
+  },
+  "home": {
+    "kicker": "A suffrage-era board game",
+    "title": "A contest in",
+    "titleAccent": "six places.",
+    "description": "Thread the pink Arena, make careful exchanges, and fill the opposing building before the other side.",
+    "playBot": "Play a bot",
+    "playTogether": "Pass and play",
+    "footnote": "Free to play · No account · Your game saves on this device",
+    "artCaption": "17 × 17 · TWO FORCES · SIX-CELL GOALS",
+    "northLabel": "POLICE",
+    "southLabel": "SUFFRAGETTES",
+    "modes": "Ways to play",
+    "botTitle": "Play against a bot",
+    "botDescription": "Six strengths, from a gentle first game to a tactical challenge.",
+    "localTitle": "Two players, one board",
+    "localDescription": "Take turns on the same screen. Choose who moves first.",
+    "onlineDescription": "Invite a friend to a private room or meet another player.",
+    "learnTitle": "Learn the rules",
+    "learnDescription": "Board exercises cover movement, captures, exchanges, goals and endings.",
+    "ruleTeaser": "Captures happen by hopping in the pink Arena. Both sides can return through exchanges.",
+    "readRules": "Read the field notes"
+  },
+  "setup": {
+    "kicker": "Take your place",
+    "botTitle": "Choose your opponent",
+    "botDescription": "Choose a bot, your side, and who moves first.",
+    "localTitle": "Pass and play",
+    "localDescription": "Share one board and pass the device after each turn.",
+    "mode": "Game mode",
+    "opponent": "Opponent",
+    "chooseLevel": "Choose a campaign guide",
+    "levelCount": "{{count}} strengths",
+    "seat": "Your side",
+    "playAs": "Play as",
+    "sideNote": "Your bot takes the opposite side.",
+    "localNote": "After each move, pass the device to the other player.",
+    "firstPlayer": "First player",
+    "chooseFirst": "Choose who begins",
+    "firstNote": "The printed rules use a coin toss; choose either side here.",
+    "switchMode": "Change mode"
+  },
+  "bots": {
+    "guide": {
+      "name": "Guide",
+      "description": "An easy first game with room to learn."
+    },
+    "scout": {
+      "name": "Scout",
+      "description": "A relaxed opponent that explores the board."
+    },
+    "organizer": {
+      "name": "Organizer",
+      "description": "Looks for captures and useful exchanges."
+    },
+    "strategist": {
+      "name": "Strategist",
+      "description": "Plans routes toward the opposing building."
+    },
+    "commander": {
+      "name": "Commander",
+      "description": "A focused tactical opponent."
+    },
+    "champion": {
+      "name": "Champion",
+      "description": "The deepest and most demanding challenge."
+    }
+  },
+  "game": {
+    "botEyebrow": "Playing against {{name}}",
+    "localEyebrow": "Two players · one board",
+    "savedOnDevice": "Saved on this device"
+  },
+  "colors": {
+    "w": "Suffragettes",
+    "b": "Police"
+  },
+  "pieces": {
+    "s": "Suffragette",
+    "l": "Suffragette Leader",
+    "p": "Police",
+    "i": "Police Inspector"
+  },
+  "board": {
+    "label": "Suffragetto 17 by 17 board",
+    "squareWithPiece": "{{square}}, {{color}} {{piece}}",
+    "emptySquare": "{{square}}, empty"
+  },
+  "modes": {
+    "single": "Play the computer",
+    "local": "Two players, one device",
+    "online": "Play online"
+  },
+  "computer": {
+    "you": "You",
+    "thinking": "{{name}} is thinking…",
+    "sideWhite": "Suffragettes",
+    "sideBlack": "Police",
+    "sideRandom": "Random"
+  },
+  "online": {
+    "opponent": "Opponent",
+    "quickTitle": "Quick match",
+    "quickHint": "Join a 3+2, 5+0, or 10+0 queue and meet another player.",
+    "searching": "Looking for a {{pool}} game…",
+    "createTitle": "Create a private room",
+    "color": "Choose your colour",
+    "create": "Create room",
+    "joinTitle": "Join a room",
+    "codeLabel": "Room code",
+    "join": "Join",
+    "invalidCode": "Enter a valid six-character room code.",
+    "notFound": "Room not found",
+    "serverError": "The Suffragetto game server could not be reached. Try again in a moment.",
+    "connecting": "Joining your room…",
+    "reconnecting": "Reconnecting to the room…",
+    "waitingTitle": "Your room is ready",
+    "shareHint": "Send this private link or code to the other player.",
+    "copyLink": "Copy invite link",
+    "copied": "Invite link copied",
+    "qrAlt": "QR code for this private Suffragetto room",
+    "waitingFor": "Waiting for the other player",
+    "spectating": "Both seats are taken. You are watching this game.",
+    "offerDraw": "Offer a draw",
+    "drawOffered": "Draw offer sent",
+    "drawOfferReceived": "Your opponent offers a draw.",
+    "accept": "Accept",
+    "decline": "Decline",
+    "opponentDisconnected": "Your opponent lost connection. They have {{seconds}} seconds to return.",
+    "rematchOffered": "Rematch offer sent",
+    "rematchReceived": "Your opponent wants a rematch. Choose rematch to start it."
+  },
+  "play": {
+    "start": "Start game",
+    "turn": "{{color}} to move",
+    "check": "Check",
+    "captured": "Pieces held in Prison or Hospital",
+    "clockOf": "{{color}}’s clock",
+    "moves": "Moves",
+    "noMoves": "No moves yet",
+    "first": "First move",
+    "back": "Previous move",
+    "forward": "Next move",
+    "last": "Latest move",
+    "timeControl": "Time control",
+    "noClock": "No clock",
+    "custom": "Custom",
+    "minutes": "Minutes",
+    "increment": "Increment (seconds)",
+    "categories": {
+      "bullet": "Bullet",
+      "blitz": "Blitz",
+      "rapid": "Rapid",
+      "classical": "Classical"
+    },
+    "flip": "Flip the board",
+    "undo": "Take back",
+    "resign": "Resign",
+    "cancel": "Cancel",
+    "backToLive": "Back to the game",
+    "newGame": "New game",
+    "rematch": "Play again",
+    "review": "Keep looking",
+    "resignConfirm": "{{color}}, resign this game?",
+    "result": {
+      "whiteWins": "White wins",
+      "blackWins": "Black wins",
+      "draw": "Draw"
+    },
+    "reason": {
+      "stalemate": "No legal move",
+      "repetition": "Threefold repetition",
+      "goal-square": "All six goal cells occupied",
+      "elimination": "No legal move",
+      "timeout": "Time ran out",
+      "resign": "Resignation",
+      "agreement": "Draw by agreement",
+      "abandon": "The game was abandoned"
+    },
+    "exchangeTitle": "Exchange captives",
+    "exchangePrompt": "Both holding buildings have 12 or more pieces. Choose a matched exchange.",
+    "exchangeChoice": "{{total}} pair(s): {{small}} small, {{large}} large"
+  },
+  "learn": {
+    "kicker": "A field guide to the board",
+    "title": "Learn Suffragetto",
+    "description": "Short interactive lessons teach every selected rule.",
+    "intro": "Choose a field lesson. Every move exercise is checked by the rules engine.",
+    "progressCount": "{{done}} of {{total}} lessons completed",
+    "hint": "Show a hint",
+    "exit": "Leave lesson",
+    "progress": "Lesson progress",
+    "check": "Check answer",
+    "continue": "Continue",
+    "correct": "That’s right",
+    "wrong": "Not quite",
+    "tryAgain": "Try again",
+    "complete": "Field guide complete",
+    "stars": "{{count}} stars"
+  },
+  "rules": {
+    "kicker": "Field notes",
+    "title": "A contest of movement and occupation",
+    "description": "Two sides cross the pink Arena, capture by hopping and return prisoners through exchanges. Fill all six cells of the opposing building to win.",
+    "items": {
+      "goal": {
+        "title": "Six-cell victory",
+        "body": "The Suffragettes aim for the House of Commons; Police aim for Albert Hall. Fill all six cells of the opposing building."
+      },
+      "horse": {
+        "title": "Steps and hops",
+        "body": "Move one empty cell in any direction, or chain hops over one adjacent piece and land on the empty cell beyond."
+      },
+      "center": {
+        "title": "Arena captures",
+        "body": "Captures occur by hopping over an enemy in a pink Arena cell. Small pieces capture diagonally; large officers capture in any direction."
+      },
+      "reply": {
+        "title": "Prisoners and exchanges",
+        "body": "Captured Suffragettes go to Prison; captured Police go to Hospital. Once both hold twelve, either player can exchange up to six matched pairs."
+      },
+      "endings": {
+        "title": "Digital endings",
+        "body": "Threefold repetition is a draw and no legal move is a loss. These endings are product conventions; the printed rules do not specify them."
+      }
+    }
+  },
+  "footer": {
+    "note": "An original digital adaptation of the documented second-edition rules."
+  },
+  "family": {
+    "title": "More games"
+  }
+}

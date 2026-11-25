@@ -41,14 +41,18 @@ most popular. See the [rules and rights selection report](reports/Jeson%20Mor%20
    pass-and-play, persistence and interactive tutorial; verify mobile, install and offline behavior. Web
    tests passed 29/29; local Chromium passed 5/5; installed offline PWA passed 1/1.
 5. [x] Add the isolated Worker, rooms, quick match and finished-game storage; verify authoritative legality
-   and reconnect. Worker tests passed 9/9. Melon restart and copied-state restore remain part of stage smoke.
-6. [ ] Pass exact-SHA GitHub CI, deploy that commit to a Melon stage, and run production smoke. Promote only
-   when the host resolves and public HTTPS/WSS/tutorial/play checks pass.
+   and reconnect. Worker tests passed 9/9. Melon restart and copied-state restore also passed.
+6. [x] Exact-SHA GitHub CI run 45612186318 passed for 3a31bf29739ca08024abced86014a35e31d4ea56.
+   Melon staged that SHA at port 19915 in `/home/melon/chaturanga-release.jesonmor.s1Jcyr`; its isolated D1
+   migration, health/homepage, built PWA/tutorial/bot/online/offline browser smoke (6/6), container restart
+   and copied-state restore with continued legal play passed. Public promotion remains gated on DNS/TLS and
+   HTTPS/WSS/tutorial/play checks; Melon resolves no A or AAAA record for `jesonmor.beanroti.com`.
 
 ## Service
 
 - Default hostname: `jesonmor.beanroti.com`, read from `apps/jesonmor/web/site.config.ts` and overridable
   with `JESONMOR_SITE_URL`.
 - Local web/preview/Worker ports are 5199/4199/8800. Port 8799 was occupied by an unrelated service.
-- Use a unique Melon stage port after checking `docs/MELON-RELEASE.md`.
+- Melon stage: loopback port 19915, container `chaturanga-stage-jesonmor-19915`, pinned SHA
+  `3a31bf29739ca08024abced86014a35e31d4ea56`.
 - Keep the PWA, server service and D1 isolated from every other game.

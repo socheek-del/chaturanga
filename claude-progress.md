@@ -1394,3 +1394,15 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 - Added the Jeson Mor-only Worker, Durable Objects, quick match, private rooms, reconnect, move validation through the pure Variant, no-chat behavior and isolated D1 archive. Worker tests passed 9/9. `npm run build:jesonmor` passed for both the Vite PWA and Wrangler Worker dry run.
 - Full repository `npm run verify` passed with `NODE_OPTIONS=--no-experimental-webstorage` in the available Node 25 environment. Without that compatibility flag, Node 25's built-in `localStorage` conflicts with happy-dom; the repository pins Node 22 for CI. Exact-SHA GitHub CI remains required on the new product commit.
 - Next commit and push to main, verify that commit's CI, stage on Melon, and run built PWA, online room, restart and copied-state restore smoke. Keep the public route and catalog gated on DNS/TLS and HTTPS/WSS checks. The product remains `in_progress` until the Melon stage checks pass.
+
+### Session 062 (Jeson Mor Melon staging)
+
+- Commit `3a31bf29739ca08024abced86014a35e31d4ea56` is pushed to main. Exact-SHA GitHub CI run `45612186318` passed full repository verification and the production build matrix.
+- Melon staged the exact SHA at port 19915 in `/home/melon/chaturanga-release.jesonmor.s1Jcyr`, container `chaturanga-stage-jesonmor-19915`. The isolated D1 migration, `/api/health` and homepage returned healthy.
+- Built-stage Playwright passed 6/6: guided lesson/answer, local save/reload/takeback, bot as Black, narrow-screen lessons, two-seat invite/move sync/reconnect, and installed offline reload. A live two-seat room recovered after Docker restart and continued; a stopped-state copy restored both seats and accepted another legal move. Removed the temporary restore container and state copy; confirmed the primary stage healthy.
+- Melon resolves no A or AAAA record for `jesonmor.beanroti.com`. Public HTTPS/WSS smoke, Caddy promotion and app-directory publication remain blocked; no route/catalog change was made. `jesonmor-001` is blocked only at that public gate; keep its stage running.
+
+### Session 063 (Suffragetto source and rights research)
+
+- Started the next Wave 1 feature, `suffragetto-001`, after Jeson Mor's Melon stage was verified. The roadmap selects the original published two-player rules. Research is split across primary rules/provenance, edition interpretations/popularity evidence, and rights scope.
+- Research notes are being collected in `apps/suffragetto/docs/research_notes/Suffragetto rules and rights/`. Next synthesize the report under the product's docs, pin source-backed rules and unresolved conventions in its plan/rules contract, and only then begin engine implementation. No Suffragetto game code has been written.

@@ -48,4 +48,8 @@
 - [x] Build the Jeson Mor independent English PWA with original art, first-player selection, six bot levels, pass-and-play, local persistence, and a seven-lesson interactive tutorial covering every selected rule. Web tests 29/29, local browser E2E 5/5 and installed offline PWA smoke 1/1 passed.
 - [x] Add the isolated online Worker and D1; Worker tests passed 9/9 for legal move validation, reconnect recovery, no-chat behavior and finished-game storage.
 - [x] Full repository verification passed with `NODE_OPTIONS=--no-experimental-webstorage` under the shell's Node 25. `npm run build:jesonmor` passed (Vite PWA and Wrangler Worker dry-run).
-- [ ] Commit/push the complete product to main, confirm exact-SHA CI, deploy to Melon, then verify production PWA/rooms, restart and copied-state restore before starting another game.
+- [x] Commit `3a31bf29739ca08024abced86014a35e31d4ea56` to main; exact-SHA GitHub CI run `45612186318` passed its full verification and build matrix.
+- [x] Stage Jeson Mor on Melon at port 19915 in `/home/melon/chaturanga-release.jesonmor.s1Jcyr`; the isolated migration, health endpoint and homepage passed.
+- [x] Built-stage browser smoke passed 6/6; the active two-seat room continued after container restart and after a copied-state restore. Temporary restore resources were removed, and the primary stage is healthy.
+- [x] `jesonmor.beanroti.com` has no A or AAAA record. Public HTTPS/WSS smoke, Caddy promotion and app-directory publication are blocked; no public route or catalog entry changed. Keep the Melon stage running.
+- [x] Begin the next Wave 1 product, Suffragetto. Its research notes are in `apps/suffragetto/docs/research_notes/Suffragetto rules and rights/`; record original rules and rights before engine implementation.

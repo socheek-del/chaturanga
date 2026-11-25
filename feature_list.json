@@ -3307,7 +3307,7 @@
       "milestone": "M33",
       "title": "Release Jeson Mor",
       "user_visible_behavior": "Players learn the selected Jeson Mor rules and play against a bot or on one device, with private online play when supported by the selected edition.",
-      "status": "in_progress",
+      "status": "blocked",
       "verification": [
         "Research source and rights; select the documented Mongolian knight-game edition and record its center-square victory sequence and any unresolved conventions before engine implementation.",
         "Implement a pure @chaturanga/jesonmor Variant with focused rules, shared conformance, seeded replay and source-backed fixtures.",
@@ -3323,9 +3323,36 @@
         "2026-11-25: Added packages/jesonmor-ai on ai-core with six deterministic bounded personas. Fifteen tests passed, covering legal moves for all six levels as both colors, capture-all and center-escape wins, seeded choice and root-state restoration.",
         "2026-11-25: Full repository npm run verify passed with NODE_OPTIONS=--no-experimental-webstorage in the local Node 25 shell: ESLint, every workspace typecheck, and all workspace tests. The compatibility flag disables Node 25 localStorage so happy-dom matches the repository's pinned Node 22 CI environment.",
         "2026-11-25: Built the standalone English Jeson Mor PWA with original horse art, responsive play, first-player selection, six bot levels, pass-and-play, local save/reload/takeback and seven interactive rules lessons. Web tests passed 29/29, including locale and lesson validation; local browser E2E passed 5/5; installed offline PWA smoke passed 1/1.",
-        "2026-11-25: Added Jeson Mor's isolated Worker, Durable Objects, quick match, server-validated rooms, reconnect and Jeson Mor-only D1 archive. Worker tests passed 9/9, including illegal move rejection, reconnect recovery, chat rejection and finished-game storage. `npm run build:jesonmor` passed (Vite PWA and Wrangler Worker dry-run)."
+        "2026-11-25: Added Jeson Mor's isolated Worker, Durable Objects, quick match, server-validated rooms, reconnect and Jeson Mor-only D1 archive. Worker tests passed 9/9, including illegal move rejection, reconnect recovery, chat rejection and finished-game storage. `npm run build:jesonmor` passed (Vite PWA and Wrangler Worker dry-run).",
+        "2026-11-25: Exact-SHA GitHub CI run 45612186318 passed for 3a31bf29739ca08024abced86014a35e31d4ea56, including full workspace verification and build matrix.",
+        "2026-11-25: Staged the exact SHA on Melon at 127.0.0.1:19915 in /home/melon/chaturanga-release.jesonmor.s1Jcyr (container chaturanga-stage-jesonmor-19915). The Jeson Mor-only D1 migration applied; stage health and homepage passed.",
+        "2026-11-25: Built-stage Playwright smoke passed 6/6 across tutorial and quiz, saved local play/takeback, bot as Black, narrow layout, private room move sync/reconnect and offline PWA. A live two-seat room continued after container restart; a stopped-state copy recovered both seats and accepted another legal move. Temporary restore resources were removed and the primary stage is healthy.",
+        "2026-11-25: Melon DNS resolves no IPv4 or IPv6 address for jesonmor.beanroti.com. Public HTTPS/WSS, Caddy route and app-directory publication are blocked; no public route or catalog entry was changed."
       ],
-      "notes": "Active feature. The selected rules, research boundary, pure 9×9 Variant, six-level bot, independent English PWA, seven-lesson interactive tutorial, local saves, and isolated server-authoritative rooms/D1 are implemented. Local full workspace verification passed with NODE_OPTIONS=--no-experimental-webstorage under the shell's Node 25; targeted web/Worker suites, browser E2E, offline PWA, and production build passed. Next commit and push to main, confirm exact-SHA GitHub CI, stage on Melon, and verify the built app, rooms, restart and copied-state restore. Public promotion and catalog entry wait for DNS/TLS/HTTPS/WSS smoke."
+      "notes": "The product is implemented, passed exact-SHA CI and is staged on Melon at port 19915 in /home/melon/chaturanga-release.jesonmor.s1Jcyr. Tutorial, bot, pass-and-play, saves, private server-authoritative rooms, offline mode, restart and copied-state restore passed. Status is blocked only at public promotion: jesonmor.beanroti.com has no A or AAAA record, so public HTTPS/WSS smoke and directory publication cannot run. No Caddy route or catalog entry was changed. Keep the stage running while work continues on the next roadmap game."
+    },
+    {
+      "id": "suffragetto-001",
+      "product": "suffragetto",
+      "priority": 184,
+      "area": "release",
+      "milestone": "M33",
+      "title": "Release Suffragetto",
+      "user_visible_behavior": "Players learn the documented Suffragetto rules through an interactive tutorial and play a complete game against a bot, locally, and in a private online room.",
+      "status": "in_progress",
+      "verification": [
+        "Research the original published two-player rules, provenance, edition variants and rights boundary; record setup, movement, captures, objectives, endings and unresolved conventions before engine work.",
+        "Implement a pure @chaturanga/suffragetto Variant with source-backed fixtures, shared conformance, deterministic replay/undo and focused coverage of special rules.",
+        "Add bounded bots for both roles and an interactive tutorial that teaches and validates every selected rule; verify complete games and same-device play.",
+        "Ship an independent original English PWA with responsive layout, saved play, install/offline behavior, complete locale keys and standalone site/service configuration.",
+        "Provide server-authoritative private rooms and isolated Melon storage; verify legality, reconnect, restart and copied-state restore.",
+        "Pass exact-SHA CI and Melon stage smoke. Publish a public route and directory entry only after DNS/TLS and HTTPS/WebSocket/tutorial/play checks pass."
+      ],
+      "evidence": [
+        "2026-11-25: Selected as the next ready Wave 1 product after Jeson Mor in docs/CHESS-LIKE-ROADMAP.md. The user requires one selected variant, an interactive tutorial, bots, applicable multiplayer and Melon deployment.",
+        "2026-11-25: Rules, provenance and rights research is in progress under apps/suffragetto/docs/research_notes/Suffragetto rules and rights/. No game engine or product code has been started."
+      ],
+      "notes": "Active feature. Research the original published two-player game, compare later interpretations, and record the rights scope in game-local docs before implementing code. Jeson Mor remains staged and available on Melon; its public route is separately blocked by missing DNS."
     }
   ]
 }

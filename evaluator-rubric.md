@@ -23,24 +23,24 @@ Mark "n/a" for categories that do not apply to the feature.
 - Revise
 - Block
 
-## Jeson Mor local product checkpoint — 2026-11-25
+## Jeson Mor Melon staging checkpoint — 2026-11-25
 
 | Category | Score | Notes |
 | --- | ---: | --- |
 | Correctness | 2 | Local bot/pass-and-play work; the Worker validates moves through the Jeson Mor Variant. |
 | Rules fidelity | 2 | Engine conformance and the seven interactive lessons cover the selected center escape, capture-all and digital endings. |
-| Verification | 1 | Full repository verification passed with the Node 25 web-storage compatibility flag; product build, web 29/29, Worker 9/9, browser 5/5 and offline 1/1 passed. Exact-SHA CI and Melon smoke remain. |
+| Verification | 2 | Exact-SHA CI run 45612186318 passed; local web 29/29, Worker 9/9, local browser 5/5, staged browser/offline 6/6, restart, copied-state restore and product build passed. |
 | Scope discipline | 2 | Product implementation is isolated to Jeson Mor; generic root workspace scripts and lock entries were added. |
 | Localization | 2 | English-only product; visible UI and lesson text use the complete declared locale. |
 | UX & design | 2 | Original horse/field-atlas identity; tutorial and mobile browser scenarios passed. |
 | Product separation | 2 | Independent PWA, Worker, Durable Objects, D1, site setting and local storage namespace. |
-| Reliability | 1 | Local save/reload and online reconnect are covered; Melon restart and copied-state restore remain. |
+| Reliability | 2 | Local save/reload, online reconnect, room continuation through container restart and independent copied-state restore all passed. |
 | Maintainability | 2 | Rules decisions, rights scope, ports, commands and release gates are documented in product files. |
-| Handoff readiness | 2 | Feature state, progress, quality, checklist and handoff identify the exact next CI and Melon steps. |
+| Handoff readiness | 2 | Feature state, progress, quality, checklist, stage pin/path and next product research are recorded. |
 
-**Verdict:** Revise before release acceptance. Local product implementation is complete; exact-SHA CI and Melon staging/recovery evidence remain.
+**Verdict:** Accept the Jeson Mor Melon staging checkpoint. Keep `jesonmor-001` blocked only at public DNS/TLS, HTTPS/WSS smoke and app-directory publication because the hostname has no A/AAAA record. The stage remains running.
 
-**Required follow-up:** Commit and push the implementation, confirm CI for that SHA, stage it on Melon, then run browser/offline, room reconnect, restart and copied-state restore smoke. Promote publicly only after DNS/TLS and HTTPS/WSS checks pass.
+**Required follow-up:** Configure the hostname through the authorized DNS path, then promote the verified Melon stage, run public HTTPS/WSS/tutorial/play smoke and publish the app-directory entry. Continue with Suffragetto while that public-route gate is unavailable.
 
 ## Required Follow-Up
 

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#182820"/>
+  <path d="M810 0h390v630H810z" fill="#21362a"/>
+  <path d="M875 88h250v250H875zm125 250h250v250h-250z" fill="#78917b"/>
+  <path d="M1000 121c-34 0-56 25-56 59 0 21 10 37 25 46l-16 47h94l-16-47c15-9 25-25 25-46 0-34-22-59-56-59zm-69 178 12 65h114l12-65z" fill="#f0e5cd" stroke="#bd7150" stroke-width="7" stroke-linejoin="round"/>
+  <text x="82" y="170" fill="#bd7150" font-family="sans-serif" font-size="23" font-weight="700" letter-spacing="5">THE POCKET GAME</text>
+  <text x="76" y="292" fill="#f0e5cd" font-family="Georgia,serif" font-size="94">Crazyhouse</text>
+  <text x="84" y="357" fill="#bac6b5" font-family="sans-serif" font-size="30">Every capture gives a piece a second life.</text>
+</svg>

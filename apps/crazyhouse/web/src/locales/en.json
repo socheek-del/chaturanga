@@ -1,0 +1,195 @@
+{
+  "brand": "Crazyhouse",
+  "app": { "name": "Crazyhouse", "subtitle": "The pocket game", "home": "Crazyhouse home" },
+  "nav": { "label": "Main", "back": "Back", "play": "Play", "learn": "Learn", "rules": "Rules" },
+  "home": {
+    "kicker": "A chess variant with a second life",
+    "title": "Chess gets",
+    "titleAccent": "a second life.",
+    "description": "Capture a piece and it becomes yours to drop back onto the board. Every trade opens a new route into the position.",
+    "playBot": "Choose an opponent",
+    "playTogether": "Play together",
+    "footnote": "Free to play · No account · Your games stay on this device",
+    "inHand": "IN HAND",
+    "artCaption": "TAKE · POCKET · DROP",
+    "modes": "Ways to play",
+    "botTitle": "Play the computer",
+    "botDescription": "Six levels, from a gentle first game to a sharp tactical test.",
+    "localTitle": "Two players, one device",
+    "localDescription": "Pass the board back and forth. Captures still go into each player’s pocket.",
+    "onlineDescription": "Invite a friend by link or code, or find an opponent for a timed game.",
+    "learnTitle": "Learn the rules",
+    "learnDescription": "Short interactive lessons for captures, drops, special moves and endings.",
+    "ruleTeaser": "A dropped piece can block check, attack the king, or change a quiet position in one move.",
+    "readRules": "Open the field guide"
+  },
+  "setup": {
+    "kicker": "Set the table",
+    "botTitle": "Choose your opponent",
+    "botDescription": "Pick a level and the side you want to play. Your game saves as you go.",
+    "localTitle": "Pass and play",
+    "localDescription": "Settle around one screen and take turns at the same board.",
+    "mode": "Game mode",
+    "opponent": "The other side",
+    "chooseLevel": "Choose a bot",
+    "levelCount": "{{count}} levels",
+    "seat": "Your side",
+    "playAs": "Play as",
+    "sideNote": "The bot takes the opposite colour.",
+    "localNote": "White moves first. After each move, hand the device to the other player.",
+    "switchMode": "Change mode"
+  },
+  "bots": {
+    "starter": { "name": "Seedling", "description": "Takes its time and leaves room to explore." },
+    "casual": { "name": "Rambler", "description": "A relaxed game with simple tactics." },
+    "club": { "name": "Regular", "description": "Looks for useful captures and checks." },
+    "challenger": { "name": "Tactician", "description": "Finds forcing drops and combinations." },
+    "expert": { "name": "Sentinel", "description": "Plans carefully and punishes loose pieces." },
+    "master": { "name": "Warden", "description": "A deep, demanding opponent." }
+  },
+  "game": {
+    "botEyebrow": "Across the board from {{name}}",
+    "localEyebrow": "Two players · one board",
+    "savedOnDevice": "Saved on this device"
+  },
+  "colors": { "w": "White", "b": "Black" },
+  "pieces": { "k": "king", "q": "queen", "r": "rook", "b": "bishop", "n": "knight", "p": "pawn" },
+  "board": {
+    "label": "Crazyhouse board",
+    "squareWithPiece": "{{square}}, {{color}} {{piece}}",
+    "emptySquare": "{{square}}, empty"
+  },
+  "hand": { "label": "{{color}} pocket", "piece": "{{piece}} in pocket, {{count}}" },
+  "modes": { "single": "Play the computer", "local": "Two players, one device", "online": "Play online" },
+  "computer": {
+    "you": "You",
+    "thinking": "{{name}} is thinking…",
+    "sideWhite": "White",
+    "sideBlack": "Black",
+    "sideRandom": "Random"
+  },
+  "online": {
+    "opponent": "Opponent",
+    "quickTitle": "Quick match",
+    "quickHint": "Join a 3+2, 5+0, or 10+0 queue and meet another player.",
+    "searching": "Looking for a {{pool}} game…",
+    "createTitle": "Create a private room",
+    "color": "Choose your colour",
+    "create": "Create room",
+    "joinTitle": "Join a room",
+    "codeLabel": "Room code",
+    "join": "Join",
+    "invalidCode": "Enter a valid six-character room code.",
+    "notFound": "Room not found",
+    "serverError": "The game server could not be reached. Try again in a moment.",
+    "connecting": "Connecting to the room…",
+    "reconnecting": "Reconnecting to the room…",
+    "waitingTitle": "Your room is ready",
+    "shareHint": "Send this private link or code to the other player.",
+    "copyLink": "Copy invite link",
+    "copied": "Invite link copied",
+    "qrAlt": "QR code for this private game room",
+    "waitingFor": "Waiting for the other player",
+    "spectating": "Both seats are taken. You are watching this game.",
+    "offerDraw": "Offer a draw",
+    "drawOffered": "Draw offer sent",
+    "drawOfferReceived": "Your opponent offers a draw.",
+    "accept": "Accept",
+    "decline": "Decline",
+    "opponentDisconnected": "Your opponent lost connection. They have {{seconds}} seconds to return.",
+    "rematchOffered": "Rematch offer sent",
+    "rematchReceived": "Your opponent wants a rematch. Choose rematch to start it."
+  },
+  "play": {
+    "start": "Start game",
+    "turn": "{{color}} to move",
+    "check": "Check",
+    "captured": "Captured pieces",
+    "clockOf": "{{color}}’s clock",
+    "moves": "Moves",
+    "noMoves": "No moves yet",
+    "first": "First move",
+    "back": "Previous move",
+    "forward": "Next move",
+    "last": "Latest move",
+    "timeControl": "Time control",
+    "noClock": "No clock",
+    "custom": "Custom",
+    "minutes": "Minutes",
+    "increment": "Increment (seconds)",
+    "categories": {
+      "bullet": "Bullet",
+      "blitz": "Blitz",
+      "rapid": "Rapid",
+      "classical": "Classical"
+    },
+    "flip": "Flip the board",
+    "undo": "Take back",
+    "resign": "Resign",
+    "cancel": "Cancel",
+    "backToLive": "Back to the game",
+    "newGame": "New game",
+    "rematch": "Play again",
+    "review": "Keep looking",
+    "promoteTo": "Choose a promotion",
+    "resignConfirm": "{{color}}, resign this game?",
+    "cancel": "Cancel",
+    "result": { "whiteWins": "White wins", "blackWins": "Black wins", "draw": "Draw" },
+    "reason": {
+      "checkmate": "Checkmate",
+      "stalemate": "Stalemate",
+      "repetition": "Threefold repetition",
+      "fifty-move": "The 50-move rule",
+      "timeout": "Time ran out",
+      "resign": "Resignation",
+      "agreement": "Draw by agreement",
+      "abandon": "The game was abandoned"
+    }
+  },
+  "learn": {
+    "kicker": "A field guide to the pockets",
+    "title": "Learn Crazyhouse",
+    "description": "Work through the rules at your own pace. Each lesson puts a real position under your hand.",
+    "intro": "Capture, pocket, and drop. Learn how the familiar chess board changes when every piece can return.",
+    "progressCount": "{{done}} of {{total}} lessons completed",
+    "hint": "Show a hint",
+    "exit": "Leave lesson",
+    "progress": "Lesson progress",
+    "check": "Check answer",
+    "continue": "Continue",
+    "correct": "That’s right",
+    "wrong": "Not quite",
+    "tryAgain": "Try again",
+    "complete": "Field guide complete",
+    "stars": "{{count}} stars"
+  },
+  "rules": {
+    "kicker": "The short version",
+    "title": "The board remembers every capture",
+    "description": "The pieces move as in chess. The pocket is what makes this game different.",
+    "items": {
+      "capture": {
+        "title": "Capture",
+        "body": "The captured piece changes sides and enters the capturer’s pocket."
+      },
+      "drop": {
+        "title": "Drop",
+        "body": "Spend a turn to place a pocket piece on any legal empty square. It may give check or mate."
+      },
+      "pawn": {
+        "title": "Pawn drops",
+        "body": "Pawns cannot be dropped on ranks one or eight. Same-file pawns and pawn-drop mate are legal."
+      },
+      "promoted": {
+        "title": "Promotion",
+        "body": "Promoted pieces are marked in the position. If captured, they return to hand as pawns."
+      },
+      "ending": {
+        "title": "Endings",
+        "body": "Checkmate, stalemate, threefold repetition, and the 50-move rule apply. Repetition includes pockets and promotion markers."
+      }
+    }
+  },
+  "footer": { "note": "Original Crazyhouse rules guide and artwork. Licensed under GPL-3.0." },
+  "family": { "title": "More games" }
+}

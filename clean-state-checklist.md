@@ -13,5 +13,11 @@
 - [x] Record the Fortress DNS release gate and begin `crazyhouse-001` as the next roadmap product.
 - [x] Commit and push Crazyhouse plan `a6e6602` and engine `13f0baa`; exact engine SHA passed full GitHub CI run 45560562799.
 - [x] Crazyhouse engine typecheck/lint and 30 tests passed; bounded bot typecheck/lint and 5 tests passed for both colors.
-- [ ] Commit and push the verified Crazyhouse AI increment after updating the handoff.
+- [x] Commit and push the Crazyhouse bot increment `941f474`; GitHub CI run 45561775842 passed.
 - [ ] Keep the Melon Fortress stage running until public DNS, TLS and smoke are available.
+- [x] Crazyhouse PWA and Worker have product-local configuration, migration, README, local dev/build scripts and isolated online storage; no secrets or generated build output are staged.
+- [x] Crazyhouse rules, AI, 14 lessons, all English UI strings, private rooms, quick match, server-side drops, no-chat policy and local reconnect are covered by the local full verification and browser suites.
+- [x] Crazyhouse online lobby was reviewed at desktop and 390px; time-control labels are complete and the screen has no horizontal overflow.
+- [ ] Commit and push the completed Crazyhouse PWA/Worker increment after checking the final diff; wait for exact-SHA GitHub CI.
+- [ ] Stage that exact SHA on Melon; migrate its isolated D1; smoke the built PWA, tutorial, bot, private rooms, illegal moves, reconnect, container restart and copied-state restore.
+- [ ] Keep the Crazyhouse Melon stage available. Check `crazyhouse.beanroti.com` DNS/TLS and only promote its Caddy route or catalog entry after public HTTPS/WebSocket smoke passes.

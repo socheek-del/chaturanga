@@ -85,3 +85,22 @@ Mark "n/a" for categories that do not apply to the feature.
 **Verdict:** Accept the Crazyhouse AI increment. Overall product work remains in progress.
 
 **Required follow-up:** Build the independent PWA with a complete interactive tutorial, then implement private online rooms and stage the exact verified SHA on Melon.
+
+## Crazyhouse product checkpoint review — 2026-11-25
+
+| Category | Score | Notes |
+| --- | ---: | --- |
+| Correctness | 2 | Local, bot and shared pocket/drop play work; the Worker rejects illegal and out-of-turn moves through the Crazyhouse Variant. |
+| Rules fidelity | 2 | The engine already passes Variant conformance and seeded Fairy-Stockfish comparisons; online tests exercise a capture and pawn drop. |
+| Verification | 1 | Full repository verification, product build, 5/5 local browser scenarios and 1/1 offline PWA check passed; exact-SHA CI for this product increment is pending. |
+| Scope discipline | 2 | Product code lives under Crazyhouse; only root product scripts and the shared family helper type were adjusted to keep the unpublished product out of family links. |
+| Localization | 2 | English-only dictionary includes every literal app key and all shared online lobby, room and clock keys. |
+| UX & design | 2 | Original foundry identity and piece art; the online lobby was reviewed at 390px and 1440px without horizontal overflow. |
+| Product separation | 2 | Own PWA, service, Durable Objects, D1, site setting, locale, tutorial, README and storage keys. |
+| Reliability | 1 | Local reload/reconnect and DO eviction pass; Melon container restart and copied-state restore are pending. |
+| Maintainability | 2 | Rules/rights decisions, local ports, run commands and release steps are recorded beside the product. |
+| Handoff readiness | 2 | Progress, feature state, plan, quality notes and the next exact-SHA/Melon steps are recorded. |
+
+**Verdict:** Revise before release acceptance. Local implementation is complete; deployment evidence is not.
+
+**Required follow-up:** Commit and push the product increment, wait for exact-SHA CI, then stage that SHA on Melon and verify the built PWA, migration, rooms, restart and copied-state restore. DNS/TLS and public HTTPS/WebSocket smoke remain the final route/catalog gate.

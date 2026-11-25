@@ -1,0 +1,32 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Crazyhouse owns its static app, room objects, matchmaker and finished-game database.
+  "name": "crazyhouse",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-01",
+  "assets": {
+    "directory": "../web/dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*", "/ws/*"],
+  },
+  "durable_objects": {
+    "bindings": [
+      { "name": "GAME_ROOM", "class_name": "GameRoom" },
+      { "name": "MATCHMAKER", "class_name": "Matchmaker" },
+    ],
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["GameRoom", "Matchmaker"] }],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "crazyhouse",
+      // Dedicated product database. Melon stages use an isolated local D1 database.
+      "database_id": "9b31ac57-79b5-419d-8d3d-cb2d322f4901",
+      "migrations_dir": "migrations",
+    },
+  ],
+  "vars": { "RECONNECT_GRACE_MS": "60000" },
+  "routes": [{ "pattern": "crazyhouse.beanroti.com", "custom_domain": true }],
+  "observability": { "enabled": true },
+}

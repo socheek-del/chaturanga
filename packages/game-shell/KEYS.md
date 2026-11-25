@@ -93,6 +93,8 @@ screen also reads every game-screen key above.
 | `online.opponentDisconnected` (`{{seconds}}`) | Reconnect grace period |
 | `online.rematchOffered`, `online.rematchReceived` | Rematch |
 | `play.cancel` | Cancels a quick-match search |
+| `play.timeControl`, `play.categories.<category>` | Time control picker label and `bullet`, `blitz`, `rapid`, `classical` group headings |
+| `play.noClock`, `play.custom`, `play.minutes`, `play.increment` | Untimed/custom choices and custom clock fields |
 
 There is no chat key, because there is no chat.
 

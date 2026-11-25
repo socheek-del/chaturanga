@@ -49,6 +49,6 @@ export const SITES: Readonly<Record<GameId, { url: string; locales: readonly str
 export const SITE_LANGUAGES: readonly string[] = [...new Set(Object.values(SITES).flatMap((site) => site.locales))];
 
 /** The sibling games a site links to: every family game except itself. */
-export function familyLinks(current: GameId): FamilyLink[] {
+export function familyLinks(current: string): FamilyLink[] {
   return GAMES.filter((game) => game.id !== current).map((game) => ({ id: game.id, names: game.names, ...SITES[game.id] }));
 }

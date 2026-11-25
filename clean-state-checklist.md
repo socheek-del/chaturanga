@@ -1,16 +1,12 @@
 # Clean State Checklist
 
-- [x] Suffragetto's source-derived board coordinate map is recorded in `apps/suffragetto/docs/board-coordinates.md`; goal/Arena membership and the complete S/P setup are explicit.
-- [x] Full baseline `npm run verify` passed with loopback access and `NODE_OPTIONS=--no-experimental-webstorage`; `./init.sh` could not fetch npm@11 because registry DNS failed, and Node 22 from `.nvmrc` is not installed here.
-- [x] Suffragetto layout fixture/typecheck passed (5/5); rules-core coordinates passed 40/40 and board-ui passed 46/46; all three packages typechecked.
-- [x] Suffragetto engine implements steps, chained hops/captures, exchanges, goal locks/wins, repetition,
-  no-move loss, serialization and undo/replay; focused tests passed 36/36 with shared Variant conformance.
-- [x] Full workspace `npm run verify` passed with `NODE_OPTIONS=--no-experimental-webstorage` and loopback
-  access; Node 25.9 is installed instead of the `.nvmrc` Node 22.23.1.
-- [x] Suffragetto AI typecheck and lint passed; 17 tests passed for all six bot levels as both roles, goal
-  wins, captures, exchanges, deterministic choice and search-state restoration. Two 32-ply seeded strength
-  smoke games completed with legal moves.
-- [ ] Build the Suffragetto independent PWA and online Worker; run product build/browser/Worker checks.
+- [x] Suffragetto's selected rules, rights boundary, 17×17 archival coordinate map, pure Variant, bots, seven interactive lessons, PWA and isolated online Worker are recorded in the product folders.
+- [x] Suffragetto rules/conformance tests passed 36/36; bot tests 17/17; web tests 34/34; Worker tests 9/9; `npm run build:suffragetto` and full workspace `npm run verify` passed with `NODE_OPTIONS=--no-experimental-webstorage` under Node 25.9.
+- [x] Exact commit `0e46a1ee3bf5fd3f9075e025f387a54a01638123` is on main; exact-SHA GitHub CI run `45638729555` passed verification and the build matrix.
+- [x] Melon staged the exact SHA at port 19916 in `/home/melon/chaturanga-release.suffragetto.Bz3TYJ`; its isolated D1 migration, health endpoint and homepage passed.
+- [x] Built-stage browser smoke passed 5/5 and installed offline PWA smoke 1/1. A two-seat room recovered after container restart and continued; a stopped-state copy recovered a room and accepted a legal move. The temporary restore container/copy were removed and the primary stage is healthy.
+- [x] `suffragetto.beanroti.com` has no DNS answer. Public HTTPS/WSS smoke, Caddy promotion and directory publication are blocked; no public route or catalog entry changed. Keep the verified Melon stage running.
+- [x] Begin `dameo-001` as the next listed ready Wave 1 product; start with source, edition/popularity and rights research.
 
 - [x] Fortress's exact code revision passed GitHub `npm run verify` and all workspace builds. Crazyhouse startup `npm run verify` also passed locally under Node 22.23.1 when run outside the sandbox so Worker tests could bind loopback ports; `./init.sh` could not sync uncached npm@11 in offline mode.
 - [x] Fortress rules tests passed 23/23, bots 4/4, tutorial 2/2 and Worker room/schema checks 4/4; local browser and PWA checks passed before staging.

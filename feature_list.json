@@ -3339,7 +3339,7 @@
       "milestone": "M33",
       "title": "Release Suffragetto",
       "user_visible_behavior": "Players learn the documented Suffragetto rules through an interactive tutorial and play a complete game against a bot, locally, and in a private online room.",
-      "status": "in_progress",
+      "status": "blocked",
       "verification": [
         "Research the original published two-player rules, provenance, edition variants and rights boundary; record setup, movement, captures, objectives, endings and unresolved conventions before engine work.",
         "Implement a pure @chaturanga/suffragetto Variant with source-backed fixtures, shared conformance, deterministic replay/undo and focused coverage of special rules.",
@@ -3359,9 +3359,36 @@
         "2026-11-25: Replaced the exchange's fake route encoding with explicit action notation `X<small><large>@<stage>` (example `X21@b1`), taught board-ui and the room protocol to parse it as a non-board action, and updated lesson validation to handle action moves. Board-ui tests passed 47/47, game-shell tests 93/93 and protocol tests 6/6.",
         "2026-11-25: Full workspace `npm run verify` passed (ESLint, every workspace typecheck, all tests) with `NODE_OPTIONS=--no-experimental-webstorage` and loopback access. The unprivileged run could not start the existing Xiangqi Cloudflare Worker test pool because loopback bind was blocked; the loopback-enabled run passed. Node 25.9 is available; `.nvmrc` Node 22.23.1 is not installed. `./init.sh` remains unable to fetch npm@11 due registry DNS failure.",
         "2026-11-25: Added `@chaturanga/suffragetto-ai` with six deterministic bounded personas using ai-core. All 17 focused tests passed: every level for both roles, immediate goal win, Arena capture and transfer, exchange action availability, seeded choice and live-game state restoration. Lint and typecheck passed; `npm run test:strength -w packages/suffragetto-ai` completed two seeded 32-ply games.",
-        "2026-11-25: Engine checkpoint `7f82b77d8fc1db3f049b89079772d578d04f20cd` was pushed to main; exact-SHA GitHub CI run 45629891192 passed."
+        "2026-11-25: Engine checkpoint `7f82b77d8fc1db3f049b89079772d578d04f20cd` was pushed to main; exact-SHA GitHub CI run 45629891192 passed.",
+        "2026-11-25: Added the standalone original English PWA with six bounded bot levels, pass-and-play, local save/reload/takeback, offline install, and seven interactive lessons covering the selected rules. Web tests passed 34/34; `npm run build:suffragetto` passed; staged browser smoke passed 5/5 and installed offline PWA smoke passed 1/1.",
+        "2026-11-25: Added the isolated Suffragetto Worker, Durable Objects, D1 migration/archive, quick match and private rooms with server-side rule validation and no chat. Worker tests passed 9/9; full workspace `npm run verify` passed with `NODE_OPTIONS=--no-experimental-webstorage` under Node 25.9; `.nvmrc` Node 22.23.1 is not installed and `./init.sh` could not fetch npm@11 because registry DNS failed.",
+        "2026-11-25: Commit 0e46a1ee3bf5fd3f9075e025f387a54a01638123 was pushed directly to main; exact-SHA GitHub CI run 45638729555 passed full workspace verification and the build matrix.",
+        "2026-11-25: Melon staged the exact SHA at 127.0.0.1:19916 in /home/melon/chaturanga-release.suffragetto.Bz3TYJ (container chaturanga-stage-suffragetto-19916). The isolated Suffragetto D1 migration applied; stage health and homepage passed.",
+        "2026-11-25: On the built Melon stage, browser smoke passed 5/5 for interactive tutorial/exchange action, bot as Police, narrow layout, private-room synchronization/reconnect, and unknown-room handling. Installed offline PWA smoke passed 1/1.",
+        "2026-11-25: A two-seat room recovered both seats and its two-ply history after container restart, then accepted and synchronized another legal move. With the service stopped, its state directory was copied to a separate restore container; the copied room recovered, accepted a second player, and accepted a legal move. Removed the temporary restore container/copy and restored the primary stage healthy.",
+        "2026-11-25: Melon DNS lookup returned no A/AAAA answer for suffragetto.beanroti.com. Public HTTPS/WSS smoke, Caddy promotion and app-directory publication are blocked; no public route or catalog entry was changed."
       ],
-      "notes": "Active feature. The source-backed rules contract, scoped rights review, archival map, pure Variant and six bounded bots are complete. Engine verification: 36 focused tests and full workspace verification; AI verification: 17 tests and a two-game strength smoke. Next build the independent PWA with an interactive tutorial covering every mechanic, local save/offline play, then server-authoritative private rooms, product builds/browser/Worker checks and exact-SHA CI. Melon staging/restart/copied-state verification remains ahead; public promotion is gated on DNS/TLS/HTTPS/WSS checks."
+      "notes": "The product is implemented, passed exact-SHA CI and is staged on Melon at port 19916 in /home/melon/chaturanga-release.suffragetto.Bz3TYJ. The seven-lesson tutorial, bots, local play/saves, offline PWA, private server-authoritative rooms, staged browser smoke, restart recovery and copied-state restore passed. Status is blocked only at public promotion: suffragetto.beanroti.com has no DNS answer, so HTTPS/WSS and directory publication cannot run. No Caddy route or catalog entry was changed. Keep the stage running while work continues with Dameo."
+    },
+    {
+      "id": "dameo-001",
+      "product": "dameo",
+      "priority": 185,
+      "area": "release",
+      "milestone": "M34",
+      "title": "Release Dameo",
+      "user_visible_behavior": "Players learn the selected Dameo rules through an interactive tutorial and play a complete game against a bot, locally, and in a private online room.",
+      "status": "not_started",
+      "verification": [
+        "Research primary rules, editions/popularity evidence and rights boundary; select one well-supported standard form and record setup, movement, captures, endings and unresolved conventions before engine work.",
+        "Implement a pure @chaturanga/dameo Variant with source-backed fixtures, shared conformance, deterministic replay/undo and focused coverage of all selected special rules.",
+        "Add bounded bots for both roles and an interactive tutorial that teaches and validates every selected rule; verify complete games and same-device play.",
+        "Ship an independent original PWA with responsive layout, saved play, install/offline behavior, complete locale keys and standalone site/service configuration.",
+        "Provide server-authoritative private rooms and isolated Melon storage; verify legal moves, reconnect, restart and copied-state restore.",
+        "Pass exact-SHA CI and Melon stage smoke. Publish a public route and directory entry only after DNS/TLS and HTTPS/WebSocket smoke pass."
+      ],
+      "evidence": [],
+      "notes": "Next listed ready Wave 1 product after Suffragetto in docs/CHESS-LIKE-ROADMAP.md. Begin with source, edition/popularity and rights research; do not assume a variant popularity winner without evidence."
     }
   ]
 }

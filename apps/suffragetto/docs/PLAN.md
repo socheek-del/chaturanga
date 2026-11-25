@@ -89,8 +89,10 @@ Bros. or Bodleian. The research is not worldwide copyright or trademark clearanc
    passed 1/1; the product build passed.
 7. [x] Add the isolated Worker and private rooms. Worker tests passed 9/9, including authoritative exchange
    validation, reconnect, archive and no-chat checks. Full workspace verification passed.
-8. [ ] Pass exact-SHA CI and stage on Melon. Verify built PWA, tutorial, bots, online play, offline mode,
-   restart and copied-state restore. Publish only after public DNS/TLS and HTTPS/WSS smoke pass.
+8. [x] Exact-SHA CI and Melon stage passed. Built-stage browser checks passed 5/5 and installed offline PWA
+   passed 1/1. A two-seat room resumed after container restart and accepted another move; a stopped-state
+   copy recovered a private room and accepted a legal move. Public promotion remains gated on DNS/TLS and
+   HTTPS/WSS smoke; `suffragetto.beanroti.com` currently has no DNS answer and no route/catalog change was made.
 
 ## Sources
 

@@ -216,3 +216,20 @@ Mark "n/a" for categories that do not apply to the feature.
 - Melon staging identified affected runtime versions Hono 4.13.7 and Zod 4.6.4. The lockfile now resolves Hono 4.13.22 and Zod 4.6.7, and `npm audit --omit=dev` reports no production advisories.
 - The no-force audit fix removed the two critical toolchain findings. Five findings remain in build/test dependencies; the offered fix would force a downgrade or major version change, so it was not applied. Full workspace verification, Congo production build, staged browser 5/5 and offline PWA 1/1 pass with the refreshed lock.
 - **Verdict:** Accept the dependency patch locally, but do not mark the Melon release checkpoint current until the patched lock passes exact-SHA CI and is staged/re-smoked. The existing port 19913 stage runs the prior runtime and should be kept loopback-only.
+
+## Suffragetto Melon staging checkpoint — 2026-11-25
+
+| Category | Score | Notes |
+| --- | ---: | --- |
+| Correctness | 2 | Local play, six bounded bots, seven interactive lessons and server-validated private rooms work on the staged build. |
+| Rules fidelity | 1 | Shared Variant conformance and 36 focused checks pass; no Fairy-Stockfish preset exists, so fixtures follow the selected source and documented digital conventions. |
+| Verification | 2 | Web 34/34, Worker 9/9, workspace verify/build, exact-SHA CI 45638729555, staged browser 5/5 and offline PWA 1/1 passed. |
+| Scope discipline | 2 | Game-specific rules, art, lessons and service live in Suffragetto folders; the shared lesson change only renders legal actions for games that supply them. |
+| Localization | 2 | English-only v1 strings use the complete declared locale. |
+| UX & design | 2 | Original archival field-guide identity and responsive board/tutorial passed staged browser checks. |
+| Product separation | 2 | Independent PWA, Worker, Durable Objects, D1, site setting and storage namespace. |
+| Reliability | 2 | Two seats and move history recovered after restart; an independent stopped-state copy restored a room and accepted a legal move. |
+| Maintainability | 2 | Rules, source boundary, tests, stage pin, CI evidence, DNS gate and next roadmap product are recorded. |
+| Handoff readiness | 2 | Feature state, progress, checklist, plan, quality snapshot and Melon stage table are current. |
+
+**Verdict:** Accept the Suffragetto Melon staging checkpoint. Keep `suffragetto-001` blocked only at public DNS/TLS, HTTPS/WSS smoke and directory publication because the hostname has no DNS answer. The stage remains running.

@@ -1571,3 +1571,12 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 - The research report and source notes are in `apps/kruzno/docs/`. Adoption evidence is local and sparse and supports no popularity ranking.
 - No digital adaptation license was found, and the current title/copyright chain is unverified. A reported 2022 U.S. trademark cancellation does not clear worldwide naming. Kruzno is blocked before implementation; no contact was sent.
 - The next roadmap product is Rithmomachia. Start with one explicit historical reconstruction, primary/source evidence, variant/adoption and rights research. Dameo remains staged on Melon at port 19917; public promotion waits on missing DNS and trademark review.
+
+### Session 084 (Rithmomachia rules selection and setup fixture)
+
+- Rechecked the prior Selenus-only draft against the user's popularity requirement. Selected the common medieval/Renaissance rules named by Wikipedia as the most common version; recorded that this is qualitative evidence, not comparable player counts. The Selenus/Mebben movement pattern is now comparison-only.
+- Wrote the product rules contract, variant/adoption report, rights note, and package rules. Explicit digital choices cover movement, capture turn flow, reserves, pyramid components, default progression win, and digital draw endings.
+- Added `@chaturanga/rithmomachia` and its exact 8×16 setup/value fixture in `packages/rithmomachia/src/layout.ts`; coordinate round-trips include rank 16 and the test checks 24 pieces per side, number families, pyramid totals, and occupied cells.
+- Focused package verification: 5 setup tests passed; package TypeScript check passed. Workspace lockfile updated offline. `./init.sh` attempted npm@11 sync but registry DNS failed with ENOTFOUND; installed npm 11.12.1 and Node 25.9 remain usable.
+- Full `NODE_OPTIONS=--no-experimental-webstorage npm run verify` passed after retrying with local-network permission: ESLint, all workspace typechecks, and every package/app test suite passed. The initial sandbox-only retry had failed to start existing Worker test pools with `listen EPERM 127.0.0.1`.
+- Next: implement and verify the pure Variant and focused movement/capture/pyramid/victory fixtures. Then add bots, interactive tutorial, standalone PWA, private Worker rooms, and Melon staging. Do not promote publicly until DNS/TLS, HTTPS/WSS, and brand review pass.

@@ -3626,9 +3626,11 @@
       ],
       "evidence": [
         "2026-11-26: Began as the next Wave 2 product after Kruzno; Kruzno is blocked before implementation pending rights clearance.",
-        "2026-11-26: Research is active. Pin one source-backed historical reconstruction, all numeric/victory conventions and rights before code."
+        "2026-11-26: Selected the common medieval/Renaissance rules summarized by Wikipedia as its most common version. Compared movement families and recorded that historical sources do not provide comparable player counts; report and product contract are in apps/rithmomachia/docs/.",
+        "2026-11-26: Added the 8×16 setup and value fixture in packages/rithmomachia/src/layout.ts. Focused package tests passed 5/5 and package typecheck passed.",
+        "2026-11-26: Full NODE_OPTIONS=--no-experimental-webstorage npm run verify passed under Node 25.9 with loopback permission; ESLint, every workspace typecheck, and all package/app tests passed. ./init.sh's npm registry sync failed on DNS ENOTFOUND; offline package-lock sync succeeded."
       ],
-      "notes": "Active feature. Research one historical rules reconstruction (including numerical captures and victory), compare documented alternatives/adoption, and verify rights. Record the precise reconstruction and all digital conventions before implementation."
+      "notes": "Active feature. The selected common medieval/Renaissance rules, source comparison, rights boundary, and digital conventions are recorded in apps/rithmomachia/docs/PLAN.md and packages/rithmomachia/RULES.md. Setup fixture is verified. Next: implement the pure Variant and capture/pyramid fixtures, then bots, tutorial, PWA, rooms, and Melon stage. `./init.sh` currently cannot fetch npm@11 because registry DNS is unavailable; use the installed Node 25.9/npm 11 and run Worker tests with loopback permission."
     }
   ]
 }

@@ -82,6 +82,7 @@ needs work.
 - Added Jeson Mor's original standalone PWA, seven-lesson tutorial, six-level bot flow, local saves and isolated server-authoritative rooms/D1; focused tests, local browser/offline smoke, production build and full workspace verification passed. Exact-SHA CI and Melon stage/recovery are next.
 - Staged Jeson Mor's exact CI-passing SHA on Melon; migration, six built-stage browser scenarios, restart and copied-state restore passed. Public DNS is absent, so no route or catalog entry changed. Suffragetto is the active research feature.
 - Completed Suffragetto's original-rules, editions/popularity and rights review. Selected the best-documented second edition without claiming a popularity ranking; report, plan and contract are ready. Engine work waits on the source-derived board mask.
+- Transcribed Suffragetto's 17×17 coordinate masks, pink Arena, goal cutouts, holding/staging zones and all S/P setup cells. Full workspace baseline verification is rerunning after init's npm registry lookup failed and the sandbox initially blocked Worker loopback tests.
 
 ### 2026-09-13
 

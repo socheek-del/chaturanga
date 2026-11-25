@@ -10,11 +10,22 @@ rights.md`](../../apps/suffragetto/docs/reports/Suffragetto%20rules%20and%20righ
 
 ## Board and setup
 
-- Coordinates use files `a`–`q` and ranks `1`–`17`; the view may be rotated for each player.
-- The full grid has 17×17 cells. The centered 9×17 cells form the Arena. Prison/Hospital, staging areas,
-  goal buildings, and the marked `S`/`P` setup cells are encoded in a separately tested board-layout map.
-- Extract that map from the archival board before implementing move generation. The source prose does not
-  provide a complete coordinate table. Never infer a missing cell silently.
+- Coordinates use files `a`–`q` and ranks `1`–`17`; `a1` is the Suffragette-side bottom-left corner. The
+  view may be rotated for each player.
+- All 289 cells belong to the 17×17 board. The Arena envelope is files `e`–`m`, ranks `1`–`17`; the
+  House of Commons and Albert Hall are each 3×2 cutouts, so their 12 cells are not pink Arena capture
+  squares. The pink Arena has 141 cells.
+- Exact coordinate masks and setup are in [`apps/suffragetto/docs/board-coordinates.md`](../../apps/suffragetto/docs/board-coordinates.md):
+  - House: files `h`–`j`, ranks 13–14; Albert Hall: files `h`–`j`, ranks 4–5.
+  - Prison: file `a`, ranks 1–17, and file `b`, ranks 14–17 (21 cells). Prison Yard: file `b`, ranks 1–6.
+  - Hospital: file `q`, ranks 1–17, and file `p`, ranks 1–4 (21 cells). Hospital Grounds: file `p`, ranks
+    12–17.
+  - Suffragette setup: `g4`, `k4`; `e5`–`g5`, `k5`–`m5`; all files `c`–`o` on rank 6. Police setup is
+    the rank-reflected arrangement: all files `c`–`o` on rank 12; `e13`–`g13`, `k13`–`m13`; `g14`, `k14`.
+- Both players have five large pieces on the marked front/second-row ends and center, plus 16 rank-and-file
+  pieces. Large Suffragette starts: `i6`, `c6`, `o6`, `e5`, `m5`; large Police starts: `i12`, `c12`, `o12`,
+  `e13`, `m13`. The first player is chosen by coin toss in the source; the product exposes a first-side
+  choice.
 - Each side starts with 16 rank-and-file and five large pieces: a Leader plus four assistants, or an
   Inspector plus four constables. The `S` and `P` markings determine starting positions. The first player is
   chosen by coin toss in the source; the product exposes a first-side choice.
@@ -25,12 +36,13 @@ rights.md`](../../apps/suffragetto/docs/reports/Suffragetto%20rules%20and%20righ
 ## Movement and capture
 
 - A turn moves one piece one adjacent empty cell in any of eight directions, or chains hops with the same
-  piece. A hop passes over one occupied adjacent cell and lands in the empty cell immediately beyond.
+  piece. Each hop passes over one occupied adjacent cell and lands in the empty cell immediately beyond.
 - A route may change direction and hop either player's pieces. Hops and steps must obey the zone masks.
 - Prison, Hospital, Prison Yard and Hospital Grounds are not ordinary destinations or spaces to hop over.
   Suffragettes may not enter Albert Hall; police may not enter the House of Commons. Once a piece enters its
   opponent's goal building, it cannot leave but may move within that building.
-- Opponents are captured only by a hop while they stand in the Arena. Rank-and-file captures are diagonal;
+- Opponents are captured only by a hop while they stand in a pink Arena cell. Goal buildings are not pink
+  Arena. Rank-and-file captures are diagonal;
   Leaders and Inspectors capture in any direction. A legal hop that does not satisfy capture conditions is a
   non-capturing hop.
 - Captured Suffragettes move into Prison; captured police move into Hospital. They remain in the game and

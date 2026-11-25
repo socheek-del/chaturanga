@@ -11,10 +11,11 @@ report](reports/Suffragetto%20rules%20and%20rights.md).
 
 ## Rules summary
 
-- Board: 17×17 square grid; 9×17 central Arena; six-cell House of Commons and Albert Hall goal buildings;
-  21-cell Prison and Hospital zones; six-cell Prison Yard and Hospital Grounds. The archival board's
-  marked cells define the playable-cell, zone, goal and S/P setup masks. Record their coordinates as a
-  machine-readable layout fixture before implementing move generation.
+- Board: 17×17 square grid; 9×17 central Arena envelope with the 3×2 House of Commons and Albert Hall
+  goal buildings cut out of the pink capture area; 21-cell Prison and Hospital zones; six-cell Prison Yard
+  and Hospital Grounds. Exact coordinates and S/P setup masks are in
+  [`board-coordinates.md`](board-coordinates.md). Build a machine-readable, tested fixture from this map
+  before implementing move generation.
 - Each side has 21 pieces: 16 small rank-and-file and five large pieces. The Suffragette side has a Leader
   and four assistants; Police has an Inspector and four constables. The S/P markers on the surviving board
   determine setup. One large piece occupies the middle of the front row; the other four occupy the outermost
@@ -26,7 +27,8 @@ report](reports/Suffragetto%20rules%20and%20rights.md).
 - Prison, Prison Yard, Hospital and Hospital Grounds are not ordinary landing or crossing destinations.
   Suffragettes may not enter Albert Hall; police may not enter the House of Commons. A piece in the
   opponent's goal building may move within it but may not leave.
-- Opponents may be arrested/disabled only while in the Arena and only by a hop. Rank-and-file pieces capture
+- Opponents may be arrested/disabled only while in a pink Arena cell and only by a hop. Goal buildings are
+  not pink Arena cells. Rank-and-file pieces capture
   on diagonal hops; Leaders/Inspectors capture in any direction. A jumped opponent outside the Arena, or
   reached by a non-capturing hop direction, is not captured. Captures transfer a piece to Prison or Hospital.
 - If both Prison and Hospital hold at least 12 pieces, either player can demand an exchange of up to six
@@ -44,9 +46,8 @@ report](reports/Suffragetto%20rules%20and%20rights.md).
   original rules do not define which individual pieces are selected or a UI exchange protocol.
 - Remove a captured piece from its Arena cell immediately during a chained hop so its cell becomes empty;
   the original prose does not state capture timing inside a chain.
-- Board zone membership, including whether goal cells are in the Arena, follows the transcription of the
-  original board. If the diagram does not settle a cell, record a clearly labeled digital convention in the
-  board-layout fixture and tests before engine implementation.
+- The archival board resolves zone membership: both 3×2 buildings are uncolored cutouts from the pink
+  Arena and cannot be capture squares. The coordinate fixture must assert each zone and setup count.
 
 ## Rights boundary
 
@@ -71,16 +72,16 @@ Bros. or Bodleian. The research is not worldwide copyright or trademark clearanc
 
 1. [x] Research provenance, editions and rights. Report and source notes live under `docs/reports/` and
    `docs/research_notes/`.
-2. [ ] Extract the archival board's coordinate masks and setup into a text/TS fixture; verify the 17×17,
-   Arena, prison/hospital, yards, buildings and each S/P cell before adding move generation.
-3. [ ] Implement `@chaturanga/suffragetto` as a pure 17×17 `Variant` with rules tests, serialization,
+2. [x] Transcribe the archival board's exact coordinate masks and setup in `board-coordinates.md`.
+3. [ ] Build and verify the TS fixture from that map before adding move generation.
+4. [ ] Implement `@chaturanga/suffragetto` as a pure 17×17 `Variant` with rules tests, serialization,
    prisoner exchanges, shared conformance and seeded replay/undo.
-4. [ ] Add bounded bots and strength smoke; test both roles, chained hops and exchanges.
-5. [ ] Build the independent PWA, original art, local play/save, responsive board, offline behavior and
+5. [ ] Add bounded bots and strength smoke; test both roles, chained hops and exchanges.
+6. [ ] Build the independent PWA, original art, local play/save, responsive board, offline behavior and
    interactive tutorial; add web, locale, lesson, PWA and browser checks.
-6. [ ] Add the isolated Worker/D1, private rooms and quick match; verify legality, reconnect, restart and
+7. [ ] Add the isolated Worker/D1, private rooms and quick match; verify legality, reconnect, restart and
    copied-state restore.
-7. [ ] Pass exact-SHA CI and stage on Melon. Verify built PWA, tutorial, bots, online play, offline mode,
+8. [ ] Pass exact-SHA CI and stage on Melon. Verify built PWA, tutorial, bots, online play, offline mode,
    restart and copied-state restore. Publish only after public DNS/TLS and HTTPS/WSS smoke pass.
 
 ## Sources

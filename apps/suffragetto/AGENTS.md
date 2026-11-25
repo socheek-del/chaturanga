@@ -8,9 +8,10 @@ isolated Melon storage.
 
 - Use the surviving WSPU / Sargeant Bros. second-edition rules as the best-documented playable edition. Do
   not call it the statistically most popular edition; available sources provide no sales or usage data.
-- The board is a 17×17 square grid with a 9×17 central Arena, six-cell House of Commons and Albert Hall goal
-  buildings, 21-cell Prison and Hospital areas, six-cell Prison Yard and Hospital Grounds, and marked S/P
-  setup cells. Translate each cell from the archival diagram into a named coordinate mask before engine work.
+- The board is a 17×17 square grid, with `a1` at the bottom-left Suffragette corner. Its Arena envelope is
+  files `e`–`m` across ranks 1–17, with 3×2 House of Commons and Albert Hall cutouts. Prison, Hospital,
+  yards, grounds and every marked S/P setup cell are fixed in `docs/board-coordinates.md`. The pink capture
+  area excludes both goal buildings.
 - Each player has 16 rank-and-file pieces and five large pieces (Leader plus four assistants, or Inspector
   plus four constables). One large piece goes in the middle of the front row; the other four go on the
   outermost cells of the front and second rows. The original chooses the first player by coin toss; the
@@ -25,8 +26,7 @@ isolated Melon storage.
   equal-rank pairs. No opponent consent is required. Released pieces go to their staging yard/grounds. No
   further exchange is available while either staging area is occupied.
 - A piece entering the opponent's six-cell goal building may move inside but cannot leave. Fill all six
-  opposing goal cells to win. A piece inside the Arena, including a goal cell if the coordinate mask places
-  it there, is capturable under the Arena capture rule.
+  opposing goal cells to win. Goal cells are outside the pink Arena and are not capturable.
 - Repetition draw and loss for no legal move are digital conventions. There is no source-backed 50-move
   rule. Record every remaining engine convention in `packages/suffragetto/RULES.md`.
 - The rules and rights report is `docs/reports/Suffragetto rules and rights.md`; researcher notes are beside

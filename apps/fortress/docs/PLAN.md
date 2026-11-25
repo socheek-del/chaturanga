@@ -25,7 +25,7 @@ Digital reconstruction choices are explicit: top Red starts; the three reserves 
 2. Bot package: bounded team-aware search with legal fallback; exercise a human against bots from all four seats. **Implemented and locally verified at the package boundary.**
 3. Product shell: own design, 16×16 board rendering, setup input, saves, pass-and-play, bot play, move history and accessible tutorials. **Implemented and verified in Chromium at phone and desktop sizes.**
 4. Worker: four-seat invite rooms, authoritative rules validation, reconnect and isolated database. **Implemented; unit tests and four-client browser play pass.**
-5. CI/build and browser verification; stage exact passing SHA on Melon, test PWA and four-seat rooms across restart, then public HTTPS/WebSocket smoke when the configured hostname resolves. **Local build, full workspace verification, tutorial/browser suite and offline PWA checks pass; Melon staging is next.**
+5. CI/build and browser verification; stage exact passing SHA on Melon, test PWA and four-seat rooms across restart, then public HTTPS/WebSocket smoke when the configured hostname resolves. **GitHub CI run 45552897158 passed for `fc5577d3a53e6c90a572457bb24750b3b0e34e52`. That exact revision is staged at `127.0.0.1:19911` in `~/chaturanga-release.fortress.Gz3JGZ`; migration `DB/0001_games.sql`, built PWA browser scenarios, illegal-move rejection, four-seat reconnect, container restart recovery, offline play, and copied-state restore all passed.**
 
 The shared alpha-beta search and room kit currently model two seats. Fortress uses its own team-aware Max-n bot and will follow the Three-player Chess product pattern for its four-seat worker, with all accepted moves replayed through this package.
 
@@ -33,4 +33,4 @@ The shared alpha-beta search and room kit currently model two seats. Fortress us
 
 - Obtain and inspect the Petrov scans if an accessible copy becomes available; preserve the explicit reconstruction labels unless a primary text changes a decision.
 - Check the product and hostname against current app-directory state before adding a catalog entry.
-- Public hostname DNS may be absent, as with the earlier chess-game stages. Keep the Melon stage intact until DNS and TLS are available.
+- `fortress.beanroti.com` has no DNS address on Melon. Keep the verified stage intact until DNS and TLS are available; do not promote Caddy or add a catalog entry before public HTTPS/WebSocket smoke passes.

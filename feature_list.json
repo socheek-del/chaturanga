@@ -3205,7 +3205,7 @@
       "milestone": "M31",
       "title": "Release Russian Four-Handed Fortress Chess",
       "user_visible_behavior": "Players learn Petrov's Russian Fortress Chess and play as any of four seats against three bots, locally or in a private four-seat invite room.",
-      "status": "in_progress",
+      "status": "blocked",
       "verification": [
         "Implement the 192-cell board, fortress walls/gates, four seats and teams, reserve setup, move rules, checkmate elimination, endings and Variant conformance; test against Markov's published geometry examples.",
         "Complete the interactive tutorial and verify human play as all four seats, legal bounded bot play, local saves and pass-and-play.",
@@ -3218,10 +3218,36 @@
         "2026-11-25: The pure rules package passed typecheck and 23 tests, including shared Variant conformance, 192-cell geometry, all three published wall-end diagonal examples, four-seat reserve setup, correct en passant, axis castling, checkmate elimination, team victory, and seeded replay/undo. The shared conformance helper now handles arbitrary first seats and alternating setup turns.",
         "2026-11-25: The team-aware Fortress bot passed typecheck and 4 tests, including legal setup, bounded fallback, and a legal turn from each seat. The English PWA, 12-step interactive tutorial, saved local/pass-and-play modes, four-seat authoritative Worker and isolated D1 archive are implemented.",
         "2026-11-25: `./init.sh` completed under Node 22.23.1 and full `npm run verify` passed. Fortress rules 23/23, bot 4/4, tutorial 2/2 and Worker 4/4 passed; browser suite 9/9 and production-preview PWA install/offline checks 2/2 passed.",
-        "2026-11-25: Python Playwright visual review covered the home and live board at 390px and 1440px. The 192-cell board fits the phone viewport, the complete tutorial succeeds at both widths, and Chromium reports no PWA installability errors. Melon stage and restart/restore smoke remain.",
-        "2026-11-25: GitHub run 45551463628 for 266be20 failed because the shared seeded-game and attacked-square conformance tests exceeded Vitest's five-second limit on the hosted runner. Added per-check timeout configuration for Fortress only (20 seconds); no playouts, assertions, seeds or move limits changed. Fortress rules tests then passed 23/23 locally in 9.38 seconds and rules-core/Fortress typechecks passed. Push the narrow fix and rerun CI before staging."
+        "2026-11-25: Python Playwright visual review covered the home and live board at 390px and 1440px. The 192-cell board fits the phone viewport, the complete tutorial succeeds at both widths, and Chromium reports no PWA installability errors.",
+        "2026-11-25: GitHub run 45551463628 for 266be20 failed because the shared seeded-game and attacked-square conformance tests exceeded Vitest's five-second limit on the hosted runner. Added per-check timeout configuration for Fortress only (20 seconds); no playouts, assertions, seeds or move limits changed. Fortress rules tests passed 23/23 locally in 9.38 seconds; rules-core/Fortress typechecks and targeted ESLint passed. GitHub run 45552897158 for fc5577d passed full repository verification and every workspace build in 8m38s.",
+        "2026-11-25: Exact revision fc5577d3a53e6c90a572457bb24750b3b0e34e52 is staged on Melon at 127.0.0.1:19911 in ~/chaturanga-release.fortress.Gz3JGZ. Migration DB/0001_games.sql applied; the health endpoint returns {\"ok\":true,\"game\":\"fortress\"}; the PWA manifest and built assets are served.",
+        "2026-11-25: Headless Python Playwright checks against the built stage passed: the complete tutorial at phone/desktop widths; local save, reload and takeback; all four human seats against bots; phone board layout; offline reload/local play; four-seat private room and server-side rejection of an illegal move; reconnect; restart recovery with play continuing; copied-state restore with all four seats resuming and continuing; isolated original state; and missing-room handling. The temporary restore container and state copy were removed; the original stage remains healthy.",
+        "2026-11-25: fortress.beanroti.com returns no address from Melon. Public HTTPS/WebSocket smoke, Caddy promotion and catalog publication remain blocked until DNS resolves; keep the verified stage running."
       ],
-      "notes": "Four seats: top Red, right Blue, bottom White, left Black; Red+White vs Blue+Black. The tutorial labels stalemate and reserve-placement conventions as digital choices, not recovered historical rules. Use original prose and artwork. Melon is the target; public hostname is fortress.beanroti.com."
+      "notes": "Four seats: top Red, right Blue, bottom White, left Black; Red+White vs Blue+Black. The tutorial labels stalemate and reserve-placement conventions as digital choices, not recovered historical rules. Use original prose and artwork. Verified Melon stage is fc5577d on port 19911; public hostname fortress.beanroti.com has no DNS record, so HTTPS/WSS smoke and catalog publication remain blocked."
+    },
+    {
+      "id": "crazyhouse-001",
+      "product": "crazyhouse",
+      "priority": 181,
+      "area": "release",
+      "milestone": "M32",
+      "title": "Release Crazyhouse",
+      "user_visible_behavior": "Players learn the standard Crazyhouse rules and play against a bot, on one device, or in private two-seat invite rooms.",
+      "status": "in_progress",
+      "verification": [
+        "Implement orthodox chess plus Crazyhouse pockets, legal drops, pawn rules, promoted-piece reversion, endings and Variant conformance; compare rules and seeded games with Fairy-Stockfish's crazyhouse preset.",
+        "Complete the interactive tutorial and verify human play as both colors, legal bounded bot play, local saves, takeback and pass-and-play.",
+        "Verify private two-seat rooms, server-side legality, reconnect, built PWA and state after container restart and copied-state restore on Melon.",
+        "Promote and smoke public HTTPS/WebSocket and publish the catalog entry once the hostname resolves."
+      ],
+      "evidence": [
+        "2026-11-25: Selected the standard online Crazyhouse rules documented by FICS and Lichess. The list entry does not identify competing Crazyhouse editions; the 2020 research review describes its growth on online servers.",
+        "2026-11-25: Created apps/crazyhouse/docs/PLAN.md, apps/crazyhouse/docs/reports/Crazyhouse rules and rights.md, packages/crazyhouse/RULES.md and apps/crazyhouse/AGENTS.md. The rights review found no game-method permission gate; all code, art, rules explanations and tutorial content will be independently authored.",
+        "2026-11-25: Startup `npm run verify` passed under pinned Node 22.23.1 when run outside the sandbox. `./init.sh` could not sync uncached npm@11 in offline mode; sandboxed Worker tests also could not bind loopback ports.",
+        "2026-11-25: Directly probed the installed Fairy-Stockfish 0.7.10 `crazyhouse` preset: start FEN uses `[]`; captures enter pockets; drops use `P@square`; 100 halfmoves are adjudicated drawn; king versus king, a lone minor, and a lone minor in hand are not automatically drawn for insufficient material. Updated the rules contract to match."
+      ],
+      "notes": "Standard 8×8 two-player Crazyhouse: captures reverse color into the capturer's pocket; drops are legal except pawn drops on ranks one/eight; pawn-drop mate and same-file pawns are allowed; captured promoted pieces return as pawns. Fairy-Stockfish's rules, including no automatic insufficient-material adjudication, are recorded in packages/crazyhouse/RULES.md. Public hostname is crazyhouse.beanroti.com."
     }
   ]
 }

@@ -191,3 +191,9 @@ Mark "n/a" for categories that do not apply to the feature.
 | Handoff readiness | 2 | Congo's public gate is isolated; Jeson Mor is the next active Wave 1 product. |
 
 **Verdict:** Accept the Congo Melon staging checkpoint. Keep `congo-001` blocked only at public DNS/TLS, HTTPS/WebSocket smoke and directory publication because `congo.beanroti.com` has no DNS answer. The stage remains running.
+
+## Congo runtime dependency audit follow-up — 2026-11-25
+
+- Melon staging identified affected runtime versions Hono 4.13.7 and Zod 4.6.4. The lockfile now resolves Hono 4.13.22 and Zod 4.6.7, and `npm audit --omit=dev` reports no production advisories.
+- The no-force audit fix removed the two critical toolchain findings. Five findings remain in build/test dependencies; the offered fix would force a downgrade or major version change, so it was not applied. Full workspace verification, Congo production build, staged browser 5/5 and offline PWA 1/1 pass with the refreshed lock.
+- **Verdict:** Accept the dependency patch locally, but do not mark the Melon release checkpoint current until the patched lock passes exact-SHA CI and is staged/re-smoked. The existing port 19913 stage runs the prior runtime and should be kept loopback-only.

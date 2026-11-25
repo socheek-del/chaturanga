@@ -3267,7 +3267,7 @@
       "milestone": "M33",
       "title": "Release Congo",
       "user_visible_behavior": "Players learn the selected two-player Congo rules with an interactive tutorial and play against a bot, locally, or in a private online room.",
-      "status": "blocked",
+      "status": "in_progress",
       "verification": [
         "Research sources and rights; document the selected two-player rules, setup, river and drowning, animal movement, promotion, endings and open conventions before engine implementation.",
         "Implement a pure @chaturanga/congo Variant with focused rule tests, shared conformance, seeded replay and an external rules oracle where one matches the selected edition.",
@@ -3291,9 +3291,10 @@
         "2026-11-25: Staged that revision on Melon at 127.0.0.1:19913 in /home/melon/chaturanga-release.congo.yFqc4U; the Congo-only D1 migration applied and the health endpoint and PWA homepage returned 200.",
         "2026-11-25: Production build smoke on Melon passed 5/5 tutorial, bot, mobile-layout, invite, synchronized-move and reconnect scenarios, plus 1/1 installed offline reload. The room sync scenario now waits for both client WebSockets to be open before sending its move.",
         "2026-11-25: Restarted the staged container with a live two-seat room; both seats recovered two plies and accepted another move. Copied the stopped stage state to a separate restore container on port 19914; both stored seat identities recovered and continued synchronized four-ply play. Removed the restore container and copy; the primary stage is running and healthy.",
-        "2026-11-25: congo.beanroti.com has no DNS answer. No Caddy route or catalog entry was changed. Marked the feature blocked only at public DNS/TLS, HTTPS/WSS smoke and directory publication; keep the Melon stage running."
+        "2026-11-25: congo.beanroti.com has no DNS answer. No Caddy route or catalog entry was changed. Marked the feature blocked only at public DNS/TLS, HTTPS/WSS smoke and directory publication; keep the Melon stage running.",
+        "2026-11-25: Melon install audit found production Hono 4.13.7 and Zod 4.6.4 advisories. Updated the lock with compatible Hono 4.13.22 and Zod 4.6.7; `npm audit --omit=dev` reports zero production advisories. No `--force` update was used. The complete `npm run verify`, `npm run build:congo`, staged-runtime browser suite 5/5 and offline PWA 1/1 passed against the updated dependencies locally. Full `npm audit` still reports 5 build/test-only advisories (4 moderate in Workbox glob/minimatch and 1 high in happy-dom); npm only offers a forced downgrade/major change for those, so they remain a documented non-production gap. The current Melon stage still runs the pre-patch runtime and must be replaced after CI."
       ],
-      "notes": "Roadmap default: Demian Freeling's original two-player Congo. Rules, bounded bot, eight-lesson interactive tutorial, independent English PWA, local persistence and authoritative private rooms are implemented. Runtime commit 77cfac9949333c2f075e84c0f2ec185601366e3d passed exact-SHA GitHub CI and Melon stage smoke, restart and copied-state restore. Public release is blocked because congo.beanroti.com has no DNS answer; do not change Caddy or the catalog until DNS/TLS and public HTTPS/WebSocket smoke work. No matching external engine oracle exists, so source-backed fixtures are used. Use Melon; do not use Cloudflare without documenting a concrete Melon limitation."
+      "notes": "Roadmap default: Demian Freeling's original two-player Congo. Rules, bounded bot, eight-lesson interactive tutorial, independent English PWA, local persistence and authoritative private rooms are implemented. Runtime commit 77cfac9949333c2f075e84c0f2ec185601366e3d passed exact-SHA CI and Melon smoke/recovery. The refreshed lock pins patched Hono 4.13.22 and Zod 4.6.7; production audit is clean and local full verification/build/browser/offline checks pass. Commit and pass CI for the patch, then replace the loopback stage before treating the runtime checkpoint as complete. Public release remains blocked because congo.beanroti.com has no DNS answer; no Caddy/catalog change. Five audit findings remain only in dev/test dependencies and require breaking forced updates. No external engine oracle exists; use source-backed fixtures."
     },
     {
       "id": "jesonmor-001",
@@ -3303,7 +3304,7 @@
       "milestone": "M33",
       "title": "Release Jeson Mor",
       "user_visible_behavior": "Players learn the selected Jeson Mor rules and play against a bot or on one device, with private online play when supported by the selected edition.",
-      "status": "in_progress",
+      "status": "not_started",
       "verification": [
         "Research source and rights; select the documented Mongolian knight-game edition and record its center-square victory sequence and any unresolved conventions before engine implementation.",
         "Implement a pure @chaturanga/jesonmor Variant with focused rules, shared conformance, seeded replay and source-backed fixtures.",
@@ -3315,7 +3316,7 @@
       "evidence": [
         "2026-11-25: Selected as the next Wave 1 product after Congo in docs/CHESS-LIKE-ROADMAP.md; rules, source rights and a product contract have not yet been researched or implemented."
       ],
-      "notes": "Next roadmap entry: Jeson Mor. Start with primary and credible rules sources plus a rights review; independently author rules prose, tutorials, UI and art. The roadmap calls it a documented Mongolian knight game and requires verifying its center-square win sequence. Use Melon for deployment; do not use Cloudflare without a documented Melon limitation."
+      "notes": "Next Wave 1 entry after Congo. Rules, source rights and selected edition have not yet been researched or implemented. Start that work after the current Congo dependency patch is CI-verified and staged."
     }
   ]
 }

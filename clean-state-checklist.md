@@ -35,5 +35,8 @@
 - [x] Active room recovered both seats through container restart and continued; copied stopped-state restore recovered both seats and continued online play. Removed temporary restore resources and left primary stage healthy.
 - [x] `congo.beanroti.com` has no DNS answer. Public HTTPS/WSS, Caddy promotion and catalog publication are blocked; no public route or catalog entry was changed.
 - [x] Update feature evidence, plan, progress, rubric, quality and handoff state; keep the Congo stage running.
-- [ ] Research Jeson Mor rules and rights as the next Wave 1 product before implementation.
+- [ ] After the patched Congo runtime passes CI and Melon stage smoke, begin Jeson Mor edition and rights research before implementation.
+- [x] A post-stage npm audit found Hono 4.13.7 and Zod 4.6.4 advisories in production dependencies. Updated the shared lock to Hono 4.13.22/Zod 4.6.7; production audit is clean. No force update was used.
+- [x] Full workspace verification, Congo production build, staged browser E2E 5/5 and offline PWA 1/1 passed after the compatible dependency updates.
+- [ ] Commit the patched lock, confirm exact-SHA CI, and rebuild/re-stage Congo at port 19914; the currently running port 19913 stage still uses the old runtime lock.
 - [x] Congo bot package typecheck/lint and 3 tests passed for both colors, terminal Lion capture, Monkey route and river positions.

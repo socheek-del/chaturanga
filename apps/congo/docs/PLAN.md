@@ -31,5 +31,6 @@ The package contract is [`packages/congo/RULES.md`](../../../packages/congo/RULE
 - Reserve local web/Worker ports `5196`/`8796` unless a later port inventory finds a conflict.
 - Deployment target: Melon via `ssh melon`. Keep a separate Workerd data directory and D1 for this product.
 - Stage: port `19913`, directory `/home/melon/chaturanga-release.congo.yFqc4U`, container `chaturanga-stage-congo-19913`; dedicated migration applied and primary stage restored to healthy/running after restart and copied-state verification.
+- Dependency audit follow-up: the staged `77cfac9` runtime used Hono 4.13.7 and Zod 4.6.4. The shared lock now resolves Hono 4.13.22 and Zod 4.6.7; `npm audit --omit=dev` is clean. Full audit still reports five build/test-only advisories; the available npm fix would force a major change/downgrade, so no force was used. Full local verification, Congo build, and browser/offline suites pass with the refreshed lock. Re-stage the patched runtime after its exact-SHA CI passes, then keep that stage running.
 - Release status: `congo.beanroti.com` has no DNS answer. Keep the stage running; do not change Caddy or the family/catalog directory until DNS/TLS and public mode smoke pass.
 - Do not add Congo to the family catalog until the public route and product smoke pass.

@@ -47,3 +47,22 @@ Mark "n/a" for categories that do not apply to the feature.
 **Verdict:** Accept the staged implementation. Public release remains blocked until `fortress.beanroti.com` resolves and HTTPS/WebSocket smoke passes.
 
 **Required follow-up:** Configure the hostname's DNS, then promote the verified Melon stage, run public smoke and publish the directory entry. Revisit rules fidelity if an inspectable Petrov scan or reference engine becomes available.
+
+## Crazyhouse rules-engine increment review — 2026-11-25
+
+| Category | Score | Notes |
+| --- | ---: | --- |
+| Correctness | 2 | Captures, drops, check blocking, promoted-piece reversion, special moves and endings are implemented. |
+| Rules fidelity | 2 | Shared Variant conformance, focused fixtures and 16 seeded games match Fairy-Stockfish legal moves, SAN, FEN and results. |
+| Verification | 2 | Package typecheck, targeted ESLint and all 30 package tests passed. |
+| Scope discipline | 2 | Changes stay in the Crazyhouse package and its product notes. |
+| Localization | n/a | The rules package adds no user-visible strings. |
+| UX & design | n/a | Product interface is not part of this increment. |
+| Product separation | 2 | Crazyhouse has its own package and rules contract. |
+| Reliability | 2 | FEN round-trip, undo and seeded server-style replay pass. |
+| Maintainability | 2 | Wrapper boundaries, pocket order, draw behavior and oracle fixtures are documented. |
+| Handoff readiness | 2 | `feature_list.json`, `claude-progress.md`, plan and session handoff name the next implementation step. |
+
+**Verdict:** Accept the Crazyhouse rules-engine increment. The full product remains in progress until its bot, tutorial, PWA, online rooms and Melon stage are verified.
+
+**Required follow-up:** Implement `@chaturanga/crazyhouse-ai`, then continue through the tutorial, product and online milestones. Run full CI after the engine commit.

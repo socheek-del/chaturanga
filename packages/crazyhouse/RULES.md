@@ -33,7 +33,7 @@ This package implements standard two-player Crazyhouse: orthodox chess where cap
 ## Serialization
 
 - Crazyhouse FEN extends ordinary FEN with the pocket contents in square brackets immediately after the board placement. The `~` suffix marks a promoted pawn currently represented by another piece.
-- The product's exact pocket ordering and repetition-state representation are serialization details. They must round-trip every legal game state and remain stable across local saves, online replay and undo.
+- The product orders pocket pieces `QRBNPqrbnp` (white then black, each by queen/rook/bishop/knight/pawn) and uses the first four Crazyhouse FEN fields as repetition identity, including pockets and promotion markers. These serialization details must remain stable across local saves, online replay and undo.
 
 ## Verification contract
 

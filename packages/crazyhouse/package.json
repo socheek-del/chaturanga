@@ -1,0 +1,21 @@
+{
+  "name": "@chaturanga/crazyhouse",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "GPL-3.0-or-later",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@chaturanga/chess": "*",
+    "@chaturanga/rules-core": "*"
+  },
+  "devDependencies": {
+    "ffish": "^0.7.10"
+  }
+}

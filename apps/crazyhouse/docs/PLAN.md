@@ -20,7 +20,7 @@ Use Crazyhouse FEN with bracketed pockets and `~` promoted-pawn markers. FEN dia
 
 ## Implementation sequence
 
-1. Pure `@chaturanga/crazyhouse` rules package, FEN and full chess/drop behavior; conformance plus Fairy-Stockfish lock-step tests.
+1. [x] Pure `@chaturanga/crazyhouse` rules package, FEN and full chess/drop behavior; shared Variant conformance, focused Fairy-Stockfish fixtures and 16 seeded lock-step games pass.
 2. Bounded single-player bot with pocket-aware evaluation and legal fallback; exercise play as both colors.
 3. Standalone English PWA with custom Crazyhouse identity, board and hand trays, tutorial, local saves, takeback and pass-and-play.
 4. Server-validated invite rooms, two-seat reconnect and isolated persistent storage.
@@ -28,7 +28,7 @@ Use Crazyhouse FEN with bracketed pockets and `~` promoted-pawn markers. FEN dia
 
 ## Open release risks
 
-- Keep probing dropped-pawn double-step, drop move notation and draw semantics against the bundled Fairy-Stockfish version while implementing the engine.
+- Direct probes and focused tests confirm dropped-pawn double-step, `P@square` drop notation and the selected draw behavior against bundled Fairy-Stockfish 0.7.10.
 - Crazyhouse does not have one universal FEN dialect. Keep the bracket-pocket format and promoted marker documented and stable.
 - The Crazyhouse hostname is `crazyhouse.beanroti.com`; Melon DNS may need to be added before public promotion.
 - Use original rules prose, interface, artwork and code. The rights review identified no permission gate for the game method itself; do not copy platform expression or branding.

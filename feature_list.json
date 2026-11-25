@@ -3214,7 +3214,9 @@
       ],
       "evidence": [
         "2026-11-25: Selected Petrov's historical Russian four-player edition because the Wikipedia entry identifies it and Markov identifies Petrov's first-hand descriptions as the strongest rules source. No evidence establishes a most-popular edition.",
-        "2026-11-25: Research report, product plan and digital rules contract created under apps/fortress/ and packages/fortress/RULES.md. Original Petrov scans were not directly accessible; unresolved stalemate and special cases are called out as explicit reconstruction choices."
+        "2026-11-25: Research report, product plan and digital rules contract created under apps/fortress/ and packages/fortress/RULES.md. Original Petrov scans were not directly accessible; unresolved stalemate and special cases are called out as explicit reconstruction choices.",
+        "2026-11-25: The pure rules package passed typecheck and 23 tests, including shared Variant conformance, 192-cell geometry, all three published wall-end diagonal examples, four-seat reserve setup, correct en passant, axis castling, checkmate elimination, team victory, and seeded replay/undo. The shared conformance helper now handles arbitrary first seats and alternating setup turns.",
+        "2026-11-25: The new team-aware Fortress bot passed typecheck and 4 tests, including legal setup, bounded fallback, and a legal turn from each of the four seats. Product UI, tutorial, four-seat online rooms, full workspace verification, and Melon staging remain unfinished."
       ],
       "notes": "Four seats: top Red, right Blue, bottom White, left Black; Red+White vs Blue+Black. The English tutorial must label the selected stalemate and reserve-placement conventions as digital choices, not recovered historical rules. Use original prose and artwork. Melon is the target; public hostname is fortress.beanroti.com."
     }

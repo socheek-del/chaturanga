@@ -7,6 +7,7 @@ import { squareNameOf, squareOf } from '../coords';
 import { FenError, IllegalMoveError } from '../errors';
 import type { GameStatus } from '../types';
 import type { Variant, VariantGame } from '../variant';
+import { usesSetupPhase } from '../variant';
 import { mulberry32 } from './random';
 
 export interface ConformanceFixtures {
@@ -35,7 +36,7 @@ export function describeVariantConformance<G extends VariantGame<string>>(
       const game = variant.createGame();
       expect(game.fen()).toBe(variant.startFen);
       expect(variant.createGame(variant.startFen).fen()).toBe(variant.startFen);
-      expect(game.turn).toBe('w');
+      expect(game.turn).toBe(players[0]);
       expect(game.moves()).toEqual([]);
       expect(game.lastMove()).toBeNull();
       expect(game.status()).toEqual({ kind: 'ongoing' });
@@ -80,11 +81,16 @@ export function describeVariantConformance<G extends VariantGame<string>>(
           expect(new Set(legal).size).toBe(legal.length);
           const uci = legal[Math.floor(rand() * legal.length)]!;
           const mover = game.turn;
+          const handCountBefore = game.hand(mover).length;
+          const inSetupPhase = usesSetupPhase(variant) && players.some((player) => game.hand(player).length > 0);
           const record = game.move(uci);
           expect(record).toMatchObject({ uci, color: mover, fenAfter: game.fen() });
           expect(squareNameOf(record.to, variant.files)).toBe(uci.match(/[a-p]\d{1,2}/g)!.at(-1));
           expect(game.lastMove()).toBe(record);
-          expect(game.turn).not.toBe(mover);
+          if (game.turn === mover) {
+            expect(inSetupPhase).toBe(true);
+            expect(game.hand(mover).length).toBeLessThan(handCountBefore);
+          }
           expect(game.pieceAt(record.to)?.color).toBe(mover);
           expect(game.checkedKingSquare() !== null).toBe(game.inCheck());
           fens.push(game.fen());

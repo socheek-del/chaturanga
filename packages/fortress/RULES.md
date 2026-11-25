@@ -6,7 +6,7 @@ This package implements the Petrov-described Russian fortress game named by the 
 
 - Coordinates use files `a`–`p` and ranks `1`–`16`.
 - The core rectangle is `c3`–`n14`; its central 8×8 is `e5`–`l12`. The four corner fortresses are 4×4 blocks: `a1`–`d4`, `m1`–`p4`, `a13`–`d16`, and `m13`–`p16`. Each fortress overlaps a 2×2 corner patch of the core. Overlap squares are one cell. The union contains 192 playable cells in a 16×16 envelope; the non-fortress part of the four-handed board has 128 cells.
-- A fortress has two wall segments and two gate approaches. Sliding paths cannot cross walls or cut diagonally around a wall end. The wall layout follows the published Ludii reconstruction and Markov's route examples; the engine models walls as blocked cell-to-cell edges.
+- Each corner fort has two 2-edge walls meeting at a vertex. For the bottom-right fort, one wall lies between files `m|n` on ranks 3–4 and one lies between ranks `4|5` on files `m–n`; rotate this pattern for the other three forts. These walls match the published Ludii topology and Markov's forbidden diagonal examples: a diagonal touching a wall vertex is blocked, including a knight's diagonal leg. Sliding paths cannot cross a wall or cut diagonally around its end.
 - The ordinary armies occupy the four 2×8 arms around the central 8×8. Each has eight back-rank pieces and eight pawns facing inward. The back rank is rook, knight, bishop, queen, king, bishop, knight, rook in each seat's local left-to-right order; the king is on that player's right of the queen.
 
 ## Players and setup

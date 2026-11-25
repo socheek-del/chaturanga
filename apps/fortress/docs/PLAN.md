@@ -15,17 +15,19 @@ The Wikipedia entry points to Russian four-player Fortress Chess, not generic fo
 
 ## Rules decisions to implement
 
-The current rules contract is `packages/fortress/RULES.md`. It records the 192-cell layout, the two-wall gate topology, seat/team mapping, normal chess movement with the historical knight route, reserve placement, promotion, team checkmate and immediate piece removal. The implementation must encode the walls as blocked edges and verify Markov's published example routes, including forbidden diagonal shortcuts at wall ends.
+The current rules contract is `packages/fortress/RULES.md`. It records the 192-cell layout, the exact rotated two-wall gate topology, seat/team mapping, normal chess movement with the historical knight route, reserve placement, promotion, team checkmate and immediate piece removal. The implementation must encode the walls as blocked edges and verify Markov's published example routes, including forbidden diagonal shortcuts at wall ends.
 
 Digital reconstruction choices are explicit: top Red starts; the three reserves are placed by the player during setup; orthodox en passant and castling apply along each seat's axis subject to fortress walls; promotion is limited to ordinary home ranks; a stalemated active seat causes an immediate draw. Verify every board-edge and wall interaction with fixtures before release.
 
 ## Implementation sequence
 
-1. Pure rules package: board mask, wall edges, FEN, 4-seat setup and turns, movement, check, elimination, endings, serialization, and Variant conformance.
-2. Bot package: bounded team-aware search with legal fallback; exercise a human against bots from all four seats.
+1. Pure rules package: board mask, wall edges, FEN, 4-seat setup and turns, movement, check, elimination, endings, serialization, and Variant conformance. **Implemented and locally verified.**
+2. Bot package: bounded team-aware search with legal fallback; exercise a human against bots from all four seats. **Implemented and locally verified at the package boundary.**
 3. Product shell: own design, 16×16 board rendering, setup input, saves, pass-and-play, bot play, move history and accessible tutorials.
 4. Worker: four-seat invite rooms, authoritative rules validation, reconnect and isolated database.
 5. CI/build and browser verification; stage exact passing SHA on Melon, test PWA and four-seat rooms across restart, then public HTTPS/WebSocket smoke when `fortress.beanroti.com` resolves.
+
+The shared alpha-beta search and room kit currently model two seats. Fortress uses its own team-aware Max-n bot and will follow the Three-player Chess product pattern for its four-seat worker, with all accepted moves replayed through this package.
 
 ## Open release risks
 

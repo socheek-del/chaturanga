@@ -258,6 +258,9 @@ export function Board({
         continue;
       }
       const piece = bySquare.get(square);
+      const cellColor = theme.boardAlternate && ((square % files) + Math.floor(square / files)) % 2 === 1
+        ? theme.boardAlternate
+        : theme.board;
       const isTarget = targetSet.has(square);
       const isPromotion = promotionSet.has(square);
       const isLast = marks(lastMove, square);
@@ -289,7 +292,7 @@ export function Board({
           onPointerDown={(e) => startDrag(square, e)}
           onClick={() => onSquareClick?.(square)}
           className="relative min-h-0 min-w-0 select-none focus-visible:z-10 focus-visible:outline-3 focus-visible:outline-secondary"
-          style={points ? undefined : { background: theme.board }}
+          style={points ? undefined : { background: cellColor }}
         >
           {attack && !(points && piece) && (
             <span aria-hidden className={mark} style={{ background: attackFill(attack, ownTint, enemyTint) }} />
@@ -356,7 +359,7 @@ export function Board({
             <span
               aria-hidden
               className="absolute right-[5%] top-[5%] h-[30%] w-[30%] rounded-full border-[3px]"
-              style={{ borderColor: theme.hint, background: theme.board }}
+              style={{ borderColor: theme.hint, background: cellColor }}
             />
           )}
         </button>,

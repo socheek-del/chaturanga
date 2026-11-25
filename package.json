@@ -55,8 +55,10 @@
     "dev:jesonmor": "concurrently -n worker,web -c yellow,green \"npm run dev -w apps/jesonmor/worker\" \"npm run dev -w apps/jesonmor/web\"",
     "build:jesonmor": "npm run build -w apps/jesonmor/web && npm run build -w apps/jesonmor/worker",
     "dev:suffragetto": "concurrently -n worker,web -c yellow,green \"npm run dev -w apps/suffragetto/worker\" \"npm run dev -w apps/suffragetto/web\"",
+    "dev:rithmomachia": "npm run dev -w apps/rithmomachia/web",
     "build:suffragetto": "npm run build -w apps/suffragetto/web && npm run build -w apps/suffragetto/worker",
-    "build:dameo": "npm run build -w apps/dameo/web && npm run build -w apps/dameo/worker"
+    "build:dameo": "npm run build -w apps/dameo/web && npm run build -w apps/dameo/worker",
+    "build:rithmomachia": "npm run build -w apps/rithmomachia/web"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

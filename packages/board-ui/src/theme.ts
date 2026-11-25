@@ -1,6 +1,8 @@
 /** Colours the board and hand trays paint with. Each product defines its own themes. */
 export interface BoardTheme {
   board: string;
+  /** Optional alternating square surface; omitted for boards with one uniform cell color. */
+  boardAlternate?: string;
   line: string;
   coordinate: string;
   selected: string;

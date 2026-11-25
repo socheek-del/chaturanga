@@ -119,7 +119,7 @@ describe('Rithmomachia (the common rules family)', () => {
     const siegeGame = new Game(fen(siege));
     expect(siegeGame.legalUci()).toContain('b1b2z');
     const siegeRecord = siegeGame.move('b1b2z');
-    expect(siegeRecord.captures).toHaveLength(4);
+    expect(siegeRecord.captures).toHaveLength(5);
     expect(siegeGame.hand('w')).toHaveLength(5);
     expect(siegeGame.pieceAt(squareAt('b', 2))).toBeNull();
   });
@@ -144,6 +144,14 @@ describe('Rithmomachia (the common rules family)', () => {
     expect(game.status()).toEqual({ kind: 'ongoing' });
     game.move('a8b9');
     expect(game.status()).toEqual({ kind: 'progression', winner: 'w' });
+  });
+
+  it('accepts any equal spacing on a straight progression line', () => {
+    const position = blank();
+    put(position, 'w', 'c2', 'b', 9);
+    put(position, 'w', 'c4', 'd', 9);
+    put(position, 'w', 'c6', 'f', 9);
+    expect(new Game(fen(position)).status()).toEqual({ kind: 'progression', winner: 'w' });
   });
 
   it('adjudicates repetition and the 200-ply non-capture limit, and awards a blocked side loss', () => {

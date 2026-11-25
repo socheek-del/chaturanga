@@ -1,0 +1,269 @@
+{
+  "home": {
+    "edition": "THE COMMON MEDIEVAL RULES FAMILY",
+    "title": "Rithmomachia",
+    "intro": "Move the numbers. Make the sequence. Learn a game where pieces meet through arithmetic, then build a line that wins by progression.",
+    "play": "Play a bot",
+    "playOnline": "Play online",
+    "playBot": "Play against a bot",
+    "playLocal": "Pass and play",
+    "botTitle": "Against a bot",
+    "localTitle": "Two players · one device",
+    "startLearning": "Learn the rules",
+    "allLessons": "All lessons",
+    "lastResult": "Last lesson: {{stars}} stars",
+    "signature": "Move the numbers. Make the sequence.",
+    "diagram": "OPENING FIELD · 128 SQUARES",
+    "coordinates": "FILES A–H · RANKS 1–16",
+    "boardNote": "EIGHT FILES · SIXTEEN RANKS",
+    "brandNote": "The Number Cabinet",
+    "indexLabel": "FIELD NOTES",
+    "editionNote": "A modern digital edition of the common medieval and Renaissance rules family.",
+    "footer": "Independent digital rules edition · English"
+  },
+  "nav": {
+    "label": "Main navigation",
+    "home": "Return to home",
+    "play": "Play",
+    "lessons": "Lessons",
+    "start": "Start lesson",
+    "leave": "Leave lesson",
+    "leaveGame": "Leave game"
+  },
+  "modes": {
+    "online": "Online play"
+  },
+  "board": {
+    "label": "Rithmomachia board",
+    "square": "{{square}}, {{piece}}"
+  },
+  "colors": {
+    "w": "White",
+    "b": "Black"
+  },
+  "pieces": {
+    "empty": "empty"
+  },
+  "learn": {
+    "kicker": "AN INTERACTIVE RULES TUTORIAL",
+    "title": "Learn the numbers",
+    "intro": "Practice each movement shape, arithmetic capture, reserve, and ending with the game’s real rules engine.",
+    "begin": "Begin",
+    "hint": "Show hint",
+    "exit": "Leave lesson",
+    "progress": "Lesson progress",
+    "check": "Check answer",
+    "continue": "Continue",
+    "correct": "Correct",
+    "wrong": "Try another route",
+    "tryAgain": "Try again",
+    "complete": "Lesson complete",
+    "stars": "{{count}} stars",
+    "steps": "steps"
+  },
+  "play": {
+    "chooseRoute": "Choose a complete capture route",
+    "turn": "{{color}} to move",
+    "check": "Check",
+    "captured": "Captured",
+    "clockOf": "{{color}}’s clock",
+    "moves": "Moves",
+    "noMoves": "No moves yet",
+    "first": "First move",
+    "back": "Previous move",
+    "forward": "Next move",
+    "last": "Latest move",
+    "flip": "Flip board",
+    "undo": "Take back",
+    "resign": "Resign",
+    "backToLive": "Return to the current position",
+    "newGame": "New game",
+    "rematch": "Play again",
+    "review": "Review moves",
+    "cancel": "Cancel",
+    "resignConfirm": "Resign for {{color}}?",
+    "result": {
+      "whiteWins": "White wins",
+      "blackWins": "Black wins",
+      "draw": "Draw"
+    },
+    "reason": {
+      "stalemate": "The player with no legal action loses.",
+      "elimination": "All opposing men and kings were captured.",
+      "repetition": "The same position occurred for the third time.",
+      "timeout": "Time ran out.",
+      "abandon": "A player did not reconnect in time.",
+      "resign": "A player resigned.",
+      "agreement": "Both players agreed to a draw.",
+      "progression": "Three equally spaced values formed an arithmetic progression.",
+      "counting": "No capture happened for 200 plies."
+    },
+    "offerDraw": "Offer a draw",
+    "drawOffered": "Draw offered. Make your move; your opponent can accept or decline.",
+    "drawOfferReceived": "Your opponent offers a draw.",
+    "acceptDraw": "Accept draw",
+    "declineDraw": "Decline",
+    "timeControl": "Time control",
+    "noClock": "No clock",
+    "custom": "Custom",
+    "minutes": "Minutes",
+    "increment": "Increment (seconds)",
+    "categories": {
+      "bullet": "Bullet",
+      "blitz": "Blitz",
+      "rapid": "Rapid",
+      "classical": "Classical"
+    },
+    "chooseCapture": "Choose the pyramid capture",
+    "reserve": "{{color}} reserve",
+    "reservePiece": "{{count}} × {{name}}"
+  },
+  "setup": {
+    "kicker": "CHOOSE YOUR GAME",
+    "title": "Set up a game",
+    "intro": "Choose a bounded bot or share the board with someone beside you.",
+    "mode": "PLAY MODE",
+    "botMode": "Play a bot",
+    "botHint": "Six fixed-budget strengths, from beginner to master.",
+    "localMode": "Pass and play",
+    "localHint": "Take turns on the same board and device.",
+    "strength": "BOT STRENGTH",
+    "levelCount": "{{count}} levels",
+    "seat": "YOUR SIDE",
+    "playAs": "Play as",
+    "blackNote": "Black moves first in this edition.",
+    "localPassNote": "Black moves first. Pass the device after each turn. The game saves on this device, so you can return later.",
+    "start": "Start game",
+    "firstTurn": "Black moves first. If you choose White, the bot makes the opening move."
+  },
+  "game": {
+    "botEyebrow": "COMPUTER · {{name}}",
+    "localEyebrow": "PASS AND PLAY · THIS DEVICE",
+    "savedOnDevice": "Saved on this device"
+  },
+  "computer": {
+    "you": "You",
+    "thinking": "{{name}} is thinking…",
+    "sideWhite": "White",
+    "sideBlack": "Black",
+    "sideRandom": "Random"
+  },
+  "online": {
+    "opponent": "Opponent",
+    "quickTitle": "Quick match",
+    "quickHint": "Find an opponent in the same time-control pool.",
+    "searching": "Searching the {{pool}} pool…",
+    "createTitle": "Create a private game",
+    "color": "Choose your side",
+    "create": "Create room",
+    "joinTitle": "Join with a room code",
+    "codeLabel": "Room code",
+    "join": "Join room",
+    "invalidCode": "Enter a valid six-character room code.",
+    "notFound": "That room could not be found.",
+    "serverError": "Online play is unavailable right now. Check your connection and try again.",
+    "connecting": "Connecting to the room…",
+    "reconnecting": "Connection lost. Reconnecting…",
+    "waitingTitle": "Your room is ready",
+    "shareHint": "Share this code or link with your opponent.",
+    "copyLink": "Copy invite link",
+    "copied": "Link copied",
+    "qrAlt": "QR code for the room invite link",
+    "waitingFor": "Waiting for your opponent",
+    "spectating": "You are watching this game.",
+    "offerDraw": "Offer a draw",
+    "drawOffered": "Draw offered",
+    "drawOfferReceived": "Your opponent offers a draw.",
+    "accept": "Accept",
+    "decline": "Decline",
+    "opponentDisconnected": "Your opponent has {{seconds}} seconds to reconnect.",
+    "rematchOffered": "Rematch offered",
+    "rematchReceived": "Your opponent wants a rematch."
+  },
+  "bots": {
+    "novice": {
+      "name": "Novice",
+      "description": "A gentle first opponent that often leaves a useful line open."
+    },
+    "apprentice": {
+      "name": "Apprentice",
+      "description": "Finds simple moves and learns to protect valuable numbers."
+    },
+    "arithmetician": {
+      "name": "Arithmetician",
+      "description": "Looks for equal values and short arithmetic captures."
+    },
+    "strategist": {
+      "name": "Strategist",
+      "description": "Plans captures and watches for a progression line."
+    },
+    "scholar": {
+      "name": "Scholar",
+      "description": "Searches several replies and guards the pyramid."
+    },
+    "master": {
+      "name": "Master",
+      "description": "The strongest fixed-budget opponent in this edition."
+    }
+  },
+  "family": {
+    "title": "More games"
+  },
+  "feedback": {
+    "link": "Send feedback",
+    "title": "Send feedback",
+    "close": "Close feedback form",
+    "type": "What would you like to share?",
+    "bug": "Report a problem",
+    "idea": "Suggest an improvement",
+    "details": "Details",
+    "placeholder": "Describe what happened or what would help.",
+    "note": "Please leave out private information.",
+    "publicNote": "Feedback may be visible to the project team.",
+    "owner": "Project team",
+    "send": "Send feedback",
+    "sending": "Sending…",
+    "sent": "Feedback sent",
+    "failed": "Feedback could not be sent.",
+    "rateLimited": "Please wait before sending more feedback.",
+    "network": "Check your connection and try again.",
+    "queued": "Feedback saved and waiting to send.",
+    "challengeFailed": "The request could not be verified. Try again.",
+    "continue": "Continue",
+    "handoff": "Continue to feedback",
+    "handedOff": "Feedback form opened in another tab.",
+    "closeTab": "You can close this tab now."
+  },
+  "shapes": {
+    "circle": "Circle",
+    "triangle": "Triangle",
+    "square": "Square",
+    "pyramid": "Pyramid"
+  },
+  "notebook": {
+    "title": "Position notebook",
+    "promptTitle": "Select a piece",
+    "prompt": "Its shape sets its reach. Its number sets the arithmetic of a capture.",
+    "captures": "Available captures",
+    "captureAt": "{{square}} · target {{value}}",
+    "ruleSource": "This edition follows the selected common medieval and Renaissance rules family.",
+    "movement": {
+      "circle": "One diagonal square in any direction.",
+      "triangle": "Exactly two clear squares along a rank or file.",
+      "square": "Exactly three clear squares along a rank or file.",
+      "pyramid": "Move by any surviving component shape; the face shows its current total."
+    }
+  },
+  "capture": {
+    "siegeAll": "Siege · take every remaining component",
+    "siegeChoice": "Siege · remove the whole pyramid ({{value}})",
+    "componentChoice": "Take {{shape}} {{value}} · pyramid remains {{remaining}}",
+    "takeComponent": "Take the {{shape}} worth {{value}}",
+    "unknownComponent": "Pyramid component for {{color}}"
+  },
+  "theme": {
+    "toggle": "Change color theme",
+    "light": "Light theme",
+    "dark": "Dark theme"
+  }
+}

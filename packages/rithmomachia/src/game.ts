@@ -39,26 +39,41 @@ function greatVictoryWinner(position: Position): Color | null {
       const file = middle % FILES;
       const rank = Math.floor(middle / FILES);
       for (const [dx, dy] of directions) {
-        const firstFile = file - dx;
-        const firstRank = rank - dy;
-        const lastFile = file + dx;
-        const lastRank = rank + dy;
-        if (firstFile < 0 || firstFile >= FILES || lastFile < 0 || lastFile >= FILES || firstRank < 0 || firstRank >= RANKS || lastRank < 0 || lastRank >= RANKS) continue;
-        const opponentHalf = color === 'w' ? (rank >= 8 && firstRank >= 8 && lastRank >= 8) : (rank < 8 && firstRank < 8 && lastRank < 8);
-        if (!opponentHalf) continue;
-        const first = position.board[firstRank * FILES + firstFile];
-        const last = position.board[lastRank * FILES + lastFile];
-        if (first?.color === color && last?.color === color && first.value + last.value === center.value * 2) return color;
+        for (let distance = 1; ; distance++) {
+          const firstFile = file - dx * distance;
+          const firstRank = rank - dy * distance;
+          const lastFile = file + dx * distance;
+          const lastRank = rank + dy * distance;
+          if (
+            firstFile < 0 || firstFile >= FILES || lastFile < 0 || lastFile >= FILES ||
+            firstRank < 0 || firstRank >= RANKS || lastRank < 0 || lastRank >= RANKS
+          ) break;
+          const opponentHalf = color === 'w'
+            ? rank >= 8 && firstRank >= 8 && lastRank >= 8
+            : rank < 8 && firstRank < 8 && lastRank < 8;
+          if (!opponentHalf) continue;
+          const first = position.board[firstRank * FILES + firstFile];
+          const last = position.board[lastRank * FILES + lastFile];
+          if (first?.color === color && last?.color === color && first.value + last.value === center.value * 2) return color;
+        }
       }
     }
   }
   return null;
 }
 
-function sanFor(action: Action, moved: RithPiece): string {
-  if (action.kind === 'drop') return `${action.type.toUpperCase()}@${squareName(action.to)}`;
-  if (action.kind === 'capture') return `${moved.type.toUpperCase()}:${squareName(action.from)}×${squareName(action.to)}${action.uci.slice(-1).match(/[a-kz]/) ? ` [${action.uci.slice(-1)}]` : ''}`;
-  return `${moved.type.toUpperCase()}:${squareName(action.from)}–${squareName(action.to)}`;
+function pieceNotation(piece: RithPiece): string {
+  const shape = { circle: '○', triangle: '△', square: '□', pyramid: '◇' }[piece.shape];
+  return `${shape}${piece.value}`;
+}
+
+function sanFor(action: Action, moved: RithPiece, capturedPieces: readonly RithPiece[] = []): string {
+  if (action.kind === 'drop') return `${pieceNotation(moved)}@${squareName(action.to)} (reserve)`;
+  if (action.kind === 'capture') {
+    const taken = capturedPieces.map(pieceNotation).join(' + ');
+    return `${pieceNotation(moved)}:${squareName(action.from)}×${squareName(action.to)} · ${taken}`;
+  }
+  return `${pieceNotation(moved)}:${squareName(action.from)}–${squareName(action.to)}`;
 }
 
 export class Game {
@@ -132,11 +147,11 @@ export class Game {
     this.repetitions.set(key, (this.repetitions.get(key) ?? 0) + 1);
     const record: VariantMoveRecord<Color> = {
       uci,
-      san: sanFor(action, moved),
+      san: sanFor(action, moved, captured ? [captured, ...captures] : []),
       color: mover,
       piece: asPiece(moved),
       captured: captured ? asPiece(captured) : null,
-      ...(captures.length > 0 ? { captures: captures.map(asPiece) } : {}),
+      ...(captures.length > 0 ? { captures: [captured!, ...captures].map(asPiece) } : {}),
       action: action.kind,
       to: action.to,
       fenAfter: this.fen(),

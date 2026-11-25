@@ -65,7 +65,13 @@ modern-source text, tables, illustrations, or library scans.
    deterministic serialization, replay, undo, and conformance.
 4. [x] Add bounded bots for both colors and position-level tests.
 5. [x] Write the product design brief before UI implementation (`docs/design.md`, proposal).
-6. [ ] Build the interactive tutorial and independent offline-capable PWA; verify English keys.
+6. [x] Build the interactive tutorial and independent offline-capable PWA. Thirteen lessons across three
+   units cover every selected rule; `RULE_LESSONS` maps each convention to a lesson and lesson exercises
+   run through the authoritative engine. Web checks passed 55/55, including lesson coverage and complete
+   English locale checks. Production build precaches the app and local font/license assets. Headless Chromium
+   verified bot play and reply, a correct tutorial move, service-worker control and offline reload; at 390px
+   there is no horizontal overflow and the 8×16 lesson board fits below its prompt. Full workspace
+   verification passed with loopback access.
 7. [ ] Add isolated private rooms and the server-side rules engine.
 8. [ ] Pass workspace verification, exact-SHA CI, Melon stage, offline, room/restart/restore, and
    mobile browser checks; then recheck DNS/TLS and branding before promotion.

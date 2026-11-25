@@ -73,6 +73,14 @@ export interface GameScreenProps<G extends VariantGame> {
   describePromotion?: (piece: Piece) => string;
   /** Product-translated title for the route picker used when legal moves share endpoints. */
   routeChoiceTitle?: string;
+  /** Describes a game-specific route choice such as taking one pyramid component. */
+  describeRouteChoice?: (uci: string, path: readonly Square[]) => ReactNode;
+  /** Tall boards can opt into page scrolling instead of shrinking to fit the phone viewport. */
+  boardSizing?: 'viewport' | 'scroll';
+  /** Piece type shown in each player bar for games without kings. */
+  avatarType?: string;
+  /** Product-specific position notes, rendered in the board sidebar. */
+  renderPositionDetails?: (game: G, selected: Square | null) => ReactNode;
   /** Required when the variant has hands: names a tray and a piece type in it. */
   handLabel?: (color: Color) => string;
   describeHandPiece?: (type: string, count: number) => string;
@@ -119,6 +127,10 @@ export function GameScreen<G extends VariantGame>({
   renderCounting,
   describePromotion,
   routeChoiceTitle,
+  describeRouteChoice,
+  boardSizing = 'viewport',
+  avatarType,
+  renderPositionDetails,
   handLabel,
   describeHandPiece,
   boardOverlay,
@@ -169,6 +181,7 @@ export function GameScreen<G extends VariantGame>({
   const placing = inSetupPhaseOf(variant, game);
   const aspect = variant.files / variant.ranks;
   const fit = useFittedBoard(aspect);
+  const boardStyle = boardSizing === 'viewport' ? fit.style : undefined;
   const input = useMoveInput({
     game,
     version,
@@ -211,6 +224,7 @@ export function GameScreen<G extends VariantGame>({
       active={!result && game.turn === color}
       rotated={rotated}
       renderPiece={renderPiece}
+      avatarType={avatarType}
     />
   );
 
@@ -250,11 +264,11 @@ export function GameScreen<G extends VariantGame>({
         style={{ '--board-aspect': aspect } as CSSProperties}
       >
         {/* Bars take the board's width so they stay aligned with it; trays keep the full width so pieces never wrap. */}
-        <div className="mx-auto w-full" style={fit.style}>
+        <div className="mx-auto w-full" style={boardStyle}>
           {bar(top, rotateTopBar)}
         </div>
         {variant.hasHands && tray(top)}
-        <div ref={fit.boardRef} className="mx-auto w-full" style={fit.style}>
+        <div ref={fit.boardRef} className="mx-auto w-full" style={boardStyle}>
         <Board
           pieces={shown.pieces()}
           theme={theme}
@@ -272,7 +286,7 @@ export function GameScreen<G extends VariantGame>({
           checkSquare={shown.checkedKingSquare()}
           hint={viewPly === null ? hint : null}
           attackMap={attacks}
-          animate={viewPly === null && last ? { from: last.from, to: last.to, key: `${livePly}` } : null}
+          animate={viewPly === null && last && lastRecord?.action !== 'capture' ? { from: last.from, to: last.to, key: `${livePly}` } : null}
           selected={input.selected}
           targets={input.targets}
           promotionTargets={input.promotionTargets}
@@ -286,7 +300,7 @@ export function GameScreen<G extends VariantGame>({
         />
         </div>
         {variant.hasHands && tray(orientation)}
-        <div className="mx-auto w-full" style={fit.style}>
+        <div className="mx-auto w-full" style={boardStyle}>
           {bar(orientation)}
         </div>
       </div>
@@ -305,6 +319,7 @@ export function GameScreen<G extends VariantGame>({
               : t('play.turn', { color: t(`colors.${game.turn}`) }) + (game.inCheck() ? ` · ${t('play.check')}` : '')}
         </Card>
         {status}
+        {renderPositionDetails?.(game, input.selected)}
         {input.canPromoteInPlace && (
           <Button variant="warning" data-testid="promote-in-place" onClick={() => input.promoteInPlace()}>
             {t('play.promote')}
@@ -430,7 +445,8 @@ export function GameScreen<G extends VariantGame>({
               data-testid="choose-route"
               onClick={() => input.chooseRoute(choice.uci)}
             >
-              {[input.pendingRoute!.from, ...choice.path].map((square) => squareNameOf(square, variant.files)).join(' → ')}
+              {describeRouteChoice?.(choice.uci, [input.pendingRoute!.from, ...choice.path])
+                ?? [input.pendingRoute!.from, ...choice.path].map((square) => squareNameOf(square, variant.files)).join(' → ')}
             </Button>
           ))}
         </div>

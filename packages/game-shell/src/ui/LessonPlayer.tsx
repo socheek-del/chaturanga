@@ -2,7 +2,7 @@ import { Board, type BoardHandle, type BoardTheme, HandTray, parseUci, useMoveIn
 import { type Color, type Piece, type Square, squareNameOf, squareOf, type Variant, type VariantGame } from '@chaturanga/rules-core';
 import { Button, Card, cn, Modal, ProgressBar } from '@chaturanga/ui';
 import { CheckCircle2, Star, X, XCircle } from 'lucide-react';
-import { type ReactNode, useEffect, useRef, useState } from 'react';
+import { type CSSProperties, type ReactNode, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { type L10n, type Lesson, type LessonStep, starsFor } from '../lessons';
 import { useFocusMode } from './focusMode';
@@ -30,6 +30,8 @@ export interface LessonPlayerProps<G extends VariantGame, Verify = never> {
   describeSquare: (square: string, piece: Piece | null) => string;
   /** Product-translated title for selecting between different legal capture routes. */
   routeChoiceTitle?: string;
+  /** Describes a game-specific route choice such as taking one pyramid component. */
+  describeRouteChoice?: (uci: string, path: readonly Square[]) => ReactNode;
   /** Describes a game-specific legal action (for example, a piece exchange) in a move lesson. */
   describeAction?: (uci: string) => ReactNode;
   /** Drawn beside the prompt; omit for a product without a mascot. */
@@ -173,14 +175,17 @@ function Prompt({
  * header and the actions, and the board shrinks to fit that space (a size container), so the actions are
  * never pushed off screen. Wider screens stack everything in the page flow.
  */
-function StepLayout({ prompt, board, below, actions }: { prompt: ReactNode; board?: ReactNode; below?: ReactNode; actions: ReactNode }) {
+function StepLayout({ prompt, board, below, actions, boardFitRatio = 1 }: { prompt: ReactNode; board?: ReactNode; below?: ReactNode; actions: ReactNode; boardFitRatio?: number }) {
   return (
     <>
       <div data-testid="lesson-body" className="flex flex-col gap-3 max-md:min-h-0 max-md:flex-1 max-md:overflow-y-auto md:gap-5">
         {prompt}
         {board ? (
           <div className="flex items-center justify-center max-md:min-h-36 max-md:flex-1 max-md:[container-type:size]">
-            <div className="mx-auto w-full max-w-[min(100%,calc(100dvh-22rem),28rem)] max-md:w-[min(100cqw,100cqh)] max-md:max-w-[28rem]">
+            <div
+              className="mx-auto w-full max-w-[min(100%,calc(100dvh-22rem),28rem)] max-md:w-[min(100cqw,calc(100cqh*var(--lesson-board-fit-ratio)))] max-md:max-w-[28rem]"
+              style={{ '--lesson-board-fit-ratio': boardFitRatio } as CSSProperties}
+            >
               {board}
             </div>
           </div>
@@ -347,6 +352,7 @@ function InfoStep<G extends VariantGame, Verify>(props: StepProps<G, Verify, Ext
   const [game] = useState(() => (step.fen ? props.variant.createGame(step.fen) : null));
   return (
     <StepLayout
+      boardFitRatio={props.variant.files / props.variant.ranks}
       prompt={<Prompt text={step.text} mood={moodFor(step.kind, feedback)} translate={props.translate} renderMascot={props.renderMascot} />}
       board={
         game && (
@@ -411,6 +417,7 @@ function MoveStep<G extends VariantGame, Verify>(props: StepProps<G, Verify, Ext
   return (
     <>
     <StepLayout
+      boardFitRatio={props.variant.files / props.variant.ranks}
       prompt={<Prompt text={step.text} mood={moodFor(step.kind, feedback)} translate={props.translate} renderMascot={props.renderMascot} />}
       board={
         <StepBoard
@@ -488,9 +495,10 @@ function MoveStep<G extends VariantGame, Verify>(props: StepProps<G, Verify, Ext
             data-testid="choose-route"
             onClick={() => input.chooseRoute(choice.uci)}
           >
-            {[input.pendingRoute!.from, ...choice.path]
-              .map((square) => squareNameOf(square, props.variant.files))
-              .join(' → ')}
+            {props.describeRouteChoice?.(choice.uci, [input.pendingRoute!.from, ...choice.path])
+              ?? [input.pendingRoute!.from, ...choice.path]
+                .map((square) => squareNameOf(square, props.variant.files))
+                .join(' → ')}
           </Button>
         ))}
       </div>
@@ -511,6 +519,7 @@ function SquaresStep<G extends VariantGame, Verify>(props: StepProps<G, Verify, 
   };
   return (
     <StepLayout
+      boardFitRatio={props.variant.files / props.variant.ranks}
       prompt={<Prompt text={step.text} mood={moodFor(step.kind, feedback)} translate={props.translate} renderMascot={props.renderMascot} />}
       board={
         <StepBoard
@@ -545,6 +554,7 @@ function QuizStep<G extends VariantGame, Verify>(props: StepProps<G, Verify, Ext
   const [hintShown, setHintShown] = useState(false);
   return (
     <StepLayout
+      boardFitRatio={props.variant.files / props.variant.ranks}
       prompt={<Prompt text={step.text} mood={moodFor(step.kind, feedback)} translate={translate} renderMascot={props.renderMascot} />}
       board={game && <StepBoard props={props} game={game} />}
       below={

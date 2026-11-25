@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f5f1e7"/>
+  <path d="M0 505h1200" stroke="#205b4d" stroke-width="3"/>
+  <path d="M0 513h1200" stroke="#9a5d19" stroke-opacity=".45"/>
+  <text x="88" y="104" fill="#205b4d" font-family="sans-serif" font-size="18" font-weight="700" letter-spacing="4">THE COMMON MEDIEVAL RULES FAMILY</text>
+  <text x="82" y="278" fill="#202b27" font-family="Georgia,serif" font-size="94">Rithmomachia</text>
+  <text x="92" y="340" fill="#53615a" font-family="sans-serif" font-size="28">Move the numbers. Make the sequence.</text>
+  <g transform="translate(810 53)">
+    <rect width="286" height="520" fill="#e9e2d2" stroke="#205b4d" stroke-width="8"/>
+    <g fill="#e8ddc4">
+      <path d="M0 0h35v32H0zm70 0h35v32H70zm70 0h35v32h-35zm70 0h35v32h-35zM35 32h35v32H35zm105 0h35v32h-35zm70 0h35v32h-35zM0 64h35v32H0zm70 0h35v32H70zm140 0h35v32h-35zM35 96h35v32H35zm105 0h35v32h-35zm70 0h35v32h-35zM0 128h35v32H0zm140 0h35v32h-35zm70 0h35v32h-35zM35 160h35v32H35zm70 0h35v32h-35zm140 0h35v32h-35zM0 192h35v32H0zm70 0h35v32H70zm70 0h35v32h-35zm70 0h35v32h-35z"/>
+    </g>
+    <path d="M74 445V392h35v53m35-87v87h35v-53m35 53v-105h35v105" fill="#205b4d" stroke="#edbd66" stroke-width="2"/>
+    <circle cx="92" cy="406" r="16" fill="#fffdf7" stroke="#9a5d19" stroke-width="2"/>
+    <text x="92" y="411" text-anchor="middle" font-family="Georgia,serif" font-size="13" font-weight="700" fill="#202b27">2</text>
+    <path d="M169 352 190 395h-42z" fill="#fffdf7" stroke="#9a5d19" stroke-width="2"/>
+    <text x="169" y="389" text-anchor="middle" font-family="Georgia,serif" font-size="13" font-weight="700" fill="#202b27">4</text>
+  </g>
+</svg>

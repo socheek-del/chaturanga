@@ -1,7 +1,9 @@
 # Rithmomachia product design
 
-**Status: proposal.** This is the product's own visual direction, not a reproduction of a historical board,
-manuscript, or modern rules site. The public product name still needs a separate name review.
+**Status: proposal.** The local product implementation follows this direction and has passed a 390px mobile
+and 1280px desktop browser review. Owner/design approval is still open. This is the product's own visual
+direction, not a reproduction of a historical board, manuscript, or modern rules site. The public product
+name still needs a separate name review.
 
 ## Direction: The Number Cabinet
 

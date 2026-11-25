@@ -16,7 +16,7 @@ Use Demian Freeling's 1982 two-player 7×7 Congo chess variant, not the similarl
 
 1. [x] Select the rules and document the source and rights boundary.
 2. [x] Implemented `@chaturanga/congo` with validated 7×7 FEN, Monkey routes, river deadlines, drowning, promotion, endings and `Variant` conformance. Rules tests pass 31/31 with seeded replay/undo. No compatible external engine preset was found; use source-backed fixtures and mark drowning in move records.
-3. Add a bounded deterministic bot on ai-core. Verify a legal move at each difficulty for both players, including Monkey route choices and river deadlines.
+3. [x] Added six bounded deterministic bot levels on ai-core; verified legal choices as both players, a direct Lion capture, Monkey routes and river-deadline positions (3 bot tests).
 4. Build the independent PWA, responsive animal-piece board, complete interactive tutorial, save/reload/takeback, pass-and-play, bot mode and offline install.
 5. Add server-authoritative private rooms and a Congo-only Durable Object/D1 service. Test multi-capture validation, reconnect, illegal move rejection and finished-game persistence.
 6. Pass exact-SHA CI, stage on Melon, and verify the production assets, tutorial, bots, rooms, restart and copied-state restore. Add the public route and directory entry only after DNS/TLS and HTTPS/WebSocket smoke.

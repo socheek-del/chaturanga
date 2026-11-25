@@ -1346,4 +1346,10 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 - Implemented `@chaturanga/congo` as a pure 7×7 Variant with the complete selected piece movement, optional Monkey capture routes (captured pieces remain blockers during the route), Lion capture, automatic Superpawn promotion, river-exit FEN markers, drowning, no-move losses, bare-Lion draws and threefold repetition.
 - Added 31 package tests for start/FEN, invalid positions, each piece, capture/promotion, river entry/exit/drowning, Monkey routes, endings, shared Variant conformance and seeded replay/undo. There is no compatible Fairy-Stockfish preset for Congo; rules fixtures are checked against the source-backed contract.
 - Extended `VariantMoveRecord` with optional ordered `captures` and `movedPieceRemoved` fields. Shared conformance now recognizes a legal river move whose mover drowns at turn end. Full repository `npm run verify` passed under Node 22.23.1; package lock includes Congo.
-- Next: add the bounded deterministic bot; leave the feature `in_progress` until the PWA/tutorial, multiplayer, Melon stage and public release gate are complete.
+- Exact rules commit `d39c377a0ac60e0efdf0e700262c1f875ffb10f1` was pushed to main; local full verification and GitHub CI run `45581462791` both passed.
+
+### Session 055 (Congo bot)
+
+- Added `@chaturanga/congo-ai` on ai-core with six deterministic bounded personas, Lion-capture terminal scoring, a Congo-specific evaluation, promotion/capture ordering and river-aware position identity. AI outputs are legal UCI route strings, including Monkey multi-captures.
+- Package typecheck/lint and 3 bot tests passed: legal output for both sides at every level, direct Lion capture, Monkey/river situations, seeded choice, bounded search and terminal null result.
+- Next: build the standalone English PWA and interactive rules tutorial; read and follow the frontend-design skill before product UI work. Keep the overall feature `in_progress` through online play, CI, Melon staging and DNS/public release checks.

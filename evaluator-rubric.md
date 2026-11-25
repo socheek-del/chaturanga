@@ -140,3 +140,20 @@ Mark "n/a" for categories that do not apply to the feature.
 | Handoff readiness | 2 | Plan, feature evidence and next bot step are recorded in repository artifacts. |
 
 **Verdict:** Accept the Congo engine increment. Overall product work remains in progress until the bot, interactive tutorial, PWA, online service and Melon stage are verified.
+
+## Congo bot increment review — 2026-11-25
+
+| Category | Score | Notes |
+| --- | ---: | --- |
+| Correctness | 2 | Six levels choose legal Congo moves for both sides; direct Lion capture and no-legal-move endings are covered. |
+| Rules fidelity | 2 | Search uses the Congo Variant for Monkey routes, promotion, river deadlines, drowning and repetition state. |
+| Verification | 2 | Congo AI typecheck/lint and 3 package tests passed; the bot checks seeded choices, both colors, move caps, Monkey and river positions. |
+| Scope discipline | 2 | Bot code and tests live in the isolated `@chaturanga/congo-ai` package. |
+| Localization | 2 | No product strings have been added at the bot package stage. |
+| UX & design | 1 | Product interface work has not started. |
+| Product separation | 2 | Separate AI package depends on Congo rules and shared ai-core. |
+| Reliability | 2 | Search has node and time budgets, a legal fallback and deterministic injected randomness. |
+| Maintainability | 2 | Adapter, persona list, and evaluator are separated and documented. |
+| Handoff readiness | 2 | Bot step and next PWA/tutorial work are recorded in the plan and handoff. |
+
+**Verdict:** Accept the Congo bot increment. Overall product work remains in progress until the tutorial, PWA, online service, and Melon stage are complete.

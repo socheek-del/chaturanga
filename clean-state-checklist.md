@@ -27,4 +27,5 @@
 - [ ] Keep the Crazyhouse Melon stage running. Resume public route and catalog work after DNS/TLS and HTTPS/WebSocket smoke are available; continue with the next ready roadmap product in the meantime.
 - [x] Congo rules selection, independent-content boundary, product plan and engine contract are recorded next to the product.
 - [x] `@chaturanga/congo` typecheck and 31 rules/conformance tests passed; full repository `npm run verify` passed. Package lock updated.
-- [ ] Implement the Congo bot, independent PWA with complete interactive tutorial, and server-authoritative online service; then stage and verify on Melon.
+- [ ] Implement the standalone Congo PWA with complete interactive tutorial, and server-authoritative online service; then stage and verify on Melon.
+- [x] Congo bot package typecheck/lint and 3 tests passed for both colors, terminal Lion capture, Monkey route and river positions.

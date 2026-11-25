@@ -68,10 +68,16 @@ DNS/TLS and HTTPS/WebSocket checks.
    route/line fixtures, blocked repeated captures, promotion timing, status, replay/undo and attack maps;
    package typecheck and ESLint passed. No compatible Fairy-Stockfish Dameo preset is available, so the
    engine uses source-derived fixtures rather than claiming an external move oracle.
-5. [ ] Add bounded bots for both roles and validate every selected rule through an interactive tutorial.
-6. [ ] Ship the independent PWA with responsive play, local saves, offline install and complete locale keys.
-7. [ ] Add isolated server-authoritative private rooms/quick match and verify reconnect and rule validation.
-8. [ ] Pass exact-SHA CI and stage on Melon; verify tutorial, bots, online play, offline mode, restart and
+5. [x] Add bounded bots for both roles in `@chaturanga/dameo-ai`. Six levels, fixed node budgets, immediate
+   elimination, compulsory maximum capture, full route strings, seeded selection and make/unmake are covered;
+   all 16 focused tests, package typecheck and ESLint passed. Full workspace `npm run verify` also passed
+   under Node 25 with loopback enabled for the existing Cloudflare Worker suites.
+6. [ ] Add a product design document and interactive tutorial that validates every selected rule: ordinary
+   steps, line shifts, king range, compulsory capture, maximum-route choice, delayed blockers/Coup Turc,
+   promotion timing, blockage, repetition and the agreed-draw convention.
+7. [ ] Ship the independent PWA with responsive play, local saves, offline install and complete locale keys.
+8. [ ] Add isolated server-authoritative private rooms/quick match and verify reconnect and rule validation.
+9. [ ] Pass exact-SHA CI and stage on Melon; verify tutorial, bots, online play, offline mode, restart and
    copied-state restore. Publish only after the public gates in this plan pass.
 
 ## Sources

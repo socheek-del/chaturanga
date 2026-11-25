@@ -20,7 +20,8 @@
 - [x] Build nine interactive lessons covering the selected Dameo rules and digital conventions. Web lesson/locale tests passed 45/45; the production PWA built; typecheck and ESLint passed; full workspace `npm run verify` passed; headless browser smoke opened the tutorial, answered a quiz and found no overflow at 390px.
 - [x] Correct the Dameo nested `@vitejs/plugin-react@6.3.0` lock entry; `npm ci --ignore-scripts --dry-run --offline` and exact-SHA CI run 45658960096 pass.
 - [x] Add Dameo pass-and-play, six worker-based bot strengths for both sides, replay-saved local sessions and mutual draw agreement. Focused game-shell tests 94/94, web tests 45/45, typecheck, lint, production PWA build, and Chromium bot/move/reload/draw/mobile smoke pass.
-- [ ] Complete Dameo offline install/reload verification, isolated server-authoritative rooms/quick match and Melon restart/restore stage checks; the PWA still has no Dameo Worker.
+- [x] Dameo production-build offline smoke passed in Chromium: cached tutorial and bot worker both play while disconnected; no page errors.
+- [ ] Add Dameo server-authoritative rooms/quick match and online draw offers, then stage on Melon and verify restart/restore.
 
 - [x] Fortress's exact code revision passed GitHub `npm run verify` and all workspace builds. Crazyhouse startup `npm run verify` also passed locally under Node 22.23.1 when run outside the sandbox so Worker tests could bind loopback ports; `./init.sh` could not sync uncached npm@11 in offline mode.
 - [x] Fortress rules tests passed 23/23, bots 4/4, tutorial 2/2 and Worker room/schema checks 4/4; local browser and PWA checks passed before staging.

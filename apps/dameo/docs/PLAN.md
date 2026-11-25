@@ -81,7 +81,7 @@ DNS/TLS and HTTPS/WebSocket checks.
    production PWA build passed. Headless browser smoke opened the home and first lesson, answered a rule quiz,
    and found no horizontal overflow at 390px. Full workspace `npm run verify` also passed under Node 25.9 with
    `NODE_OPTIONS=--no-experimental-webstorage` and loopback enabled for Worker tests.
-8. [ ] Ship the independent PWA with responsive play, local saves, offline install and complete locale keys. Play modes are implemented: pass-and-play and all six worker-based bots work for either human color, sessions restore by replay, and a two-step local agreement ends in a recorded draw. Web/game-shell checks and desktop/mobile browser smoke passed on 2026-11-26; offline install/reload is still to verify.
+8. [x] Ship the independent PWA with responsive play, local saves, offline install and complete locale keys. Pass-and-play and all six worker-based bots work for either human color, sessions restore by replay, and a two-step local agreement ends in a recorded draw. Web/game-shell checks, desktop/mobile smoke and production-build offline tutorial/bot play passed on 2026-11-26.
 9. [ ] Add isolated server-authoritative private rooms/quick match and verify reconnect and rule validation.
 10. [ ] Pass exact-SHA CI and stage on Melon; verify tutorial, bots, online play, offline mode, restart and
     copied-state restore. Publish only after the public gates in this plan pass.

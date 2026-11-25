@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { HealthResponse } from './index';
+import { ClientMessage, HealthResponse } from './index';
 
 describe('HealthResponse', () => {
   it('accepts a valid payload', () => {
@@ -18,5 +18,21 @@ describe('HealthResponse', () => {
     expect(HealthResponse.safeParse({ ok: true, service: '', time }).success).toBe(false);
     expect(HealthResponse.safeParse({ ok: true, time }).success).toBe(false);
     expect(HealthResponse.safeParse({ ok: true, service: 'makruk', time: 'yesterday' }).success).toBe(false);
+  });
+});
+
+describe('ClientMessage move notation', () => {
+  it('accepts a complete Congo multi-capture route and automatic promotion', () => {
+    expect(ClientMessage.safeParse({ type: 'move', uci: 'b2d4f6', ply: 0 }).success).toBe(true);
+    expect(ClientMessage.safeParse({ type: 'move', uci: 'a6a7+', ply: 0 }).success).toBe(true);
+  });
+
+  it('still accepts ordinary moves, in-place promotions, and drops', () => {
+    for (const uci of ['e2e4', 'd5d5f', 'K@e1'])
+      expect(ClientMessage.safeParse({ type: 'move', uci, ply: 0 }).success, uci).toBe(true);
+  });
+
+  it('rejects a move string that is not made from coordinate tokens', () => {
+    expect(ClientMessage.safeParse({ type: 'move', uci: 'b2-d4!', ply: 0 }).success).toBe(false);
   });
 });

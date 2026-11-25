@@ -1353,3 +1353,9 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 - Added `@chaturanga/congo-ai` on ai-core with six deterministic bounded personas, Lion-capture terminal scoring, a Congo-specific evaluation, promotion/capture ordering and river-aware position identity. AI outputs are legal UCI route strings, including Monkey multi-captures.
 - Package typecheck/lint and 3 bot tests passed: legal output for both sides at every level, direct Lion capture, Monkey/river situations, seeded choice, bounded search and terminal null result.
 - Next: build the standalone English PWA and interactive rules tutorial; read and follow the frontend-design skill before product UI work. Keep the overall feature `in_progress` through online play, CI, Melon staging and DNS/public release checks.
+
+### Session 056 (Congo PWA and online service)
+
+- Built the standalone English PWA with original field-guide styling, animal piece seals, a responsive 7×7 river board, six bot levels, pass-and-play, local save/reload/takeback, and eight interactive lessons. Web tests passed 35/35; local browser E2E passed 5/5 and installed offline PWA smoke passed 1/1.
+- Added the Congo-only Worker, Durable Object and D1 migration for private rooms and quick match. Worker tests passed 9/9, covering server-side illegal-move rejection, a complete Monkey multi-capture route, reconnect recovery, finished-game persistence and chat rejection. Shared protocol tests passed 6/6 after supporting full route notation.
+- `npm run build:congo` passed. Full `npm run verify` passed under Node 22.23.1 (lint, typecheck and all workspace tests). Next commit the product increment, confirm exact-SHA CI, and stage on Melon with tutorial/bot/room smoke plus restart and copied-state restore. Public route/catalog publication still requires DNS and TLS.

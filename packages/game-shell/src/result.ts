@@ -13,8 +13,13 @@ export {
 } from '@chaturanga/rules-core';
 
 /** Pieces captured by `color`, in capture order. */
-export function capturedBy<P>(records: ReadonlyArray<{ color: Color; captured: P | null }>, color: Color): P[] {
-  return records.filter((r) => r.color === color && r.captured).map((r) => r.captured!);
+export function capturedBy<P>(
+  records: ReadonlyArray<{ color: Color; captured: P | null; captures?: readonly P[] }>,
+  color: Color,
+): P[] {
+  return records
+    .filter((record) => record.color === color)
+    .flatMap((record) => record.captures ?? (record.captured ? [record.captured] : []));
 }
 
 /** Material on the board by the game's own piece values: positive when White is ahead. */

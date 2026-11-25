@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="paper" x2="1" y2="1"><stop stop-color="#fbf8e9"/><stop offset="1" stop-color="#dce4cf"/></linearGradient>
+    <linearGradient id="water" x2="1"><stop stop-color="#72b6aa"/><stop offset="1" stop-color="#a7d1c1"/></linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#paper)"/>
+  <path d="M0 450c210-70 285 16 474-42s300-13 443-54 180 8 283-28v304H0Z" fill="url(#water)" opacity=".42"/>
+  <g transform="translate(720 70) rotate(-4 230 230)" stroke="#315c43" stroke-width="9">
+    <rect width="460" height="460" rx="16" fill="#315c43"/>
+    <g stroke-width="0">
+      <path fill="#efe8ca" d="M9 9h63v63H9zm126 0h63v63h-63zm126 0h63v63h-63zm126 0h64v63h-64zM72 72h63v63H72zm126 0h63v63h-63zm126 0h63v63h-63zM9 135h63v63H9zm126 0h63v63h-63zm126 0h63v63h-63zm126 0h64v63h-64zM72 198h63v63H72zm126 0h63v63h-63zm126 0h63v63h-63zM9 261h63v63H9zm126 0h63v63h-63zm126 0h63v63h-63zm126 0h64v63h-64zM72 324h63v63H72zm126 0h63v63h-63zm126 0h63v63h-63zM9 387h63v64H9zm126 0h63v64h-63zm126 0h63v64h-63zm126 0h64v64h-64z"/>
+      <path fill="#879a72" d="M72 9h63v63H72zm126 0h63v63h-63zm126 0h63v63h-63zM9 72h63v63H9zm126 0h63v63h-63zm126 0h63v63h-63zm126 0h64v63h-64zM72 135h63v63H72zm126 0h63v63h-63zm126 0h63v63h-63zM9 198h63v63H9zm126 0h63v63h-63zm126 0h63v63h-63zm126 0h64v63h-64zM72 261h63v63H72zm126 0h63v63h-63zm126 0h63v63h-63zM9 324h63v63H9zm126 0h63v63h-63zm126 0h63v63h-63zm126 0h64v63h-64zM72 387h63v64H72zm126 0h63v64h-63zm126 0h63v64h-63z"/>
+      <path fill="#83c1b6" d="M9 198h442v63H9z"/>
+    </g>
+    <g fill="#fff2d1" stroke="#315c43" stroke-width="3">
+      <circle cx="40" cy="40" r="20"/><circle cx="230" cy="40" r="20"/><circle cx="420" cy="40" r="20"/>
+      <circle cx="40" cy="420" r="20"/><circle cx="230" cy="420" r="20"/><circle cx="420" cy="420" r="20"/>
+      <circle cx="40" cy="105" r="14"/><circle cx="105" cy="105" r="14"/><circle cx="170" cy="105" r="14"/><circle cx="230" cy="105" r="14"/><circle cx="290" cy="105" r="14"/><circle cx="355" cy="105" r="14"/><circle cx="420" cy="105" r="14"/>
+    </g>
+  </g>
+  <text x="82" y="205" fill="#b6603d" font-family="Arial,sans-serif" font-size="22" font-weight="700" letter-spacing="7">A STRATEGY GAME OF THE RIVER</text>
+  <text x="76" y="318" fill="#243a2b" font-family="Georgia,serif" font-size="104" font-weight="500">Congo</text>
+  <text x="84" y="374" fill="#566c57" font-family="Arial,sans-serif" font-size="31">Guide the animals across the board.</text>
+  <path d="M84 421h430" stroke="#4f9994" stroke-width="4"/>
+  <text x="84" y="468" fill="#315c43" font-family="Arial,sans-serif" font-size="20" font-weight="700" letter-spacing="4">CASTLES · CROSSINGS · LION HUNT</text>
+</svg>

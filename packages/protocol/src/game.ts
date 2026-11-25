@@ -58,10 +58,11 @@ export type GameSnapshot = z.infer<typeof GameSnapshot>;
 
 /**
  * Fairy-Stockfish coordinate notation, wide enough for every variant: a board move with an optional
- * promotion letter (`e3e4`, `a5a6m`, `d5d5f`) or a drop from hand (`K@e1`). This is only a cheap shape
- * guard — the room always replays the move through its own rules engine before accepting it.
+ * promotion marker (`e3e4`, `a5a6m`, `d5d5f`, `a6a7+`), a multi-square route (`b2d4f6`) or a drop
+ * from hand (`K@e1`). This is only a cheap shape guard — the room always replays the move through its own
+ * rules engine before accepting it.
  */
-const UCI = z.string().regex(/^(?:[A-Z]@[a-z]\d{1,2}|[a-z]\d{1,2}[a-z]\d{1,2}[a-z]?)$/);
+const UCI = z.string().regex(/^(?:[A-Z]@[a-z]\d{1,2}|(?:[a-z]\d{1,2}){2,}[+a-z]?)$/);
 
 export const ClientMessage = z.discriminatedUnion('type', [
   z.object({ type: z.literal('move'), uci: UCI, ply: z.number().int().min(0) }),

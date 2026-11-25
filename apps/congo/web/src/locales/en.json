@@ -1,0 +1,205 @@
+{
+  "brand": "Congo",
+  "app": { "name": "Congo", "subtitle": "Chess of the river", "home": "Congo home" },
+  "nav": { "label": "Main navigation", "back": "Back", "play": "Play", "learn": "Learn", "rules": "Rules" },
+  "home": {
+    "kicker": "A strategy game shaped by a river",
+    "title": "The river",
+    "titleAccent": "sets the board.",
+    "description": "Guide your animals across a seven-by-seven wildland. Keep the Lion in its castle, plan a safe river crossing, and find a route to the opposing Lion.",
+    "playBot": "Choose a rival",
+    "playTogether": "Play together",
+    "footnote": "Free to play · No account · Your game saves on this device",
+    "artCaption": "CASTLE · RIVER · WILDLAND",
+    "castleLabel": "CASTLE",
+    "riverLabel": "THE RIVER",
+    "modes": "Ways to play",
+    "botTitle": "Play against an animal guide",
+    "botDescription": "Six strengths, from a patient first match to a deep tactical hunt.",
+    "localTitle": "Two players, one board",
+    "localDescription": "Take turns at the same screen and pass the board between you.",
+    "onlineDescription": "Invite a friend to a private room or find an opponent online.",
+    "learnTitle": "Learn the rules",
+    "learnDescription": "Guided board exercises for the animals, river crossings, routes, and endings.",
+    "ruleTeaser": "The Lion stays in its castle until it can capture the other Lion. No check or checkmate.",
+    "readRules": "Read the field notes"
+  },
+  "setup": {
+    "kicker": "Choose your trail",
+    "botTitle": "Choose your opponent",
+    "botDescription": "Pick a guide and a side. The game saves as you go.",
+    "localTitle": "Pass and play",
+    "localDescription": "Take turns at the same board. White makes the first move.",
+    "mode": "Game mode",
+    "opponent": "Opponent",
+    "chooseLevel": "Choose an animal guide",
+    "levelCount": "{{count}} strengths",
+    "seat": "Your side",
+    "playAs": "Play as",
+    "sideNote": "Your guide takes the opposite colour.",
+    "localNote": "White moves first. After each turn, pass the device to the other player.",
+    "switchMode": "Change mode"
+  },
+  "bots": {
+    "starter": { "name": "Puddle", "description": "A gentle guide who leaves room to explore." },
+    "casual": { "name": "Reed", "description": "A relaxed match with a few useful plans." },
+    "club": { "name": "Canopy", "description": "Looks for strong crossings and captures." },
+    "challenger": { "name": "Tracker", "description": "Finds forcing routes and Lion threats." },
+    "expert": { "name": "Ranger", "description": "Plans carefully and punishes exposed pieces." },
+    "master": { "name": "River King", "description": "A deep, demanding opponent." }
+  },
+  "game": {
+    "botEyebrow": "Across the river from {{name}}",
+    "localEyebrow": "Two players · one wildland",
+    "savedOnDevice": "Saved on this device"
+  },
+  "colors": { "w": "White", "b": "Black" },
+  "pieces": {
+    "l": "Lion",
+    "z": "Zebra",
+    "e": "Elephant",
+    "g": "Giraffe",
+    "c": "Crocodile",
+    "m": "Monkey",
+    "p": "Pawn",
+    "s": "Superpawn"
+  },
+  "board": {
+    "label": "Congo river board",
+    "squareWithPiece": "{{square}}, {{color}} {{piece}}",
+    "emptySquare": "{{square}}, empty",
+    "riverDeadline": "must leave the river this turn"
+  },
+  "modes": { "single": "Play the computer", "local": "Two players, one device", "online": "Play online" },
+  "computer": {
+    "you": "You",
+    "thinking": "{{name}} is thinking…",
+    "sideWhite": "White",
+    "sideBlack": "Black",
+    "sideRandom": "Random"
+  },
+  "online": {
+    "opponent": "Opponent",
+    "quickTitle": "Quick match",
+    "quickHint": "Join a 3+2, 5+0, or 10+0 queue and meet another player.",
+    "searching": "Looking for a {{pool}} game…",
+    "createTitle": "Create a private room",
+    "color": "Choose your colour",
+    "create": "Create room",
+    "joinTitle": "Join a room",
+    "codeLabel": "Room code",
+    "join": "Join",
+    "invalidCode": "Enter a valid six-character room code.",
+    "notFound": "Room not found",
+    "serverError": "The Congo game server could not be reached. Try again in a moment.",
+    "connecting": "Crossing into the room…",
+    "reconnecting": "Reconnecting to the room…",
+    "waitingTitle": "Your room is ready",
+    "shareHint": "Send this private link or code to the other player.",
+    "copyLink": "Copy invite link",
+    "copied": "Invite link copied",
+    "qrAlt": "QR code for this private Congo room",
+    "waitingFor": "Waiting for the other player",
+    "spectating": "Both seats are taken. You are watching this game.",
+    "offerDraw": "Offer a draw",
+    "drawOffered": "Draw offer sent",
+    "drawOfferReceived": "Your opponent offers a draw.",
+    "accept": "Accept",
+    "decline": "Decline",
+    "opponentDisconnected": "Your opponent lost connection. They have {{seconds}} seconds to return.",
+    "rematchOffered": "Rematch offer sent",
+    "rematchReceived": "Your opponent wants a rematch. Choose rematch to start it."
+  },
+  "play": {
+    "start": "Start game",
+    "turn": "{{color}} to move",
+    "check": "Check",
+    "captured": "Captured animals",
+    "clockOf": "{{color}}’s clock",
+    "moves": "Moves",
+    "noMoves": "No moves yet",
+    "first": "First move",
+    "back": "Previous move",
+    "forward": "Next move",
+    "last": "Latest move",
+    "timeControl": "Time control",
+    "noClock": "No clock",
+    "custom": "Custom",
+    "minutes": "Minutes",
+    "increment": "Increment (seconds)",
+    "categories": {
+      "bullet": "Bullet",
+      "blitz": "Blitz",
+      "rapid": "Rapid",
+      "classical": "Classical"
+    },
+    "flip": "Flip the board",
+    "undo": "Take back",
+    "resign": "Resign",
+    "cancel": "Cancel",
+    "backToLive": "Back to the game",
+    "newGame": "New game",
+    "rematch": "Play again",
+    "review": "Keep looking",
+    "promoteTo": "Choose a promotion",
+    "chooseRoute": "Choose the Monkey’s route",
+    "resignConfirm": "{{color}}, resign this game?",
+    "result": { "whiteWins": "White wins", "blackWins": "Black wins", "draw": "Draw" },
+    "reason": {
+      "stalemate": "No legal move",
+      "repetition": "Threefold repetition",
+      "insufficient-material": "Only the two Lions remain",
+      "goal-square": "Lion captured",
+      "timeout": "Time ran out",
+      "resign": "Resignation",
+      "agreement": "Draw by agreement",
+      "abandon": "The game was abandoned"
+    }
+  },
+  "learn": {
+    "kicker": "A field guide to the board",
+    "title": "Learn Congo",
+    "description": "Work through the rules at your own pace. Every lesson puts a real position under your hand.",
+    "intro": "Learn the animals, the river’s deadline, Monkey routes, and how a game ends.",
+    "progressCount": "{{done}} of {{total}} lessons completed",
+    "hint": "Show a hint",
+    "exit": "Leave lesson",
+    "progress": "Lesson progress",
+    "check": "Check answer",
+    "continue": "Continue",
+    "correct": "That’s right",
+    "wrong": "Not quite",
+    "tryAgain": "Try again",
+    "complete": "Field guide complete",
+    "stars": "{{count}} stars"
+  },
+  "rules": {
+    "kicker": "Field notes",
+    "title": "A board divided by water",
+    "description": "Seven files cross three lands and a central river. Every animal has its own way through.",
+    "items": {
+      "goal": {
+        "title": "The goal",
+        "body": "Capture the opposing Lion to win immediately. A player with no legal move loses."
+      },
+      "lion": {
+        "title": "The Lion",
+        "body": "It moves one square inside its own castle. It leaves only to capture the opposing Lion along a clear file or diagonal. Lions may enter attacked squares; there is no check."
+      },
+      "monkey": {
+        "title": "The Monkey",
+        "body": "It steps without capturing, or jumps an adjacent enemy to capture. Several jumps form one optional route; captured pieces stay as blockers until the route ends."
+      },
+      "river": {
+        "title": "The river",
+        "body": "A non-Crocodile in the river must leave on its next own turn or drown. The Crocodile is immune. The Lion cannot enter the river."
+      },
+      "pawn": {
+        "title": "Pawn and Superpawn",
+        "body": "A Pawn moves forward and captures diagonally. On the far bank it may retreat one or two squares. It promotes automatically on the last rank; a Superpawn gains sideways movement and retreats anywhere."
+      }
+    }
+  },
+  "footer": { "note": "Original Congo game, animal seals, field notes, and lessons. Licensed under GPL-3.0." },
+  "family": { "title": "More games" }
+}

@@ -27,5 +27,7 @@
 - [ ] Keep the Crazyhouse Melon stage running. Resume public route and catalog work after DNS/TLS and HTTPS/WebSocket smoke are available; continue with the next ready roadmap product in the meantime.
 - [x] Congo rules selection, independent-content boundary, product plan and engine contract are recorded next to the product.
 - [x] `@chaturanga/congo` typecheck and 31 rules/conformance tests passed; full repository `npm run verify` passed. Package lock updated.
-- [ ] Implement the standalone Congo PWA with complete interactive tutorial, and server-authoritative online service; then stage and verify on Melon.
+- [x] Implement the standalone Congo PWA, eight-step interactive tutorial, six bot levels, local save/reload/takeback, and Congo-only server-authoritative rooms/quick match. Web 35/35, Worker 9/9, protocol 6/6, Playwright 5/5 and offline PWA 1/1 passed.
+- [x] `npm run build:congo` and full `npm run verify` passed under Node 22.23.1.
+- [ ] Commit Congo, confirm exact-SHA GitHub CI, stage on Melon, and verify online smoke/restart/copied-state restore; publish only after public DNS/TLS smoke.
 - [x] Congo bot package typecheck/lint and 3 tests passed for both colors, terminal Lion capture, Monkey route and river positions.

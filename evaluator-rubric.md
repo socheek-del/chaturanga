@@ -157,3 +157,20 @@ Mark "n/a" for categories that do not apply to the feature.
 | Handoff readiness | 2 | Bot step and next PWA/tutorial work are recorded in the plan and handoff. |
 
 **Verdict:** Accept the Congo bot increment. Overall product work remains in progress until the tutorial, PWA, online service, and Melon stage are complete.
+
+## Congo PWA and online service increment review — 2026-11-25
+
+| Category | Score | Notes |
+| --- | ---: | --- |
+| Correctness | 2 | Eight guided lessons use real Congo legal moves; local play and six bounded bots are available; online moves are validated by the Congo Variant on the server. |
+| Rules fidelity | 2 | Tutorial and online tests exercise river deadlines, Monkey multi-capture route notation, and selected endings. |
+| Verification | 2 | Web 35/35, Worker 9/9, protocol 6/6, Playwright 5/5, offline PWA 1/1, Congo build and full repository verify passed. |
+| Scope discipline | 2 | Product UI and service are isolated under `apps/congo`; only additive protocol and result-display changes were made in shared packages. |
+| Localization | 2 | All user-visible copy is routed through the declared English locale. |
+| UX & design | 2 | Original field-guide identity, animal seals and river board; responsive/offline behavior and interactive tutorial verified. |
+| Product separation | 2 | Congo has its own PWA, Worker, Durable Object, D1 and storage namespace. |
+| Reliability | 2 | Browser scenarios cover local persistence and online reconnect; Melon restart and copied-state restore are the remaining release checks. |
+| Maintainability | 2 | Product instructions, plan, README, local scripts and isolated deployment configuration are present. |
+| Handoff readiness | 2 | Feature evidence, checklist, progress log and exact next release gate are recorded. |
+
+**Verdict:** Accept the Congo product and online-service increment locally. Keep the overall feature in progress until exact-SHA CI and Melon staging/recovery checks pass; public promotion and directory publication require DNS/TLS.

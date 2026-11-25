@@ -39,6 +39,7 @@
     "deploy:chess": "npm run build -w apps/chess/web && npm run deploy -w apps/chess/worker",
     "dev:janggi": "concurrently -n worker,web -c yellow,green \"npm run dev -w apps/janggi/worker\" \"npm run dev -w apps/janggi/web\"",
     "dev:threechess": "concurrently -n worker,web -c yellow,green \"npm run dev -w apps/threechess/worker\" \"npm run dev -w apps/threechess/web\"",
+    "dev:congo": "concurrently -n worker,web -c yellow,green \"npm run dev -w apps/congo/worker\" \"npm run dev -w apps/congo/web\"",
     "dev:fortress": "concurrently -n worker,web -c yellow,green \"npm run dev -w apps/fortress/worker\" \"npm run dev -w apps/fortress/web\"",
     "dev:crazyhouse": "concurrently -n worker,web -c yellow,green \"npm run dev -w apps/crazyhouse/worker\" \"npm run dev -w apps/crazyhouse/web\"",
     "build:beanroti-apps": "npm run build -w apps/beanroti/worker",
@@ -46,6 +47,7 @@
     "build:janggi": "npm run build -w apps/janggi/web && npm run build -w apps/janggi/worker",
     "deploy:janggi": "npm run build -w apps/janggi/web && npm run deploy -w apps/janggi/worker",
     "build:threechess": "npm run build -w apps/threechess/web && npm run build -w apps/threechess/worker",
+    "build:congo": "npm run build -w apps/congo/web && npm run build -w apps/congo/worker",
     "build:fortress": "npm run build -w apps/fortress/web && npm run build -w apps/fortress/worker",
     "build:crazyhouse": "npm run build -w apps/crazyhouse/web && npm run build -w apps/crazyhouse/worker",
     "deploy:threechess": "npm run build -w apps/threechess/web && npm run deploy -w apps/threechess/worker"

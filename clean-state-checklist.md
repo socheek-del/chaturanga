@@ -25,3 +25,6 @@
 - [x] Crazyhouse state, CI evidence, stage pin and DNS blocker are recorded in `feature_list.json`, `claude-progress.md`, `session-handoff.md`, the product plan and this checklist.
 - [x] `crazyhouse.beanroti.com` has no DNS answer; public HTTPS/WebSocket smoke, Caddy promotion and catalog publication remain blocked, with no public route changed.
 - [ ] Keep the Crazyhouse Melon stage running. Resume public route and catalog work after DNS/TLS and HTTPS/WebSocket smoke are available; continue with the next ready roadmap product in the meantime.
+- [x] Congo rules selection, independent-content boundary, product plan and engine contract are recorded next to the product.
+- [x] `@chaturanga/congo` typecheck and 31 rules/conformance tests passed; full repository `npm run verify` passed. Package lock updated.
+- [ ] Implement the Congo bot, independent PWA with complete interactive tutorial, and server-authoritative online service; then stage and verify on Melon.

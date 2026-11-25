@@ -123,3 +123,20 @@ Mark "n/a" for categories that do not apply to the feature.
 **Verdict:** Accept the Crazyhouse implementation and Melon staging checkpoint. Keep `crazyhouse-001` blocked only at public HTTPS/WebSocket smoke and catalog publication because `crazyhouse.beanroti.com` has no DNS answer.
 
 **Required follow-up:** Add the product hostname through the authorized DNS path, verify TLS and public HTTPS/WebSocket play on Melon, then publish the app-directory entry. Continue with Congo while that public-route gate is unavailable.
+
+## Congo rules-engine increment review — 2026-11-25
+
+| Category | Score | Notes |
+| --- | ---: | --- |
+| Correctness | 2 | Piece movement, Monkey routes, automatic promotion, river deadlines/drowning and game endings are implemented from the selected rules contract. |
+| Rules fidelity | 2 | Rules tests cover every piece and the source-backed river, Lion, Monkey and bare-Lion decisions; no compatible external engine preset exists. |
+| Verification | 2 | Congo package passed 31/31 tests; full repository lint, typecheck and test verification passed. |
+| Scope discipline | 2 | Changes are limited to the Congo package plus additive Variant move-record/conformance support for captures and drowning. |
+| Localization | 2 | No user-facing product strings have been added at the rules-engine stage. |
+| UX & design | 1 | Product interface work has not started. |
+| Product separation | 2 | Isolated `@chaturanga/congo` package and rules contract. |
+| Reliability | 2 | FEN round-trips, seeded games replay and undo, and river state participates in repetition identity. |
+| Maintainability | 2 | Piece movement, position/FEN and game state are separated; package notes document the variant contract. |
+| Handoff readiness | 2 | Plan, feature evidence and next bot step are recorded in repository artifacts. |
+
+**Verdict:** Accept the Congo engine increment. Overall product work remains in progress until the bot, interactive tutorial, PWA, online service and Melon stage are verified.

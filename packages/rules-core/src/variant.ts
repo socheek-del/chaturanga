@@ -9,6 +9,10 @@ export interface VariantMoveRecord<C extends string = Color> {
   /** The piece that moved or was placed, as it was before any promotion. */
   piece: Piece<string, C>;
   captured: Piece<string, C> | null;
+  /** Additional pieces removed by a multi-capture move, in route order. */
+  captures?: Piece<string, C>[];
+  /** True when a legal move's mover is removed at turn end, as with Congo river drowning. */
+  movedPieceRemoved?: boolean;
   /** Destination square; the placement square for a drop. */
   to: Square;
   fenAfter: string;

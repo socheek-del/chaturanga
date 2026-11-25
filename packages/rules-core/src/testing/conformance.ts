@@ -99,7 +99,8 @@ export function describeVariantConformance<G extends VariantGame<string>>(
             expect(inSetupPhase).toBe(true);
             expect(game.hand(mover).length).toBeLessThan(handCountBefore);
           }
-          expect(game.pieceAt(record.to)?.color).toBe(mover);
+          if (record.movedPieceRemoved) expect(game.pieceAt(record.to)).toBeNull();
+          else expect(game.pieceAt(record.to)?.color).toBe(mover);
           expect(game.checkedKingSquare() !== null).toBe(game.inCheck());
           fens.push(game.fen());
         }

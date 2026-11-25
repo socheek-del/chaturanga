@@ -12,7 +12,7 @@ White's rank 1 is Giraffe, Monkey, Elephant, Lion, Elephant, Crocodile, Zebra; r
 
 ## Movement
 
-- **Lion (`l`)**: one step in any of eight directions, staying inside its own 3×3 castle. It may leave only to capture the opposing Lion along a clear rank, file or diagonal. A Lion may enter an attacked square. There is no check state.
+- **Lion (`l`)**: one step in any of eight directions, staying inside its own 3×3 castle, and may capture any enemy piece inside it. It may leave only to capture the opposing Lion along a clear file or diagonal. A Lion may enter an attacked square. There is no check state.
 - **Zebra (`z`)**: leaps as a chess knight.
 - **Elephant (`e`)**: moves or captures one or two orthogonal squares. A two-square move jumps the intervening square.
 - **Giraffe (`g`)**: leaps exactly two squares in any of eight directions, or moves one king step without capturing.

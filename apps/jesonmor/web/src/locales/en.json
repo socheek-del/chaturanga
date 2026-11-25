@@ -1,0 +1,191 @@
+{
+  "brand": "Jeson Mor",
+  "app": { "name": "Jeson Mor", "subtitle": "A race to the center", "home": "Jeson Mor home" },
+  "nav": { "label": "Main navigation", "back": "Back", "play": "Play", "learn": "Learn", "rules": "Rules" },
+  "home": {
+    "kicker": "The Mongolian knight game",
+    "title": "A race to",
+    "titleAccent": "the center.",
+    "description": "Ride a horse to e5, withstand the reply, and move that same horse away to win. Or capture every opposing horse.",
+    "playBot": "Choose a bot",
+    "playTogether": "Pass and play",
+    "footnote": "Free to play · No account · Your game saves on this device",
+    "artCaption": "NINE FILES · ONE CENTER · TWO VICTORY ROUTES",
+    "northLabel": "NORTH",
+    "southLabel": "SOUTH",
+    "modes": "Ways to play",
+    "botTitle": "Play against a bot",
+    "botDescription": "Six strengths, from a gentle first race to a deep tactical challenge.",
+    "localTitle": "Two players, one board",
+    "localDescription": "Take turns on the same screen. Choose who moves first.",
+    "onlineDescription": "Invite a friend to a private room or meet another player.",
+    "learnTitle": "Learn the rules",
+    "learnDescription": "Guided board exercises for the horse, the center attempt, and game endings.",
+    "ruleTeaser": "Reaching e5 only begins the attempt. The same horse must survive one reply, then leave the center on its next turn.",
+    "readRules": "Read the field notes"
+  },
+  "setup": {
+    "kicker": "Set the starting line",
+    "botTitle": "Choose your opponent",
+    "botDescription": "Choose a bot, your side, and who moves first.",
+    "localTitle": "Pass and play",
+    "localDescription": "Share one board and pass the device after each turn.",
+    "mode": "Game mode",
+    "opponent": "Opponent",
+    "chooseLevel": "Choose a horse guide",
+    "levelCount": "{{count}} strengths",
+    "seat": "Your side",
+    "playAs": "Play as",
+    "sideNote": "Your bot takes the opposite side.",
+    "localNote": "After each move, pass the device to the other player.",
+    "firstPlayer": "First player",
+    "chooseFirst": "Choose who begins",
+    "firstNote": "Either side can make the first move.",
+    "switchMode": "Change mode"
+  },
+  "bots": {
+    "foal": { "name": "Foal", "description": "A gentle opening match." },
+    "canter": { "name": "Canter", "description": "A relaxed game with room to explore." },
+    "gallop": { "name": "Gallop", "description": "Looks for useful captures and routes." },
+    "herder": { "name": "Herder", "description": "Plans combinations around e5." },
+    "racer": { "name": "Racer", "description": "A focused, tactical opponent." },
+    "champion": { "name": "Champion", "description": "The deepest and most demanding challenge." }
+  },
+  "game": {
+    "botEyebrow": "Racing against {{name}}",
+    "localEyebrow": "Two players · one board",
+    "savedOnDevice": "Saved on this device"
+  },
+  "colors": { "w": "White", "b": "Black" },
+  "pieces": { "n": "Horse" },
+  "board": {
+    "label": "Jeson Mor nine-by-nine board",
+    "squareWithPiece": "{{square}}, {{color}} {{piece}}",
+    "emptySquare": "{{square}}, empty"
+  },
+  "modes": { "single": "Play the computer", "local": "Two players, one device", "online": "Play online" },
+  "computer": {
+    "you": "You",
+    "thinking": "{{name}} is thinking…",
+    "sideWhite": "White",
+    "sideBlack": "Black",
+    "sideRandom": "Random"
+  },
+  "online": {
+    "opponent": "Opponent",
+    "quickTitle": "Quick match",
+    "quickHint": "Join a 3+2, 5+0, or 10+0 queue and meet another player.",
+    "searching": "Looking for a {{pool}} game…",
+    "createTitle": "Create a private room",
+    "color": "Choose your colour",
+    "create": "Create room",
+    "joinTitle": "Join a room",
+    "codeLabel": "Room code",
+    "join": "Join",
+    "invalidCode": "Enter a valid six-character room code.",
+    "notFound": "Room not found",
+    "serverError": "The Jeson Mor game server could not be reached. Try again in a moment.",
+    "connecting": "Joining your room…",
+    "reconnecting": "Reconnecting to the room…",
+    "waitingTitle": "Your room is ready",
+    "shareHint": "Send this private link or code to the other player.",
+    "copyLink": "Copy invite link",
+    "copied": "Invite link copied",
+    "qrAlt": "QR code for this private Jeson Mor room",
+    "waitingFor": "Waiting for the other player",
+    "spectating": "Both seats are taken. You are watching this game.",
+    "offerDraw": "Offer a draw",
+    "drawOffered": "Draw offer sent",
+    "drawOfferReceived": "Your opponent offers a draw.",
+    "accept": "Accept",
+    "decline": "Decline",
+    "opponentDisconnected": "Your opponent lost connection. They have {{seconds}} seconds to return.",
+    "rematchOffered": "Rematch offer sent",
+    "rematchReceived": "Your opponent wants a rematch. Choose rematch to start it."
+  },
+  "play": {
+    "start": "Start game",
+    "turn": "{{color}} to move",
+    "check": "Check",
+    "captured": "Captured horses",
+    "clockOf": "{{color}}’s clock",
+    "moves": "Moves",
+    "noMoves": "No moves yet",
+    "first": "First move",
+    "back": "Previous move",
+    "forward": "Next move",
+    "last": "Latest move",
+    "timeControl": "Time control",
+    "noClock": "No clock",
+    "custom": "Custom",
+    "minutes": "Minutes",
+    "increment": "Increment (seconds)",
+    "categories": { "bullet": "Bullet", "blitz": "Blitz", "rapid": "Rapid", "classical": "Classical" },
+    "flip": "Flip the board",
+    "undo": "Take back",
+    "resign": "Resign",
+    "cancel": "Cancel",
+    "backToLive": "Back to the game",
+    "newGame": "New game",
+    "rematch": "Play again",
+    "review": "Keep looking",
+    "resignConfirm": "{{color}}, resign this game?",
+    "result": { "whiteWins": "White wins", "blackWins": "Black wins", "draw": "Draw" },
+    "reason": {
+      "stalemate": "No legal move",
+      "repetition": "Threefold repetition",
+      "goal-square": "Center escape completed",
+      "elimination": "All opposing horses captured",
+      "timeout": "Time ran out",
+      "resign": "Resignation",
+      "agreement": "Draw by agreement",
+      "abandon": "The game was abandoned"
+    }
+  },
+  "learn": {
+    "kicker": "A field guide to the board",
+    "title": "Learn Jeson Mor",
+    "description": "Work through every selected rule at your own pace. Each lesson puts a real position under your hand.",
+    "intro": "Meet the knight-like horse, practice the vulnerable center attempt, and learn the digital endings.",
+    "progressCount": "{{done}} of {{total}} lessons completed",
+    "hint": "Show a hint",
+    "exit": "Leave lesson",
+    "progress": "Lesson progress",
+    "check": "Check answer",
+    "continue": "Continue",
+    "correct": "That’s right",
+    "wrong": "Not quite",
+    "tryAgain": "Try again",
+    "complete": "Field guide complete",
+    "stars": "{{count}} stars"
+  },
+  "rules": {
+    "kicker": "Field notes",
+    "title": "A simple board with a daring finish",
+    "description": "Nine horses race across a nine-by-nine board. A player wins by clearing the opposing rank or by completing an escape from e5.",
+    "items": {
+      "goal": {
+        "title": "Two ways to win",
+        "body": "Capture every opposing horse, or move a horse to e5, allow one opponent reply, then move that same horse away from e5 on your next turn."
+      },
+      "horse": {
+        "title": "The horse",
+        "body": "Each horse moves like a chess knight: two squares along one axis and one square perpendicular. It jumps over pieces and may capture an enemy where it lands."
+      },
+      "center": {
+        "title": "The center is vulnerable",
+        "body": "A horse on e5 can be captured during the opponent’s reply. If it is captured, that center attempt ends."
+      },
+      "reply": {
+        "title": "Escape on your next turn",
+        "body": "After the reply, the same horse must leave e5 immediately to complete the center win. It is not enough just to survive."
+      },
+      "endings": {
+        "title": "Digital endings",
+        "body": "Threefold repetition is a draw; having no legal move is a loss. These are digital conventions. There is no 50-move rule."
+      }
+    }
+  },
+  "footer": { "note": "Original Jeson Mor rules explanation, horse artwork, and lessons. Licensed under GPL-3.0." },
+  "family": { "title": "More games" }
+}

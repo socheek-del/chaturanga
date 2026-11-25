@@ -37,10 +37,11 @@ most popular. See the [rules and rights selection report](reports/Jeson%20Mor%20
 3. [x] Added six deterministic bounded `@chaturanga/jesonmor-ai` personas on ai-core; 15 tests cover both
    colors, center/capture wins, seeded choice, legal output and search state restoration. A strength ladder
    remains a quality follow-up, not a release gate.
-4. [ ] Build the standalone product with all English strings localized, original art, responsive play, bot,
-   pass-and-play, persistence and interactive tutorial; verify mobile, install and offline behavior.
-5. [ ] Add the isolated Worker, rooms, quick match and finished-game storage; verify authoritative legality,
-   reconnect, restart and copied-state restore.
+4. [x] Build the standalone product with all English strings localized, original art, responsive play, bot,
+   pass-and-play, persistence and interactive tutorial; verify mobile, install and offline behavior. Web
+   tests passed 29/29; local Chromium passed 5/5; installed offline PWA passed 1/1.
+5. [x] Add the isolated Worker, rooms, quick match and finished-game storage; verify authoritative legality
+   and reconnect. Worker tests passed 9/9. Melon restart and copied-state restore remain part of stage smoke.
 6. [ ] Pass exact-SHA GitHub CI, deploy that commit to a Melon stage, and run production smoke. Promote only
    when the host resolves and public HTTPS/WSS/tutorial/play checks pass.
 
@@ -48,5 +49,6 @@ most popular. See the [rules and rights selection report](reports/Jeson%20Mor%20
 
 - Default hostname: `jesonmor.beanroti.com`, read from `apps/jesonmor/web/site.config.ts` and overridable
   with `JESONMOR_SITE_URL`.
-- Reserve a unique Worker port after checking `docs/PLATFORM.md` and `docs/MELON-RELEASE.md`.
+- Local web/preview/Worker ports are 5199/4199/8800. Port 8799 was occupied by an unrelated service.
+- Use a unique Melon stage port after checking `docs/MELON-RELEASE.md`.
 - Keep the PWA, server service and D1 isolated from every other game.

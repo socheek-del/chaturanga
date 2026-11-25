@@ -23,6 +23,25 @@ Mark "n/a" for categories that do not apply to the feature.
 - Revise
 - Block
 
+## Jeson Mor local product checkpoint — 2026-11-25
+
+| Category | Score | Notes |
+| --- | ---: | --- |
+| Correctness | 2 | Local bot/pass-and-play work; the Worker validates moves through the Jeson Mor Variant. |
+| Rules fidelity | 2 | Engine conformance and the seven interactive lessons cover the selected center escape, capture-all and digital endings. |
+| Verification | 1 | Full repository verification passed with the Node 25 web-storage compatibility flag; product build, web 29/29, Worker 9/9, browser 5/5 and offline 1/1 passed. Exact-SHA CI and Melon smoke remain. |
+| Scope discipline | 2 | Product implementation is isolated to Jeson Mor; generic root workspace scripts and lock entries were added. |
+| Localization | 2 | English-only product; visible UI and lesson text use the complete declared locale. |
+| UX & design | 2 | Original horse/field-atlas identity; tutorial and mobile browser scenarios passed. |
+| Product separation | 2 | Independent PWA, Worker, Durable Objects, D1, site setting and local storage namespace. |
+| Reliability | 1 | Local save/reload and online reconnect are covered; Melon restart and copied-state restore remain. |
+| Maintainability | 2 | Rules decisions, rights scope, ports, commands and release gates are documented in product files. |
+| Handoff readiness | 2 | Feature state, progress, quality, checklist and handoff identify the exact next CI and Melon steps. |
+
+**Verdict:** Revise before release acceptance. Local product implementation is complete; exact-SHA CI and Melon staging/recovery evidence remain.
+
+**Required follow-up:** Commit and push the implementation, confirm CI for that SHA, stage it on Melon, then run browser/offline, room reconnect, restart and copied-state restore smoke. Promote publicly only after DNS/TLS and HTTPS/WSS checks pass.
+
 ## Required Follow-Up
 
 - Missing evidence:

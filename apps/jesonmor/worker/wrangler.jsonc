@@ -1,0 +1,31 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Jeson Mor owns its static app, room objects, matchmaker and finished-game database.
+  "name": "jesonmor",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-01",
+  "assets": {
+    "directory": "../web/dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*", "/ws/*"]
+  },
+  "durable_objects": {
+    "bindings": [
+      { "name": "GAME_ROOM", "class_name": "GameRoom" },
+      { "name": "MATCHMAKER", "class_name": "Matchmaker" }
+    ]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["GameRoom", "Matchmaker"] }],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "jesonmor",
+      "database_id": "d45ab5bc-7df9-4ecf-8a4f-60ab08fa1540",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "vars": { "RECONNECT_GRACE_MS": "60000" },
+  "routes": [{ "pattern": "jesonmor.beanroti.com", "custom_domain": true }],
+  "observability": { "enabled": true }
+}

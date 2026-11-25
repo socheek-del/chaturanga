@@ -27,6 +27,7 @@ game saving, PWA install/offline behavior, and its own Melon service and storage
 - Authoritative online rooms and isolated persistence: `apps/jesonmor/worker`, its own Durable Objects and
   D1 database. The server validates every move with `@chaturanga/jesonmor`. No chat.
 - Deploy to Melon through `ssh melon`. Cloudflare is fallback only for a documented Melon limitation.
+- Local endpoints: web `127.0.0.1:5199`, PWA preview `127.0.0.1:4199`, isolated room Worker `127.0.0.1:8800`.
 - Do not add this product to the family catalog until its public route, HTTPS/WSS, tutorial and play smoke
   pass. Never hardcode its hostname outside `apps/jesonmor/web/site.config.ts` and its Worker route config.
 

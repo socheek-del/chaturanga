@@ -45,6 +45,7 @@
 - [x] Jeson Mor source selection, rights boundary, product plan and rules contract are documented under `apps/jesonmor/` and `packages/jesonmor/`.
 - [x] `@chaturanga/jesonmor` passes 28 focused/conformance checks; `@chaturanga/jesonmor-ai` passes 15 checks covering all six levels for both colors, capture-all and center wins, deterministic seeds and node limits.
 - [x] Full repository `npm run verify` passed under Node 22.23.1 after adding the Jeson Mor rules and bot packages.
-- [ ] Build the Jeson Mor independent PWA with original art, first-player selection, bot/pass-and-play, local persistence and an interactive tutorial covering every selected rule.
-- [ ] Add the isolated online Worker and D1; verify legal moves, reconnect, restart and copied-state restore.
-- [ ] Run exact-SHA CI for the current increment, deploy the complete product to Melon and record the stage smoke before starting another game.
+- [x] Build the Jeson Mor independent English PWA with original art, first-player selection, six bot levels, pass-and-play, local persistence, and a seven-lesson interactive tutorial covering every selected rule. Web tests 29/29, local browser E2E 5/5 and installed offline PWA smoke 1/1 passed.
+- [x] Add the isolated online Worker and D1; Worker tests passed 9/9 for legal move validation, reconnect recovery, no-chat behavior and finished-game storage.
+- [x] Full repository verification passed with `NODE_OPTIONS=--no-experimental-webstorage` under the shell's Node 25. `npm run build:jesonmor` passed (Vite PWA and Wrangler Worker dry-run).
+- [ ] Commit/push the complete product to main, confirm exact-SHA CI, deploy to Melon, then verify production PWA/rooms, restart and copied-state restore before starting another game.

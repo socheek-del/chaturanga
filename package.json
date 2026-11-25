@@ -50,7 +50,9 @@
     "build:congo": "npm run build -w apps/congo/web && npm run build -w apps/congo/worker",
     "build:fortress": "npm run build -w apps/fortress/web && npm run build -w apps/fortress/worker",
     "build:crazyhouse": "npm run build -w apps/crazyhouse/web && npm run build -w apps/crazyhouse/worker",
-    "deploy:threechess": "npm run build -w apps/threechess/web && npm run deploy -w apps/threechess/worker"
+    "deploy:threechess": "npm run build -w apps/threechess/web && npm run deploy -w apps/threechess/worker",
+    "dev:jesonmor": "concurrently -n worker,web -c yellow,green \"npm run dev -w apps/jesonmor/worker\" \"npm run dev -w apps/jesonmor/web\"",
+    "build:jesonmor": "npm run build -w apps/jesonmor/web && npm run build -w apps/jesonmor/worker"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#e9e3d8"/>
+  <path d="M0 0h1200v630H0z" fill="url(#paper)"/>
+  <rect x="660" y="58" width="475" height="514" rx="24" fill="#284543"/>
+  <g transform="translate(736 105)" stroke="#c58d58" stroke-width="6">
+    <rect width="326" height="326" rx="4" fill="#ae8053"/>
+    <path d="M36 0v326m36-326v326m36-326v326m36-326v326m36-326v326m36-326v326m36-326v326m36-326v326M0 36h326M0 72h326M0 108h326M0 144h326M0 180h326M0 216h326M0 252h326M0 288h326"/>
+  </g>
+  <g fill="#f7f2e8" stroke="#394b45" stroke-width="3" stroke-linejoin="round">
+    <path d="M756 130h31v31h-31zM792 130h31v31h-31zM828 130h31v31h-31zM864 130h31v31h-31zM900 130h31v31h-31zM936 130h31v31h-31zM972 130h31v31h-31zM1008 130h31v31h-31zM1044 130h31v31h-31z"/>
+    <path d="M756 419h31v31h-31zM792 419h31v31h-31zM828 419h31v31h-31zM864 419h31v31h-31zM900 419h31v31h-31zM936 419h31v31h-31zM972 419h31v31h-31zM1008 419h31v31h-31zM1044 419h31v31h-31z"/>
+  </g>
+  <rect x="861" y="266" width="36" height="36" fill="#d98a51" stroke="#f0d2a5" stroke-width="4"/>
+  <text x="72" y="120" fill="#bd6c46" font-family="sans-serif" font-size="20" font-weight="700" letter-spacing="5">A NINE-BY-NINE KNIGHT GAME</text>
+  <text x="72" y="235" fill="#293b3b" font-family="Georgia,serif" font-size="82">Jeson Mor</text>
+  <text x="76" y="300" fill="#286158" font-family="Georgia,serif" font-size="44" font-style="italic">A race to the center.</text>
+  <text x="76" y="365" fill="#536561" font-family="sans-serif" font-size="24">Ride to e5. Let the reply come.</text>
+  <text x="76" y="402" fill="#536561" font-family="sans-serif" font-size="24">Then find the way back out.</text>
+  <defs><linearGradient id="paper" x1="0" x2="1"><stop stop-color="#f7f2e8"/><stop offset="1" stop-color="#e9e3d8"/></linearGradient></defs>
+</svg>

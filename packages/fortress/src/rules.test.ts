@@ -25,6 +25,10 @@ describeVariantConformance(fortress, {
   fens: [wallBishop, wallRook],
   invalidFens: ['', START_FEN.replace(' r - ', ' z - '), START_FEN.replace('.', 'x')],
   illegalMoves: ['e13e10', 'a13a14', 'N@e5', 'n2m3'],
+}, {
+  // Preserve all five 120-ply four-seat simulations and attack assertions on slower CI hosts.
+  seededGamesMs: 20_000,
+  attackedSquaresMs: 20_000,
 });
 
 describe('Russian Four-Handed Fortress Chess', () => {

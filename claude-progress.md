@@ -1284,3 +1284,9 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 - Added a regression test for the Fortress WebSocket move schema after browser testing exposed that coordinate moves were rejected; setup/drop and ordinary/promoting moves now validate, while malformed inputs fail.
 - `./init.sh` ran with Node 22.23.1 and completed the full repository `npm run verify`. `npm run build:fortress` passed. Fortress rules passed 23/23, bot 4/4, tutorial 2/2 and Worker 4/4. Local Chromium passed 9/9 scenarios (all four human seats, local saves, full tutorial, 4-seat invite/reconnect); production-preview PWA checks passed 2/2 (installability and offline tutorial/local play).
 - Python Playwright screenshots reviewed the home and live board at 390px and 1440px. Next add the verified CI build, push the release increment, and stage its exact SHA on Melon. Keep the feature `in_progress` until room state survives stage restart/restore; public DNS is a separate release gate.
+
+### Session 046 (Fortress hosted conformance timing)
+
+- The first GitHub Actions run for `266be20` reached `npm run verify` but failed after 9m1s: the unchanged rules-core seeded-game replay and attacked-square conformance checks each exceeded Vitest's default five-second timeout on the hosted runner. Local timing was 4.74s and 3.28s respectively, confirming host variance rather than a functional failure.
+- Added per-check timeout options to `describeVariantConformance` and set 20 seconds for those two Fortress checks only. All five seeded 120-ply games, move/replay/undo assertions, and attack coverage assertions remain unchanged.
+- `npm test -w packages/fortress` passed 23/23 (9.38s); rules-core and Fortress typechecks passed. Next lint the narrow diff, push the timeout adjustment, and wait for full CI before staging on Melon.

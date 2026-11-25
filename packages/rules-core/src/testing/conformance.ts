@@ -22,12 +22,20 @@ export interface ConformanceFixtures {
   terminal?: { fen: string; move: string; status: GameStatus<string> };
 }
 
+export interface ConformanceTimeouts {
+  /** Larger multi-seat boards may need longer to run the unchanged seeded replay suite. */
+  seededGamesMs?: number;
+  /** Larger boards may need longer to check every attacked square through seeded play. */
+  attackedSquaresMs?: number;
+}
+
 const PLAYOUT_SEEDS = 5;
 const PLAYOUT_PLIES = 120;
 
 export function describeVariantConformance<G extends VariantGame<string>>(
   variant: Variant<G>,
   fixtures: ConformanceFixtures,
+  timeouts: ConformanceTimeouts = {},
 ): void {
   describe(`${variant.id} implements the rules-core Variant (plat-002)`, () => {
     const players = variant.players ?? (['w', 'b'] as unknown as readonly G['turn'][]);
@@ -109,7 +117,7 @@ export function describeVariantConformance<G extends VariantGame<string>>(
         expect(game.fen()).toBe(fens[0]);
         expect(game.undo()).toBeNull();
       }
-    });
+    }, timeouts.seededGamesMs);
 
     it('attackedSquares covers every capture and every check, on the board only (plat-015)', () => {
       const boardSize = variant.files * variant.ranks;
@@ -136,7 +144,7 @@ export function describeVariantConformance<G extends VariantGame<string>>(
           game.move(legal[Math.floor(rand() * legal.length)]!);
         }
       }
-    });
+    }, timeouts.attackedSquaresMs);
 
     if (fixtures.checkmate) {
       it('reports checkmate for the mating side', () => {

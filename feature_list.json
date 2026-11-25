@@ -3510,7 +3510,7 @@
       "milestone": "M38",
       "title": "Release Hexagonal chess",
       "user_visible_behavior": "Players learn Gliński’s 91-cell Hexagonal chess through an interactive tutorial and play a complete game against a bot, locally, and in a private online room.",
-      "status": "in_progress",
+      "status": "blocked",
       "verification": [
         "Research the Gliński edition, adoption evidence and rights boundary; record board geometry/setup, movement, pawn and promotion rules, check/mate/stalemate, draws and source conflicts before engine work.",
         "Implement a pure @chaturanga/hexagonal-chess Variant with source-backed board masks/fixtures, shared conformance, deterministic replay/undo and focused coverage of hex-specific movement and endings.",
@@ -3521,9 +3521,35 @@
       ],
       "evidence": [
         "2026-11-26: Began as the next roadmap item after Ploy, which is blocked before implementation pending rights clearance.",
-        "2026-11-26: Research is the first active task; the roadmap selects Gliński’s 91-cell form as the best-known variant. Verify rules, adoption and rights before creating the engine."
+        "2026-11-26: Research is the first active task; the roadmap selects Gliński’s 91-cell form as the best-known variant. Verify rules, adoption and rights before creating the engine.",
+        "2026-11-26: Completed primary-rules, variant/adoption and rights research. Synthesis: apps/hexagonal-chess/docs/reports/Hexagonal chess rules variants rights.md; cited notes are under apps/hexagonal-chess/docs/research_notes/Hexagonal chess rules variants rights/.",
+        "2026-11-26: Selected Gliński’s 91-cell form as best-known; McCooey is a distinct variant. The full rules source supports pawn double-step and special stalemate scoring; en passant appears in detailed secondary sources but needs confirmation in the original book. Verify the original setup diagram, en-passant details and draw rules before an engine contract.",
+        "2026-11-26: No applicable digital-adaptation license/permission or current rights holder was verified. Implementation is blocked before code pending rights clearance; public branding also needs name review. No contact was sent."
       ],
-      "notes": "Active feature. Research Gliński’s 91-cell game, the best-known hexagonal chess version. Confirm original rules/variant choice, adoption claims, rights and branding before engine work. The game needs hex geometry, distinct pawn rules, and the selected stalemate conventions documented before implementation."
+      "notes": "Blocked before implementation: no applicable digital-adaptation license or written permission was found and the current rights holder/successor is unverified. Online rules do not grant adaptation permission. Clear rights and branding before implementation/public naming; no contact was sent. The selected best-known form is Gliński’s 91-cell game, distinct from McCooey. Confirm exact setup, en passant and draw rules against the original rules book if the rights gate clears. Continue with Copenhagen Hnefatafl."
+    },
+    {
+      "id": "hnefatafl-001",
+      "product": "hnefatafl",
+      "priority": 190,
+      "area": "release",
+      "milestone": "M39",
+      "title": "Release Hnefatafl",
+      "user_visible_behavior": "Players learn Copenhagen 11×11 Hnefatafl through an interactive tutorial and play a complete asymmetric game against a bot, locally, and in a private online room.",
+      "status": "in_progress",
+      "verification": [
+        "Research the Copenhagen 11×11 tournament rules, variant adoption and rights; record setup, attacker/defender turns, king capture, shield walls, edge forts, camp/ throne rules and outcomes before engine work.",
+        "Implement a pure @chaturanga/hnefatafl Variant with source-backed fixtures, shared conformance, deterministic replay/undo and focused tests for asymmetric victory and special captures.",
+        "Add bounded bots for attacker and defender and an interactive tutorial covering both roles, all selected special rules and end conditions.",
+        "Ship an independent original PWA with responsive board, local saves, offline install, complete locale keys and standalone site/service configuration.",
+        "Provide server-authoritative private rooms and isolated Melon storage; verify both seats, legal moves, reconnect, restart and copied-state restore.",
+        "Pass exact-SHA CI and Melon stage smoke. Publish the route/catalog entry only after DNS/TLS and HTTPS/WebSocket checks pass."
+      ],
+      "evidence": [
+        "2026-11-26: Began as the next roadmap item after Gliński Hexagonal chess, which is blocked before implementation pending rights clearance.",
+        "2026-11-26: Research is active. Roadmap selects Copenhagen 11×11 as the documented tournament standard; confirm rules and rights before engine work."
+      ],
+      "notes": "Active feature. Research the Copenhagen 11×11 tournament standard, source-backed rules, adoption and rights. Confirm shield walls/edge forts, king capture, escape, throne/camp and draw conventions before coding. Do not implement until rights/license requirements are met."
     }
   ]
 }

@@ -1540,3 +1540,11 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 - The manual does not settle rotation increments; later sources conflict. Seat/color mapping, tie/no-move conventions also need resolution before implementation.
 - No Ploy-specific chain of title or digital adaptation permission/license was found. Hasbro's generic digital guideline does not prove it owns Ploy. Block implementation pending rights clearance; no contact was sent.
 - The next roadmap product is Gliński's 91-cell Hexagonal chess. Start with variant/popularity, primary rules and rights research. Dameo remains staged on Melon at port 19917; public promotion waits on absent DNS and trademark review.
+
+### Session 080 (Gliński Hexagonal chess research and rights gate)
+
+- Completed source research on the 91-cell Gliński rules, variants/adoption and rights. Synthesis is `apps/hexagonal-chess/docs/reports/Hexagonal chess rules variants rights.md`; source notes are in the product-local research folder.
+- Selected Gliński's 91-cell board as the best-known/best-supported form. Historical evidence indicates more adoption than other hex-chess proposals, but there is no current representative popularity ranking. McCooey is a distinct ruleset.
+- The strongest full rules source supports pawn double-step and special stalemate scoring. En passant appears in some detailed secondary sources but needs confirmation in Gliński's original book; modern summaries conflict. Exact setup coordinates and full draw rules also need verification before implementation.
+- No applicable digital-adaptation permission/license or present-day rights holder was verified. Marked blocked before implementation pending rights clearance; public branding also needs name review. No contact was sent.
+- Next roadmap item is Copenhagen 11×11 Hnefatafl. Begin primary rules, edition/adoption and rights research. Dameo remains staged on Melon at port 19917; public promotion waits on missing DNS and trademark review.

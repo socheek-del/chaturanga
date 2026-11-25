@@ -1556,3 +1556,11 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 - Recorded asymmetric attacker/defender setup, movement, king escape/capture, throne/camps, shield walls, edge forts and end conditions. Exact setup transcription, edge-fort adjudication, repetition and draw rules need source verification before implementation.
 - No digital adaptation license was found; the primary rules page says all rights reserved. Independent mechanics-only work may be viable in some jurisdictions with original expression, but AGENTS.md requires applicable rights clearance for the faithful digital product. Marked blocked before implementation; separate branding clearance is required. No contact was sent.
 - The next roadmap product is Rollerball (chess variant). Begin rules/variant/adoption and rights research. Dameo remains staged on Melon at port 19917; public promotion waits on missing DNS and trademark review.
+
+### Session 082 (Rollerball research and rights gate)
+
+- Researched the exact Rollerball chess variant's rules, adoption and rights. The cited synthesis is `apps/rollerball/docs/reports/Rollerball rules variants rights.md`, with source notes alongside it.
+- Identified Jean-Louis Cazaux's 40-square two-ring chess variant, dated 1998 by Pritchard and 1999 by other sources. This is unrelated to the 1975 Invicta Rollerball tilt-maze game. Evidence shows a single identifiable ruleset and limited implementations, not a popularity ranking.
+- Transcribed the rules candidate: six-piece armies, location-dependent moves and rebounds, no pawn double-step, promotion, checkmate/clockwise King-race wins, stalemate and threefold. Cazaux's original page could not be accessed; verify the setup and “travelled clockwise” condition before coding.
+- No digital adaptation license/permission was found. Marked blocked before implementation pending rights clearance and a separate name review.
+- The next roadmap game is Kruzno. Begin source/variant/adoption and rights research. Dameo remains staged on Melon at port 19917; public promotion waits on missing DNS and trademark review.

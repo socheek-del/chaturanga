@@ -3562,7 +3562,7 @@
       "milestone": "M40",
       "title": "Release Rollerball",
       "user_visible_behavior": "Players learn the documented Rollerball chess-variant rules through an interactive tutorial and play a complete game against a bot, locally, and in a private online room.",
-      "status": "in_progress",
+      "status": "blocked",
       "verification": [
         "Research the documented Rollerball layout, topology, movement by location and rules for promotion/endings; establish variant/adoption and rights before engine work.",
         "Implement a pure @chaturanga/rollerball Variant with source-backed board-graph fixtures, shared conformance, deterministic replay/undo and focused coverage of location-dependent movement and special endings.",
@@ -3573,9 +3573,36 @@
       ],
       "evidence": [
         "2026-11-26: Began as the next roadmap product after Copenhagen Hnefatafl, which is blocked before implementation pending rights clearance.",
-        "2026-11-26: Research is active; verify primary rules, topology, location-dependent movement, variant/adoption and rights before coding."
+        "2026-11-26: Research is active; verify primary rules, topology, location-dependent movement, variant/adoption and rights before coding.",
+        "2026-11-26: Completed rules, variant/adoption and rights research. Synthesis: apps/rollerball/docs/reports/Rollerball rules variants rights.md; cited evidence notes are game-local.",
+        "2026-11-26: Identified Jean-Louis Cazaux’s 40-square two-ring Rollerball chess variant (1998/1999 dating discrepancy), distinct from the unrelated 1975 Invicta maze. Evidence shows limited digital exposure, not comparative popularity. Candidate movement includes location-dependent paths, rebounds, no pawn double-step, promotion, checkmate/clockwise King-race, stalemate and threefold.",
+        "2026-11-26: Cazaux’s original rules page was inaccessible; verify setup and “travelled clockwise” win wording before engine design. No applicable digital-adaptation permission/license was found. Blocked before implementation pending rights clearance and separate name review."
       ],
-      "notes": "Active feature. Start with primary rules and board topology, then document movement by location, promotion, endings, variant/adoption and rights. Do not start engine work until source and rights checks are complete."
+      "notes": "Blocked before implementation: no digital adaptation permission/license was found, and Cazaux’s original source page could not be inspected. Obtain applicable rights clearance; separately review the product name before public branding. Target is Cazaux’s 40-square two-ring variant (date differs 1998/1999), not the unrelated Invicta maze. If cleared, verify the exact setup and clockwise King-race condition before engine work. Continue with Kruzno."
+    },
+    {
+      "id": "kruzno-001",
+      "product": "kruzno",
+      "priority": 192,
+      "area": "release",
+      "milestone": "M41",
+      "title": "Release Kruzno",
+      "user_visible_behavior": "Players learn the selected Kruzno hex-checkers rules through an interactive tutorial and play a complete game against a bot, locally, and in a private online room.",
+      "status": "in_progress",
+      "verification": [
+        "Reconcile the roadmap’s Kruzno entry, linked article and primary rules; select the documented edition and establish adoption and rights before implementation.",
+        "Record board topology/setup, pieces, legal jumps, capture and endings in packages/kruzno/RULES.md before engine work.",
+        "Implement a pure @chaturanga/kruzno Variant with source-backed fixtures, shared conformance, deterministic replay/undo and focused coverage.",
+        "Add bounded bots for both roles and an interactive tutorial that teaches all selected rules; verify complete games and both human roles.",
+        "Ship an independent original PWA with responsive board, local saves, offline install, complete locale keys and standalone site/service configuration.",
+        "Provide server-authoritative private rooms and isolated Melon storage; verify legal actions, reconnect, restart and copied-state restore.",
+        "Pass exact-SHA CI and Melon stage smoke; public route/catalog promotion requires DNS/TLS and HTTPS/WebSocket smoke."
+      ],
+      "evidence": [
+        "2026-11-26: Began after Rollerball, which is blocked before implementation pending digital-adaptation rights clearance.",
+        "2026-11-26: Research is active. First reconcile the catalog and linked article edition; verify the rules, adoption and rights before engine work."
+      ],
+      "notes": "Active feature. Reconcile what the Wikipedia/catalog entry means by Kruzno with the linked rules article before selecting a form. Research board and jump/capture semantics, variant popularity and rights. Do not code until the rules identity and rights boundary are clear."
     }
   ]
 }

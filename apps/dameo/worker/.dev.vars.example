@@ -1,0 +1,3 @@
+# Copy to .dev.vars for a persistent local seat-token signing key.
+# The dev launcher creates a private random key automatically when .dev.vars is missing.
+AUTH_SECRET=replace-with-a-random-local-secret

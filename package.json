@@ -17,7 +17,7 @@
     "dev:xiangqi": "concurrently -n worker,web -c yellow,green \"npm run dev -w apps/xiangqi/worker\" \"npm run dev -w apps/xiangqi/web\"",
     "dev:shogi": "concurrently -n worker,web -c yellow,green \"npm run dev -w apps/shogi/worker\" \"npm run dev -w apps/shogi/web\"",
     "dev:shatra": "concurrently -n worker,web -c yellow,green \"npm run dev -w apps/shatra/worker\" \"npm run dev -w apps/shatra/web\"",
-    "dev:dameo": "npm run dev -w apps/dameo/web",
+    "dev:dameo": "concurrently -n worker,web -c yellow,green \"npm run dev -w apps/dameo/worker\" \"npm run dev -w apps/dameo/web\"",
     "lint": "eslint .",
     "format": "prettier --write .",
     "typecheck": "npm run typecheck --workspaces --if-present",
@@ -56,7 +56,7 @@
     "build:jesonmor": "npm run build -w apps/jesonmor/web && npm run build -w apps/jesonmor/worker",
     "dev:suffragetto": "concurrently -n worker,web -c yellow,green \"npm run dev -w apps/suffragetto/worker\" \"npm run dev -w apps/suffragetto/web\"",
     "build:suffragetto": "npm run build -w apps/suffragetto/web && npm run build -w apps/suffragetto/worker",
-    "build:dameo": "npm run build -w apps/dameo/web"
+    "build:dameo": "npm run build -w apps/dameo/web && npm run build -w apps/dameo/worker"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

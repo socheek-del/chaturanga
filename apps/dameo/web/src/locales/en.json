@@ -4,6 +4,7 @@
     "title": "Dameo",
     "intro": "A field of moving lines and winding capture routes. Learn the rules, then find your way across the board.",
     "play": "Play Dameo",
+    "playOnline": "Play online",
     "playBot": "Play against a bot",
     "playLocal": "Pass and play on this device",
     "botTitle": "Against a bot",
@@ -27,6 +28,7 @@
     "leave": "Leave lesson",
     "leaveGame": "Leave game"
   },
+  "modes": { "online": "Online play" },
   "board": {
     "label": "Dameo board",
     "square": "{{square}}, {{piece}}"
@@ -76,6 +78,7 @@
       "elimination": "All opposing men and kings were captured.",
       "repetition": "The same position occurred for the third time.",
       "timeout": "Time ran out.",
+      "abandon": "A player did not reconnect in time.",
       "resign": "A player resigned.",
       "agreement": "Both players agreed to a draw."
     },
@@ -83,7 +86,18 @@
     "drawOffered": "Draw offered. Make your move; your opponent can accept or decline.",
     "drawOfferReceived": "Your opponent offers a draw.",
     "acceptDraw": "Accept draw",
-    "declineDraw": "Decline"
+    "declineDraw": "Decline",
+    "timeControl": "Time control",
+    "noClock": "No clock",
+    "custom": "Custom",
+    "minutes": "Minutes",
+    "increment": "Increment (seconds)",
+    "categories": {
+      "bullet": "Bullet",
+      "blitz": "Blitz",
+      "rapid": "Rapid",
+      "classical": "Classical"
+    }
   },
   "setup": {
     "kicker": "CHOOSE YOUR TABLE",
@@ -109,10 +123,48 @@
   },
   "computer": {
     "you": "You",
-    "thinking": "{{name}} is thinking…"
+    "thinking": "{{name}} is thinking…",
+    "sideWhite": "White",
+    "sideBlack": "Black",
+    "sideRandom": "Random"
+  },
+  "online": {
+    "opponent": "Opponent",
+    "quickTitle": "Quick match",
+    "quickHint": "Find an opponent in the same time-control pool.",
+    "searching": "Searching the {{pool}} pool…",
+    "createTitle": "Create a private game",
+    "color": "Choose your side",
+    "create": "Create room",
+    "joinTitle": "Join with a room code",
+    "codeLabel": "Room code",
+    "join": "Join room",
+    "invalidCode": "Enter a valid six-character room code.",
+    "notFound": "That room could not be found.",
+    "serverError": "Online play is unavailable right now. Check your connection and try again.",
+    "connecting": "Connecting to the room…",
+    "reconnecting": "Connection lost. Reconnecting…",
+    "waitingTitle": "Your room is ready",
+    "shareHint": "Share this code or link with your opponent.",
+    "copyLink": "Copy invite link",
+    "copied": "Link copied",
+    "qrAlt": "QR code for the room invite link",
+    "waitingFor": "Waiting for your opponent",
+    "spectating": "You are watching this game.",
+    "offerDraw": "Offer a draw",
+    "drawOffered": "Draw offered",
+    "drawOfferReceived": "Your opponent offers a draw.",
+    "accept": "Accept",
+    "decline": "Decline",
+    "opponentDisconnected": "Your opponent has {{seconds}} seconds to reconnect.",
+    "rematchOffered": "Rematch offered",
+    "rematchReceived": "Your opponent wants a rematch."
   },
   "bots": {
-    "learner": { "name": "Learner", "description": "A gentle place to begin. It sometimes misses a useful continuation." },
+    "learner": {
+      "name": "Learner",
+      "description": "A gentle place to begin. It sometimes misses a useful continuation."
+    },
     "wanderer": { "name": "Wanderer", "description": "Finds simple routes and gives you room to explore." },
     "tactician": { "name": "Tactician", "description": "Looks for captures and short combinations." },
     "captain": { "name": "Captain", "description": "Plans routes and guards valuable pieces." },

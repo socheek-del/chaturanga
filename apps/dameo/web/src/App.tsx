@@ -1,4 +1,5 @@
-import { FeedbackLink, GameScreen, MoreGames, undoAllowed, type SiblingSite, useFocusModeProvider } from '@chaturanga/game-shell/ui';
+import { createIdentity, storageKey, type TimeControlChoice } from '@chaturanga/game-shell';
+import { FeedbackLink, GameScreen, MoreGames, OnlineLobby, OnlineRoom, undoAllowed, type SiblingSite, useFocusModeProvider } from '@chaturanga/game-shell/ui';
 import { Button, Card } from '@chaturanga/ui';
 import { Game, dameo, START_FEN } from '@chaturanga/dameo';
 import { BOTS, botById } from '@chaturanga/dameo-ai';
@@ -19,6 +20,7 @@ import { DameoTutorial, lessonStarsKey, tutorialStarsKey } from './tutorial';
 declare const __FAMILY__: readonly SiblingSite[];
 
 const hero = new Game(START_FEN);
+const identity = createIdentity(storageKey(PRODUCT, 'identity'));
 type Mode = 'bot' | 'local';
 type SessionStore = typeof useLocalSession;
 const PIECE_VALUES = { m: 1, k: 3 };
@@ -46,6 +48,7 @@ function Home() {
         <div className="atlas-actions">
           <Link className="atlas-primary" to="/play"><Bot size={17} aria-hidden />{t('home.play')}<ArrowUpRight size={16} aria-hidden /></Link>
           <Link className="atlas-secondary" to="/play?mode=local">{t('home.playLocal')} <span aria-hidden>→</span></Link>
+          <Link className="atlas-secondary" to="/online"><Users size={16} aria-hidden />{t('home.playOnline')} <span aria-hidden>→</span></Link>
           <Link className="atlas-primary" to="/tutorial"><BookOpen size={17} aria-hidden />{t('home.startLearning')}<ArrowUpRight size={16} aria-hidden /></Link>
           <Link className="atlas-secondary" to="/learn">{t('home.allLessons')} <span aria-hidden>→</span></Link>
           {completed && <p className="completion-note">{t('home.lastResult', { stars: completed })}</p>}
@@ -274,6 +277,9 @@ function LessonRoute() {
 export function App() {
   const { t } = useTranslation();
   const { focus, FocusProvider } = useFocusModeProvider();
+  const navigate = useNavigate();
+  const [timeControl, setTimeControl] = useState<TimeControlChoice>({ kind: 'none' });
+  const [onlineColor, setOnlineColor] = useState<'w' | 'b' | 'random'>('random');
   return (
     <div className={`dameo-app${focus ? ' is-focused' : ''}`}>
       <header className="site-masthead">
@@ -281,8 +287,8 @@ export function App() {
           <span className="brand-seal" aria-hidden><Compass size={21} strokeWidth={1.5} /></span>
           <span><strong>{t('home.title')}</strong><small>{t('home.brandNote')}</small></span>
         </Link>
-        {focus ? <Link className="back-link" to={focus === 'game' ? '/' : '/learn'}><ArrowLeft size={16} aria-hidden />{focus === 'game' ? t('nav.leaveGame') : t('nav.leave')}</Link> :
-          <nav className="top-nav" aria-label={t('nav.label')}><Link to="/play">{t('nav.play')}</Link><Link to="/learn">{t('nav.lessons')}</Link><Link to="/tutorial">{t('nav.start')}</Link></nav>}
+        {focus ? <Link className="back-link" to={focus === 'game' ? (location.pathname.startsWith('/online/') ? '/online' : '/') : '/learn'}><ArrowLeft size={16} aria-hidden />{focus === 'game' ? t('nav.leaveGame') : t('nav.leave')}</Link> :
+          <nav className="top-nav" aria-label={t('nav.label')}><Link to="/play">{t('nav.play')}</Link><Link to="/online">{t('modes.online')}</Link><Link to="/learn">{t('nav.lessons')}</Link><Link to="/tutorial">{t('nav.start')}</Link></nav>}
       </header>
       <main>
         <FocusProvider>
@@ -293,6 +299,15 @@ export function App() {
             <RouteView path="lesson/:id" element={<LessonRoute />} />
             <RouteView path="play" element={<PlaySetup />} />
             <RouteView path="game/:mode/:side/:level" element={<GameRoute />} />
+            <RouteView path="online" element={<OnlineLobby
+              identity={identity}
+              timeControl={timeControl}
+              onTimeControlChange={setTimeControl}
+              color={onlineColor}
+              onColorChange={setOnlineColor}
+              onEnterRoom={(code) => navigate('/online/' + code)}
+            />} />
+            <RouteView path="online/:code" element={<OnlineRoomRoute />} />
             <RouteView path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </FocusProvider>
@@ -300,4 +315,29 @@ export function App() {
       {!focus && <footer className="site-footer"><MoreGames sites={__FAMILY__} locale={PRODUCT.defaultLocale} variant="footer" /><FeedbackLink product={PRODUCT.id} /></footer>}
     </div>
   );
+}
+
+function OnlineRoomRoute() {
+  const { code = '' } = useParams();
+  const navigate = useNavigate();
+  const { t } = useTranslation();
+  const board = useBoardIdentity();
+  if (!/^[A-HJ-NP-Z2-9]{6}$/i.test(code)) return <Navigate to="/online" replace />;
+  const normalized = code.toUpperCase();
+  return <OnlineRoom
+    key={normalized}
+    code={normalized}
+    variant={dameo}
+    identity={identity}
+    roomUrl={(roomCode) => location.origin + '/online/' + roomCode}
+    onEnterRoom={(roomCode) => navigate('/online/' + roomCode)}
+    onLeave={() => navigate('/online')}
+    renderGame={(props) => <GameScreen
+      {...props}
+      variant={dameo}
+      {...board}
+      pieceValues={PIECE_VALUES}
+      routeChoiceTitle={t('play.chooseRoute')}
+    />}
+  />;
 }

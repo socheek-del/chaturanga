@@ -245,6 +245,25 @@ describe('useMoveInput with Shogi, where a move may promote or not (plat-011)', 
   });
 });
 
+describe('useMoveInput with multi-capture routes', () => {
+  it('asks which path to take when legal moves share their origin and destination', () => {
+    const routes = ['d5c6c7d8', 'd5e6e7d8'];
+    const game = { legalUci: () => routes };
+    const onMove = vi.fn();
+    const hook = renderHook(() => useMoveInput({ game, version: 0, canMove: true, onMove, files: 7 }));
+    const from = 4 * 7 + 3;
+    const to = 7 * 7 + 3;
+    act(() => hook.result.current.onSquareClick(from));
+    expect(hook.result.current.targets).toContain(to);
+    act(() => hook.result.current.onSquareClick(to));
+    expect(onMove).not.toHaveBeenCalled();
+    expect(hook.result.current.pendingRoute?.choices.map((choice) => choice.uci)).toEqual(routes);
+    act(() => hook.result.current.chooseRoute(routes[1]!));
+    expect(onMove).toHaveBeenCalledWith(routes[1]);
+    expect(hook.result.current.pendingRoute).toBeNull();
+  });
+});
+
 /**
  * A promotion that offers a choice of pieces (plat-014). Chess has four promotions on the same from-to pair
  * and no plain move among them, so this uses a stub legal-move source rather than an engine: packages/chess

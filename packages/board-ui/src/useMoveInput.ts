@@ -26,6 +26,11 @@ export interface PromotionChoice {
   promotion: string | null;
 }
 
+export interface RouteChoice {
+  uci: string;
+  path: Square[];
+}
+
 export interface MoveInput {
   /** Selected board square. */
   selected: Square | null;
@@ -39,6 +44,10 @@ export interface MoveInput {
   choosePromotion: (uci: string) => void;
   /** Drops the pending move without playing it. */
   cancelPromotion: () => void;
+  /** Same endpoints with different legal paths (e.g. a Shatra multi-capture). */
+  pendingRoute: { from: Square; to: Square; choices: RouteChoice[] } | null;
+  chooseRoute: (uci: string) => void;
+  cancelRoute: () => void;
   /** Selected piece type in the side-to-move's hand. */
   selectedHand: string | null;
   /** Squares the selection can move or be placed to. */
@@ -60,6 +69,7 @@ export interface MoveInput {
 
 type Selection = { version: number } & ({ kind: 'square'; square: Square } | { kind: 'hand'; type: string });
 type Pending = { version: number; from: Square; to: Square; choices: PromotionChoice[] };
+type PendingRoute = { version: number; from: Square; to: Square; choices: RouteChoice[] };
 type BoardMove = Extract<ParsedMove, { kind: 'move' }>;
 type DropMove = Extract<ParsedMove, { kind: 'drop' }>;
 
@@ -69,6 +79,7 @@ const unique = (squares: Square[]) => [...new Set(squares)];
 export function useMoveInput({ game, version, canMove, onMove, files = 8 }: MoveInputOptions): MoveInput {
   const [selection, setSelection] = useState<Selection | null>(null);
   const [pending, setPending] = useState<Pending | null>(null);
+  const [routePending, setRoutePending] = useState<PendingRoute | null>(null);
   const legal = useMemo(
     () => (canMove ? game.legalUci().flatMap((uci) => parseUci(uci, files) ?? []) : []),
     [game, version, canMove, files], // eslint-disable-line react-hooks/exhaustive-deps
@@ -81,6 +92,9 @@ export function useMoveInput({ game, version, canMove, onMove, files = 8 }: Move
   const current = selection && selection.version === version ? selection : null;
   const pendingPromotion =
     pending && pending.version === version ? { from: pending.from, to: pending.to, choices: pending.choices } : null;
+  const pendingRoute = routePending && routePending.version === version
+    ? { from: routePending.from, to: routePending.to, choices: routePending.choices }
+    : null;
   const selected = current?.kind === 'square' ? current.square : null;
   const selectedHand = current?.kind === 'hand' ? current.type : null;
 
@@ -104,12 +118,20 @@ export function useMoveInput({ game, version, canMove, onMove, files = 8 }: Move
     const candidates = boardMoves.filter((m) => m.from === from && m.to === to);
     if (candidates.length === 0) return false;
     setSelection(null);
-    // More than one move on the same squares: promote or not (Shogi), or which piece (chess). The player
-    // chooses, so the move waits until they do.
+    // More than one move on the same squares: choose a promotion, or choose the capture route.
     if (candidates.length > 1) {
-      setPending({ version, from, to, choices: candidates.map(({ uci, promotion }) => ({ uci, promotion })) });
+      const promotions = new Set(candidates.map((candidate) => candidate.promotion));
+      if (promotions.size > 1) {
+        setRoutePending(null);
+        setPending({ version, from, to, choices: candidates.map(({ uci, promotion }) => ({ uci, promotion })) });
+      } else {
+        setPending(null);
+        setRoutePending({ version, from, to, choices: candidates.map(({ uci, path }) => ({ uci, path })) });
+      }
       return true;
     }
+    setPending(null);
+    setRoutePending(null);
     onMove(candidates[0]!.uci);
     return true;
   };
@@ -122,6 +144,13 @@ export function useMoveInput({ game, version, canMove, onMove, files = 8 }: Move
   };
 
   const cancelPromotion = () => setPending(null);
+  const chooseRoute = (uci: string) => {
+    if (!pendingRoute) return;
+    const choice = pendingRoute.choices.find((candidate) => candidate.uci === uci);
+    setRoutePending(null);
+    if (choice) onMove(choice.uci);
+  };
+  const cancelRoute = () => setRoutePending(null);
 
   const place = (type: string, to: Square): boolean => {
     const move = drops.find((m) => m.type === type && m.to === to);
@@ -132,7 +161,7 @@ export function useMoveInput({ game, version, canMove, onMove, files = 8 }: Move
   };
 
   const onSquareClick = (square: Square) => {
-    if (!canMove || pendingPromotion) return;
+    if (!canMove || pendingPromotion || pendingRoute) return;
     if (selectedHand !== null) {
       if (place(selectedHand, square)) return;
     } else if (selected !== null) {
@@ -143,7 +172,7 @@ export function useMoveInput({ game, version, canMove, onMove, files = 8 }: Move
   };
 
   const onHandSelect = (type: string) => {
-    if (!canMove || pendingPromotion) return;
+    if (!canMove || pendingPromotion || pendingRoute) return;
     setSelection(selectedHand === type || !canSelectHand(type) ? null : { version, kind: 'hand', type });
   };
 
@@ -160,6 +189,9 @@ export function useMoveInput({ game, version, canMove, onMove, files = 8 }: Move
     pendingPromotion,
     choosePromotion,
     cancelPromotion,
+    pendingRoute,
+    chooseRoute,
+    cancelRoute,
     targets,
     promotionTargets,
     canPromoteInPlace: !!inPlace,

@@ -12,6 +12,7 @@ import {
   type Color,
   type Piece,
   type Square,
+  squareNameOf,
   timesAt,
   usesSetupPhase,
   type Variant,
@@ -70,6 +71,8 @@ export interface GameScreenProps<G extends VariantGame> {
   renderCounting?: (game: G) => ReactNode;
   /** Required when a promotion offers a choice of pieces (chess): names each piece on its button. */
   describePromotion?: (piece: Piece) => string;
+  /** Product-translated title for the route picker used when legal moves share endpoints. */
+  routeChoiceTitle?: string;
   /** Required when the variant has hands: names a tray and a piece type in it. */
   handLabel?: (color: Color) => string;
   describeHandPiece?: (type: string, count: number) => string;
@@ -115,6 +118,7 @@ export function GameScreen<G extends VariantGame>({
   onSound,
   renderCounting,
   describePromotion,
+  routeChoiceTitle,
   handLabel,
   describeHandPiece,
   boardOverlay,
@@ -415,6 +419,21 @@ export function GameScreen<G extends VariantGame>({
             })}
           </div>
         )}
+      </Modal>
+      <Modal open={!!input.pendingRoute} onClose={input.cancelRoute} title={routeChoiceTitle ?? ''}>
+        <div className="flex flex-col gap-2">
+          {input.pendingRoute?.choices.map((choice) => (
+            <Button
+              key={choice.uci}
+              variant="outline"
+              className="font-mono"
+              data-testid="choose-route"
+              onClick={() => input.chooseRoute(choice.uci)}
+            >
+              {[input.pendingRoute!.from, ...choice.path].map((square) => squareNameOf(square, variant.files)).join(' → ')}
+            </Button>
+          ))}
+        </div>
       </Modal>
       <Modal
         open={confirmResign}

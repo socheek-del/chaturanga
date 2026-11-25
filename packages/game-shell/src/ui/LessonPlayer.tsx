@@ -1,6 +1,6 @@
 import { Board, type BoardHandle, type BoardTheme, HandTray, parseUci, useMoveInput } from '@chaturanga/board-ui';
 import { type Color, type Piece, type Square, squareNameOf, squareOf, type Variant, type VariantGame } from '@chaturanga/rules-core';
-import { Button, Card, cn, ProgressBar } from '@chaturanga/ui';
+import { Button, Card, cn, Modal, ProgressBar } from '@chaturanga/ui';
 import { CheckCircle2, Star, X, XCircle } from 'lucide-react';
 import { type ReactNode, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -28,6 +28,8 @@ export interface LessonPlayerProps<G extends VariantGame, Verify = never> {
   renderPiece: (piece: Piece, className: string) => ReactNode;
   boardLabel: string;
   describeSquare: (square: string, piece: Piece | null) => string;
+  /** Product-translated title for selecting between different legal capture routes. */
+  routeChoiceTitle?: string;
   /** Drawn beside the prompt; omit for a product without a mascot. */
   renderMascot?: (mood: LessonMood, className: string) => ReactNode;
   /** Markings drawn across the board, such as the diagonals a Sittuyin Ne promotes on. */
@@ -358,13 +360,14 @@ function InfoStep<G extends VariantGame, Verify>(props: StepProps<G, Verify, Ext
   );
 }
 
-/** Compares two engine move strings by square only, ignoring a promotion-letter suffix. */
+/** Compares a route exactly while ignoring a promotion-letter suffix. */
 function sameSquares(a: string, b: string, files: number): boolean {
   const pa = parseUci(a, files);
   const pb = parseUci(b, files);
   if (!pa || !pb || pa.kind !== pb.kind) return false;
   if (pa.kind === 'drop') return pb.kind === 'drop' && pa.type === pb.type && pa.to === pb.to;
-  return pb.kind === 'move' && pa.from === pb.from && pa.to === pb.to;
+  return pb.kind === 'move' && pa.from === pb.from && pa.to === pb.to &&
+    pa.path.length === pb.path.length && pa.path.every((square, index) => square === pb.path[index]);
 }
 
 function MoveStep<G extends VariantGame, Verify>(props: StepProps<G, Verify, Extract<LessonStep<Verify>, { kind: 'move' }>>) {
@@ -394,6 +397,7 @@ function MoveStep<G extends VariantGame, Verify>(props: StepProps<G, Verify, Ext
   const inHand = props.variant.hasHands ? game.hand(turn) : [];
   const showTray = inHand.length > 0 && !!props.handLabel && !!props.describeHandPiece;
   return (
+    <>
     <StepLayout
       prompt={<Prompt text={step.text} mood={moodFor(step.kind, feedback)} translate={props.translate} renderMascot={props.renderMascot} />}
       board={
@@ -453,6 +457,24 @@ function MoveStep<G extends VariantGame, Verify>(props: StepProps<G, Verify, Ext
         </>
       }
     />
+    <Modal open={!!input.pendingRoute} onClose={input.cancelRoute} title={props.routeChoiceTitle ?? ''}>
+      <div className="flex flex-col gap-2">
+        {input.pendingRoute?.choices.map((choice) => (
+          <Button
+            key={choice.uci}
+            variant="outline"
+            className="font-mono"
+            data-testid="choose-route"
+            onClick={() => input.chooseRoute(choice.uci)}
+          >
+            {[input.pendingRoute!.from, ...choice.path]
+              .map((square) => squareNameOf(square, props.variant.files))
+              .join(' → ')}
+          </Button>
+        ))}
+      </div>
+    </Modal>
+    </>
   );
 }
 

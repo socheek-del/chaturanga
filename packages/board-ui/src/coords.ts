@@ -12,7 +12,7 @@ export type ParsedMove =
    * equals to. `promotion` is the suffix itself, so a game with a choice of pieces (chess) can tell its
    * promotions apart; `null` when the move does not promote.
    */
-  | { kind: 'move'; from: Square; to: Square; promotion: string | null; uci: string };
+  | { kind: 'move'; from: Square; to: Square; path: Square[]; promotion: string | null; uci: string };
 
 /** Parses an engine move in Fairy-Stockfish coordinate notation. */
 export function parseUci(uci: string, files: number): ParsedMove | null {
@@ -21,10 +21,14 @@ export function parseUci(uci: string, files: number): ParsedMove | null {
     const to = squareOf(drop[2]!, files);
     return to === null ? null : { kind: 'drop', type: drop[1]!.toLowerCase(), to, uci };
   }
-  const move = /^([a-p]\d{1,2})([a-p]\d{1,2})([a-z+]?)$/.exec(uci);
-  if (!move) return null;
-  const from = squareOf(move[1]!, files);
-  const to = squareOf(move[2]!, files);
-  if (from === null || to === null) return null;
-  return { kind: 'move', from, to, promotion: move[3] === '' ? null : move[3]!, uci };
+  const promotionMatch = /([a-z+])$/.exec(uci);
+  const promotion = promotionMatch?.[1] ?? null;
+  const coordinates = promotion ? uci.slice(0, -promotion.length) : uci;
+  const names = coordinates.match(/[a-p]\d{1,2}/g);
+  if (!names || names.length < 2 || names.join('') !== coordinates) return null;
+  const path = names.slice(1).map((name) => squareOf(name, files));
+  const from = squareOf(names[0]!, files);
+  if (from === null || from < 0 || path.some((square) => square === null || square < 0)) return null;
+  const squares = path as Square[];
+  return { kind: 'move', from, to: squares.at(-1)!, path: squares, promotion, uci };
 }

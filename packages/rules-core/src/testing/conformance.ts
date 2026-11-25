@@ -5,6 +5,7 @@
 import { describe, expect, it } from 'vitest';
 import { squareNameOf, squareOf } from '../coords';
 import { FenError, IllegalMoveError } from '../errors';
+import type { GameStatus } from '../types';
 import type { Variant, VariantGame } from '../variant';
 import { mulberry32 } from './random';
 
@@ -14,8 +15,10 @@ export interface ConformanceFixtures {
   invalidFens: readonly string[];
   /** Strings that are not legal moves in the start position. */
   illegalMoves: readonly string[];
-  /** A position and the move that mates from it. */
-  checkmate: { fen: string; move: string; winner: string };
+  /** A position and the move that mates from it, for variants with checkmate. */
+  checkmate?: { fen: string; move: string; winner: string };
+  /** A non-checkmate terminal move, such as capturing the Biy in Shatra. */
+  terminal?: { fen: string; move: string; status: GameStatus<string> };
 }
 
 const PLAYOUT_SEEDS = 5;
@@ -129,14 +132,26 @@ export function describeVariantConformance<G extends VariantGame<string>>(
       }
     });
 
-    it('reports checkmate for the mating side', () => {
-      const game = variant.createGame(fixtures.checkmate.fen);
-      expect(game.isGameOver()).toBe(false);
-      expect(game.move(fixtures.checkmate.move).san.endsWith('#')).toBe(true);
-      expect(game.status()).toEqual({ kind: 'checkmate', winner: fixtures.checkmate.winner });
-      expect(game.isGameOver()).toBe(true);
-      expect(game.inCheck()).toBe(true);
-      expect(game.legalUci()).toEqual([]);
-    });
+    if (fixtures.checkmate) {
+      it('reports checkmate for the mating side', () => {
+        const game = variant.createGame(fixtures.checkmate!.fen);
+        expect(game.isGameOver()).toBe(false);
+        expect(game.move(fixtures.checkmate!.move).san.endsWith('#')).toBe(true);
+        expect(game.status()).toEqual({ kind: 'checkmate', winner: fixtures.checkmate!.winner });
+        expect(game.isGameOver()).toBe(true);
+        expect(game.inCheck()).toBe(true);
+        expect(game.legalUci()).toEqual([]);
+      });
+    }
+
+    if (fixtures.terminal) {
+      it('reports the variant terminal result after its defining move', () => {
+        const game = variant.createGame(fixtures.terminal!.fen);
+        expect(game.isGameOver()).toBe(false);
+        game.move(fixtures.terminal!.move);
+        expect(game.status()).toEqual(fixtures.terminal!.status);
+        expect(game.isGameOver()).toBe(true);
+      });
+    }
   });
 }

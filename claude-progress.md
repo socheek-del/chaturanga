@@ -1251,3 +1251,11 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 - Selected the current Altai tournament form under the 1983 Shatra Code. Local history says current competitions use that code; the detailed board guide documents 62 numbered fields, 14 active and 9 reserve Shatras per side, Biy/Batyr reserve access, horizontal-return timing and gate capture rights.
 - Resolved the 2015 paper's 11-reserve statement in favor of the explicit 9-field fortress setup: it does not explain where extra pieces go, while the documented 62-field position is complete. The separate English Wikipedia chess-piece army is not the selected Altai tournament form.
 - `shatra-001` remains active. Next: add `packages/shatra/RULES.md`, then implement and verify the engine before AI, tutorial, PWA, invite rooms and Melon stage.
+
+
+### Session 039 (Shatra product implementation)
+
+- Completed the independent Altai Shatra product: custom 62-field board and piece art, English PWA, human vs bot as either color, pass-and-play saves, a 16-step interactive tutorial, and isolated server-validated private rooms. Shared board input now retains multi-capture routes and offers a route choice; the lesson player uses the same route dialog.
+- Rules tests passed 24/24, AI 3/3, board-ui 45/45 and rules-core 38/38. Tutorial validation passed 16/16. Web and Worker typechecks passed; local Chromium passed 5/5. Production-preview PWA install/offline check passed 1/1. `npm run build:shatra` and full `npm run verify` passed under pinned Node 22.23.1.
+- Visual review covered desktop and phone. `./init.sh` initially could not reach npm registry (`ENOTFOUND registry.npmjs.org`); installed workspace dependencies were already available, and the full verification then passed locally.
+- Next: commit and push the verified code, confirm GitHub CI, stage the exact SHA on Melon port 19910, then verify HTTP assets, two-seat WebSocket play/reconnect, restart recovery and backup restore. Public DNS/TLS and catalog publication remain conditional on DNS readiness.

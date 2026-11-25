@@ -1,3 +1,9 @@
+export { Game, chuShogi, chuShogiVariant } from './game';
+export { FenError, IllegalMoveError } from '@chaturanga/rules-core';
+export { START_FEN, PIECE_TYPES, fenOf, makePiece, parseFen, square } from './position';
+export type { Board, Counterstrike, Piece, PieceType, Position } from './position';
+export { applyMove, attackedSquares, generateMoves, legalMoves, isPromotionZone, isLastRank, promotionAvailable } from './movement';
+export type { Capture, Move } from './movement';
 export {
   BASE_PIECE_TYPES,
   BOARD_CELLS,

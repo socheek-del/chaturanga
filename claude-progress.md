@@ -1413,4 +1413,11 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 - Transcribed the surviving second-edition board into `apps/suffragetto/docs/board-coordinates.md` without retaining source images in the repository. Canonical coordinates use `a1` at the Suffragette-side bottom-left.
 - Recorded every board cell, the 9×17 Arena envelope, 3×2 goal cutouts outside the pink capture zone, both 21-cell L-shaped holding areas, both six-cell staging areas, and all 42 marked setup cells. The buildings cannot be capture squares.
 - Updated the product plan, local AGENTS guidance and engine contract with the coordinate map. Next implement and test a machine-readable layout fixture before move generation.
-- `./init.sh` stopped while syncing npm@11 because `registry.npmjs.org` did not resolve. The workspace has the locked dependencies already; the only installed Node is 25.9, while `.nvmrc` requests 22.23.1. Plain verification also needed sandbox loopback permission; the current full run uses loopback access and `NODE_OPTIONS=--no-experimental-webstorage` to handle Node 25's built-in storage conflict. Its result is pending.
+- `./init.sh` stopped while syncing npm@11 because `registry.npmjs.org` did not resolve. The workspace has the locked dependencies already; the only installed Node is 25.9, while `.nvmrc` requests 22.23.1. Plain verification needed loopback permission; full `npm run verify` then passed with loopback access and `NODE_OPTIONS=--no-experimental-webstorage` to handle Node 25's built-in storage conflict.
+
+### Session 065 (Suffragetto layout fixture)
+
+- Added `@chaturanga/suffragetto` with a pure layout fixture for all 289 coordinates, pink Arena, goal cutouts, Prison/Hospital, yards/grounds and the exact S/P setup. Five tests cover counts, masks and large-piece placement.
+- Fixed shared square notation and board-ui parsing to support the 17th file `q`, and updated shared conformance coordinate extraction. Existing board-ui coordinate tests remain intact.
+- Focused verification passed: Suffragetto layout 5/5, rules-core 40/40, board-ui 46/46; all three package typechecks passed. Root workspace CI/local verification should run again after the engine is implemented.
+- Next implement the pure Variant movement engine and test setup/FEN, eight-direction steps, chained hops/captures, the reserved zones, exchanges, goal occupancy, repetition, undo/replay and shared conformance.

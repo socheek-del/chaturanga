@@ -93,7 +93,7 @@ export function describeVariantConformance<G extends VariantGame<string>>(
           const inSetupPhase = usesSetupPhase(variant) && players.some((player) => game.hand(player).length > 0);
           const record = game.move(uci);
           expect(record).toMatchObject({ uci, color: mover, fenAfter: game.fen() });
-          expect(squareNameOf(record.to, variant.files)).toBe(uci.match(/[a-p]\d{1,2}/g)!.at(-1));
+          expect(squareNameOf(record.to, variant.files)).toBe(uci.match(/[a-q]\d{1,2}/g)!.at(-1));
           expect(game.lastMove()).toBe(record);
           if (game.turn === mover) {
             expect(inSetupPhase).toBe(true);
@@ -138,7 +138,7 @@ export function describeVariantConformance<G extends VariantGame<string>>(
           const legal = game.legalUci();
           for (const uci of legal) {
             if (uci.includes('@')) continue;
-            const to = squareOf(uci.match(/[a-p]\d{1,2}/g)!.at(-1)!, variant.files)!;
+            const to = squareOf(uci.match(/[a-q]\d{1,2}/g)!.at(-1)!, variant.files)!;
             const target = game.pieceAt(to);
             if (target && target.color !== side) expect(own, `seed ${seed}: ${uci} captures`).toContain(to);
           }

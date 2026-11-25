@@ -7,7 +7,7 @@
  */
 import type { Square } from './types';
 
-const FILE_LETTERS = 'abcdefghijklmnop';
+const FILE_LETTERS = 'abcdefghijklmnopqrstuvwxyz';
 
 /** Square index (rank * files + file, a1 = 0) to its name, e.g. `e4` or `i10`. */
 export function squareNameOf(square: Square, files: number): string {
@@ -16,7 +16,10 @@ export function squareNameOf(square: Square, files: number): string {
 
 /** Square name to index, or null when it is not a square name. */
 export function squareOf(name: string, files: number): Square | null {
-  const match = /^([a-p])(\d{1,2})$/.exec(name);
+  const match = /^([a-z])(\d{1,2})$/.exec(name);
   if (!match) return null;
-  return (Number(match[2]) - 1) * files + (match[1]!.charCodeAt(0) - 97);
+  const file = match[1]!.charCodeAt(0) - 97;
+  const rank = Number(match[2]);
+  if (file >= files || rank < 1) return null;
+  return (rank - 1) * files + file;
 }

@@ -16,7 +16,7 @@ export type ParsedMove =
 
 /** Parses an engine move in Fairy-Stockfish coordinate notation. */
 export function parseUci(uci: string, files: number): ParsedMove | null {
-  const drop = /^([A-Z])@([a-p]\d{1,2})$/.exec(uci);
+  const drop = /^([A-Z])@([a-z]\d{1,2})$/.exec(uci);
   if (drop) {
     const to = squareOf(drop[2]!, files);
     return to === null ? null : { kind: 'drop', type: drop[1]!.toLowerCase(), to, uci };
@@ -24,7 +24,7 @@ export function parseUci(uci: string, files: number): ParsedMove | null {
   const promotionMatch = /([a-z+])$/.exec(uci);
   const promotion = promotionMatch?.[1] ?? null;
   const coordinates = promotion ? uci.slice(0, -promotion.length) : uci;
-  const names = coordinates.match(/[a-p]\d{1,2}/g);
+  const names = coordinates.match(/[a-z]\d{1,2}/g);
   if (!names || names.length < 2 || names.join('') !== coordinates) return null;
   const path = names.slice(1).map((name) => squareOf(name, files));
   const from = squareOf(names[0]!, files);

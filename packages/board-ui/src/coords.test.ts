@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { parseUci } from './coords';
+import { parseUci, squareNameOf, squareOf } from './coords';
 
 describe('parseUci', () => {
   it('parses ordinary moves, promotions and drop coordinates', () => {
@@ -17,5 +17,15 @@ describe('parseUci', () => {
     expect(parseUci('a1b2c0', 8)).toBeNull();
     expect(parseUci('z1a2', 8)).toBeNull();
     expect(parseUci('a0b1', 7)).toBeNull();
+  });
+});
+
+describe('17×17 board coordinates', () => {
+  it('round-trips q17 and parses routes ending on the q-file', () => {
+    expect(squareOf('q17', 17)).toBe(288);
+    expect(squareNameOf(288, 17)).toBe('q17');
+    expect(parseUci('p16q17', 17)).toMatchObject({
+      kind: 'move', from: 270, to: 288, path: [288], promotion: null,
+    });
   });
 });

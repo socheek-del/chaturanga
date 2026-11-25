@@ -73,7 +73,8 @@ Bros. or Bodleian. The research is not worldwide copyright or trademark clearanc
 1. [x] Research provenance, editions and rights. Report and source notes live under `docs/reports/` and
    `docs/research_notes/`.
 2. [x] Transcribe the archival board's exact coordinate masks and setup in `board-coordinates.md`.
-3. [ ] Build and verify the TS fixture from that map before adding move generation.
+3. [x] Build and verify the TS fixture from that map before adding move generation. Its layout tests assert
+   all 289 cells, each zone count, goal/Arena exclusions, both 21-cell setups and the five large-piece cells.
 4. [ ] Implement `@chaturanga/suffragetto` as a pure 17×17 `Variant` with rules tests, serialization,
    prisoner exchanges, shared conformance and seeded replay/undo.
 5. [ ] Add bounded bots and strength smoke; test both roles, chained hops and exchanges.

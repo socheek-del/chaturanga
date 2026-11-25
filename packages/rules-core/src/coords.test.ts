@@ -20,6 +20,14 @@ describe('squareNameOf / squareOf', () => {
     for (let sq = 0; sq < 90; sq++) expect(squareOf(squareNameOf(sq, 9), 9)).toBe(sq);
   });
 
+  it('handles the q-file and two-digit ranks on 17×17 boards', () => {
+    expect(squareOf('q17', 17)).toBe(288);
+    expect(squareNameOf(288, 17)).toBe('q17');
+    for (let sq = 0; sq < 17 * 17; sq++) expect(squareOf(squareNameOf(sq, 17), 17)).toBe(sq);
+    expect(squareOf('q1', 16)).toBeNull();
+    expect(squareOf('a0', 17)).toBeNull();
+  });
+
   it('rejects names that are not square names', () => {
     expect(squareOf('', 8)).toBeNull();
     expect(squareOf('z1', 8)).toBeNull();

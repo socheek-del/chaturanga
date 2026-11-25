@@ -1,8 +1,9 @@
 # Clean State Checklist
 
 - [x] Suffragetto's source-derived board coordinate map is recorded in `apps/suffragetto/docs/board-coordinates.md`; goal/Arena membership and the complete S/P setup are explicit.
-- [ ] Finish full workspace verification with loopback access and `NODE_OPTIONS=--no-experimental-webstorage`; record result before starting engine work. `./init.sh` could not fetch npm@11 because registry DNS failed, and Node 22 from `.nvmrc` is not installed in this environment.
-- [ ] Build/test the Suffragetto TypeScript layout fixture from the documented coordinate map before implementing moves.
+- [x] Full baseline `npm run verify` passed with loopback access and `NODE_OPTIONS=--no-experimental-webstorage`; `./init.sh` could not fetch npm@11 because registry DNS failed, and Node 22 from `.nvmrc` is not installed here.
+- [x] Suffragetto layout fixture/typecheck passed (5/5); rules-core coordinates passed 40/40 and board-ui passed 46/46; all three packages typechecked.
+- [ ] Run full workspace verification and build after the Suffragetto engine and product are implemented.
 
 - [x] Fortress's exact code revision passed GitHub `npm run verify` and all workspace builds. Crazyhouse startup `npm run verify` also passed locally under Node 22.23.1 when run outside the sandbox so Worker tests could bind loopback ports; `./init.sh` could not sync uncached npm@11 in offline mode.
 - [x] Fortress rules tests passed 23/23, bots 4/4, tutorial 2/2 and Worker room/schema checks 4/4; local browser and PWA checks passed before staging.

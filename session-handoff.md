@@ -12,7 +12,9 @@ Implement the [42-entry rollout](docs/CHESS-LIKE-ROADMAP.md) one product at a ti
 
 `gess-001` has a completed rules/edition/popularity/rights research record. The 1994 Archimedeans rules are the best-documented candidate, not a proven popularity winner. No digital adaptation license or written permission was found; the old text-repost permission is limited to the rules text. Gess is blocked before implementation pending written adaptation permission or an applicable license. No contact was sent. See `apps/gess/docs/PLAN.md` and its report. Keep the exact setup and no-move/repetition questions open until the rights gate clears.
 
-Active feature: `duell-001`, the next Wave 1 entry after Gess. Begin with primary rules, edition/popularity and rights research before implementing. Dameo remains staged on Melon at port 19917; public promotion waits on DNS and trademark review. Keep the stage running.
+`duell-001` research is complete. The selected roadmap target is Lakeside's 1976 8×9 edition, distinct from 9×9 Tactix. Rules evidence records tumbling dice, exact-landing captures and King/key-square wins, with starting-side, chirality, win-timing and ending gaps. No digital adaptation permission/license was found and the current rights holder is unresolved. Duell is blocked before implementation; see `apps/duell/docs/PLAN.md` and its report. No rights-holder contact was sent.
+
+Active feature: `ploy-001`, the next Wave 1 row. Start with rules, variant/adoption and rights research before coding. Dameo remains staged on Melon at port 19917; public promotion waits on DNS and trademark review. Keep the stage running. Gess and Duell remain rights-blocked in their product plans.
 
 `fortress-001` is implemented and verified on Melon at port 19911 from `fc5577d3a53e6c90a572457bb24750b3b0e34e52`. CI run 45552897158 passed; the built PWA, illegal-move rejection, four-seat reconnect, restart, copied-state restore and offline behavior all passed. Its feature status is `blocked` only at public DNS/HTTPS/WSS smoke because `fortress.beanroti.com` has no DNS record. Stage directory: `~/chaturanga-release.fortress.Gz3JGZ`.
 

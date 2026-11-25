@@ -39,6 +39,13 @@
 - [x] Mark Gess blocked before engine work because no applicable digital-adaptation license or written permission was found. The repost permission covers text republication only; no contact was sent.
 - [x] Advance the active feature to `duell-001`, the next Wave 1 entry. Start with rules, edition/popularity and rights research.
 
+### Duell
+
+- [x] Identify and research the roadmap's 1976 Lakeside 8×9 edition; distinguish the later 9×9 Tactix reissue and avoid an unsupported popularity claim.
+- [x] Record primary-source movement/capture/win rules and unresolved start-side, die-orientation, key-square timing and draw questions.
+- [x] Mark Duell blocked before implementation: no digital-adaptation permission/license was found and present-day ownership is unresolved; no contact was sent.
+- [x] Advance the single active roadmap feature to `ploy-001`, the next Wave 1 row; start with rules, variants/adoption and rights research.
+
 - [x] Fortress's exact code revision passed GitHub `npm run verify` and all workspace builds. Crazyhouse startup `npm run verify` also passed locally under Node 22.23.1 when run outside the sandbox so Worker tests could bind loopback ports; `./init.sh` could not sync uncached npm@11 in offline mode.
 - [x] Fortress rules tests passed 23/23, bots 4/4, tutorial 2/2 and Worker room/schema checks 4/4; local browser and PWA checks passed before staging.
 - [x] The CI-only conformance allowance preserves all five 120-ply seeded games and every attack assertion; Fortress rules tests and both package typechecks passed locally.

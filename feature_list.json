@@ -3458,7 +3458,7 @@
       "milestone": "M36",
       "title": "Release Duell",
       "user_visible_behavior": "Players learn the selected 1976 Duell rules through an interactive tutorial and play a complete game against a bot, locally, and in a private online room.",
-      "status": "in_progress",
+      "status": "blocked",
       "verification": [
         "Research primary rules, editions/popularity evidence and rights boundary; select one well-supported form and record setup, movement, die-orientation state, rolls, captures, endings and unresolved conventions before engine work.",
         "Implement a pure @chaturanga/duell Variant with source-backed fixtures, shared conformance, deterministic seeded rolls, replay/undo and focused coverage of selected rules.",
@@ -3469,9 +3469,35 @@
       ],
       "evidence": [
         "2026-11-26: Began as the next Wave 1 roadmap product after Gess. Gess is blocked before implementation pending digital-adaptation permission or an applicable license.",
-        "2026-11-26: Research is the active task. Do not implement until the 1976 edition, setup, die/movement semantics, endings, digital conventions and rights boundary are documented."
+        "2026-11-26: Research is the active task. Do not implement until the 1976 edition, setup, die/movement semantics, endings, digital conventions and rights boundary are documented.",
+        "2026-11-26: Completed rules, editions/adoption and rights research. Synthesis: apps/duell/docs/reports/Duell rules variants rights.md; cited source notes are in apps/duell/docs/research_notes/Duell rules variants rights/.",
+        "2026-11-26: Identified the roadmap target as Lakeside 1976 8×9 Duell from Geoffrey Hayes’s game family; 9×9 Tactix is a distinct later variant. Evidence supports well-documented, not most popular. The scan describes 5-1-2-6-K-6-2-1-5, 3s facing players, orthogonal die tumbling with at most one turn, no passing, exact landing captures, and King/key-square victory.",
+        "2026-11-26: Rules remain unclear on starting side, die chirality, whether King victory must survive a reply, no-move/repetition and draws. No digital adaptation permission/license was found and present-day rights ownership is unresolved. An expired U.S. patent alone does not satisfy the repo rights gate; no rights-holder contact was sent."
       ],
-      "notes": "Active feature. Start with the 1976 edition, primary rules, variants/adoption and rights. Determine the exact setup, die orientation and roll/action sequence, movement, capture and endings before coding. Respect the rights gate for newly authored/published titles; no digital implementation before required permission or license is evidenced."
+      "notes": "Blocked before implementation: no digital-adaptation permission or applicable license was found and the current rights holder/chain of title is unresolved. Do not infer Hasbro owns the property. Obtain documented rights clearance before implementation, and clear product naming before public branding. The 1976 Lakeside edition is the roadmap target; it is well-documented, not proven most popular. Unresolved rules include start side, die chirality, key-square timing, no-move/repetition and draws. See apps/duell/docs/PLAN.md and report. Continue with the next eligible roadmap row, Ploy."
+    },
+    {
+      "id": "ploy-001",
+      "product": "ploy",
+      "priority": 188,
+      "area": "release",
+      "milestone": "M37",
+      "title": "Release Ploy",
+      "user_visible_behavior": "Players learn the selected two-player Ploy rules through an interactive tutorial and play a complete game against a bot, locally, and in a private online room.",
+      "status": "in_progress",
+      "verification": [
+        "Research primary rules, editions/popularity evidence and rights boundary; select the standard two-player edition and record setup, movement, rotation, capture, end conditions and unresolved conventions before engine work.",
+        "Implement a pure @chaturanga/ploy Variant with source-backed fixtures, shared conformance, deterministic replay/undo and focused coverage of all selected special rules.",
+        "Add bounded bots for both roles and an interactive tutorial that teaches and validates every selected rule; verify complete games and same-device play.",
+        "Ship an independent original PWA with responsive layout, saved play, install/offline behavior, complete locale keys and standalone site/service configuration.",
+        "Provide server-authoritative private rooms and isolated Melon storage; verify all actions and rotations, reconnect, restart and copied-state restore.",
+        "Pass exact-SHA CI and Melon stage smoke. Publish a public route and directory entry only after DNS/TLS and HTTPS/WebSocket smoke pass."
+      ],
+      "evidence": [
+        "2026-11-26: Began as the next Wave 1 roadmap feature after Duell, which is blocked before implementation pending rights clearance.",
+        "2026-11-26: Research is active. Start with the standard two-player form; verify rules, variants/adoption and rights before engine work. Evaluate any documented multiplayer extension separately."
+      ],
+      "notes": "Active feature. Research the standard two-player Ploy edition first. Document setup, piece orientations, rotate/move action sequences, captures, outcomes, variants/adoption and rights before implementation. Multiplayer extensions are optional only when rules sources support them. No game code until the rights boundary is clear."
     }
   ]
 }

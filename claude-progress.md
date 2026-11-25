@@ -1524,3 +1524,11 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 - Selected the 1994 Archimedeans rules as the best-documented candidate, not a proven popularity winner. Candidate play uses an 18×18 board, 43 stones per side, 3×3 formations, collision captures and ring-based victory. Exact setup transcription, the center-only footprint conflict, and no-move/repetition outcomes remain unresolved.
 - No applicable license or written permission for a digital adaptation was found. The 1995 repost permission covers reproducing text only; it does not grant game adaptation rights. Gess is blocked before implementation under AGENTS.md pending rights confirmation or an applicable license. No contact was sent.
 - The next roadmap entry is Duell (1976). Begin with primary rules, edition/popularity and rights research. Dameo remains staged on Melon at port 19917; its public promotion is blocked by absent DNS and pending name review.
+
+### Session 078 (Duell research and rights gate)
+
+- Completed separate rules, editions/adoption and rights research for Duell. The synthesis report is `apps/duell/docs/reports/Duell rules variants rights.md`, with cited source notes next to it.
+- Identified the roadmap target as Lakeside's 1976 8×9 Duell in Geoffrey Hayes's game family; the later 9×9 Tactix reissue is distinct. The edition is well documented, but a popularity winner is not established.
+- Primary scan evidence describes 5-1-2-6-K-6-2-1-5 back ranks, 3s facing players, orthogonal die tumbling with at most one right-angle turn, no passing, exact landing captures, and King/key-square wins. Starting side, die chirality, key-square timing, no-move, repetition and draws need verification/conventions.
+- No digital adaptation permission/license was found and present-day rights ownership is unresolved. Duell is blocked before implementation; an expired U.S. patent does not alone establish digital rights clearance. No rights-holder contact was sent.
+- The next roadmap entry is Ploy, standard two-player form first. Begin rules/variant/adoption and rights research before implementation. Dameo remains staged on Melon at port 19917; public promotion waits on absent DNS and trademark review.

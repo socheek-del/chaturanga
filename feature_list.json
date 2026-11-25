@@ -3588,7 +3588,7 @@
       "milestone": "M41",
       "title": "Release Kruzno",
       "user_visible_behavior": "Players learn the selected Kruzno hex-checkers rules through an interactive tutorial and play a complete game against a bot, locally, and in a private online room.",
-      "status": "in_progress",
+      "status": "blocked",
       "verification": [
         "Reconcile the roadmap’s Kruzno entry, linked article and primary rules; select the documented edition and establish adoption and rights before implementation.",
         "Record board topology/setup, pieces, legal jumps, capture and endings in packages/kruzno/RULES.md before engine work.",
@@ -3600,9 +3600,35 @@
       ],
       "evidence": [
         "2026-11-26: Began after Rollerball, which is blocked before implementation pending digital-adaptation rights clearance.",
-        "2026-11-26: Research is active. First reconcile the catalog and linked article edition; verify the rules, adoption and rights before engine work."
+        "2026-11-26: Research is active. First reconcile the catalog and linked article edition; verify the rules, adoption and rights before engine work.",
+        "2026-11-26: Completed source, variant/adoption and rights research. Synthesis: apps/kruzno/docs/reports/Kruzno rules variants rights.md; detailed notes are in the local research folder.",
+        "2026-11-26: Reconciled the catalog mismatch: Wikipedia’s main entry is Mark Palko’s 2005 base game; the official site separately documents 12-piece Kruzno Checkers. The roadmap phrase “linked hex-checkers” most likely targets Kruzno Checkers; do not mix its rules with the base game. Adoption evidence is sparse/local, not a popularity ranking.",
+        "2026-11-26: No digital-adaptation license was found and current title/copyright ownership is unverified. A reported 2022 U.S. mark cancellation is not global name clearance. Blocked before implementation pending rights clearance; no contact was sent."
       ],
-      "notes": "Active feature. Reconcile what the Wikipedia/catalog entry means by Kruzno with the linked rules article before selecting a form. Research board and jump/capture semantics, variant popularity and rights. Do not code until the rules identity and rights boundary are clear."
+      "notes": "Blocked before implementation: no applicable digital adaptation permission/license was found, and current rights/title chain is unverified. A reported U.S. KRUZNO mark cancellation does not clear worldwide naming; no contact was sent. The roadmap likely targets Kruzno Checkers (12-piece checkers rules on Palko’s board), not Wikipedia’s 2005 base game. Adoption is local/sparse, with no popularity winner. If cleared, verify its setup/jump details before engine work. Continue to Rithmomachia."
+    },
+    {
+      "id": "rithmomachia-001",
+      "product": "rithmomachia",
+      "priority": 193,
+      "area": "release",
+      "milestone": "M42",
+      "title": "Release Rithmomachia",
+      "user_visible_behavior": "Players learn one clearly identified Rithmomachia historical rules reconstruction through an interactive tutorial and play a complete game against a bot, locally, and in a private online room.",
+      "status": "in_progress",
+      "verification": [
+        "Select one historical reconstruction and record source provenance, board/setup, piece values/movement, numerical captures, scoring and victory conditions; research variants/adoption and rights before engine work.",
+        "Implement a pure @chaturanga/rithmomachia Variant with source-backed fixtures, shared conformance, deterministic replay/undo and focused tests of arithmetic captures and terminal conditions.",
+        "Add bounded bots for both roles and an interactive tutorial teaching number values, captures, victory and all selected conventions.",
+        "Ship an independent original PWA with responsive board, local saves, offline install, complete locale keys and standalone site/service configuration.",
+        "Provide server-authoritative private rooms and isolated Melon storage; verify legal captures, reconnect, restart and copied-state restore.",
+        "Pass exact-SHA CI and Melon stage smoke. Public route/catalog promotion requires DNS/TLS and HTTPS/WebSocket smoke."
+      ],
+      "evidence": [
+        "2026-11-26: Began as the next Wave 2 product after Kruzno; Kruzno is blocked before implementation pending rights clearance.",
+        "2026-11-26: Research is active. Pin one source-backed historical reconstruction, all numeric/victory conventions and rights before code."
+      ],
+      "notes": "Active feature. Research one historical rules reconstruction (including numerical captures and victory), compare documented alternatives/adoption, and verify rights. Record the precise reconstruction and all digital conventions before implementation."
     }
   ]
 }

@@ -1564,3 +1564,10 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 - Transcribed the rules candidate: six-piece armies, location-dependent moves and rebounds, no pawn double-step, promotion, checkmate/clockwise King-race wins, stalemate and threefold. Cazaux's original page could not be accessed; verify the setup and “travelled clockwise” condition before coding.
 - No digital adaptation license/permission was found. Marked blocked before implementation pending rights clearance and a separate name review.
 - The next roadmap game is Kruzno. Begin source/variant/adoption and rights research. Dameo remains staged on Melon at port 19917; public promotion waits on missing DNS and trademark review.
+
+### Session 083 (Kruzno identity and rights gate)
+
+- Reconciled Wikipedia's main Kruzno with the linked hex-checkers rules. The main entry is Mark Palko's 2005 base game; the official site separately documents 12-piece Kruzno Checkers. Because the roadmap explicitly asks for the linked hex-checkers setup/jumps, Kruzno Checkers is the product candidate; do not mix the two games' rules.
+- The research report and source notes are in `apps/kruzno/docs/`. Adoption evidence is local and sparse and supports no popularity ranking.
+- No digital adaptation license was found, and the current title/copyright chain is unverified. A reported 2022 U.S. trademark cancellation does not clear worldwide naming. Kruzno is blocked before implementation; no contact was sent.
+- The next roadmap product is Rithmomachia. Start with one explicit historical reconstruction, primary/source evidence, variant/adoption and rights research. Dameo remains staged on Melon at port 19917; public promotion waits on missing DNS and trademark review.

@@ -74,6 +74,13 @@
 - [x] Mark blocked before implementation because no digital adaptation license/permission was found; name review is separate.
 - [x] Advance active work to `kruzno-001`, beginning by reconciling the catalog and linked article before rules research.
 
+### Kruzno
+
+- [x] Distinguish Palko's 2005 base game from separate 12-piece Kruzno Checkers; select Kruzno Checkers as the roadmap's linked hex-checkers candidate without a popularity claim.
+- [x] Record missing setup/capture details and limited adoption evidence.
+- [x] Mark blocked before implementation because no adaptation license/current rights chain was verified; no contact was sent.
+- [x] Advance the active feature to Rithmomachia and start rules/adoption/rights research.
+
 - [x] Fortress's exact code revision passed GitHub `npm run verify` and all workspace builds. Crazyhouse startup `npm run verify` also passed locally under Node 22.23.1 when run outside the sandbox so Worker tests could bind loopback ports; `./init.sh` could not sync uncached npm@11 in offline mode.
 - [x] Fortress rules tests passed 23/23, bots 4/4, tutorial 2/2 and Worker room/schema checks 4/4; local browser and PWA checks passed before staging.
 - [x] The CI-only conformance allowance preserves all five 120-ply seeded games and every attack assertion; Fortress rules tests and both package typechecks passed locally.

@@ -60,6 +60,13 @@
 - [x] Mark implementation blocked: no digital adaptation license or current rights holder was verified; separate name clearance is required; no contact was sent.
 - [x] Advance the single active feature to Copenhagen 11×11 `hnefatafl-001`, starting with rules, variant/adoption and rights research.
 
+### Copenhagen Hnefatafl
+
+- [x] Research tournament variant and adoption; select Copenhagen 11×11 without asserting a global popularity winner.
+- [x] Record asymmetric sides, king escape/capture, shield walls, edge forts and source gaps for setup/draw adjudication.
+- [x] Mark blocked before implementation: all-rights-reserved primary rule source, no digital license; repo requires applicable clearance. No contact was sent.
+- [x] Advance the active feature to `rollerball-001`, beginning with rules, variant/adoption and rights research.
+
 - [x] Fortress's exact code revision passed GitHub `npm run verify` and all workspace builds. Crazyhouse startup `npm run verify` also passed locally under Node 22.23.1 when run outside the sandbox so Worker tests could bind loopback ports; `./init.sh` could not sync uncached npm@11 in offline mode.
 - [x] Fortress rules tests passed 23/23, bots 4/4, tutorial 2/2 and Worker room/schema checks 4/4; local browser and PWA checks passed before staging.
 - [x] The CI-only conformance allowance preserves all five 120-ply seeded games and every attack assertion; Fortress rules tests and both package typechecks passed locally.

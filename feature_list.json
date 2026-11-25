@@ -3536,7 +3536,7 @@
       "milestone": "M39",
       "title": "Release Hnefatafl",
       "user_visible_behavior": "Players learn Copenhagen 11×11 Hnefatafl through an interactive tutorial and play a complete asymmetric game against a bot, locally, and in a private online room.",
-      "status": "in_progress",
+      "status": "blocked",
       "verification": [
         "Research the Copenhagen 11×11 tournament rules, variant adoption and rights; record setup, attacker/defender turns, king capture, shield walls, edge forts, camp/ throne rules and outcomes before engine work.",
         "Implement a pure @chaturanga/hnefatafl Variant with source-backed fixtures, shared conformance, deterministic replay/undo and focused tests for asymmetric victory and special captures.",
@@ -3547,9 +3547,35 @@
       ],
       "evidence": [
         "2026-11-26: Began as the next roadmap item after Gliński Hexagonal chess, which is blocked before implementation pending rights clearance.",
-        "2026-11-26: Research is active. Roadmap selects Copenhagen 11×11 as the documented tournament standard; confirm rules and rights before engine work."
+        "2026-11-26: Research is active. Roadmap selects Copenhagen 11×11 as the documented tournament standard; confirm rules and rights before engine work.",
+        "2026-11-26: Completed rules, tournament-variant/adoption and rights research. Synthesis: apps/hnefatafl/docs/reports/Hnefatafl rules variants rights.md; source notes are in the game-local research folder.",
+        "2026-11-26: Selected Copenhagen 11×11 as documented modern tournament standard, not a proven worldwide popularity winner. It is distinct from Fetlar and historical weak-king reconstructions; shieldwalls and exit forts are defining rules. Setup, edge-fort adjudication, repetition and draws require source verification.",
+        "2026-11-26: Primary Copenhagen rule page says all rights reserved and no digital-adaptation license was found. Mechanics-only implementation may be possible in some jurisdictions with independent expression, but repo AGENTS.md requires applicable permission/license for the faithful product. Blocked pending clearance; no contact was sent."
       ],
-      "notes": "Active feature. Research the Copenhagen 11×11 tournament standard, source-backed rules, adoption and rights. Confirm shield walls/edge forts, king capture, escape, throne/camp and draw conventions before coding. Do not implement until rights/license requirements are met."
+      "notes": "Blocked before implementation under AGENTS.md: Copenhagen primary rules are all rights reserved and no applicable digital-adaptation license/permission was found. Independent mechanics-only implementation in some jurisdictions does not resolve global clearance. Obtain rights permission/license and clear product branding; no contact was sent. Copenhagen 11×11 remains the documented tournament choice. If cleared, confirm setup, exit-fort adjudication and draw rules before coding. Continue with Rollerball."
+    },
+    {
+      "id": "rollerball-001",
+      "product": "rollerball",
+      "priority": 191,
+      "area": "release",
+      "milestone": "M40",
+      "title": "Release Rollerball",
+      "user_visible_behavior": "Players learn the documented Rollerball chess-variant rules through an interactive tutorial and play a complete game against a bot, locally, and in a private online room.",
+      "status": "in_progress",
+      "verification": [
+        "Research the documented Rollerball layout, topology, movement by location and rules for promotion/endings; establish variant/adoption and rights before engine work.",
+        "Implement a pure @chaturanga/rollerball Variant with source-backed board-graph fixtures, shared conformance, deterministic replay/undo and focused coverage of location-dependent movement and special endings.",
+        "Add bounded bots for both roles and an interactive tutorial that teaches all selected rules; verify complete games and both human colors.",
+        "Ship an independent original PWA with responsive topology-aware board, local saves, offline install, complete locale keys and standalone site/service configuration.",
+        "Provide server-authoritative private rooms and isolated Melon storage; verify all legal moves, reconnect, restart and copied-state restore.",
+        "Pass exact-SHA CI and Melon stage smoke. Publish only after DNS/TLS and HTTPS/WebSocket smoke pass."
+      ],
+      "evidence": [
+        "2026-11-26: Began as the next roadmap product after Copenhagen Hnefatafl, which is blocked before implementation pending rights clearance.",
+        "2026-11-26: Research is active; verify primary rules, topology, location-dependent movement, variant/adoption and rights before coding."
+      ],
+      "notes": "Active feature. Start with primary rules and board topology, then document movement by location, promotion, endings, variant/adoption and rights. Do not start engine work until source and rights checks are complete."
     }
   ]
 }

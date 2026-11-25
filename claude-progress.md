@@ -1548,3 +1548,11 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 - The strongest full rules source supports pawn double-step and special stalemate scoring. En passant appears in some detailed secondary sources but needs confirmation in Gliński's original book; modern summaries conflict. Exact setup coordinates and full draw rules also need verification before implementation.
 - No applicable digital-adaptation permission/license or present-day rights holder was verified. Marked blocked before implementation pending rights clearance; public branding also needs name review. No contact was sent.
 - Next roadmap item is Copenhagen 11×11 Hnefatafl. Begin primary rules, edition/adoption and rights research. Dameo remains staged on Melon at port 19917; public promotion waits on missing DNS and trademark review.
+
+### Session 081 (Copenhagen Hnefatafl research and rights gate)
+
+- Completed primary rules, variants/adoption and rights research for Copenhagen 11×11 Hnefatafl. Synthesis is `apps/hnefatafl/docs/reports/Hnefatafl rules variants rights.md` with source notes in the product-local research folder.
+- Selected Copenhagen as the documented modern tournament standard, without claiming it is globally most popular. Compared with Fetlar and historical reconstructions, Copenhagen includes shield-wall capture and edge forts.
+- Recorded asymmetric attacker/defender setup, movement, king escape/capture, throne/camps, shield walls, edge forts and end conditions. Exact setup transcription, edge-fort adjudication, repetition and draw rules need source verification before implementation.
+- No digital adaptation license was found; the primary rules page says all rights reserved. Independent mechanics-only work may be viable in some jurisdictions with original expression, but AGENTS.md requires applicable rights clearance for the faithful digital product. Marked blocked before implementation; separate branding clearance is required. No contact was sent.
+- The next roadmap product is Rollerball (chess variant). Begin rules/variant/adoption and rights research. Dameo remains staged on Melon at port 19917; public promotion waits on missing DNS and trademark review.

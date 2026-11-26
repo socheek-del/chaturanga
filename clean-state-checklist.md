@@ -173,5 +173,6 @@
 - [x] Add six seeded bounded bots; tests cover legal setup/full-turn choices, determinism, terminal scoring and state restoration.
 - [x] Run full repository `NODE_OPTIONS=--no-experimental-webstorage npm run verify` with loopback permission after the engine and bot changes; lint, typechecks and all workspace tests pass.
 - [x] Write the original “Field Manual” product design proposal; approval remains open. Keep original art, piece marks and tutorial prose.
-- [ ] Add a tested Arimaa turn-draft API exposing only atomic next actions and preview state. Build the PWA/tutorial on that API rather than materializing complete-turn route lists. Keep private Melon port 19920 and no public route/catalog changes.
+- [x] Add a tested Arimaa turn-draft API exposing bounded atomic next actions, paired push/pull and preview state; 25/25 rules tests, typecheck and lint pass.
+- [ ] Build the PWA/tutorial on that API rather than materializing complete-turn route lists. Keep private Melon port 19920 and no public route/catalog changes.
 - [x] Add `ko-shogi-001` as a blocked feature and preserve Arimaa as the next ready roadmap row.

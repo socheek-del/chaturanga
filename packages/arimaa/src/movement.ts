@@ -42,6 +42,13 @@ export interface TurnAvailability {
   hasLegal: boolean;
 }
 
+export interface TurnDraft {
+  board: Board;
+  stepsUsed: number;
+  canEnd: boolean;
+  nextActions: string[];
+}
+
 const colorOf = (piece: number): Color => (piece & BLACK ? 'b' : 'w');
 const typeStrength = (piece: number): number => STRENGTH[pieceType(piece)];
 
@@ -149,6 +156,39 @@ function unchanged(left: Board, right: Board): boolean {
 }
 
 const stepUci = ({ from, to }: Step): string => `${squareName(from)}${squareName(to)}`;
+
+/** Builds a bounded UI draft from atomic single-step or push/pull actions without enumerating full turns. */
+export function buildTurnDraft(
+  position: PositionData,
+  selectedActions: readonly string[],
+  repetitions: ReadonlyMap<string, number>,
+): TurnDraft | null {
+  const mover = position.turn;
+  const start = position.board;
+  let board: Board = start.slice();
+  let stepsUsed = 0;
+
+  for (const selected of selectedActions) {
+    const match = generateActions(board, mover).find((action) => action.steps.map(stepUci).join('') === selected);
+    if (!match || stepsUsed + match.steps.length > 4) return null;
+    board = match.board;
+    stepsUsed += match.steps.length;
+  }
+
+  const moved = stepsUsed > 0 && !unchanged(board, start);
+  const repetitionKey = positionKey({ board, turn: opposite(mover) });
+  const canEnd = moved && (repetitions.get(repetitionKey) ?? 0) < 2;
+  const nextActions =
+    stepsUsed < 4
+      ? [...new Set(
+          generateActions(board, mover)
+            .filter((action) => stepsUsed + action.steps.length <= 4)
+            .map((action) => action.steps.map(stepUci).join('')),
+        )]
+      : [];
+
+  return { board, stepsUsed, canEnd, nextActions };
+}
 
 export function generateTurnMoves(
   position: PositionData,

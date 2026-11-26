@@ -107,6 +107,54 @@ describe('Arimaa movement and complete turns', () => {
     expect(game.turn).toBe('b');
   });
 
+  it('exposes atomic push/pull draft actions and a preview without changing the live game', () => {
+    const game = new Game(fenFromPieces([
+      { type: 'e', color: 'w', square: 'c4' },
+      { type: 'r', color: 'w', square: 'a1' },
+      { type: 'r', color: 'b', square: 'd4' },
+      { type: 'r', color: 'b', square: 'h8' },
+    ]));
+    const before = game.fen();
+    const options = game.turnDraft();
+    expect(options.nextActions).toContain('c4c5d4c4');
+    expect(options.nextActions).toContain('d4d5c4d4');
+
+    const draft = game.turnDraft(['c4c5d4c4']);
+    expect(draft.stepsUsed).toBe(2);
+    expect(draft.canEnd).toBe(true);
+    const preview = new Game(draft.previewFen);
+    expect(preview.turn).toBe('w');
+    expect(preview.pieceAt(squareOf('c5', 8)!)).toMatchObject({ color: 'w', type: 'e' });
+    expect(preview.pieceAt(squareOf('c4', 8)!)).toMatchObject({ color: 'b', type: 'r' });
+    expect(game.fen()).toBe(before);
+  });
+
+  it('limits draft actions to four steps and rejects an illegal action prefix', () => {
+    const game = new Game(fenFromPieces([
+      { type: 'r', color: 'w', square: 'a2' },
+      { type: 'r', color: 'b', square: 'h7' },
+    ]));
+    const draft = game.turnDraft(['a2a3', 'a3a4', 'a4a5', 'a5a6']);
+    expect(draft.stepsUsed).toBe(4);
+    expect(draft.canEnd).toBe(true);
+    expect(draft.nextActions).toEqual([]);
+    expect(new Game(draft.previewFen).pieceAt(squareOf('a6', 8)!)).toMatchObject({ color: 'w', type: 'r' });
+    expect(() => game.turnDraft(['h7h6'])).toThrow();
+    expect(() => game.turnDraft(['a2a3', 'a3a4', 'a4a5', 'a5a6', 'a6a7'])).toThrow();
+  });
+
+  it('resolves trap captures in the draft preview before offering the next action', () => {
+    const game = new Game(fenFromPieces([
+      { type: 'h', color: 'w', square: 'b3' },
+      { type: 'r', color: 'w', square: 'c3' },
+      { type: 'r', color: 'w', square: 'a1' },
+      { type: 'r', color: 'b', square: 'h8' },
+    ]));
+    const draft = game.turnDraft(['b3b2']);
+    expect(new Game(draft.previewFen).pieceAt(squareOf('c3', 8)!)).toBeNull();
+    expect(game.pieceAt(squareOf('c3', 8)!)).toMatchObject({ color: 'w', type: 'r' });
+  });
+
   it('completes a pull even when the pulling piece is captured on a trap during its first step', () => {
     const game = new Game(fenFromPieces([
       { type: 'e', color: 'w', square: 'c2' },

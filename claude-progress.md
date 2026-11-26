@@ -1733,3 +1733,10 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 - Wrote `apps/arimaa/docs/design.md` as an original “Field Manual” direction: mobile-first 8×8 board, distinct Gold/Silver patterns, trap-support rings, atomic push/pull grouping and a four-step rail. Specified home, setup, play, interactive tutorial, private online and result screens, plus offline/accessibility checks.
 - The design remains a proposal; no product name or visual approval was assumed. Original assets and copy remain required. No public routing/catalog changes.
 - Next: provide the browser with a rules-engine turn-draft API for bounded atomic actions and preview positions, then build the PWA and tutorial against it. Preserve private Melon staging and the APL public-release gate.
+
+### Session 102 (Arimaa turn-draft API)
+
+- Added `Game.turnDraft(actions)`, which replays selected atomic actions, returns the bounded legal next-action list, reports consumed steps and whether the draft can legally end, and serializes the preview board without changing the live game.
+- Push and pull each remain one two-step draft action. The helper applies each step's trap effects before generating the next actions, caps the draft at four steps, and accounts for the third-repetition prohibition when deciding whether the draft may end.
+- Added fixtures for paired push/pull preview, same-side preview turn, live-state preservation, four-step completion, invalid/overlong prefixes and trap captures in previews. The focused Arimaa rules suite passes 25/25 with package typecheck and ESLint.
+- Updated `packages/arimaa/RULES.md`, product plan and durable handoff. Next: build the product PWA and interactive tutorial using this API; no full-turn list in the UI.

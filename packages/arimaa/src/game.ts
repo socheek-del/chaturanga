@@ -20,6 +20,7 @@ import {
 import { countRabbits, parseFen, positionKey, serializeFen, START_FEN, type PositionData } from './fen';
 import {
   applyTurn,
+  buildTurnDraft,
   generateTurnMoves,
   neighbors,
   probeTurnAvailability,
@@ -27,6 +28,16 @@ import {
   validateTurn,
   type TurnMoves,
 } from './movement';
+
+export interface TurnDraftView {
+  /** Selected atomic actions. A push or pull is one entry that consumes two steps. */
+  actions: string[];
+  stepsUsed: number;
+  canEnd: boolean;
+  nextActions: string[];
+  /** FEN for rendering the draft board; its side-to-move and move counters remain unchanged. */
+  previewFen: string;
+}
 
 interface HistoryEntry {
   before: PositionData;
@@ -86,6 +97,20 @@ export class Game {
     if (this.inSetup()) return this.legalSetupUci();
     if (this.positionResult()) return [];
     return this.turnMoves().legal.slice();
+  }
+
+  /** Returns legal atomic actions after a draft without generating every complete turn from the position. */
+  turnDraft(actions: readonly string[] = []): TurnDraftView {
+    if (this.inSetup() || this.positionResult()) throw new IllegalMoveError(actions.join(''));
+    const draft = buildTurnDraft(this.position, actions, this.repetitions);
+    if (!draft) throw new IllegalMoveError(actions.join(''));
+    return {
+      actions: [...actions],
+      stepsUsed: draft.stepsUsed,
+      canEnd: draft.canEnd,
+      nextActions: draft.nextActions,
+      previewFen: serializeFen({ ...this.position, board: draft.board }),
+    };
   }
 
   move(uci: string): VariantMoveRecord<Color> {

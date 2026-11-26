@@ -3736,9 +3736,10 @@
         "2026-11-26: Shared conformance replay/undo tests use an injected seeded legal-turn sampler to avoid enumerating every complete turn at every ply; default full-list uniqueness coverage remains unchanged for other variants. Arimaa's full setup opening list test checks 20,652 unique turns and direct acceptance of a generated four-step turn.",
         "2026-11-26: @chaturanga/arimaa-ai adds six seeded levels. Setup scores the finite placement list; midgame uses 1–256 distinct sampled complete turns and rules-engine evaluation. Tests confirm legal setup/full-turn choices, deterministic seeded output, terminal wins and restoration of the input game.",
         "2026-11-26: Full NODE_OPTIONS=--no-experimental-webstorage npm run verify passed after engine and bot changes: repository lint, every workspace typecheck and every test suite; Arimaa rules 22/22 and bot 4/4.",
-        "2026-11-26: Original responsive Field Manual product design proposal covers home, setup, 8x8 play/step rail, interactive tutorial, results and private online flows; visual approval remains open."
+        "2026-11-26: Original responsive Field Manual product design proposal covers home, setup, 8x8 play/step rail, interactive tutorial, results and private online flows; visual approval remains open.",
+        "2026-11-26: Game.turnDraft(actions) exposes atomic legal next actions, paired pushes/pulls, step count, turn-end eligibility and a preview FEN. Focused rules suite 25/25 covers trap captures in preview; Arimaa typecheck and ESLint pass."
       ],
-      "notes": "The pure rules engine and six bounded bots are implemented and full-workspace verified. Next: original product design, interactive tutorial/PWA with a step-draft editor, isolated Worker, and private Melon staging. A full opening turn list contains 20,652 options, so keep UI/bot choice bounded. Public release stays gated on confirming no user/advertising revenue and owner authorization for the required Discord announcement; no contact or announcement has been made."
+      "notes": "The pure rules engine, six bounded bots, product design proposal and turn-draft API are implemented. Next: interactive tutorial/PWA with bounded action input, isolated Worker, and private Melon staging. A full opening turn list contains 20,652 options, so keep UI/bot choice bounded. Public release stays gated on confirming no user/advertising revenue and owner authorization for the required Discord announcement; no contact or announcement has been made."
     }
   ]
 }

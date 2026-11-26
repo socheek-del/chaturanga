@@ -36,3 +36,4 @@ jobs:
       - run: npm run build:rithmomachia
       - run: npm run build:arimaa
       - run: npm run build:chaturaji
+      - run: npm run build:senterej

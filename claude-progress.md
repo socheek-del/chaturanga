@@ -1726,3 +1726,10 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 - Focused bot suite passes 4/4: legal setup and full-turn selection, deterministic output for the same seed, immediate goal scoring, terminal-game handling and setup state restoration. Arimaa AI typecheck and focused ESLint pass.
 - `NODE_OPTIONS=--no-experimental-webstorage npm run verify` passed after the bot increment: root lint, all workspace typechecks and all workspace tests. Arimaa rules pass 22/22 and bot tests pass 4/4. Existing Vite config-extension and worker event-return console warnings remain informational.
 - Updated the product plan, feature evidence, quality grade, session handoff and clean-state checklist. Next: original product design brief, then step-draft PWA/tutor. The full opening turn list is 20,652; maintain a bounded UI. Public release gate remains unchanged and no contact/announcement has been made.
+
+### Session 101 (Arimaa product design)
+
+- Read the repository frontend-design skill before planning the product interface.
+- Wrote `apps/arimaa/docs/design.md` as an original “Field Manual” direction: mobile-first 8×8 board, distinct Gold/Silver patterns, trap-support rings, atomic push/pull grouping and a four-step rail. Specified home, setup, play, interactive tutorial, private online and result screens, plus offline/accessibility checks.
+- The design remains a proposal; no product name or visual approval was assumed. Original assets and copy remain required. No public routing/catalog changes.
+- Next: provide the browser with a rules-engine turn-draft API for bounded atomic actions and preview positions, then build the PWA and tutorial against it. Preserve private Melon staging and the APL public-release gate.

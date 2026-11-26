@@ -43,7 +43,7 @@ export const GameSnapshot = z.object({
   /** Server timestamp (ms) when this snapshot was taken; clients use it for countdowns. */
   serverTime: z.number(),
   status: z.enum(['waiting', 'playing', 'finished']),
-  startFen: z.string(),
+  startFen: z.string().max(2048),
   /** Moves in coordinate notation, e.g. e3e4, a5a6m, d5d5f, K@e1. */
   moves: z.array(z.string()),
   /** Seat that made each move; absent on older turn-based snapshots. */
@@ -73,7 +73,10 @@ export type GameSnapshot = z.infer<typeof GameSnapshot>;
  * Suffragetto's explicit pair-exchange action (`X21@b1`). This is only a cheap shape guard — the room
  * always replays the move through its own rules engine before accepting it.
  */
-const UCI = z.string().regex(/^(?:pass|ROLL[1-6]{2}|X[0-6][0-6]@[a-z]\d{1,2}|[A-Z][A-Z0-9]*@[a-z]\d{1,2}|(?:[a-z]\d{1,2}){2,}[+a-z]?)$/);
+const UCI = z.union([
+  z.string().max(4096).regex(/^-?\d+,-?\d+>-?\d+,-?\d+[qrbn]?$/),
+  z.string().regex(/^(?:pass|ROLL[1-6]{2}|X[0-6][0-6]@[a-z]\d{1,2}|[A-Z][A-Z0-9]*@[a-z]\d{1,2}|(?:[a-z]\d{1,2}){2,}[+a-z]?)$/),
+]);
 
 export const ClientMessage = z.discriminatedUnion('type', [
   z.object({ type: z.literal('move'), uci: UCI, ply: z.number().int().min(0) }),
@@ -134,7 +137,7 @@ export const CreateGameRequest = z.object({
   timeControl: TimeControl.nullable(),
   color: z.enum(['w', 'b', 'random']),
   /** One of the variant's `startFens`; the room's start position when left out is `startFen`. */
-  startFen: z.string().max(200).optional(),
+  startFen: z.string().max(2048).optional(),
   /** Rated games update ratings when both players are signed in and the game is timed. */
   rated: z.boolean().default(true),
 });

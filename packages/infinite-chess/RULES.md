@@ -1,6 +1,6 @@
 # Infinite Chess Classical rules contract
 
-**Status:** selected source profile; engine implementation is active after `plat-024` passed. Source-derived product software uses product-local AGPL-3.0-or-later terms.
+**Status:** selected source profile; sparse engine implemented after `plat-024`. Product-specific source uses product-local AGPL-3.0-or-later terms.
 
 **Primary source:** [InfiniteChess.org guide](https://www.infinitechess.org/guide).
 
@@ -28,7 +28,7 @@
 - The guide explicitly names threefold repetition and the 50-move rule, castling and en passant as inherited classical rules. The official implementation sets the move-rule threshold to 100 half-moves and resets its counter after a pawn move or capture. Castling and en passant use the orthodox special moves from the initial setup; en passant is available only immediately after a qualifying double pawn push. Position identity must include side to move, retained castling rights and an en-passant target only when it changes the legal move set.
 - The guide does not specify clocks, resignation, agreement, or a digital adjudication procedure; these are product-layer decisions, not changes to movement.
 
-## Required edge-case review before implementation
+## Verified edge-case coverage
 
 - Exact initial position and side to move.
 - Promotion targets, trigger line, and resulting turn.
@@ -36,8 +36,12 @@
 - Castling rights and attack/path rules on an unbounded board.
 - Threefold-position identity, 100-half-move counter and reset events.
 - Finite decision procedures for check, checkmate and stalemate despite infinitely many possible sliding destinations.
-- Exact-coordinate limits, serialization and server validation; do not silently round JavaScript numbers.
+- Exact-coordinate limits, serialization and server validation; do not silently round JavaScript numbers. Tests include
+  values beyond the JavaScript safe-integer range and rays spanning one trillion squares.
 
 ## Determinism and implementation boundary
 
-When rights clear, the engine will be a pure serializable `Variant` with no DOM, network, timers or unseeded randomness. It will not enumerate an infinite board or all ray destinations. Any bot policy will be explicitly bounded and will still return only fully legal moves.
+The implemented engine is a pure serializable `Variant` with no DOM, network, timers or unseeded randomness. It does
+not enumerate an infinite board or all ray destinations. The bot's explicitly bounded candidate policy returns only
+fully legal moves. The rules and tutorial suites cover special moves, legal check evasions, checkmate, stalemate,
+threefold repetition, the 100-half-move draw and en-passant FEN validation.

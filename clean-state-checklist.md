@@ -254,4 +254,9 @@
 - [x] Record the product-local AGPL-3.0-or-later route for source-derived product code, preservation of upstream copyright/license notices, and prominent corresponding-source link required for network users. GNU's GPLv3/AGPLv3 terms permit the combination with the GPL-3.0-or-later monorepo; no external contact is needed for this route.
 - [x] Keep original art, interface, tutorial prose and brand; check official COPYING exceptions before adapting any upstream file. Classical remains a documented default/tournament choice without a proven popularity claim.
 - [x] Complete platform prerequisite `plat-024`: sparse square types, unbounded topology, point attack queries, bounded legal destinations and conformance fixtures; full workspace verification passed. No runtime service to deploy.
-- [ ] Implement `infinite-chess-001`: pure exact-coordinate engine, bounded bot, original interactive tutorial, independent offline PWA, authoritative private rooms and Melon stage.
+- [x] Implement the pure exact-coordinate Variant with castling, en passant, four promotions, check/endings, FEN, replay/undo and Variant conformance; rules package 23/23.
+- [x] Add seeded bounded bots (4/4) and the independent English PWA with offline service worker, local bot/pass-and-play, saved games and ten interactive rule practices; web/locale tests 7/7.
+- [x] Add server-authoritative private invite rooms with isolated Durable Objects, no chat and legal move validation; Worker tests 2/2.
+- [x] Pass full `NODE_OPTIONS=--no-experimental-webstorage npm run verify`, `npm run build:infinite-chess`, local browser E2E 5/5 and installability/offline E2E 2/2. Production entry is 511.30 kB minified and emits a non-blocking chunk-size warning.
+- [ ] Commit/push the implementation, confirm exact-SHA CI, and deploy the pinned build to Melon port 19925.
+- [ ] Run built-stage browser/PWA smoke, restart and copied-state room recovery; check Melon DNS/TLS/HTTPS/WSS before any public promotion or app-directory entry.

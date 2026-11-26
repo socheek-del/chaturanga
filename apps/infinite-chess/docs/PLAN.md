@@ -26,17 +26,17 @@ the 50-move threshold to 100 half-moves and reset it after a pawn move or captur
 `state.ts`). Use the orthodox castling and en-passant conditions from that Classical preset. These sources are linked
 in the rules contract; no upstream code will be copied into the implementation.
 
-If cleared, the rules engine will use sparse coordinates and validate a selected destination by ray queries; it
-must never allocate the infinite plane or enumerate every destination on an unbounded sliding ray. State and move
-coordinates need a serializable exact-integer representation, with arithmetic and server validation independent of
-the viewport. Bot search must use a documented bounded candidate policy because a sliding piece has infinitely many
-empty destinations. The UI needs a pannable/zoomable board and a way to select a far destination without relying on
-a finite grid widget. Check, checkmate and stalemate need rule-level existence queries rather than full move lists.
+The engine uses sparse coordinates and validates a selected destination by ray queries; it never allocates the
+infinite plane or enumerates every destination on an unbounded sliding ray. State and move coordinates use a
+serializable exact-integer representation, with arithmetic and server validation independent of the viewport. Bot
+search uses a documented bounded candidate policy because a sliding piece has infinitely many empty destinations.
+The board pans and zooms and accepts a far destination by exact coordinates. Check, checkmate and stalemate use
+rule-level existence queries rather than full move lists.
 
 This is a two-player, perfect-information game. Local human-vs-bot and pass-and-play apply. Invite rooms are
-applicable and should use isolated server storage with server-side move validation and no chat. The independent
-English PWA must include an interactive tutorial covering the objective, coordinates, unbounded movement, pawn
-promotion, check/endings, and practice with feedback.
+applicable and use isolated server storage with server-side move validation and no chat. The independent English PWA
+includes an interactive tutorial covering coordinates, unbounded movement, castling, en passant, pawn promotion,
+check evasions, checkmate, stalemate, repetition, the 50-move rule, dead positions and practice feedback.
 
 ## Rights and license plan
 
@@ -55,7 +55,8 @@ exceptions and retain attribution. Apeiron is not the chosen bot dependency; its
 need to be assessed independently if that changes. No external contact has been made or is needed for this route.
 
 `plat-024` has passed: sparse string coordinates and bounded attack queries are available through the shared
-`Variant` contract while numeric-square defaults remain intact. Implement and verify the pure Variant,
-bounded bot, interactive tutorial, independent PWA, and
-private multiplayer; pass workspace verification/build and exact-SHA CI; stage on Melon, then run browser/PWA,
-restart and copied-state recovery checks. Public promotion still requires DNS, TLS, HTTPS/WSS and catalog checks.
+`Variant` contract while numeric-square defaults remain intact. The pure Variant, bounded bot, ten-practice
+interactive tutorial, independent PWA and private multiplayer are implemented. Full workspace verification, the
+product build, five local browser scenarios and two offline/installability scenarios pass. Next commit and push the
+verified increment, confirm exact-SHA CI, stage on Melon, then run built-stage browser/PWA, restart and copied-state
+recovery checks. Public promotion still requires DNS, TLS, HTTPS/WSS and catalog checks.

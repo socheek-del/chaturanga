@@ -42,6 +42,14 @@ describe('ClientMessage move notation', () => {
   it('still accepts ordinary moves, in-place promotions, and drops', () => {
     for (const uci of ['e2e4', 'd5d5f', 'K@e1', 'C100@a1', 'X21@b1', 'pass', 'ROLL16'])
       expect(ClientMessage.safeParse({ type: 'move', uci, ply: 0 }).success, uci).toBe(true);
+    expect(ClientMessage.safeParse({
+      type: 'move',
+      uci: '-9007199254740993,1>-9007199254740992,1q',
+      ply: 0,
+    }).success).toBe(true);
+    const longCoordinate = '7'.repeat(700);
+    expect(ClientMessage.safeParse({ type: 'move', uci: `${longCoordinate},1>${longCoordinate},2`, ply: 0 }).success).toBe(true);
+    expect(ClientMessage.safeParse({ type: 'move', uci: '1,2>1,4x', ply: 0 }).success).toBe(false);
   });
 
   it('rejects a move string that is not made from coordinate tokens', () => {

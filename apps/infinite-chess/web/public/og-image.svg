@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#182222"/>
+  <g stroke="#647871" opacity=".42" stroke-width="2">
+    <path d="M0 90h1200M0 150h1200M0 210h1200M0 270h1200M0 330h1200M0 390h1200M0 450h1200M0 510h1200M0 570h1200"/>
+    <path d="M60 0v630M120 0v630M180 0v630M240 0v630M300 0v630M360 0v630M420 0v630M480 0v630M540 0v630M600 0v630M660 0v630M720 0v630M780 0v630M840 0v630M900 0v630M960 0v630M1020 0v630M1080 0v630M1140 0v630"/>
+  </g>
+  <circle cx="872" cy="315" r="174" fill="#cda96b"/>
+  <path d="M872 138l42 82 90 13-66 64 15 91-81-43-81 43 15-91-66-64 91-13z" fill="#182222"/>
+  <text x="86" y="265" fill="#f2e8d7" font-family="Georgia,serif" font-size="74">Open Plane</text>
+  <text x="92" y="331" fill="#cda96b" font-family="Arial,sans-serif" font-size="22" letter-spacing="8">INFINITE CHESS · CLASSICAL</text>
+  <text x="92" y="410" fill="#aebbb2" font-family="Arial,sans-serif" font-size="27">A chessboard without edges.</text>
+</svg>

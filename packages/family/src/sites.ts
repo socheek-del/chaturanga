@@ -27,6 +27,8 @@ import { PRODUCT as CHATURAJI } from '../../../apps/chaturaji/web/product.config
 import { SITE_URL as CHATURAJI_URL } from '../../../apps/chaturaji/web/site.config';
 import { PRODUCT as SENTEREJ } from '../../../apps/senterej/web/product.config';
 import { SITE_URL as SENTEREJ_URL } from '../../../apps/senterej/web/site.config';
+import { PRODUCT as INFINITE_CHESS } from '../../../apps/infinite-chess/web/product.config';
+import { SITE_URL as INFINITE_CHESS_URL } from '../../../apps/infinite-chess/web/site.config';
 import { type GameId, GAMES } from './games';
 
 /** A link from one site to a sibling, with what the linking site needs to pick the right language. */
@@ -52,6 +54,7 @@ export const SITES: Readonly<Record<GameId, { url: string; locales: readonly str
   fourchess: { url: FOURCHESS_URL, locales: FOURCHESS.locales, defaultLocale: FOURCHESS.defaultLocale },
   chaturaji: { url: CHATURAJI_URL, locales: CHATURAJI.locales, defaultLocale: CHATURAJI.defaultLocale },
   senterej: { url: SENTEREJ_URL, locales: SENTEREJ.locales, defaultLocale: SENTEREJ.defaultLocale },
+  'infinite-chess': { url: INFINITE_CHESS_URL, locales: INFINITE_CHESS.locales, defaultLocale: INFINITE_CHESS.defaultLocale },
 };
 
 /** Every declared language of every family site, for checking that each game has a name in it. */

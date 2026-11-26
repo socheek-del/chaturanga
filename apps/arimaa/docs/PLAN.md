@@ -23,5 +23,7 @@ No Discord announcement or rights-holder contact has been made. Development and 
 
 - Research and the initial source-based rules contract are complete.
 - `./init.sh` passed full workspace install, lint, typecheck and tests with `NODE_OPTIONS=--no-experimental-webstorage`; the adjacent standard-chess browser smoke passed 5/5 (one optional offline scenario skipped).
-- No Arimaa rules engine, bot, PWA, tutorial, or Worker code exists yet.
-- Next implementation slice: exact setup/coordinates and a pure four-step Variant state model, with source-backed fixtures before move-generation breadth.
+- `@chaturanga/arimaa` is implemented as a pure Variant with two-stage chosen setup, stable FEN, complete one-to-four-step turns, atomic push/pull, per-step traps, freeze/thaw, goals, elimination, immobilization and third-repetition loss.
+- The engine's focused suite passes 22/22, with typecheck and ESLint passing. Full repository verification passed before the last two narrowly scoped engine fixtures; the final Arimaa package suite still passes.
+- No Arimaa bot, PWA, interactive tutorial, or Worker code exists yet.
+- Next implementation slice: add deterministic bounded bots for both roles and test the bot against the authoritative Variant. Use a draft turn editor in the PWA so the player selects one to four steps without presenting the entire 20,652-turn opening list as route choices.

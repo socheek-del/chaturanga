@@ -3731,9 +3731,11 @@
       "evidence": [
         "2026-11-26: Research complete in apps/arimaa/docs/reports/Arimaa rules adoption licensing.md and its three source-linked notes. Selected the official standard two-player rules; available sources support it as the canonical profile but do not prove a most-popular variant.",
         "2026-11-26: The rules contract records the 8x8 board, four trap squares, 16-piece armies, player-chosen two-rank setup, four-step turns, push/pull, freezing, per-step trap captures, rabbit goals/elimination, immobilization, and third-repetition loss.",
-        "2026-11-26: Arimaa Public License v2025.02 Section 3 is a possible route only for a free product with no user or advertising revenue. It requires visible notices/attribution and a Discord announcement. No announcement or rights-holder contact has been made; original art and prose are required."
+        "2026-11-26: Arimaa Public License v2025.02 Section 3 is a possible route only for a free product with no user or advertising revenue. It requires visible notices/attribution and a Discord announcement. No announcement or rights-holder contact has been made; original art and prose are required.",
+        "2026-11-26: @chaturanga/arimaa is a pure Variant with sequential Gold/Silver setup, serialized placement and hands, full-turn UCI, direct complete-turn validation, per-step trap capture, and ordered results/repetition. Focused suite 22/22; package and rules-core typechecks and focused ESLint pass.",
+        "2026-11-26: Shared conformance replay/undo tests use an injected seeded legal-turn sampler to avoid enumerating every complete turn at every ply; default full-list uniqueness coverage remains unchanged for other variants. Arimaa's full setup opening list test checks 20,652 unique turns and direct acceptance of a generated four-step turn."
       ],
-      "notes": "Research is complete and the source-linked rules/rights contract is recorded. Engine implementation may proceed as private development and Melon staging using original assets. Keep public release gated on confirming no user/advertising revenue and owner authorization for the required Discord announcement; do not contact anyone without explicit authorization."
+      "notes": "The pure rules engine is implemented and verified. Next: bounded bots, product design, interactive tutorial/PWA, isolated Worker, then private Melon staging. Use a draft turn editor in the PWA; a full legal turn list is exhaustive by contract and contains 20,652 options for the tested opening. Public release stays gated on confirming no user/advertising revenue and owner authorization for the required Discord announcement; no contact or announcement has been made."
     }
   ]
 }

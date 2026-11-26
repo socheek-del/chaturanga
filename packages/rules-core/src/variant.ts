@@ -15,6 +15,8 @@ export interface VariantMoveRecord<C extends string = Color> {
   captures?: Piece<string, C>[];
   /** True when a legal move's mover is removed at turn end, as with Congo river drowning. */
   movedPieceRemoved?: boolean;
+  /** The final coordinate may contain an opposing piece when a multi-piece turn ends with a pull. */
+  multiPieceMove?: boolean;
   /** Destination square; the placement square for a drop. */
   to: Square;
   fenAfter: string;

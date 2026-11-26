@@ -10,7 +10,7 @@ import type { Variant, VariantGame } from '../variant';
 import { usesSetupPhase } from '../variant';
 import { mulberry32 } from './random';
 
-export interface ConformanceFixtures {
+export interface ConformanceFixtures<G extends VariantGame<string> = VariantGame<string>> {
   /** Valid positions other than the start; each must round-trip through the game's FEN. */
   fens: readonly string[];
   invalidFens: readonly string[];
@@ -20,6 +20,8 @@ export interface ConformanceFixtures {
   checkmate?: { fen: string; move: string; winner: string };
   /** A non-checkmate terminal move, such as capturing the Biy in Shatra. */
   terminal?: { fen: string; move: string; status: GameStatus<string> };
+  /** For high-branching games, select one complete legal move without enumerating the full list each ply. */
+  sampleLegalMove?: (game: G, rng: () => number) => string | null;
 }
 
 export interface ConformanceTimeouts {
@@ -34,7 +36,7 @@ const PLAYOUT_PLIES = 120;
 
 export function describeVariantConformance<G extends VariantGame<string>>(
   variant: Variant<G>,
-  fixtures: ConformanceFixtures,
+  fixtures: ConformanceFixtures<G>,
   timeouts: ConformanceTimeouts = {},
 ): void {
   describe(`${variant.id} implements the rules-core Variant (plat-002)`, () => {
@@ -84,10 +86,16 @@ export function describeVariantConformance<G extends VariantGame<string>>(
         const game = variant.createGame();
         const fens = [game.fen()];
         while (!game.isGameOver() && game.moves().length < PLAYOUT_PLIES) {
-          const legal = game.legalUci();
-          expect(legal.length, `seed ${seed}: ongoing game has legal moves`).toBeGreaterThan(0);
-          expect(new Set(legal).size).toBe(legal.length);
-          const uci = legal[Math.floor(rand() * legal.length)]!;
+          let uci: string | null;
+          if (fixtures.sampleLegalMove) uci = fixtures.sampleLegalMove(game, rand);
+          else {
+            const legal = game.legalUci();
+            expect(legal.length, `seed ${seed}: ongoing game has legal moves`).toBeGreaterThan(0);
+            expect(new Set(legal).size).toBe(legal.length);
+            uci = legal[Math.floor(rand() * legal.length)]!;
+          }
+          expect(uci, `seed ${seed}: ongoing game has a sampled legal move`).toBeTruthy();
+          if (!uci) throw new Error(`seed ${seed}: ongoing game has no sampled legal move`);
           const mover = game.turn;
           const handCountBefore = game.hand(mover).length;
           const inSetupPhase = usesSetupPhase(variant) && players.some((player) => game.hand(player).length > 0);
@@ -103,6 +111,7 @@ export function describeVariantConformance<G extends VariantGame<string>>(
             expect(record.captured).not.toBeNull();
             expect(game.hand(mover).length).toBeGreaterThan(handCountBefore);
           } else if (record.movedPieceRemoved) expect(game.pieceAt(record.to)).toBeNull();
+          else if (record.multiPieceMove) expect(game.pieceAt(record.to)).not.toBeNull();
           else expect(game.pieceAt(record.to)?.color).toBe(mover);
           expect(game.checkedKingSquare() !== null).toBe(game.inCheck());
           fens.push(game.fen());
@@ -138,7 +147,7 @@ export function describeVariantConformance<G extends VariantGame<string>>(
           }
           const checked = game.checkedKingSquare();
           if (checked !== null) expect(enemy, `seed ${seed}: check is an attack`).toContain(checked);
-          const legal = game.legalUci();
+          const legal = fixtures.sampleLegalMove ? [fixtures.sampleLegalMove(game, rand)].filter((uci): uci is string => !!uci) : game.legalUci();
           for (const uci of legal) {
             if (uci.includes('@')) continue;
             const to = squareOf(uci.match(/[a-q]\d{1,2}/g)!.at(-1)!, variant.files)!;

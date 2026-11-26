@@ -26,6 +26,7 @@ This product follows the official standard two-player Arimaa rules. It does not 
 ## Digital conventions and verification targets
 
 - Display complete turns as sequences of up to four steps. Keep each push/pull together as a two-step action in the input flow while preserving the canonical step sequence for replay and protocol validation.
+- In the protocol, encode each step as its four-character origin/destination pair (for example, `a2a3`); concatenate two to four pairs for one complete turn. Setup placements use the shared drop form such as `E@a1`.
 - Preserve chosen setup placement and turn history in serialized state. Online and local replay must produce the same position after every step and completed turn.
 - Do not create generic draw-by-repetition behavior; forced third repetition is a loss as specified above.
 - Source-supported fixtures must cover setup counts/areas, each piece strength and Rabbit direction, freezing/support, push/pull, trap captures after individual steps, four-step turns, every win condition, result-order edge cases and third repetition.

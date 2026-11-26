@@ -169,5 +169,7 @@
 - [x] Complete Arimaa rules, adoption and licensing research; select official standard two-player rules without claiming a popularity winner. Save the report, notes, product plan and source-linked rules contract under `apps/arimaa/` and `packages/arimaa/`.
 - [x] Record the Arimaa Public License v2025.02 Section 3 conditions. Keep public release gated on confirming a free/no-user-or-ad-revenue product and owner authorization for the required Discord announcement; no contact or announcement has been made.
 - [x] Pass baseline `NODE_OPTIONS=--no-experimental-webstorage ./init.sh` and adjacent 8×8 browser smoke (5/5; optional installed-offline scenario skipped).
-- [ ] Implement the Arimaa Variant setup phase and deterministic FEN, then verify setup and four-step-turn rules before starting bots or product UI. Reserve Melon staging port 19920; use original art/prose and no public route/catalog changes.
+- [x] Implement the pure Arimaa Variant with chosen setup, deterministic FEN, four-step turns, push/pull, freezing/traps, result order and repetition; 22/22 focused tests, package/rules-core typechecks and lint pass.
+- [x] Run full repository `NODE_OPTIONS=--no-experimental-webstorage npm run verify` with loopback permission; all displayed suites completed without reported failures. Re-run after the next runtime code increment.
+- [ ] Add deterministic bounded bots; use a draft turn editor in the UI rather than materializing the entire legal opening list for board input. Keep original art/prose, private Melon port 19920 and no public route/catalog changes.
 - [x] Add `ko-shogi-001` as a blocked feature and preserve Arimaa as the next ready roadmap row.

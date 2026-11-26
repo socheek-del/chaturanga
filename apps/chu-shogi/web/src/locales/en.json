@@ -1,5 +1,6 @@
 {
   "nav": { "label": "Main navigation", "home": "Home", "play": "Play", "learn": "Tutorial", "atlas": "Piece atlas", "leave": "Leave screen" },
+  "modes": { "online": "Online play" },
   "theme": { "toggle": "Change color theme", "dark": "Dark", "light": "Light" },
   "colors": { "w": "White", "b": "Black" },
   "pieces": {
@@ -16,7 +17,7 @@
   "home": {
     "title": "Chu Shogi", "brandLine": "The Meridian Table", "edition": "A 12 × 12 strategy game",
     "intro": "Forty-six pieces per side. Long sliding ranks, sudden jumps, and complete Lion turns that can change direction midway.",
-    "playBot": "Play a bot", "passAndPlay": "Pass and play", "learn": "Learn the rules", "atlas": "Explore every piece",
+    "playBot": "Play a bot", "passAndPlay": "Pass and play", "playOnline": "Play online", "learn": "Learn the rules", "atlas": "Explore every piece",
     "profile": "Rules used: Chu Shogi Renmei competition profile (2019), with the 2004 Lion clarifications. This is the best-documented current association standard, not a claim about popularity.",
     "diagram": "THE OPENING FIELD", "boardCaption": "A measured field of twelve ranks", "footer": "A standalone Chu Shogi product · offline play and tutorials"
   },
@@ -33,16 +34,28 @@
   "play": {
     "turn": "{{color}} to move", "check": "Check", "captured": "Captured pieces", "clockOf": "{{color}}'s clock",
     "moves": "Moves", "noMoves": "No moves yet", "first": "First move", "back": "Previous move", "forward": "Next move", "last": "Latest move",
+    "chooseRoute": "Choose a complete route", "promotion": "promotes", "captures_one": "Capture: {{pieces}}", "captures_other": "Captures: {{pieces}}", "captureAt": "{{square}}: {{piece}}",
     "flip": "Flip the board", "undo": "Take back", "resign": "Resign", "backToLive": "Return to the game", "newGame": "New game", "rematch": "Play again", "review": "Review",
     "cancel": "Cancel", "resignConfirm": "Resign for {{color}}?", "promoteAsk": "Promote this piece?", "promoteYes": "Promote", "promoteNo": "Keep its current rank",
     "promoteTo": "Promote to", "chooseRoute": "Choose a complete route", "captures": "Capture: {{pieces}}", "captures_one": "{{count}} capture: {{pieces}}", "captures_other": "{{count}} captures: {{pieces}}", "captureAt": "{{square}}: {{piece}}", "promotion": "promotes", "promotedRank": "Promoted rank",
     "result": { "whiteWins": "White wins", "blackWins": "Black wins", "draw": "Draw" },
+    "timeControl": "Time control", "noClock": "Untimed", "custom": "Custom", "minutes": "Minutes", "increment": "Increment (seconds)",
+    "categories": { "bullet": "Bullet", "blitz": "Blitz", "rapid": "Rapid", "classical": "Classical" },
     "reason": {
       "checkmate": "All opposing royals defeated", "stalemate": "No legal move loses", "repetition": "Duty to vary was not met",
       "bare-king": "Barren material ending", "timeout": "Out of time", "resign": "Resigned", "agreement": "Draw agreed", "abandon": "Opponent left"
     }
   },
   "computer": { "you": "You", "thinking": "{{name}} is thinking", "sideWhite": "White", "sideBlack": "Black", "sideRandom": "Random" },
+  "online": {
+    "opponent": "Opponent", "quickTitle": "Quick match", "quickHint": "Find an opponent in the same time-control pool.", "searching": "Searching the {{pool}} pool…",
+    "createTitle": "Create a private game", "color": "Choose your side", "create": "Create room", "joinTitle": "Join with a room code", "codeLabel": "Room code", "join": "Join room",
+    "invalidCode": "Enter a valid six-character room code.", "notFound": "That room could not be found.", "serverError": "Online play is unavailable right now. Check your connection and try again.",
+    "connecting": "Connecting to the room…", "reconnecting": "Connection lost. Reconnecting…", "waitingTitle": "Your room is ready", "shareHint": "Share this code or link with your opponent.",
+    "copyLink": "Copy invite link", "copied": "Link copied", "qrAlt": "QR code for the room invite link", "waitingFor": "Waiting for your opponent", "spectating": "You are watching this game.",
+    "offerDraw": "Offer a draw", "drawOffered": "Draw offered", "drawOfferReceived": "Your opponent offers a draw.", "accept": "Accept", "decline": "Decline",
+    "opponentDisconnected": "Your opponent has {{seconds}} seconds to reconnect.", "rematchOffered": "Rematch offered", "rematchReceived": "Your opponent wants a rematch."
+  },
   "bots": {
     "pawn": { "name": "Pawn", "description": "Learns the board and takes simple chances." },
     "go-between": { "name": "Go-Between", "description": "Looks for clean captures and safe advances." },

@@ -34,7 +34,7 @@ export default defineConfig({
       },
     }),
   ],
-  server: { port: 5207 },
-  preview: { port: 4207 },
+  server: { port: 5207, proxy: { '/api': 'http://127.0.0.1:8819', '/ws': { target: 'ws://127.0.0.1:8819', ws: true } } },
+  preview: { port: 4207, proxy: { '/api': 'http://127.0.0.1:8819', '/ws': { target: 'ws://127.0.0.1:8819', ws: true } } },
   test: { include: ['src/**/*.test.{ts,tsx}'] },
 });

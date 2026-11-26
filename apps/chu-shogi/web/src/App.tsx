@@ -1,5 +1,5 @@
-import { storageKey } from '@chaturanga/game-shell';
-import { GameScreen, LessonPlayer, undoAllowed, useFocusModeProvider } from '@chaturanga/game-shell/ui';
+import { createIdentity, storageKey, type TimeControlChoice } from '@chaturanga/game-shell';
+import { GameScreen, LessonPlayer, OnlineLobby, OnlineRoom, undoAllowed, useFocusModeProvider, type OnlineRoomContext, type OnlineScreenProps } from '@chaturanga/game-shell/ui';
 import { parseUci } from '@chaturanga/board-ui';
 import { Button, Card } from '@chaturanga/ui';
 import { chuShogiVariant, Game, PIECE_TYPES, START_FEN, squareName } from '@chaturanga/chu-shogi';
@@ -22,6 +22,7 @@ type SessionStore = typeof useLocalSession;
 const sessionFor = (mode: Mode, side: Color): SessionStore => mode === 'local' ? useLocalSession : side === 'w' ? useBotWhiteSession : useBotBlackSession;
 const PIECE_VALUES: Record<string, number> = Object.fromEntries(PIECE_TYPES.map((type, index) => [type, [1000, 900, 850, 600, 500, 450, 400, 400, 360, 350, 320, 310, 300, 270, 250, 240, 220, 210, 190, 120, 100][index] ?? 100]));
 const lessonStarsKey = (id: string) => storageKey(PRODUCT, `lesson.${id}.stars`);
+const identity = createIdentity(storageKey(PRODUCT, 'identity'));
 
 function Home() {
   const { t } = useTranslation();
@@ -34,6 +35,7 @@ function Home() {
       <div className="home-actions">
         <Link className="action-primary" to="/play"><Bot size={17} aria-hidden />{t('home.playBot')}<ArrowUpRight size={16} aria-hidden /></Link>
         <Link className="action-secondary" to="/play?mode=local"><Users size={17} aria-hidden />{t('home.passAndPlay')}<ArrowRight size={16} aria-hidden /></Link>
+        <Link className="action-secondary" to="/online"><Users size={17} aria-hidden />{t('home.playOnline')}<ArrowRight size={16} aria-hidden /></Link>
         <Link className="action-secondary" to="/learn"><BookOpen size={17} aria-hidden />{t('home.learn')}<ArrowRight size={16} aria-hidden /></Link>
         <Link className="action-secondary" to="/atlas"><Grid3X3 size={17} aria-hidden />{t('home.atlas')}<ArrowRight size={16} aria-hidden /></Link>
       </div>
@@ -100,6 +102,64 @@ function GameRoute() {
   const level = Number(rawLevel);
   if (!Number.isInteger(level) || level < 1 || level > BOTS.length) return <Navigate to="/play" replace />;
   return <ActiveGameRoute mode={rawMode} side={side} level={level} />;
+}
+
+function describeChuRoute(uci: string, game: Game, t: ReturnType<typeof useTranslation>['t']): string {
+  const move = parseUci(uci, 12);
+  if (move?.kind !== 'move') return uci;
+  const route = [move.from, ...move.path].map(squareName).join(' → ');
+  const copy = new Game(game.fen());
+  const record = copy.move(uci);
+  const capturedPieces = record.captures ?? [];
+  const moverColor = game.pieceAt(move.from)?.color;
+  const captureSquares = move.path.filter((square) => {
+    const target = game.pieceAt(square);
+    return target !== null && target.color !== moverColor;
+  });
+  const captures = capturedPieces.length ? ` · ${t('play.captures', {
+    count: capturedPieces.length,
+    pieces: capturedPieces.map((piece, index) => t('play.captureAt', {
+      square: captureSquares[index] === undefined ? '' : squareName(captureSquares[index]!),
+      piece: t(`pieces.${piece.type}`),
+    })).join(' · '),
+  })}` : '';
+  return `${route}${captures}${move.promotion ? ` · ${t('play.promotion')}` : ''}`;
+}
+
+function OnlineGameView({ screen, context }: { screen: OnlineScreenProps<Game>; context: OnlineRoomContext<Game> }) {
+  const { t } = useTranslation();
+  const board = useBoardIdentity();
+  const game = context.session((state) => state.game);
+  return <GameScreen
+    {...screen}
+    variant={chuShogiVariant}
+    {...board}
+    pieceValues={PIECE_VALUES}
+    boardSizing="scroll"
+    avatarType="king"
+    showCheckStatus={false}
+    routeChoiceTitle={t('play.chooseRoute')}
+    describeRouteChoice={(uci) => describeChuRoute(uci, game, t)}
+  />;
+}
+
+function OnlineRoomRoute() {
+  const { code = '' } = useParams();
+  const navigate = useNavigate();
+  const enterRoom = useCallback((roomCode: string) => navigate('/online/' + roomCode), [navigate]);
+  const leaveRoom = useCallback(() => navigate('/online'), [navigate]);
+  if (!/^[A-HJ-NP-Z2-9]{6}$/i.test(code)) return <Navigate to="/online" replace />;
+  const normalized = code.toUpperCase();
+  return <OnlineRoom
+    key={normalized}
+    code={normalized}
+    variant={chuShogiVariant}
+    identity={identity}
+    roomUrl={(roomCode) => location.origin + '/online/' + roomCode}
+    onEnterRoom={enterRoom}
+    onLeave={leaveRoom}
+    renderGame={(screen, context) => <OnlineGameView screen={screen} context={context} />}
+  />;
 }
 
 function ActiveGameRoute({ mode, side, level }: { mode: Mode; side: Color; level: number }) {
@@ -240,6 +300,9 @@ function BackLink() {
 export function App() {
   const { t } = useTranslation();
   const { focus, FocusProvider } = useFocusModeProvider();
+  const navigate = useNavigate();
+  const [onlineTimeControl, setOnlineTimeControl] = useState<TimeControlChoice>({ kind: 'none' });
+  const [onlineColor, setOnlineColor] = useState<'w' | 'b' | 'random'>('random');
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     const saved = localStorage.getItem(storageKey(PRODUCT, 'theme'));
     return saved === 'light' || saved === 'dark' ? saved : window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
@@ -250,7 +313,7 @@ export function App() {
   }, [theme]);
   return <div className={`meridian-app${focus ? ' is-focused' : ''}`}>
     <header className="site-header"><Link to="/" className="wordmark"><span className="wordmark-mark"><Compass size={19} aria-hidden /></span><span><strong>{t('home.title')}</strong><small>{t('home.brandLine')}</small></span></Link>
-      {focus ? <Link className="header-back" to={focus === 'game' ? '/play' : '/learn'}><ArrowLeft size={15} aria-hidden />{t('nav.leave')}</Link> : <nav className="top-nav" aria-label={t('nav.label')}><Link to="/play">{t('nav.play')}</Link><Link to="/learn">{t('nav.learn')}</Link><Link to="/atlas">{t('nav.atlas')}</Link></nav>}
+      {focus ? <Link className="header-back" to={focus === 'game' ? (location.pathname.startsWith('/online/') ? '/online' : '/play') : '/learn'}><ArrowLeft size={15} aria-hidden />{t('nav.leave')}</Link> : <nav className="top-nav" aria-label={t('nav.label')}><Link to="/play">{t('nav.play')}</Link><Link to="/online">{t('modes.online')}</Link><Link to="/learn">{t('nav.learn')}</Link><Link to="/atlas">{t('nav.atlas')}</Link></nav>}
       {!focus && <button className="theme-toggle" type="button" aria-label={t('theme.toggle')} title={t('theme.toggle')} onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
         {theme === 'light' ? <Moon size={15} aria-hidden /> : <Sun size={15} aria-hidden />}<span>{t(theme === 'light' ? 'theme.dark' : 'theme.light')}</span>
       </button>}
@@ -258,6 +321,15 @@ export function App() {
     <main><FocusProvider><Routes>
       <Route index element={<Home />} /><Route path="play" element={<PlaySetup />} /><Route path="game/:mode/:side/:level" element={<GameRoute />} />
       <Route path="learn" element={<Learn />} /><Route path="tutorial" element={<Navigate to={`/lesson/${ALL_LESSONS[0]!.id}`} replace />} /><Route path="lesson/:id" element={<TutorialRoute />} />
+      <Route path="online" element={<OnlineLobby
+        identity={identity}
+        timeControl={onlineTimeControl}
+        onTimeControlChange={setOnlineTimeControl}
+        color={onlineColor}
+        onColorChange={setOnlineColor}
+        onEnterRoom={(code) => navigate('/online/' + code)}
+      />} />
+      <Route path="online/:code" element={<OnlineRoomRoute />} />
       <Route path="atlas" element={<Atlas />} /><Route path="*" element={<Navigate to="/" replace />} />
     </Routes></FocusProvider></main>
     {!focus && <footer className="site-footer"><span>{t('home.footer')}</span><Link to="/learn">{t('nav.learn')}</Link></footer>}

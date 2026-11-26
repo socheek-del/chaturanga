@@ -149,8 +149,10 @@
 - [x] Create the original Chu Shogi design and piece marks in `apps/chu-shogi/docs/design.md` and the local web app; keep name review separate from descriptive game naming.
 - [x] Build the standalone English PWA with pass-and-play, bot worker, local saves and all six bot levels. Tests and local browser smoke passed; verify installed offline reload on Melon.
 - [x] Add twelve interactive rules tutorials, validated through the authoritative engine, and test English locale completeness.
-- [ ] Commit/push the product design and PWA/tutorial slice; verify exact-SHA CI before the online service milestone.
-- [ ] Add the isolated server-authoritative private Worker, no chat, own storage, reconnect, restart and copied-state recovery.
-- [ ] Pass full workspace verification, product builds and exact-SHA CI; stage pinned code on Melon at port 19919 and smoke the built PWA/Worker.
+- [x] Add the isolated server-authoritative private Worker with no chat, own D1/DO storage, reconnect and archived finished games; Worker tests pass 10/10.
+- [x] Verify two-browser invite/join, move synchronization, reload reconnect, complete Lion route selection, and built PWA offline atlas (29/29).
+- [x] Pass full `NODE_OPTIONS=--no-experimental-webstorage npm run verify` across all workspaces.
+- [ ] Measure the other five adjacent bot pairs and tune any clear regressions.
+- [ ] Commit/push and pass exact-SHA CI; stage the pinned code on Melon port 19919 and smoke the built PWA/Worker, restart and copied-state recovery.
 - [ ] Keep the product out of public routes/catalog until product-name review and Melon DNS/TLS plus HTTPS/WSS smoke pass. No Cloudflare route unless Melon has a documented delivery limitation.
 - [ ] Record final active state and open risks in feature list, progress, handoff, quality notes and this checklist; inspect `git status` before ending.

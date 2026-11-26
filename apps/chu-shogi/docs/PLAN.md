@@ -28,14 +28,17 @@ apps/chu-shogi/worker/    isolated server-kit Worker and its own persistent game
 
 ## Current implementation — 2026-11-26
 
-The pure rules package and six bounded bots are implemented. The product design brief, English PWA shell,
+The pure rules package and six bounded bots are implemented. The product design brief, English PWA,
 original geometric piece marks, bot/pass-and-play setup, per-seat local saves, twelve engine-checked lessons,
 and a 29-rank/18-promotion atlas are in `apps/chu-shogi/web/`. The PWA uses the product-local
-`CHU_SHOGI_SITE_URL` setting and its own offline precache. The first local browser pass covered desktop home,
-bot opening and reply, first tutorial quiz, full atlas, dark theme and narrow-screen home/game layouts. The
-private online Worker, built-app offline browser check, Melon stage, and public release gates remain ahead.
-The board route chooser and shared game shell were extended narrowly for Chu's full-path-before-promotion
-input and no-check-attention rule; their targeted suites pass.
+`CHU_SHOGI_SITE_URL` setting and its own offline precache. The private Worker in `apps/chu-shogi/worker/`
+has product-specific Durable Objects and a D1 archive. Its local Durable Object tests cover legality,
+quick match, reconnect, chat rejection, archived draws, and full two-leg Lion-route replay. Two Chromium
+clients created and joined an invite room, synchronized moves, reconnected after reload, and selected the
+exact Lion route. Chromium also loaded all 29 atlas entries from the built PWA with network access disabled.
+Melon staging, restart/copy recovery, exact-SHA CI for this Worker increment, remaining bot ladder pairs,
+and public DNS/TLS/name gates are still ahead. The route chooser and shared game shell support Chu's
+full-path-before-promotion input and no-check-attention rule.
 
 The 12×12 `Variant` dimensions and `board-ui` grid are generic. Opaque move strings already carry multi-square routes in the protocol. The integration seam is input: the product must present every legal complete Lion route and its capture/promotion consequences without assuming only one from/to move. `VariantMoveRecord.captures` carries both captured pieces. Promotion eligibility, the first-Lion one-turn event, repetition responsibility, and result history belong in serializable game state. No Shogi files should be changed for Chu behavior.
 

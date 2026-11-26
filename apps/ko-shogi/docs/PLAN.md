@@ -1,22 +1,45 @@
-# Ko Shogi (廣象棋) — research gate
+# Ko Shogi (廣象棋) — product plan
 
-Ko Shogi is the next historical game after Chu Shogi in the chess-like rollout. The available evidence supports a source-based reconstruction, not a proven popular edition. The 1770 source and its archive scan are now accessible. Do not begin engine implementation until the complete setup and move chart is transcribed and checked.
+Ko Shogi is a historical two-player reconstruction. The evidence does not support calling any edition the most popular. V1 is named **Ko Shogi, reconstructed rules**, based on Ogyū Sorai’s 1770 *Kōshōgifu* and Bun’yū’s 1773 *Kōshōgifu Gukai*, with the digital choices in [`packages/ko-shogi/RULES.md`](../../../packages/ko-shogi/RULES.md).
 
-## Candidate rules basis
+## Rules and rights gate
 
-Use Ogyū Sorai's 1770 *Kōshōgifu* as the controlling source and compare Bun'yū's separately catalogued 1773 *Kōshōgifu Gukai* where the commentary is accessible. Tōhoku University's record provides a 14-image scan of the 1770 book. Visual review confirms that its setup order is given in text and its movement rules are illustrated on later pages; this is source access, not a completed transcription. The Noda City Library record labels a *Gukai* item 1770, while other catalogs distinguish the 1773 second volume, so do not use the Noda item as proof of the 1773 edition. The modern English profile describes a 19×19 intersection board, 90 pieces per side and 34 starting types, but its complete movement chart has not yet been independently transcribed. Modern summaries disagree on whether there are 53 or 65 distinct moves.
+The source transcription and complete playable movement chart are now in [`research_notes/Ko Shogi rules adoption rights/transcription.md`](research_notes/Ko%20Shogi%20rules%20adoption%20rights/transcription.md) and `packages/ko-shogi/RULES.md`. The formation has 90 pieces per side and seven occupied ranks on a 19×19 intersection board. The base and promoted movement profiles are listed individually. The catalog’s 53-versus-65 figures are reconciled as 65 piece forms (34 starting + 31 promoted) and 53 unique movement profiles after removing 12 duplicate profiles; the catalogs do not explain their counting method.
 
-Before freezing the rules contract, transcribe every setup cell and each base/promoted move from the historical pages, compare the relevant 1773 commentary, define what is counted by the 53-versus-65 totals, and record decisions for shooting turns, Banner-and-Drum substitution, Poison Flame effects, five-intersection ranges, and Governor's inclusion. Identify each convention as an inference where the sources are unclear. See [the source-linked research report](reports/Ko%20Shogi%20rules%20adoption%20rights.md) and its notes under `research_notes/Ko Shogi rules adoption rights/`.
+The rules-content rights gate is clear for the two original books: Sorai died in 1728 and Bun’yū in 1763, both before Japan’s general 70-year author term expired. Tōhoku/NIJL/Waseda scan conditions remain separate. No archive scan, modern prose, or diagram is reused. The product’s own art, interface, tutorial text, and notation will be original.
 
-## Adoption and rights
+The product follows the detailed English profile where an old text is incomplete or the surviving readings differ. It explicitly labels choices for Black’s first move, move-before-shot, Banner-and-Drum role substitution, five-intersection area, Governor inclusion, net immobilization, promotion timing, no-move loss, and repeated play. The scan and differences are recorded in the research notes. Public-facing wording must say “reconstructed rules,” not imply an uncontested historical standard or popularity winner.
 
-No evidence supports calling one Ko Shogi form the most popular. Available records show historical rule texts and modern listings, but no comparable participation data, recurring competition record, or active association standard. Describe the product as “Ko Shogi, reconstructed rules” if it eventually ships; do not treat Wikipedia's unexplained 1997 date as an origin date.
+## Product requirements
 
-Write any future code, tutorial, notation and diagrams independently from source facts. Do not copy the modern English reconstruction's prose, layout, examples or diagrams. For Sorai's 1770 source, the project rights gate for using the historical rule facts is met: the National Diet Library dates Sorai 1666–1728, and Japan's Copyright Act sets the general term at 70 years after an author's death. This is an inference about the old text, not permission to reuse a modern digitization. Tōhoku University applies item-specific image conditions, and Waseda requires advance application to reuse its scan; do not republish or trace archive images. The separate 1773 commentary should be rights-checked if it supplies rules not in the 1770 source. The Commons setup SVG has CC BY 3.0 terms if reused; original artwork avoids that obligation. No rights-holder contact has been made.
+- Independent product under `apps/ko-shogi/` and `packages/ko-shogi/`; no Ko-specific identity or content in shared packages or other games.
+- English v1, with all visible strings in locale keys and the locale completeness checks enabled.
+- 19×19 responsive intersection board, 90-piece opening, original rank glyphs, route chooser for compound moves and post-move shots, local saves, and pass-and-play.
+- Six deterministic bounded bots for both colors, implemented on `@chaturanga/ai-core`; engine legality remains authoritative.
+- Interactive tutorial that teaches the setup, ordinary moves, shots, multi-leg turns, promotions, suppression/burn/net effects, objective, repetition, and the reconstruction’s digital conventions. Exercises use the rules engine.
+- Installable offline PWA with its own site setting, manifest, service worker and fonts/assets. Public domain remains unset until DNS/TLS is verified.
+- Server-authoritative private two-player rooms, no chat, isolated Worker and persistent storage, server validation through the Ko Shogi Variant, reconnect/restart/copied-state recovery.
+- Melon stage and verification through `ssh melon`. Keep Cloudflare as fallback only if a documented Melon limitation prevents delivery. Do not add Caddy routing or the app-directory entry until DNS, HTTPS, TLS and WSS pass.
 
-## Current status — 2026-11-27
+## Work sequence
 
-- Research notes and the report are saved under this product's `docs/` directory.
-- No Ko Shogi package, web app, worker, rules contract or public route exists.
-- Ko Shogi remains blocked before engine code until all setup cells, movements, promotions and special mechanics are source-checked and the 53-versus-65 count is explained. The 1770 rules-content rights gate is clear; scan images remain excluded.
-- Continue this source transcription rather than skipping to Arimaa. If a disputed rule depends on the 1773 commentary, verify that source and document the playable convention before implementation.
+1. **Rules contract and provenance** — complete. Use this document and `packages/ko-shogi/RULES.md` as the frozen v1 profile; change it only when a test exposes a contradiction or a newly verified source passage requires a documented decision.
+2. **Pure rules package** — implement setup/FEN, every starting/promoted movement, shots, captures, promotion triggers, burn, suppression, nets, objectives, repetition, undo/replay and `Variant` conformance. Add focused fixtures for each movement family and special transition.
+3. **Bots** — six deterministic strength levels, both roles, bounded node budgets and legality/strength evidence.
+4. **Product shell and identity** — original design proposal in `apps/ko-shogi/docs/design.md`; keep name/design proposal separate from historical rules. Do not use association branding or trace archive/Commons diagrams.
+5. **PWA and tutorial** — English locale, local/pass-and-play/bot, complete interactive tutorial, saves, install/offline operation and narrow phone-board usability.
+6. **Private online play** — isolated Worker and storage, room reconnect and authoritative moves; verify restart and copied-state recovery.
+7. **Release checks** — full verification, product build, exact-SHA CI, Melon stage browser/PWA smoke, recovery checks, then public DNS/TLS/HTTPS/WSS. No product route/catalog entry until the public gate passes.
+
+## Melon allocation
+
+- Product Worker development port: `8794`.
+- Private stage loopback port: `19926`.
+- Keep `KO_SHOGI_SITE_URL` empty for local/private stage builds. Do not publish or reserve a hostname until the product and DNS checks are ready.
+- Stage directory and pinned commit will be written here and in `session-handoff.md` after deployment.
+
+## Current state — 2026-11-27
+
+- Primary-source setup and movement pages were reviewed; the source-derived setup has been normalized into coordinates and sums to 90 pieces per side.
+- `packages/ko-shogi/RULES.md` has the complete v1 movement/promotion chart and records the disputed mechanics. The product-local transcription and source-rights update are recorded with the rules gate.
+- No engine, bot, app, Worker, tutorial, PWA, room service, or public route exists yet. The next action is implement the pure rules package, then proceed through the numbered sequence without skipping verification.

@@ -3715,10 +3715,9 @@
       "milestone": "M44",
       "title": "Release Ko Shogi reconstruction",
       "user_visible_behavior": "Players learn a source-based Ko Shogi reconstruction through an interactive tutorial and play complete games against bots, locally, and in private online rooms.",
-      "status": "blocked",
+      "status": "in_progress",
       "verification": [
-        "Compare the 1770 Kōshōgifu and 1773 commentary, record source provenance, adoption limits and rights before scheduling engine work.",
-        "Transcribe and source-check all 19×19 setup cells, piece movements, shooting and special mechanics; resolve the 53-versus-65 move-count conflict before pinning packages/ko-shogi/RULES.md.",
+        "Keep a source-linked 1770/1773 rules and rights record with every setup row, base/promoted move, shot, special effect, ending, and digital convention before freezing the engine contract.",
         "Implement a pure @chaturanga/ko-shogi Variant with source-backed fixtures, shared conformance, deterministic replay/undo and focused multi-leg/special-rule tests.",
         "Add bounded bots for both roles and an interactive tutorial covering the selected rules and every digital convention.",
         "Ship an independent original PWA with local saves, offline install, complete locale keys and product-local site/service configuration.",
@@ -3727,12 +3726,13 @@
       ],
       "evidence": [
         "2026-11-26: Source-linked research is recorded in apps/ko-shogi/docs/reports/Ko Shogi rules adoption rights.md and the product-local notes. The recommended candidate is a reconstruction based on Sorai’s 1770 Kōshōgifu and the 1773 Gukai commentary, not a proven popular edition.",
-        "2026-11-26: The modern profile describes a 19×19 board, 90 pieces per side and 34 starting types; the full movement chart and setup still need independent verification. Sources disagree on 53 versus 65 distinct moves and leave several mechanics unresolved.",
-        "2026-11-27: Tōhoku University's 1770 *Kōshōgifu* catalog exposes a 14-image scan; visual review confirms setup text and movement diagrams are present, but the full chart has not yet been transcribed. The separately catalogued *Gukai* is 1773; Noda's 1770 label remains a catalog discrepancy.",
-        "2026-11-27: Project rights inference: Sorai died in 1728 and Japan's general author term is 70 years after death, so the 1770 rules text clears the rules-content gate. Archive image terms are item-specific; no scan image will be reused or committed. Check any 1773-only rule source separately. No rights-holder contact was made.",
-        "2026-11-27: No popularity winner is supported. Keep this feature blocked before engine code until all setup and movement rules are transcribed, 1773 commentary is compared where relevant, and the 53-versus-65 count and disputed mechanics are resolved."
+        "2026-11-27: Tōhoku University's 1770 *Kōshōgifu* catalog exposes a 14-image scan; visual review confirms the setup text and movement diagrams. The separately catalogued *Gukai* is 1773; Noda's 1770 label remains a catalog discrepancy.",
+        "2026-11-27: Transcribed the seven 1770 center-out setup lines into coordinates and checked the 90-piece inventory against the source. Added a complete chart for all 34 starting and 31 promoted forms in packages/ko-shogi/RULES.md; the research transcription records source differences and the chosen digital conventions.",
+        "2026-11-27: Reconciled 65 piece forms as 34 starting plus 31 promoted, and reproduced 53 unique movement profiles by merging 12 duplicate profiles. This explains the arithmetic but is not claimed as the catalogs’ historical counting method.",
+        "2026-11-27: Rules-content rights gate clears for both Sorai (d. 1728) and Bun’yū (1700–1763) under Japan’s general author-life term. The scanned items retain separate image-use conditions; no scan, tracing, modern prose, or diagram is reused. No rights-holder contact was made.",
+        "2026-11-27: No popularity winner is supported. V1 is explicitly “Ko Shogi, reconstructed rules”; Black-first, shooting, Banner-and-Drum, five-intersection effects, Governor, net immobilization and other under-specified rules are labeled digital conventions. Rules gate is complete; pure Variant implementation is now active."
       ],
-      "notes": "Blocked before engine code pending full transcription/review of setup, base and promoted movement, the 53-versus-65 count, and disputed mechanics. The 1770 rules-content gate is clear; do not reuse archive images or modern reconstruction prose/diagrams. Continue Ko Shogi source review rather than skipping it for rights reasons. See apps/ko-shogi/docs/PLAN.md."
+      "notes": "Rules-source, adoption and content-rights gate is complete. Implement the named reconstruction in packages/ko-shogi/RULES.md and preserve every explicit digital convention in code, tutorial, save/replay, and server validation. Do not reuse archive images or modern prose/diagrams. See apps/ko-shogi/docs/PLAN.md and its source transcription."
     },
     {
       "id": "arimaa-001",

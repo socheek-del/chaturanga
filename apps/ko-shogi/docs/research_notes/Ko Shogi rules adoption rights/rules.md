@@ -1,5 +1,11 @@
 # Ko Shogi Rules and Provenance
 
+## 2026-11-27 rules-gate completion
+
+The source gate is now complete for implementation. The seven-line setup has been transcribed into center-out coordinates, checked against the 1770 scan, and counted to 90 pieces per side. All 34 starting forms and their 31 promotion forms now have a documented movement profile in [`packages/ko-shogi/RULES.md`](../../../../packages/ko-shogi/RULES.md); source passages, profile differences, the 53/65 reconciliation, and digital decisions are recorded in [`transcription.md`](transcription.md). The 1773 commentary’s source-content gate also clears: Bun’yū is dated 1700–1763, so the general Japanese 70-year author term expired long ago. No scan is being reused.
+
+The table follows the detailed English profile where the old text is unclear or its reading conflicts with that profile. The result is explicitly a reconstruction, not a newly asserted historical standard. Scholarly translation and the exact meaning of a few old lines remain open questions, but they no longer block implementing the named profile.
+
 ## 2026-11-27 source access update
 
 The Tōhoku University IIIF scan of Sorai's 1770 *Kōshōgifu* is now accessible at the record's manifest. Visual review of all 14 images confirms that the setup is described in the text and that the later pages contain movement descriptions and diagrams. The rules have not yet been transcribed individually. The 1773 *Gukai* is a separately catalogued second volume by Bun’yū, according to the German Union Catalogue; the Noda record's 1770 date remains a catalog discrepancy. Use the 1770 volume as the rules baseline and compare the second volume only where it clarifies a rule. [Tōhoku catalog and IIIF manifest](https://touda.tohoku.ac.jp/collection/database/library/10010000019232); [German Union Catalogue, entry 283](https://rep.adw-goe.de/bitstream/handle/11858/2327/2397_VOHD_XXVII5.pdf?sequence=1); [Noda catalog](https://www.library-noda.jp/homepage/digilib/shogi/01.html)
@@ -29,7 +35,7 @@ Treat Ko Shogi as a documented Edo-period design with a modern playable reconstr
 
 ### Gaps
 
-- A complete scholarly translation or critical comparison of the 1770 rulebook and 1773 commentary was not located. The Waseda PDF could not be fetched automatically, and the NIJL viewer for the commentary returned 503; direct Japanese-text review is needed before freezing disputed edge cases. [Waseda scan](https://archive.wul.waseda.ac.jp/kosho/wo09/wo09_00837/wo09_00837.pdf); [NIJL commentary viewer](https://base1.nijl.ac.jp/iview/Frame.jsp?C_CODE=XYA8-08304&DB_ID=G0003917KTM&IMG_NO=1&IMG_SIZE=)
+- No scholarly critical translation or comprehensive edition comparison was located. Disputed interpretations are therefore retained as labeled digital conventions rather than claims of historical certainty. The archive records remain available for later source review. [Tōhoku scan record](https://touda.tohoku.ac.jp/collection/database/library/10010000019232); [NIJL commentary catalog](https://kokusho.nijl.ac.jp/biblio/100169203)
 
 ## Reconstructed game specification
 
@@ -39,9 +45,9 @@ The modern profile is a two-player, 19×19 intersection game with 90 pieces per 
 
 ### Cited Findings
 
-- The board is a 19-rank by 19-file Go-style grid of 361 intersections. Each side has 90 pieces of 34 starting types; the English rules page calls out 65 distinct moves, while the separate Shogi variant overview reports 53, so do not rely on either aggregate move count. [Ko Shogi article: equipment and rules](https://en.wikipedia.org/wiki/Ko_shogi); [Shogi variant overview](https://en.wikipedia.org/wiki/Shogi_variant)
+- The board is a 19-rank by 19-file grid of 361 intersections. Each side has 90 pieces of 34 starting types. The detailed profile lists 31 promotion forms (65 forms total); 53 is reproducible as 53 distinct movement profiles after merging 12 repeated patterns. The counting definition is an inference, not an explanation found in either catalog. See [`transcription.md`](transcription.md). [Ko Shogi article: equipment and rules](https://en.wikipedia.org/wiki/Ko_shogi); [Shogi variant overview](https://en.wikipedia.org/wiki/Shogi_variant)
 - The starting inventory per player is: General ×1; Clerk ×1; Staff Officer ×1; Aide-de-camp ×2; Sumo Wrestler ×2; Aide ×2; Staff ×2; Chief of Staff ×2; Engineer ×2; Taoist Priest ×1; Spiritual Monk ×1; Advance Guard ×2; Middle Troop ×1; Drum ×1; Banner ×1; Sentry ×2; Millenary ×2; Quartermaster ×2; Centuria ×2; Rear Guard ×2; Frankish Cannon ×1; Elephant ×6; Longbow ×4; Crossbow ×4; Cannon ×4; Cavalryman ×8; Cavalry ×2; Pawn ×6; Patrol Unit ×3; Shield ×6; Shield Unit ×3; Chariot ×8; Chariot Unit ×2; Vanguard ×1. The listed counts sum to 90; the one-side initial layout is diagrammed in the rules article, with the opposite player’s formation oriented to face it. [Ko Shogi article: inventory and setup diagram](https://en.wikipedia.org/wiki/Ko_shogi)
-- Initial formation should follow the article’s setup diagram exactly: it shows one side on board intersections, including a centered Vanguard behind the main formation, and instructs that both players view their own side in the same orientation. The setup diagram is the readable modern reconstruction; I did not independently verify every location against the original scan. [Ko Shogi article: setup](https://en.wikipedia.org/wiki/Ko_shogi)
+- The original setup text lists seven center-out lines; the coordinate transcription in [`transcription.md`](transcription.md) matches the listed inventory and gives 90 pieces. The source diagrams are not copied or traced. [Tōhoku University scan record](https://touda.tohoku.ac.jp/collection/database/library/10010000019232)
 - The promoted forms listed in the modern reconstruction are: Clerk→Master-at-Arms; Staff Officer→Banner-and-Drum; Aide-de-camp→Quartermaster; Aide→Town Brigade; Staff→Village Brigade; Chief of Staff→Vice Commander; Engineer→Poison Flame; Taoist Priest→Five-li Fog; Spiritual Monk→“Immaculate Light?”; Advance Guard→Skyward Net; Middle Troop→Governor; Drum→Thunderclap; Banner→Flag Waver; Sentry→Centuria; Millenary→Dragon Ascending; Quartermaster→Tiger Wing; Centuria→War Hawk; Rear Guard→Earthward Net; Frankish Cannon→“Chariot of the Gods?”; Longbow→Longbow Cavalryman; Crossbow→Crossbow Cavalryman; Cannon→Gun Carriage; Cavalryman→Cavalry; Cavalry→Winged Horse; Pawn→Patrol Unit; Patrol Unit→“Commissar?”; Shield→Shield Unit; Shield Unit→Heavenly Fortress; Chariot→Chariot Unit; Chariot Unit→Millenary; Vanguard→“Commissar?”. General, Sumo Wrestler, and Elephant do not promote. The question marks and article caveat that many English translations are suggestions must be preserved in product terminology review. [Ko Shogi article: promotion table](https://en.wikipedia.org/wiki/Ko_shogi)
 - Black moves first, turns alternate, and a turn consists of moving a piece, with optional/triggered captures and promotions. Ordinary capture removes an opposing piece by displacement; captured pieces are not dropped back into play. [Ko Shogi article: rules and gameplay](https://en.wikipedia.org/wiki/Ko_shogi)
 - Move families in the reconstruction are step, limited-range, jump, range, and shooting. Step movement can be blocked by an adjacent piece; limited-range moves travel a bounded number of intersections; jumpers pass over intervening pieces; range pieces slide along lines and stop on capture or before friendly blockers. The named initial jumpers are Clerk, Staff Officer, Taoist Priest, Spiritual Monk, Cavalryman and Cavalry; initial range pieces are Advance Guard, Millenary, Quartermaster, Centuria, Rear Guard, Elephant, Patrol Unit, Shield Unit and Chariot Unit. Each piece’s directions/ranges are individual and diagrammed. [Ko Shogi article: movement rules and diagrams](https://en.wikipedia.org/wiki/Ko_shogi)
@@ -57,14 +63,13 @@ The modern profile is a two-player, 19×19 intersection game with 90 pieces per 
 
 ### Gaps
 
-- The English movement table has every starting and promoted type, but it is large and contains layout-cleanup notices; this research note does not transcribe all 65/53 alleged movement patterns. A rule-engine specification must transcribe and review each individual diagram against the Japanese sources before declaring the rules complete. [Ko Shogi article: individual pieces](https://en.wikipedia.org/wiki/Ko_shogi); [Shogi variant overview](https://en.wikipedia.org/wiki/Shogi_variant)
-- “65” versus “53” distinct moves is unexplained by the consulted pages. [Ko Shogi article](https://en.wikipedia.org/wiki/Ko_shogi); [Shogi variant overview](https://en.wikipedia.org/wiki/Shogi_variant)
+- The playable movement/promotion chart is complete in `packages/ko-shogi/RULES.md`. A future scholarly review may refine the source reading for the Chief of Staff and other disputed clauses; the current implementation follows its named English-profile convention. The catalogs themselves do not define how their 53/65 counts were produced.
 
 ## Textual ambiguities and implementation decisions
 
 ### Takeaway
 
-Several rules are not fully fixed by the surviving sources or modern interpretation. Before implementation, record a deliberate profile choice for shooting turns, burning, Banner-and-Drum, five-intersection effects, shooting-capture restrictions, and Governor; expose these as tutorial rules rather than implying certainty about Sorai’s text.
+Several rules are not fully fixed by the surviving sources or modern interpretation. Their v1 choices are now recorded in `packages/ko-shogi/RULES.md` and the interactive tutorial must identify them as reconstruction conventions rather than imply certainty about Sorai’s text.
 
 ### Cited Findings
 

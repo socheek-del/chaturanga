@@ -1,6 +1,6 @@
 {
   "project": "Chaturanga — family of chess games (Makruk, Sittuyin, Xiangqi, Shogi, Chess and Janggi live; Three-player chess live)",
-  "last_updated": "2026-11-26",
+  "last_updated": "2026-11-27",
   "rules": {
     "single_active_feature": true,
     "passing_requires_evidence": true,
@@ -2967,7 +2967,8 @@
       "evidence": [
         "2026-11-24: Node 22 typecheck passed; 21 Shatranj rules and conformance tests passed, including 12 seeded Fairy-Stockfish games. Shared rules-core tests passed 36/36.",
         "2026-11-24: Bot tests passed 2/2, tutorial data passed 11/11, Playwright passed 5/5 for tutorial completion, both bot seats, local persistence, and invite reconnect. The PWA build and server dry run passed.",
-        "2026-11-24: Full npm run verify passed. Melon stage 9232a07 on port 19897 applied the games migration. Six browser checks through an SSH tunnel passed, including final game results, invite reconnect and offline use."
+        "2026-11-24: Full npm run verify passed. Melon stage 9232a07 on port 19897 applied the games migration. Six browser checks through an SSH tunnel passed, including final game results, invite reconnect and offline use.",
+        "2026-11-27: Read-only DNS audit from Melon found no IPv4 or IPv6 answer for this product hostname. The private stage remains available; public HTTPS/WSS, Caddy promotion and catalog publication remain blocked. No public route or catalog entry changed."
       ],
       "notes": "First new product in docs/CHESS-LIKE-ROADMAP.md. Online release uses the Melon deployment path. Public DNS for shatranj.beanroti.com is pending; the available zone login is read-only."
     },
@@ -3047,7 +3048,8 @@
       "evidence": [
         "2026-11-24: Node 22 typecheck and all 20 rules tests passed, including Variant conformance and eight seeded games against a Fairy-Stockfish configuration with the reconstructed setup and elephant move.",
         "2026-11-24: Bot tests 2/2, tutorial checks 11/11 and local browser scenarios 5/5 passed. The PWA and server production build passed. Phone and desktop layout were reviewed.",
-        "2026-11-24: Melon stage 89604bb on port 19902 applied its migration. All six staged browser checks passed, including invite reconnect and offline PWA play. Public DNS returned no record."
+        "2026-11-24: Melon stage 89604bb on port 19902 applied its migration. All six staged browser checks passed, including invite reconnect and offline PWA play. Public DNS returned no record.",
+        "2026-11-27: Read-only DNS audit from Melon found no IPv4 or IPv6 answer for this product hostname. The private stage remains available; public HTTPS/WSS, Caddy promotion and catalog publication remain blocked. No public route or catalog entry changed."
       ],
       "notes": "Selected the documented al-Adli reconstruction. New public hostname and TLS need DNS edit access. Continue implementation while Shatranj public DNS is pending."
     },
@@ -3068,7 +3070,8 @@
       "evidence": [
         "2026-11-24: Node 22 typecheck and all 18 rules tests passed, including Variant conformance, checkmates for both sides, and six seeded comparisons against configured Fairy-Stockfish.",
         "2026-11-24: Bot tests 2/2, tutorial checks 11/11 and local browser scenarios 5/5 passed. The tutorial was completed at phone width, with both bot roles, local saves, and online reconnect verified.",
-        "2026-11-24: Melon stage e4e04fb on port 19903 applied its migration. All six staged browser checks passed. Reviewed the home screen at 375px and 1440px."
+        "2026-11-24: Melon stage e4e04fb on port 19903 applied its migration. All six staged browser checks passed. Reviewed the home screen at 375px and 1440px.",
+        "2026-11-27: Read-only DNS audit from Melon found no IPv4 or IPv6 answer for this product hostname. The private stage remains available; public HTTPS/WSS, Caddy promotion and catalog publication remain blocked. No public route or catalog entry changed."
       ],
       "notes": "Melon stage is ready. Public launch requires DNS for maharajah.beanroti.com before TLS, promotion and public smoke."
     },
@@ -3089,7 +3092,8 @@
       "evidence": [
         "2026-11-24: Node 22 typecheck and all 18 engine tests passed, including Variant conformance and six seeded twelve-file comparisons against configured Fairy-Stockfish.",
         "2026-11-24: Bot checks 2/2, tutorial checks 12/12 and local browser scenarios 5/5 passed, including phone-width promotion, both bot roles, local saves and online reconnect.",
-        "2026-11-24: Melon stage dc1feb1 on port 19904 applied its migration and passed all six browser scenarios, including offline play and online reconnect. Full repository verification also passed."
+        "2026-11-24: Melon stage dc1feb1 on port 19904 applied its migration and passed all six browser scenarios, including offline play and online reconnect. Full repository verification also passed.",
+        "2026-11-27: Read-only DNS audit from Melon found no IPv4 or IPv6 answer for this product hostname. The private stage remains available; public HTTPS/WSS, Caddy promotion and catalog publication remain blocked. No public route or catalog entry changed."
       ],
       "notes": "Melon stage is ready. Public launch requires DNS for courier.beanroti.com before TLS, promotion and public smoke."
     },
@@ -3110,7 +3114,8 @@
       "evidence": [
         "2026-11-24: Node 22 typecheck and all 22 rules checks passed, including Variant conformance, independent movement and ending fixtures, and six seeded replay and undo games.",
         "2026-11-24: Bot checks 2/2, tutorial checks 13/13 and local browser scenarios 5/5 passed. The phone tutorial covered rank-12 promotion and mate, and the invite room synchronized a rank-12 king leap.",
-        "2026-11-24: Melon stage 5adadf2 on port 19905 applied its migration and passed all six browser scenarios, including offline play and online rank-12 play. Full repository verification passed."
+        "2026-11-24: Melon stage 5adadf2 on port 19905 applied its migration and passed all six browser scenarios, including offline play and online rank-12 play. Full repository verification passed.",
+        "2026-11-27: Read-only DNS audit from Melon found no IPv4 or IPv6 answer for this product hostname. The private stage remains available; public HTTPS/WSS, Caddy promotion and catalog publication remain blocked. No public route or catalog entry changed."
       ],
       "notes": "Melon stage is ready. Public launch requires DNS for acedrex.beanroti.com before TLS, promotion and public smoke."
     },
@@ -3132,7 +3137,8 @@
         "2026-11-24: Node 22 typecheck and all 35 rules tests passed. Rules-core passed 37 checks and protocol passed 3 with the generic goal-square result.",
         "2026-11-24: The board and shell regression checks passed, bot checks passed 2/2, tutorial checks passed 16/16 and local browser scenarios passed 6/6, including a saved citadel draw and both bot sides.",
         "2026-11-24: Melon stage f1206a7 on port 19906 applied its migration and passed all seven browser scenarios, including a persisted citadel draw and offline play. Full repository verification passed.",
-        "2026-11-24: Updated Melon stage a48a53d on port 19907 improves contrast of pawn identities for both sides. All seven checks passed again and the phone board was visually verified."
+        "2026-11-24: Updated Melon stage a48a53d on port 19907 improves contrast of pawn identities for both sides. All seven checks passed again and the phone board was visually verified.",
+        "2026-11-27: Read-only DNS audit from Melon found no IPv4 or IPv6 answer for this product hostname. The private stage remains available; public HTTPS/WSS, Caddy promotion and catalog publication remain blocked. No public route or catalog entry changed."
       ],
       "notes": "Melon stage is ready. Public launch requires DNS for tamerlane.beanroti.com before TLS, promotion and public smoke."
     },
@@ -3153,7 +3159,8 @@
       "evidence": [
         "2026-11-24: Node 22 typecheck and all 26 Shatar tests passed, including shared conformance, eight seeded stock Fairy-Stockfish comparisons and four exact reference endings. Shared rules-core and protocol checks also passed.",
         "2026-11-24: Bot checks 3/3, tutorial checks 13/13 and local browser scenarios 7/7 passed, including both restricted-mate outcomes and online reconnect.",
-        "2026-11-24: Melon stage 0581e7b on port 19908 applied its migration and passed all eight browser scenarios, including offline play and both restricted-mate results."
+        "2026-11-24: Melon stage 0581e7b on port 19908 applied its migration and passed all eight browser scenarios, including offline play and both restricted-mate results.",
+        "2026-11-27: Read-only DNS audit from Melon found no IPv4 or IPv6 answer for this product hostname. The private stage remains available; public HTTPS/WSS, Caddy promotion and catalog publication remain blocked. No public route or catalog entry changed."
       ],
       "notes": "Melon stage is ready. Public launch requires DNS for shatar.beanroti.com before TLS, promotion and public smoke."
     },
@@ -3175,7 +3182,8 @@
         "2026-11-25: Node 22 rules tests passed 27/27 with shared Variant conformance, including both zone entry and starting inside it, horse exemption, hia limits, all three pawn strides, en passant targets and pins, promotion, checkmate, and seeded replay/undo. The selected Winther reconstruction has no matching Fairy-Stockfish preset.",
         "2026-11-25: Hiashatar AI typecheck and tests passed 4/4, including tactical en passant selection. Web unit tests passed 17/17, the 15-step tutorial checks passed, and the production PWA build passed.",
         "2026-11-25: Local Playwright browser checks passed 5/5, covering tutorial completion and retry, saved game reload, both bot seats, an invite room with triple advance, en passant, and guest reconnect. Root npm run verify passed across workspaces; final AI changes passed targeted typecheck and tests; repository lint passed. Desktop and phone layouts were visually reviewed.",
-        "2026-11-25: Commit 2858c15 passed GitHub CI (full npm run verify plus repository builds) and was staged on Melon port 19909 in ~/chaturanga-release.hiashatar.ea0qfu. All 6 staged browser checks passed. Restarted the stage during an unfinished invite game; both seats reconnected with their history and continued play."
+        "2026-11-25: Commit 2858c15 passed GitHub CI (full npm run verify plus repository builds) and was staged on Melon port 19909 in ~/chaturanga-release.hiashatar.ea0qfu. All 6 staged browser checks passed. Restarted the stage during an unfinished invite game; both seats reconnected with their history and continued play.",
+        "2026-11-27: Read-only DNS audit from Melon found no IPv4 or IPv6 answer for this product hostname. The private stage remains available; public HTTPS/WSS, Caddy promotion and catalog publication remain blocked. No public route or catalog entry changed."
       ],
       "notes": "Melon stage is ready. Public HTTPS, WebSocket smoke, promotion and catalog publication await DNS for hiashatar.beanroti.com."
     },
@@ -3199,7 +3207,8 @@
         "2026-11-25: Web and Worker typechecks passed. Local Chromium passed 5/5 scenarios; a separate production-preview PWA install/offline check passed 1/1. Desktop and phone layouts were visually reviewed.",
         "2026-11-25: `npm run build:shatra` and full `npm run verify` passed under pinned Node 22.23.1. GitHub CI passed for 7907568c21a4113ad0592f24ff24fde9d13bb9ad (run 45536274512), including the full workspace and configured product builds. The initial CI run exposed a 5.24s hosted-runner timeout in the existing Acedrex bot test; a 10s per-test timeout retained all assertions and CI then passed.",
         "2026-11-25: Exact revision 7907568 is staged on Melon at port 19910 in ~/chaturanga-release.shatra.Vw0eEp; migration DB/0001_games.sql applied. All 6 browser tests passed against the built PWA and Worker over SSH, including tutorial completion, local save, both bot seats, invite reconnect and offline reload. A two-seat room recovered after container restart and continued at ply 2. A stopped-state copy restored into an isolated container on port 19911; both seats reconnected from that backup and continued play. The original stage is healthy and running.",
-        "2026-11-25: Public DNS lookup for shatra.beanroti.com returned no address, so public HTTPS/WebSocket smoke, promotion and catalog publication remain blocked pending DNS."
+        "2026-11-25: Public DNS lookup for shatra.beanroti.com returned no address, so public HTTPS/WebSocket smoke, promotion and catalog publication remain blocked pending DNS.",
+        "2026-11-27: Read-only DNS audit from Melon found no IPv4 or IPv6 answer for this product hostname. The private stage remains available; public HTTPS/WSS, Caddy promotion and catalog publication remain blocked. No public route or catalog entry changed."
       ],
       "notes": "Select the current Altai tournament form under the 1983 Shatra Code: one Biy, 14 active Shatras and 9 fortress reserves per side, plus promoted Batyry. The 2015 rules-engine paper says 11 reserves but gives no placement consistent with the explicit 62-field setup; record this discrepancy. The English Wikipedia article describes a separate chess-piece army. Melon staging is complete; public launch awaits DNS for shatra.beanroti.com."
     },
@@ -3228,7 +3237,8 @@
         "2026-11-25: GitHub run 45551463628 for 266be20 failed because the shared seeded-game and attacked-square conformance tests exceeded Vitest's five-second limit on the hosted runner. Added per-check timeout configuration for Fortress only (20 seconds); no playouts, assertions, seeds or move limits changed. Fortress rules tests passed 23/23 locally in 9.38 seconds; rules-core/Fortress typechecks and targeted ESLint passed. GitHub run 45552897158 for fc5577d passed full repository verification and every workspace build in 8m38s.",
         "2026-11-25: Exact revision fc5577d3a53e6c90a572457bb24750b3b0e34e52 is staged on Melon at 127.0.0.1:19911 in ~/chaturanga-release.fortress.Gz3JGZ. Migration DB/0001_games.sql applied; the health endpoint returns {\"ok\":true,\"game\":\"fortress\"}; the PWA manifest and built assets are served.",
         "2026-11-25: Headless Python Playwright checks against the built stage passed: the complete tutorial at phone/desktop widths; local save, reload and takeback; all four human seats against bots; phone board layout; offline reload/local play; four-seat private room and server-side rejection of an illegal move; reconnect; restart recovery with play continuing; copied-state restore with all four seats resuming and continuing; isolated original state; and missing-room handling. The temporary restore container and state copy were removed; the original stage remains healthy.",
-        "2026-11-25: fortress.beanroti.com returns no address from Melon. Public HTTPS/WebSocket smoke, Caddy promotion and catalog publication remain blocked until DNS resolves; keep the verified stage running."
+        "2026-11-25: fortress.beanroti.com returns no address from Melon. Public HTTPS/WebSocket smoke, Caddy promotion and catalog publication remain blocked until DNS resolves; keep the verified stage running.",
+        "2026-11-27: Read-only DNS audit from Melon found no IPv4 or IPv6 answer for this product hostname. The private stage remains available; public HTTPS/WSS, Caddy promotion and catalog publication remain blocked. No public route or catalog entry changed."
       ],
       "notes": "Four seats: top Red, right Blue, bottom White, left Black; Red+White vs Blue+Black. The tutorial labels stalemate and reserve-placement conventions as digital choices, not recovered historical rules. Use original prose and artwork. Verified Melon stage is fc5577d on port 19911; public hostname fortress.beanroti.com has no DNS record, so HTTPS/WSS smoke and catalog publication remain blocked."
     },
@@ -3261,7 +3271,8 @@
         "2026-11-25: Staged exact commit 0b160b035447083d390b999aced2d216688abefb on Melon at 127.0.0.1:19912 in ~/chaturanga-release.crazyhouse.KzM8xm. D1 migration applied; app root and /api/health returned 200.",
         "2026-11-25: Staged Chromium smoke passed the 14-lesson tutorial answer, bot opening as Black, service-worker activation and offline reload, private two-seat invite, capture-to-pocket, server-accepted P@e4, reload reconnect and no-chat check.",
         "2026-11-25: An active two-seat room recovered after restarting the Melon container and accepted a subsequent capture. A stopped-state copy restored in a separate temporary container at port 19913; both seats recovered and continued through capture, c6 and server-accepted P@e4. Removed the temporary restore container and copy; the original port 19912 stage is healthy.",
-        "2026-11-25: DNS lookup for crazyhouse.beanroti.com returned no address. Keep crazyhouse-001 blocked at public HTTPS/WebSocket smoke, Caddy promotion and catalog publication; no public route or catalog entry was changed. The Melon stage is available for promotion after DNS/TLS are ready."
+        "2026-11-25: DNS lookup for crazyhouse.beanroti.com returned no address. Keep crazyhouse-001 blocked at public HTTPS/WebSocket smoke, Caddy promotion and catalog publication; no public route or catalog entry was changed. The Melon stage is available for promotion after DNS/TLS are ready.",
+        "2026-11-27: Read-only DNS audit from Melon found no IPv4 or IPv6 answer for this product hostname. The private stage remains available; public HTTPS/WSS, Caddy promotion and catalog publication remain blocked. No public route or catalog entry changed."
       ],
       "notes": "Standard 8×8 two-player Crazyhouse: captures reverse color into the capturer's pocket; drops are legal except pawn drops on ranks one/eight; pawn-drop mate and same-file pawns are allowed; captured promoted pieces return as pawns. Fairy-Stockfish's rules, including no automatic insufficient-material adjudication, are recorded in packages/crazyhouse/RULES.md. Exact-CI Melon staging, tutorial/bot/PWA/online smoke, restart and copied-state restore passed. Public hostname is crazyhouse.beanroti.com; DNS is currently absent, so the feature is blocked only at public HTTPS/WSS and catalog publication."
     },
@@ -3301,7 +3312,8 @@
         "2026-11-25: Melon install audit found production Hono 4.13.7 and Zod 4.6.4 advisories. Updated the lock with compatible Hono 4.13.22 and Zod 4.6.7; `npm audit --omit=dev` reports zero production advisories. No `--force` update was used. The complete `npm run verify`, `npm run build:congo`, staged-runtime browser suite 5/5 and offline PWA 1/1 passed against the updated dependencies locally. Full `npm audit` still reports 5 build/test-only advisories (4 moderate in Workbox glob/minimatch and 1 high in happy-dom); npm only offers a forced downgrade/major change for those, so they remain a documented non-production gap. The current Melon stage still runs the pre-patch runtime and must be replaced after CI.",
         "2026-11-25: Dependency patch commit fdf1325efcd7b3d63c3ac1eb20c86fe6fa28f176 passed exact-SHA GitHub CI run 45599461942, including full npm run verify and all workspace builds.",
         "2026-11-25: Melon staged fdf1325efcd7b3d63c3ac1eb20c86fe6fa28f176 at 127.0.0.1:19914 in /home/melon/chaturanga-release.congo.350fpC; its isolated D1 migration, health and homepage passed. The staged production dependency audit found zero advisories; Playwright passed 5/5 (tutorial, bot as Black, mobile lessons, private invite, synced moves/reconnect) and installed offline PWA passed 1/1.",
-        "2026-11-25: Melon DNS lookup returned no IPv4 or IPv6 address for congo.beanroti.com. Public HTTPS/WSS smoke, Caddy promotion and directory publication remain blocked; no public route or catalog entry was changed."
+        "2026-11-25: Melon DNS lookup returned no IPv4 or IPv6 address for congo.beanroti.com. Public HTTPS/WSS smoke, Caddy promotion and directory publication remain blocked; no public route or catalog entry was changed.",
+        "2026-11-27: Read-only DNS audit from Melon found no IPv4 or IPv6 answer for this product hostname. The private stage remains available; public HTTPS/WSS, Caddy promotion and catalog publication remain blocked. No public route or catalog entry changed."
       ],
       "notes": "Roadmap default: Demian Freeling’s original two-player Congo. Rules, bounded bot, eight-lesson interactive tutorial, standalone English PWA, local persistence and authoritative private rooms are implemented. The patched runtime commit fdf1325efcd7b3d63c3ac1eb20c86fe6fa28f176 passed exact-SHA CI run 45599461942 and Melon stage smoke at port 19914 in /home/melon/chaturanga-release.congo.350fpC. Production dependency audit is clean; five remaining audit findings affect only build/test dependencies (four moderate in Workbox glob/minimatch and one high in happy-dom), and npm offered only forced major/downgrade changes. Status is blocked only at missing congo.beanroti.com DNS and resulting public HTTPS/WSS and directory checks. Do not change Caddy or catalog until DNS/TLS and public mode smoke pass. No external engine oracle exists; use source-backed fixtures."
     },
@@ -3333,7 +3345,8 @@
         "2026-11-25: Exact-SHA GitHub CI run 45612186318 passed for 3a31bf29739ca08024abced86014a35e31d4ea56, including full workspace verification and build matrix.",
         "2026-11-25: Staged the exact SHA on Melon at 127.0.0.1:19915 in /home/melon/chaturanga-release.jesonmor.s1Jcyr (container chaturanga-stage-jesonmor-19915). The Jeson Mor-only D1 migration applied; stage health and homepage passed.",
         "2026-11-25: Built-stage Playwright smoke passed 6/6 across tutorial and quiz, saved local play/takeback, bot as Black, narrow layout, private room move sync/reconnect and offline PWA. A live two-seat room continued after container restart; a stopped-state copy recovered both seats and accepted another legal move. Temporary restore resources were removed and the primary stage is healthy.",
-        "2026-11-25: Melon DNS resolves no IPv4 or IPv6 address for jesonmor.beanroti.com. Public HTTPS/WSS, Caddy route and app-directory publication are blocked; no public route or catalog entry was changed."
+        "2026-11-25: Melon DNS resolves no IPv4 or IPv6 address for jesonmor.beanroti.com. Public HTTPS/WSS, Caddy route and app-directory publication are blocked; no public route or catalog entry was changed.",
+        "2026-11-27: Read-only DNS audit from Melon found no IPv4 or IPv6 answer for this product hostname. The private stage remains available; public HTTPS/WSS, Caddy promotion and catalog publication remain blocked. No public route or catalog entry changed."
       ],
       "notes": "The product is implemented, passed exact-SHA CI and is staged on Melon at port 19915 in /home/melon/chaturanga-release.jesonmor.s1Jcyr. Tutorial, bot, pass-and-play, saves, private server-authoritative rooms, offline mode, restart and copied-state restore passed. Status is blocked only at public promotion: jesonmor.beanroti.com has no A or AAAA record, so public HTTPS/WSS smoke and directory publication cannot run. No Caddy route or catalog entry was changed. Keep the stage running while work continues on the next roadmap game."
     },
@@ -3372,7 +3385,8 @@
         "2026-11-25: Melon staged the exact SHA at 127.0.0.1:19916 in /home/melon/chaturanga-release.suffragetto.Bz3TYJ (container chaturanga-stage-suffragetto-19916). The isolated Suffragetto D1 migration applied; stage health and homepage passed.",
         "2026-11-25: On the built Melon stage, browser smoke passed 5/5 for interactive tutorial/exchange action, bot as Police, narrow layout, private-room synchronization/reconnect, and unknown-room handling. Installed offline PWA smoke passed 1/1.",
         "2026-11-25: A two-seat room recovered both seats and its two-ply history after container restart, then accepted and synchronized another legal move. With the service stopped, its state directory was copied to a separate restore container; the copied room recovered, accepted a second player, and accepted a legal move. Removed the temporary restore container/copy and restored the primary stage healthy.",
-        "2026-11-25: Melon DNS lookup returned no A/AAAA answer for suffragetto.beanroti.com. Public HTTPS/WSS smoke, Caddy promotion and app-directory publication are blocked; no public route or catalog entry was changed."
+        "2026-11-25: Melon DNS lookup returned no A/AAAA answer for suffragetto.beanroti.com. Public HTTPS/WSS smoke, Caddy promotion and app-directory publication are blocked; no public route or catalog entry was changed.",
+        "2026-11-27: Read-only DNS audit from Melon found no IPv4 or IPv6 answer for this product hostname. The private stage remains available; public HTTPS/WSS, Caddy promotion and catalog publication remain blocked. No public route or catalog entry changed."
       ],
       "notes": "The product is implemented, passed exact-SHA CI and is staged on Melon at port 19916 in /home/melon/chaturanga-release.suffragetto.Bz3TYJ. The seven-lesson tutorial, bots, local play/saves, offline PWA, private server-authoritative rooms, staged browser smoke, restart recovery and copied-state restore passed. Status is blocked only at public promotion: suffragetto.beanroti.com has no DNS answer, so HTTPS/WSS and directory publication cannot run. No Caddy route or catalog entry was changed. Keep the stage running while work continues with Dameo."
     },
@@ -3426,7 +3440,8 @@
         "2026-11-26: Online increment 6987d5b6a6e67938d27d55d1189c4ce43268bdd3 was committed and pushed directly to main. Exact-SHA GitHub CI run 45668832352 is in progress. Melon staging is preflighted for free port 19917 and will follow CI success.",
         "2026-11-26: Exact-SHA CI run 45668832352 passed for 6987d5b6a6e67938d27d55d1189c4ce43268bdd3. Staged on Melon at port 19917 in /home/melon/chaturanga-release.dameo.dTpb5d; isolated D1 migration, health and homepage passed.",
         "2026-11-26: Built-stage tutorial, bot-as-both-colors, private room, legal move sync, reload reconnect, agreement draw, mobile and browser-error smoke passed; offline PWA smoke passed. Live room recovered through container restart. A stopped-state copy restored both seats and synchronized a further legal move; temporary restore resources were removed and primary stage health passed.",
-        "2026-11-26: dameo.beanroti.com returned no DNS answer; trademark review is open. Public HTTPS/WSS and catalog promotion are blocked; no public Caddy route or catalog entry changed. Keep stage running while the next product proceeds."
+        "2026-11-26: dameo.beanroti.com returned no DNS answer; trademark review is open. Public HTTPS/WSS and catalog promotion are blocked; no public Caddy route or catalog entry changed. Keep stage running while the next product proceeds.",
+        "2026-11-27: Read-only DNS audit from Melon found no IPv4 or IPv6 answer for this product hostname. The private stage remains available; public HTTPS/WSS, Caddy promotion and catalog publication remain blocked. No public route or catalog entry changed."
       ],
       "notes": "Implemented and staged on Melon at port 19917 from 6987d5b6a6e67938d27d55d1189c4ce43268bdd3; exact-SHA CI 45668832352, full local verification/build, online/offline PWA, tutorial, bots, room/reconnect, restart and copied-state restore all passed. Status is blocked only at public promotion: dameo.beanroti.com has no DNS answer and trademark review remains open, so HTTPS/WSS and catalog publication cannot run. No Caddy route or catalog entry changed. Keep stage running while Gess begins."
     },
@@ -3646,7 +3661,8 @@
         "2026-11-26: Exact SHA 840ff3defe743726b8ddc6353fa63c3b9b84039d passed GitHub CI run 45711966827, including full workspace verification and the dedicated Rithmomachia web/Worker build.",
         "2026-11-26: Staged the pinned SHA on Melon at 127.0.0.1:19918 in /home/melon/chaturanga-release.rithmomachia.7MoXIr (container chaturanga-stage-rithmomachia-19918); its D1 migration, health and homepage passed. Built-stage Chromium verified 390px no-overflow, offline lesson navigation, a legal tutorial move, Black bot opening, private room/join and synchronized f13-g12.",
         "2026-11-26: Melon restart recovery preserved the active room and both seats. A stopped-writer copy restored in a separate container; a legal White b5-c4 reply synchronized to both clients. Temporary recovery state/container were removed and the primary stage resumed with its original room. Melon DNS resolves no A/AAAA for rithmomachia.beanroti.com; no public route or catalog entry changed.",
-        "2026-11-26: npm audit --omit=dev reported zero production dependency advisories. The full development dependency graph reports five advisories (4 moderate, 1 high in test-only happy-dom); production build also reports a non-blocking 546.23 kB minified entry chunk."
+        "2026-11-26: npm audit --omit=dev reported zero production dependency advisories. The full development dependency graph reports five advisories (4 moderate, 1 high in test-only happy-dom); production build also reports a non-blocking 546.23 kB minified entry chunk.",
+        "2026-11-27: Read-only DNS audit from Melon found no IPv4 or IPv6 answer for this product hostname. The private stage remains available; public HTTPS/WSS, Caddy promotion and catalog publication remain blocked. No public route or catalog entry changed."
       ],
       "notes": "Implementation, tutorial, bots, online rooms, exact-SHA CI and isolated Melon stage are verified. Status is blocked only at public promotion: Melon DNS resolves no A/AAAA for rithmomachia.beanroti.com, and product-name/design review remains open. No Caddy route or app-directory entry was added. Keep the stage running at port 19918 in /home/melon/chaturanga-release.rithmomachia.7MoXIr. Zero production dependency advisories; the full development graph has five advisories including high-severity test-only happy-dom. See apps/rithmomachia/docs/PLAN.md. Continue with Chu Shogi research."
     },
@@ -3686,7 +3702,8 @@
         "2026-11-26: Commit 3475a21d6c3723e57be4e8c7daaa6d5eecc71f1b passed exact-SHA GitHub CI run 45736686982. Melon staged that SHA at loopback port 19919 in /home/melon/chaturanga-release.chu-shogi.NJyO3x; the isolated D1 migration, homepage and health endpoint passed.",
         "2026-11-26: The 100-ply seeded two-game bot ladder completed all adjacent pairs: L2/L1 1.5/2 (win + draw), L3/L2 1/2 (two draws), L4/L3 1/2 (two draws), L5/L4 1.5/2 (win + draw), and L6/L5 1.5/2 (win + draw). No stronger level lost in the measured pairs; two games per pair are an initial signal, not a stable rating.",
         "2026-11-26: Built-stage Chromium passed the guided tutorial answer, a bot reply, private two-seat invite and move sync, and accepted draw/archive. A live two-seat game recovered its seats/history through Melon container restart and continued; a stopped-state copy recovered both seats/two plies and synchronized another legal move. The service worker reloaded the 29-rank atlas offline at 390px with no horizontal overflow or page errors. Temporary restore resources were removed and the primary stage is healthy.",
-        "2026-11-26: Melon DNS resolves no address for chu-shogi.beanroti.com. Public HTTPS/WSS and Caddy/catalog promotion remain gated on DNS/TLS and owner review of the public product name/design. No route or catalog entry changed; the verified stage remains available."
+        "2026-11-26: Melon DNS resolves no address for chu-shogi.beanroti.com. Public HTTPS/WSS and Caddy/catalog promotion remain gated on DNS/TLS and owner review of the public product name/design. No route or catalog entry changed; the verified stage remains available.",
+        "2026-11-27: Read-only DNS audit from Melon found no IPv4 or IPv6 answer for this product hostname. The private stage remains available; public HTTPS/WSS, Caddy promotion and catalog publication remain blocked. No public route or catalog entry changed."
       ],
       "notes": "Implementation and isolated Melon stage are complete. Commit 3475a21d6c3723e57be4e8c7daaa6d5eecc71f1b passed exact-SHA CI run 45736686982. The pinned stage at port 19919 passed migration, health, tutorial, bot, online room/archive, offline PWA, restart and copied-state restore checks. Status is blocked only at public promotion: chu-shogi.beanroti.com has no DNS address, and the public product name/design awaits owner review. No public Caddy route or app-directory entry was added. Stage directory: /home/melon/chaturanga-release.chu-shogi.NJyO3x. See apps/chu-shogi/docs/PLAN.md and Session 096 in claude-progress.md."
     },
@@ -3754,7 +3771,8 @@
         "2026-11-26: Pinned commit bc212e2232b7a975614053314a99b153c9f9c8a1 is privately staged on Melon at 127.0.0.1:19920 in /home/melon/chaturanga-release.arimaa.gcnx9k as chaturanga-stage-arimaa-19920. D1 migration, Worker health and PWA homepage passed; public routing was not changed.",
         "2026-11-26: Built-stage Chromium verified the 390px PWA, service-worker control, all 15 lessons offline, an interactive correct quiz, and a bot reply after the opening turn; no overflow or page errors.",
         "2026-11-26: Built-stage two-seat browser smoke synchronized all 32 server-validated setup placements and legal turns. Both seats recovered the same room after container restart. A stopped-state copy restored both seat identities and 34 move records in an isolated container, accepted and synchronized another legal turn, then was removed; the primary stage returned healthy with its original state.",
-        "2026-11-26: Public release remains blocked until the owner confirms the Arimaa Public License v2025.02 no-user/no-ad-revenue condition and authorizes its required Discord announcement; public DNS/TLS/HTTPS/WSS smoke is also outstanding. No external announcement, contact, Caddy change or catalog publication has occurred."
+        "2026-11-26: Public release remains blocked until the owner confirms the Arimaa Public License v2025.02 no-user/no-ad-revenue condition and authorizes its required Discord announcement; public DNS/TLS/HTTPS/WSS smoke is also outstanding. No external announcement, contact, Caddy change or catalog publication has occurred.",
+        "2026-11-27: Read-only DNS audit from Melon found no IPv4 or IPv6 answer for this product hostname. The private stage remains available; public HTTPS/WSS, Caddy promotion and catalog publication remain blocked. No public route or catalog entry changed."
       ],
       "notes": "The rules engine, six bounded bots, original English PWA, 15 interactive lessons, private invite/quick-match rooms and isolated archive are implemented and privately staged. The exact-SHA CI run and Melon browser, restart and copied-state recovery checks passed. This release feature is blocked at public promotion by the Arimaa Public License Section 3 conditions and unrun public DNS/TLS/HTTPS/WSS checks. No contact or announcement has been made; do not change public routing or catalog until the gate is cleared. A full opening turn list contains 20,652 options, so keep UI/bot choice bounded."
     },
@@ -3805,7 +3823,8 @@
         "2026-11-26: Pinned SHA is staged in /home/melon/chaturanga-release.fourchess.UGrfdi at 127.0.0.1:19921. The active container chaturanga-stage-fourchess-19921 uses the verified copied state directory state-restore-test; the stopped original container is retained as chaturanga-stage-fourchess-19921-pre-restore. Health and homepage passed.",
         "2026-11-26: Built-stage Playwright passed 4/4 scenarios, including four stable seats, four server-validated moves, reconnect, mobile/PWA metadata, tutorial/bot, and invalid room. Added turn-state waits between seat moves to remove a test timing race.",
         "2026-11-26: A live four-seat room retained all seats and four plies after container restart. With the source stopped, copied state-restore-test into a separate restore container; all four identities and history recovered, and Red completed a fifth legal move synchronized to all clients.",
-        "2026-11-26: getent returned no address for fourchess.beanroti.com. Public TLS/HTTPS/WSS smoke and directory publication cannot run; no Caddy route or catalog entry was changed. Feature is blocked only at public promotion."
+        "2026-11-26: getent returned no address for fourchess.beanroti.com. Public TLS/HTTPS/WSS smoke and directory publication cannot run; no Caddy route or catalog entry was changed. Feature is blocked only at public promotion.",
+        "2026-11-27: Read-only DNS audit from Melon found no IPv4 or IPv6 answer for this product hostname. The private stage remains available; public HTTPS/WSS, Caddy promotion and catalog publication remain blocked. No public route or catalog entry changed."
       ],
       "notes": "Implemented and privately staged from 1e067b9d00c766f7d12824b0a520e51dd12baf79. Exact-SHA CI, built-stage browser smoke, restart and copied-state restore all pass. Public release is blocked because fourchess.beanroti.com has no DNS answer; keep Caddy and the app directory unchanged. The next ready roadmap feature is Chaturaji."
     },
@@ -3839,7 +3858,8 @@
         "2026-11-26: Melon staged the exact SHA at /home/melon/chaturanga-release.chaturaji.yoXEwM on 127.0.0.1:19922 in chaturanga-stage-chaturaji-19922. Isolated DB/0001_games.sql migration applied; Worker health and built PWA homepage returned healthy Chaturaji responses.",
         "2026-11-26: Built-stage Playwright passed 6/6 for the complete tutorial, bot, mobile/local save, four-seat server-validated play, reconnect and invalid-room behavior. Offline/installability PWA checks passed 2/2.",
         "2026-11-26: A four-seat room retained its identities and move history after container restart. With the writer stopped, state was copied to state-restore-test and opened in an isolated container on 19923; all seats/history returned and a legal/pass action synchronized. The restore container and copy were removed; the primary port-19922 stage was restarted and health passed.",
-        "2026-11-26: Melon's resolver returned no address for chaturaji.beanroti.com. Public HTTPS/WSS checks and promotion cannot proceed; no Caddy route or directory entry was changed. Feature is blocked only at public promotion."
+        "2026-11-26: Melon's resolver returned no address for chaturaji.beanroti.com. Public HTTPS/WSS checks and promotion cannot proceed; no Caddy route or directory entry was changed. Feature is blocked only at public promotion.",
+        "2026-11-27: Read-only DNS audit from Melon found no IPv4 or IPv6 answer for this product hostname. The private stage remains available; public HTTPS/WSS, Caddy promotion and catalog publication remain blocked. No public route or catalog entry changed."
       ],
       "notes": "Implemented and privately staged from cf328621aab6bcdd2575c7abd0be147cc8f8546a. Exact-SHA CI, full workspace verification, product build, staged tutorial/bot/room/PWA smoke and restart/copied-state restore pass. This is the historically attested dice reconstruction and does not claim a popularity winner or perfect recovery of every historical procedure. Public promotion is blocked because Melon's resolver has no answer for chaturaji.beanroti.com; keep Caddy and the app directory unchanged. Djambi, Martian Chess, Apocalypse and Game of the Generals remain rights-blocked before implementation; the next ready roadmap row is Infinite chess, starting with source, adoption and rights research."
     },
@@ -3859,7 +3879,8 @@
       ],
       "evidence": [
         "2026-11-26: Rules/adoption/rights review is saved in apps/djambi/docs/PLAN.md and apps/djambi/docs/reports/Djambi rules adoption and rights.md. The best-documented selection is the standard four-seat 9×9 game; reviewed sources do not establish a most-popular edition.",
-        "2026-11-26: Board Game Arena credits L’Impensé radical for enabling its adaptation; no general public digital-adaptation license was found. No contact was made."
+        "2026-11-26: Board Game Arena credits L’Impensé radical for enabling its adaptation; no general public digital-adaptation license was found. No contact was made.",
+        "2026-11-27: Current primary-source recheck found no public digital-adaptation license or project permission; this feature remains blocked before code under repository policy. No contact was made. Synthesis: docs/reports/Modern chess game rights licenses.md."
       ],
       "notes": "Blocked before implementation until an applicable license or written permission is documented. Do not copy the existing adaptation’s text, art, diagrams or interface. Next roadmap candidates are recorded separately so this rights blocker does not stop all work."
     },
@@ -3879,7 +3900,8 @@
       ],
       "evidence": [
         "2026-11-26: Source/adoption/rights report and plan are saved under apps/martian-chess/docs/. No comparative popularity data were found; the roadmap selects the current two-player base form.",
-        "2026-11-26: Looney Labs’ electronic-games policy requires hobby developers to request permission before publishing. No contact was made."
+        "2026-11-26: Looney Labs’ electronic-games policy requires hobby developers to request permission before publishing. No contact was made.",
+        "2026-11-27: Current primary-source recheck found no public digital-adaptation license or project permission; this feature remains blocked before code under repository policy. No contact was made. Synthesis: docs/reports/Modern chess game rights licenses.md."
       ],
       "notes": "Blocked before implementation pending written permission. Do not copy Looney Labs rules text, pyramid art, logo or product identity."
     },
@@ -3899,7 +3921,8 @@
       ],
       "evidence": [
         "2026-11-26: Rules/adoption/rights report and product plan are saved in apps/apocalypse/docs/. The selected candidate is C. S. Elliott’s 1976 two-player edition; setup and rights-holder details remain unverified.",
-        "2026-11-26: No digital-adaptation license or current rights holder was established in the reviewed sources. No contact was made."
+        "2026-11-26: No digital-adaptation license or current rights holder was established in the reviewed sources. No contact was made.",
+        "2026-11-27: Current primary-source recheck found no public digital-adaptation license or project permission; this feature remains blocked before code under repository policy. No contact was made. Synthesis: docs/reports/Modern chess game rights licenses.md."
       ],
       "notes": "Blocked before implementation pending rules-source verification and rights clearance. Do not reuse published rules prose or artwork."
     },
@@ -3919,7 +3942,8 @@
       ],
       "evidence": [
         "2026-11-26: Official source-linked rules, adoption chronology and rights review are saved under apps/game-of-the-generals/docs/. The source history says conceived in 1967 and publicly introduced in 1972; the selected target is the original hidden-rank game.",
-        "2026-11-26: No applicable public digital-adaptation license or verified current chain for all rights was found. No contact was made."
+        "2026-11-26: No applicable public digital-adaptation license or verified current chain for all rights was found. No contact was made.",
+        "2026-11-27: Current primary-source recheck found no public digital-adaptation license or project permission; this feature remains blocked before code under repository policy. No contact was made. Synthesis: docs/reports/Modern chess game rights licenses.md."
       ],
       "notes": "Blocked before implementation pending applicable permission/license; preserve hidden ranks in server-side private views. No contact was made."
     },
@@ -3968,7 +3992,8 @@
         "2026-11-26: Full `NODE_OPTIONS=--no-experimental-webstorage npm run verify` passes (lint, all workspace typechecks and tests); `npm run build:senterej` passes for the PWA and Worker dry-run. Exact-SHA CI run 45846364938 passed commit 64ec507cb5b8ad2325594024bc67c0d3a117b0b3, including workspace verification and build:senterej.",
         "2026-11-26: Staged that SHA on Melon at 127.0.0.1:19924 in /home/melon/chaturanga-release.senterej.umZ25h (container chaturanga-stage-senterej-19924); DB/0001_games.sql applied, and health/homepage returned Senterej. Built-stage browser smoke passed 4/4 and offline PWA smoke 1/1 through a fresh SSH tunnel.",
         "2026-11-26: Two-seat Werera play and move sync passed. Room history replayed after container restart; a stopped-writer copy restored the room and both correct seats in a separate container, and another legal move synchronized to both browsers. The temporary restore container/data were removed and the original stage was restarted healthy. The earlier pre-fix stage remains on 19923 as rollback.",
-        "2026-11-26: Melon's resolver returned no DNS address for the configured Senterej hostname. Public HTTPS/WSS smoke cannot run; no Caddy route or app-directory entry was changed. Status is blocked only at public promotion."
+        "2026-11-26: Melon's resolver returned no DNS address for the configured Senterej hostname. Public HTTPS/WSS smoke cannot run; no Caddy route or app-directory entry was changed. Status is blocked only at public promotion.",
+        "2026-11-27: Read-only DNS audit from Melon found no IPv4 or IPv6 answer for this product hostname. The private stage remains available; public HTTPS/WSS, Caddy promotion and catalog publication remain blocked. No public route or catalog entry changed."
       ],
       "notes": "The implemented historical profile follows the documented digital choices for first-capture Werera ending, first ordinary side, check/stalemate/repetition procedures and the seven-move lone-capital ending. The product is implemented and privately staged; public promotion is blocked because Melon's resolver returns no DNS address for its hostname, leaving HTTPS/WSS checks unavailable. Keep Caddy and the app directory unchanged. The Field of Ochre identity proposal still awaits owner review. The next ready roadmap row is Infinite chess; complete its source, adoption and rights review before implementation."
     },
@@ -4020,7 +4045,8 @@
         "2026-11-27: Added `npm run build:infinite-chess` to CI in follow-up commit `17e14063fbca0f17614c8abc781d87d6e39d15d4`. Exact-SHA CI run 45878199946 passed full verification and the product build. The minified web entry is 511.30 kB (161.04 kB gzip), a non-blocking chunk-size warning.",
         "2026-11-27: Melon staged the CI-passing SHA `17e14063fbca0f17614c8abc781d87d6e39d15d4` at `/home/melon/chaturanga-release.infinite-chess.TZl1ZF`, loopback port 19925, container `chaturanga-stage-infinite-chess-19925`. Health, homepage, manifest and service worker passed; production-only npm audit found 0 vulnerabilities.",
         "2026-11-27: Built-stage browser smoke passed 5/5 and offline/installability PWA smoke passed 2/2. A two-seat room recovered its history after container restart and synchronized another legal move. A stopped-writer state copy restored both seats/history in a temporary container and synchronized another legal move; temporary recovery resources were removed and the primary stage is healthy.",
-        "2026-11-27: Melon DNS lookup returned no answer for `infinite-chess.beanroti.com`. Public TLS/HTTPS/WSS and app-directory promotion cannot run yet; no Caddy route or app-directory entry changed. The private stage remains available on Melon port 19925."
+        "2026-11-27: Melon DNS lookup returned no answer for `infinite-chess.beanroti.com`. Public TLS/HTTPS/WSS and app-directory promotion cannot run yet; no Caddy route or app-directory entry changed. The private stage remains available on Melon port 19925.",
+        "2026-11-27: Read-only DNS audit from Melon found no IPv4 or IPv6 answer for this product hostname. The private stage remains available; public HTTPS/WSS, Caddy promotion and catalog publication remain blocked. No public route or catalog entry changed."
       ],
       "notes": "The source-license route is recorded: product-specific source-derived software uses AGPL-3.0-or-later; GNU's GPLv3/AGPLv3 compatibility terms allow combining it with the GPLv3 monorepo, with the AGPL network-source requirement applying to the combined program. Shared prerequisite `plat-024` passed. Preserve license notices and provide complete corresponding source prominently. No official art, branding, prose or source files were reused; no external contact was made. Classical is the official default and an established tournament edition, but no comparative usage data establishes it as the most popular variant. Implementation, full workspace verification, product build, exact-SHA CI, staged browser/PWA smoke, restart and copied-state recovery pass. Status is blocked only at public promotion because Melon resolves no DNS for `infinite-chess.beanroti.com`; keep the port-19925 stage running and do not change Caddy or the app directory until public DNS/TLS/HTTPS/WSS checks pass."
     }

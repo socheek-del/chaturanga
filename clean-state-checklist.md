@@ -1,5 +1,11 @@
 # Clean State Checklist
 
+## Cross-product release audit (2026-11-27)
+
+- [x] Read-only DNS checks from Melon covered all 22 active privately staged game hostnames; none resolved to an IPv4 or IPv6 address. Public Caddy routes and the app catalog remain unchanged.
+- [x] Current primary-source rights checks found no applicable adaptation license for Djambi, Martian Chess, Apocalypse or Game of the Generals. No external contact was made; the rights report and research notes are saved under `docs/`.
+- [x] Add the current private stages for Dameo (19917) and Senterej (19924) to the handoff table so the DNS snapshot covers every active candidate release.
+
 - [x] Suffragetto's selected rules, rights boundary, 17×17 archival coordinate map, pure Variant, bots, seven interactive lessons, PWA and isolated online Worker are recorded in the product folders.
 - [x] Suffragetto rules/conformance tests passed 36/36; bot tests 17/17; web tests 34/34; Worker tests 9/9; `npm run build:suffragetto` and full workspace `npm run verify` passed with `NODE_OPTIONS=--no-experimental-webstorage` under Node 25.9.
 - [x] Exact commit `0e46a1ee3bf5fd3f9075e025f387a54a01638123` is on main; exact-SHA GitHub CI run `45638729555` passed verification and the build matrix.

@@ -1,5 +1,5 @@
 import type { GameSnapshot } from '@chaturanga/protocol';
-import type { Color, Variant, VariantGame } from '@chaturanga/rules-core';
+import { activePlayers, type Color, type Variant, type VariantGame } from '@chaturanga/rules-core';
 import { Button, Card } from '@chaturanga/ui';
 import { Handshake, LoaderCircle, WifiOff } from 'lucide-react';
 import QRCode from 'qrcode';
@@ -216,7 +216,7 @@ function OnlineGame<G extends VariantGame>({
       title: t('modes.online'),
       orientation,
       names: { w: nameOf('w'), b: nameOf('b') },
-      inputEnabled: !!you && game.turn === you && connection === 'open',
+      inputEnabled: !!you && activePlayers(game).includes(you) && connection === 'open',
       canUndo: false,
       onUndo: () => {},
       resignColor: you ?? 'w',

@@ -15,6 +15,9 @@ import {
   runFor,
   stopClock,
   timesAt,
+  activePlayers,
+  moveFor,
+  replayVariantMoves,
   type Variant,
   type VariantGame,
 } from '@chaturanga/rules-core';
@@ -26,6 +29,8 @@ export interface RoomState {
   createdAt: number;
   startFen: string;
   moves: string[];
+  /** Actor for each move; optional to keep persisted rooms written by older code readable. */
+  moveActors?: Color[];
   players: Record<Color, PublicUser | null>;
   timeControl: TimeControl | null;
   /** Counts for ratings when both players are signed in (acct-003). */
@@ -82,9 +87,7 @@ export function roomStatus(room: RoomState): GameSnapshot['status'] {
 }
 
 export function replay(variant: Variant, room: RoomState): VariantGame {
-  const game = variant.createGame(room.startFen);
-  for (const move of room.moves) game.move(move);
-  return game;
+  return replayVariantMoves(variant, room.startFen, room.moves, room.moveActors);
 }
 
 export function seatOf(room: RoomState, userId: string): Color | null {
@@ -106,7 +109,7 @@ function startIfReady(variant: Variant, room: RoomState, now: number): RoomState
   if (!room.players.w || !room.players.b || room.clock || !room.timeControl) return room;
   const game = replay(variant, room);
   const clock = createClock(room.timeControl.initialMs, now, game.turn);
-  return { ...room, clock: inSetup(game) ? stopClock(clock, now) : clock };
+  return { ...room, clock: inSetup(game) || activePlayers(game).length > 1 ? stopClock(clock, now) : clock };
 }
 
 function finish(room: RoomState, result: GameResult, now: number): RoomState {
@@ -176,25 +179,50 @@ export function applyMessage(
       if (status === 'finished') return { room, error: 'game_over' };
       if (status === 'waiting') return { room, error: 'game_not_started' };
       const game = replay(variant, room);
-      if (game.turn !== color) return { room, error: 'not_your_turn' };
+      if (!activePlayers(game).includes(color)) return { room, error: 'not_your_turn' };
       if (message.ply !== room.moves.length) return { room, error: 'stale_ply' };
+      const concurrent = activePlayers(game).length > 1;
       const placing = inSetup(game);
       let uci: string;
+      let actors = room.moveActors;
+      if (!actors) actors = game.moves().map((move) => move.color as Color);
       try {
-        uci = game.move(message.uci).uci;
+        uci = moveFor(game, color, message.uci).uci;
       } catch (err) {
         if (err instanceof IllegalMoveError) return { room, error: 'illegal_move' };
         throw err;
       }
       let clock = room.clock;
       if (clock && room.timeControl) {
+        // A simultaneous action does not press a turn clock; after the phase, run for the new turn.
+        if (concurrent && activePlayers(game).length === 1) clock = runFor(clock, game.turn, now);
         // A placement never presses the clock; the last one starts it for the side to move.
-        if (!placing) clock = pressClock(clock, color, now, room.timeControl.incrementMs);
-        else if (!inSetup(game)) clock = runFor(clock, game.turn, now);
+        else if (!concurrent && !placing) clock = pressClock(clock, color, now, room.timeControl.incrementMs);
+        else if (!concurrent && placing && !inSetup(game)) clock = runFor(clock, game.turn, now);
       }
-      const moved: RoomState = { ...room, moves: [...room.moves, uci], clock, drawOfferBy: null };
+      const moved: RoomState = { ...room, moves: [...room.moves, uci], moveActors: [...actors, color], clock, drawOfferBy: null };
       const result = resultFromStatus(game.status());
       return { room: result ? finish(moved, result, now) : moved };
+    }
+    case 'retract': {
+      if (status !== 'playing') return { room, error: status === 'finished' ? 'game_over' : 'game_not_started' };
+      if (message.ply !== room.moves.length) return { room, error: 'stale_ply' };
+      const game = replay(variant, room);
+      if (activePlayers(game).length < 2) return { room, error: 'not_your_turn' };
+      const actors = room.moveActors ?? game.moves().map((move) => move.color as Color);
+      const removed = game.moves()[message.index];
+      if (!removed || actors[message.index] !== color || removed.color !== color) return { room, error: 'illegal_move' };
+      if (removed.captured || (removed.captures?.length ?? 0) > 0 || removed.action === 'capture') return { room, error: 'illegal_move' };
+      const moves = room.moves.filter((_, index) => index !== message.index);
+      const moveActors = actors.filter((_, index) => index !== message.index);
+      let rebuilt: VariantGame;
+      try {
+        rebuilt = replayVariantMoves(variant, room.startFen, moves, moveActors);
+      } catch {
+        return { room, error: 'illegal_move' };
+      }
+      if (activePlayers(rebuilt).length < 2) return { room, error: 'illegal_move' };
+      return { room: { ...room, moves, moveActors, drawOfferBy: null } };
     }
     case 'resign':
       if (status !== 'playing') return { room, error: status === 'finished' ? 'game_over' : 'game_not_started' };
@@ -231,6 +259,7 @@ export function snapshot(room: RoomState, now: number, connected: Record<Color, 
     status: roomStatus(room),
     startFen: room.startFen,
     moves: room.moves,
+    moveActors: room.moveActors,
     players: { w: seat('w'), b: seat('b') },
     timeControl: room.timeControl,
     rated: room.rated,

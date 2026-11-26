@@ -1,5 +1,6 @@
 import { makruk } from '@chaturanga/makruk';
 import { ClientMessage, GameSnapshot } from '@chaturanga/protocol';
+import { activePlayers, IllegalMoveError, type Color, type Variant, type VariantGame, type VariantMoveRecord } from '@chaturanga/rules-core';
 import { sittuyin } from '@chaturanga/sittuyin';
 import { describe, expect, it } from 'vitest';
 import { applyMessage, createRoom, join, leave, nextAlarm, replay, roomStatus, settle, snapshot } from './roomLogic';
@@ -7,6 +8,57 @@ import { applyMessage, createRoom, join, leave, nextAlarm, replay, roomStatus, s
 const alice = { id: 'u-alice', name: 'Alice', kind: 'guest' as const };
 const bob = { id: 'u-bob', name: 'Bob', kind: 'guest' as const };
 const code = () => 'NEXT23';
+
+class ConcurrentTestGame implements VariantGame<Color> {
+  private records: VariantMoveRecord<Color>[] = [];
+  private opening = true;
+  private next: Color = 'w';
+
+  get turn(): Color { return this.next; }
+  activePlayers(): readonly Color[] { return this.opening ? ['w', 'b'] : [this.next]; }
+  fen(): string { return `start:${this.records.map(({ color, uci }) => `${color}.${uci}`).join(',')}`; }
+  pieceAt(): null { return null; }
+  pieces(): Array<{ square: number; piece: never }> { return []; }
+  hand(): readonly string[] { return []; }
+  legalUci(): string[] { return this.legalUciFor(this.turn); }
+  legalUciFor(color: Color): string[] {
+    if (!this.activePlayers().includes(color)) return [];
+    if (!this.opening) return ['e1e2'];
+    const whitePrepared = this.records.some((move) => move.color === 'w' && move.uci === 'a1a2');
+    return ['a1a2', ...(color === 'w' || whitePrepared ? ['b1b2'] : []), 'c1c2'];
+  }
+  move(uci: string): VariantMoveRecord<Color> { return this.moveFor(this.turn, uci); }
+  moveFor(color: Color, uci: string): VariantMoveRecord<Color> {
+    if (!this.legalUciFor(color).includes(uci)) throw new IllegalMoveError(uci);
+    const enemy: Color = color === 'w' ? 'b' : 'w';
+    const captured = uci === 'c1c2' ? { color: enemy, type: 'p', promoted: false } : null;
+    const record: VariantMoveRecord<Color> = {
+      color, uci, san: uci, piece: { color, type: 'p', promoted: false }, captured,
+      action: captured ? 'capture' : 'move', to: 0, fenAfter: '',
+    };
+    if (captured) {
+      this.opening = false;
+      this.next = color === 'w' ? 'b' : 'w';
+    }
+    this.records.push(record);
+    record.fenAfter = this.fen();
+    return record;
+  }
+  undo(): VariantMoveRecord<Color> | null { return this.records.pop() ?? null; }
+  moves(): VariantMoveRecord<Color>[] { return [...this.records]; }
+  lastMove(): VariantMoveRecord<Color> | null { return this.records.at(-1) ?? null; }
+  status() { return { kind: 'ongoing' as const }; }
+  isGameOver(): boolean { return false; }
+  inCheck(): boolean { return false; }
+  checkedKingSquare(): null { return null; }
+  attackedSquares(): number[] { return []; }
+  counting(): null { return null; }
+}
+
+const concurrentVariant: Variant<ConcurrentTestGame> = {
+  id: 'concurrent-test', files: 8, ranks: 8, startFen: 'start', pieceTypes: ['p'], hasHands: false,
+  createGame: () => new ConcurrentTestGame(),
+};
 
 function playingRoom(timeControl = { initialMs: 60_000, incrementMs: 2_000 }) {
   const created = createRoom(makruk, { code: 'ABCDEF', creator: alice, color: 'w', timeControl, now: 0 });
@@ -56,6 +108,68 @@ describe('moves (online-001)', () => {
 
   it('has no chat message type', () => {
     expect(ClientMessage.safeParse({ type: 'chat', text: 'hello' }).success).toBe(false);
+  });
+});
+
+describe('concurrent actions (plat-023)', () => {
+  function room() {
+    const created = createRoom(concurrentVariant, { code: 'ABCDEF', creator: alice, color: 'w', timeControl: null, now: 0 });
+    return join(concurrentVariant, created, bob, 1_000).room;
+  }
+
+  it('accepts multiple actions from each active seat and preserves actors for replay/snapshots', () => {
+    let current = room();
+    const actions = [['w', 'a1a2'], ['w', 'b1b2'], ['b', 'a1a2']] as const;
+    for (const [color, uci] of actions) {
+      const applied = applyMessage(concurrentVariant, current, color, { type: 'move', uci, ply: current.moves.length }, 2_000, code);
+      expect(applied.error).toBeUndefined();
+      current = applied.room;
+    }
+    expect(current.moves).toEqual(['a1a2', 'b1b2', 'a1a2']);
+    expect(current.moveActors).toEqual(['w', 'w', 'b']);
+    expect(replay(concurrentVariant, current).moves().map((move) => move.color)).toEqual(['w', 'w', 'b']);
+    expect(snapshot(current, 3_000, { w: true, b: true }).moveActors).toEqual(['w', 'w', 'b']);
+    expect(GameSnapshot.parse(snapshot(current, 3_000, { w: true, b: true })).moveActors).toEqual(['w', 'w', 'b']);
+  });
+
+  it('retracts only the caller’s non-capturing action when the full remainder replays legally', () => {
+    let current = room();
+    for (const [color, uci] of [['w', 'a1a2'], ['b', 'a1a2'], ['w', 'b1b2']] as const) {
+      current = applyMessage(concurrentVariant, current, color, { type: 'move', uci, ply: current.moves.length }, 2_000, code).room;
+    }
+    expect(applyMessage(concurrentVariant, current, 'b', { type: 'retract', index: 0, ply: 3 }, 3_000, code).error).toBe('illegal_move');
+    const retracted = applyMessage(concurrentVariant, current, 'w', { type: 'retract', index: 0, ply: 3 }, 3_000, code);
+    expect(retracted.error).toBeUndefined();
+    expect(retracted.room.moves).toEqual(['a1a2', 'b1b2']);
+    expect(retracted.room.moveActors).toEqual(['b', 'w']);
+    expect(replay(concurrentVariant, retracted.room).moves().map((move) => move.color)).toEqual(['b', 'w']);
+  });
+
+  it('rejects a retraction that makes a later accepted action illegal on replay', () => {
+    let current = room();
+    current = applyMessage(concurrentVariant, current, 'w', { type: 'move', uci: 'a1a2', ply: 0 }, 2_000, code).room;
+    current = applyMessage(concurrentVariant, current, 'b', { type: 'move', uci: 'b1b2', ply: 1 }, 2_000, code).room;
+    const rejected = applyMessage(concurrentVariant, current, 'w', { type: 'retract', index: 0, ply: 2 }, 3_000, code);
+    expect(rejected.error).toBe('illegal_move');
+    expect(rejected.room).toBe(current);
+  });
+
+  it('ends concurrent play at capture and applies ordinary turn validation afterward', () => {
+    let current = room();
+    current = applyMessage(concurrentVariant, current, 'w', { type: 'move', uci: 'c1c2', ply: 0 }, 2_000, code).room;
+    expect(activePlayers(replay(concurrentVariant, current))).toEqual(['b']);
+    expect(applyMessage(concurrentVariant, current, 'w', { type: 'move', uci: 'e1e2', ply: 1 }, 2_000, code).error).toBe('not_your_turn');
+    expect(applyMessage(concurrentVariant, current, 'b', { type: 'move', uci: 'e1e2', ply: 1 }, 2_000, code).error).toBeUndefined();
+    expect(applyMessage(concurrentVariant, current, 'b', { type: 'retract', index: 0, ply: 1 }, 2_000, code).error).toBe('not_your_turn');
+  });
+
+  it('pauses the clock during concurrent play and starts it when turn-taking begins', () => {
+    const timeControl = { initialMs: 60_000, incrementMs: 1_000 };
+    let current = join(concurrentVariant, createRoom(concurrentVariant, { code: 'ABCDEF', creator: alice, color: 'w', timeControl, now: 0 }), bob, 1_000).room;
+    expect(current.clock?.running).toBeNull();
+    current = applyMessage(concurrentVariant, current, 'w', { type: 'move', uci: 'c1c2', ply: 0 }, 2_000, code).room;
+    expect(current.clock?.running).toBe('b');
+    expect(current.clock?.since).toBe(2_000);
   });
 });
 

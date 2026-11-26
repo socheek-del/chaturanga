@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ClientMessage, GameResult, HealthResponse } from './index';
+import { ClientMessage, GameResult, GameSnapshot, HealthResponse } from './index';
 
 describe('GameResult point standings', () => {
   it('preserves multi-seat winners and fractional scores', () => {
@@ -46,5 +46,17 @@ describe('ClientMessage move notation', () => {
 
   it('rejects a move string that is not made from coordinate tokens', () => {
     expect(ClientMessage.safeParse({ type: 'move', uci: 'b2-d4!', ply: 0 }).success).toBe(false);
+  });
+
+  it('accepts retract intents and checks optional actor history alignment', () => {
+    expect(ClientMessage.safeParse({ type: 'retract', index: 0, ply: 2 }).success).toBe(true);
+    expect(ClientMessage.safeParse({ type: 'retract', index: -1, ply: 2 }).success).toBe(false);
+    const snapshot = {
+      code: 'ABCDEF', variant: 'test', serverTime: 0, status: 'playing', startFen: 'start', moves: ['a1a2'], moveActors: ['w'],
+      players: { w: null, b: null }, timeControl: null, rated: false, clock: null, result: null,
+      drawOfferBy: null, rematchOfferBy: null, nextCode: null, disconnect: null,
+    };
+    expect(GameSnapshot.parse(snapshot).moveActors).toEqual(['w']);
+    expect(GameSnapshot.safeParse({ ...snapshot, moveActors: [] }).success).toBe(false);
   });
 });

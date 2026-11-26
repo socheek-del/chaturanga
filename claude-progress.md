@@ -35,9 +35,9 @@ handoff; no agent updates it automatically.
 - `jg-009` is complete: production family smoke passed 7/7 released sites. The family registry now filters by `published`, and production checks only visit destinations with live routes. The seven live sites already showed the intended six siblings, so no public behavior changed and no redeploy was needed.
 - Full `NODE_OPTIONS=--no-experimental-webstorage npm run verify` passed with loopback access: lint, workspace typechecks and tests. The unprivileged run had failed only because Cloudflare Worker test pools could not bind `127.0.0.1` (`EPERM`).
 - The Chaturaji stage remains healthy and private at `/home/melon/chaturanga-release.chaturaji.yoXEwM`, port 19922, pinned to `cf328621aab6bcdd2575c7abd0be147cc8f8546a`. Its DNS gate remains unchanged.
-- Rights/adoption/source reports are saved for Djambi, Martian Chess, Apocalypse and Game of the Generals; each is blocked before implementation pending applicable rights clearance. No contact was made. Senterej's public-domain historical rules profile and source decisions are recorded; `plat-023` is the active prerequisite for actor-aware concurrent actions, persistence and server replay.
-- `plat-023` first slice: rules-core now has optional per-seat active/legal/apply APIs, shared actor-aware helpers and replay from actor-tagged moves. Focused tests pass 49/49 plus typecheck/lint; game-shell persistence and server authority/retraction still remain.
-- Next code task: carry actor identity through local saves, review, protocol snapshots and server room replay/retraction, keeping existing turn-based histories backward-compatible. Product notes: `apps/senterej/docs/PLAN.md`; rules contract: `packages/senterej/RULES.md`.
+- Rights/adoption/source reports are saved for Djambi, Martian Chess, Apocalypse and Game of the Generals; each is blocked before implementation pending applicable rights clearance. No contact was made. Senterej's public-domain historical rules profile and source decisions are recorded; its implementation is now the active feature.
+- `plat-023` is passing: actor-aware Variant helpers, local save/review, shared board input, protocol actor histories and server-authoritative validation/retraction are implemented. Full loopback-enabled workspace verification passed lint, all workspace typechecks and tests. No runtime product exists for this platform-only increment; Senterej must be staged on Melon before public promotion.
+- Next code task: implement `senterej-001` from the source-linked contract, starting with the pure rules engine and focused verification. Product plan: `apps/senterej/docs/PLAN.md`; rules contract: `packages/senterej/RULES.md`.
 
 ## Session Log
 
@@ -1859,3 +1859,12 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 - Added common helpers to query active seats/legal moves, apply a move for its actor, and replay histories with an optional actor list; old histories without actors still replay through `move`.
 - `npm test -w packages/rules-core` passed 49/49, `npm run typecheck -w packages/rules-core` passed, and ESLint passed for the changed source/test files.
 - Remaining in `plat-023`: actor-aware local sessions/saves and review, optional actor arrays in protocol state, server-side seat validation/replay and tested simultaneous move retraction. Then begin the Senterej engine and PWA.
+
+### Session 116 (Concurrent actor path and Senterej start)
+
+- Completed the actor-aware path across rules-core, local game-shell sessions and saves, saved-game review, board input, online session snapshots, protocol schemas and server-kit rooms. Existing games retain `game.turn` defaults and old snapshots/saves replay without actor arrays.
+- Server rooms validate actions by assigned seat, persist each action's actor, replay histories by actor, and permit a seat to retract only its own non-capturing concurrent action when the remaining history remains legal and concurrent. Stale optimistic clients receive a fresh snapshot.
+- Fixed clock behavior so local and server simultaneous phases remain paused until turn-taking begins; retractions preserve that paused clock. Test coverage includes the transition to ordinary turn-taking, failed dependent-history retraction and seat-limited shared board input.
+- Focused tests pass: rules-core 49/49; board-ui 50/50; game-shell 97/97; protocol 8/8; server-kit 24/24. `NODE_OPTIONS=--no-experimental-webstorage npm run verify` passed with loopback access: lint, all workspace typechecks and all tests. The sandbox run failed only where Worker test pools could not bind loopback (`EPERM`); the permitted rerun passed.
+- No deployment was needed for the platform package because it has no runtime endpoint. The Senterej release feature now carries the Melon staging, browser and recovery gate before public promotion. `plat-023` passes and `senterej-001` is active.
+- Next: implement the Senterej pure Variant and rules tests from `packages/senterej/RULES.md`; preserve the concurrent Werera and first-capture transition contract.

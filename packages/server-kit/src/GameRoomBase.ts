@@ -138,7 +138,13 @@ export abstract class GameRoomBase<E extends RoomEnv> extends DurableObject<E> {
     const result = applyMessage(this.variant, room, attachment.color, message, now, generateRoomCode);
     let next = result.room;
     if (result.rematch) next = await this.createRematch(next);
-    if (result.error) this.send(ws, { type: 'error', code: result.error });
+    if (result.error) {
+      this.send(ws, { type: 'error', code: result.error });
+      // Concurrent actions may make an optimistic client stale; immediately replace its local history.
+      if (result.error === 'stale_ply') {
+        this.send(ws, { type: 'state', you: attachment.color, game: snapshot(next, now, this.connected()) });
+      }
+    }
     if (next !== room) {
       await this.save(next);
       this.broadcast(next, now);

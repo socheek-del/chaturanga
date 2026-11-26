@@ -1,4 +1,4 @@
-import { type Color, squareOf, type Variant, type VariantGame } from '@chaturanga/rules-core';
+import { legalUciFor, moveFor as applyMoveFor, type Color, squareOf, type Variant, type VariantGame } from '@chaturanga/rules-core';
 import type { EngineLine, PositionEval } from './engine';
 import type { Opening, OpeningBook } from './openings';
 import type { Score } from './uci';
@@ -136,6 +136,8 @@ export interface ReviewInput<G extends VariantGame = VariantGame> {
   rules: ReviewRules<G>;
   startFen: string;
   moves: readonly string[];
+  /** Acting seat for each move in variants with concurrent actions. */
+  moveActors?: readonly string[];
   /** One per position, before every move and after the last; the engine's view, or the rules' for an ended game. */
   evals: readonly PositionEval[];
   book: OpeningBook | null;
@@ -158,7 +160,7 @@ export function terminalEval(game: VariantGame): PositionEval | null {
 }
 
 /** Labels every move, and sums up each side (ch-015, plat-017). Pure: the engine's work comes in `evals`. */
-export function reviewGame<G extends VariantGame>({ rules, startFen, moves, evals, book }: ReviewInput<G>): GameReview {
+export function reviewGame<G extends VariantGame>({ rules, startFen, moves, moveActors, evals, book }: ReviewInput<G>): GameReview {
   if (evals.length !== moves.length + 1) throw new Error(`need ${moves.length + 1} evaluations, got ${evals.length}`);
   const { variant } = rules;
   const game = variant.createGame(startFen);
@@ -170,9 +172,9 @@ export function reviewGame<G extends VariantGame>({ rules, startFen, moves, eval
 
   const reviews: MoveReview[] = [];
   moves.forEach((uci, i) => {
-    const color = game.turn;
+    const color = (moveActors?.[i] ?? game.turn) as Color;
     const before = evals[i]!;
-    const legalCount = game.legalUci().length;
+    const legalCount = legalUciFor(game, color).length;
     const bestLine = before.lines[0];
     const best = bestLine?.pv[0] ?? null;
     const bestSan = best ? sanOf(variant, game, [best])[0] ?? null : null;
@@ -180,7 +182,7 @@ export function reviewGame<G extends VariantGame>({ rules, startFen, moves, eval
     const previous = game.lastMove();
     const fenBefore = game.fen();
 
-    const record = game.move(uci);
+    const record = applyMoveFor(game, color, uci);
     const winBefore = winPercent(fromSide(scores[i]!, color));
     const winAfter = winPercent(fromSide(scores[i + 1]!, color));
     const loss = Math.max(0, winBefore - winAfter);

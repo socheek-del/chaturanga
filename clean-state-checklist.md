@@ -226,8 +226,17 @@
 - [x] TypeScript/Vite production builds pass for all nine staged apps whose family-injection config changed.
 - [x] Record that no live redeploy was needed: currently deployed family links already show the intended released set, with no user-visible delta.
 - [x] Save source/adoption/rights reports and mark Djambi, Martian Chess, Apocalypse and Game of the Generals blocked before code. No external contact was sent.
-- [x] Pin the clean-room historical Senterej profile and document `plat-023` as its actor-aware replay/retraction prerequisite; keep `senterej-001` blocked until that platform feature passes.
-- [ ] Implement `plat-023` one capability slice at a time; run its focused tests and full repository verification before marking it passing.
+- [x] Pin the clean-room historical Senterej profile and document `plat-023` as its actor-aware replay/retraction prerequisite.
+- [x] Implement `plat-023` one capability slice at a time; rules-core, board-ui, game-shell, protocol and server-kit focused tests pass.
 - [x] Add optional actor-aware Variant methods/helpers with `turn` defaults; rules-core tests 49/49, typecheck and lint pass.
-- [ ] Persist actors in local and online history; validate/replay actor-tagged online actions and server-side retractions.
-- [ ] Build Senterej only after rules-core, local session, saved history, protocol snapshots and server-kit all preserve the acting seat through simultaneous Werera play and legal retractions.
+- [x] Persist actors in local saves/review, protocol snapshots and server rooms; validate/replay actions and retractions by seat.
+- [x] Run full `NODE_OPTIONS=--no-experimental-webstorage npm run verify` with loopback access; lint, all workspace typechecks and tests pass.
+- [x] Move `plat-023` to passing and set `senterej-001` active. The generic platform package has no runtime route to deploy.
+
+### Senterej (active)
+
+- [x] Complete the historical profile and clean-room source/rights notes; no popularity claim is made.
+- [x] Complete actor-aware platform prerequisite `plat-023`.
+- [ ] Implement and verify the pure rules Variant, including Werera actor moves/retractions and ordinary-turn transition.
+- [ ] Add deterministic bots, interactive tutorial, independent PWA and private online rooms.
+- [ ] Run full verification, build and exact-SHA CI; stage on Melon and pass browser/recovery smoke before public promotion.

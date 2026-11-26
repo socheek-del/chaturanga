@@ -1,12 +1,55 @@
 // @vitest-environment happy-dom
 import { makruk } from '@chaturanga/makruk';
-import { timesAt } from '@chaturanga/rules-core';
+import { IllegalMoveError, timesAt, type Color, type Variant, type VariantGame, type VariantMoveRecord } from '@chaturanga/rules-core';
 import { sittuyin } from '@chaturanga/sittuyin';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { capturedBy, isUndoableResult, materialBalance, resultFromStatus } from './result';
 import { createGameSession, inSetupPhase } from './session';
 
 beforeEach(() => localStorage.clear());
+
+class ConcurrentSessionGame implements VariantGame<Color> {
+  private history: VariantMoveRecord<Color>[] = [];
+  private opening = true;
+  private next: Color = 'w';
+
+  get turn(): Color { return this.next; }
+  activePlayers(): readonly Color[] { return this.opening ? ['w', 'b'] : [this.next]; }
+  fen(): string { return this.history.map((move) => `${move.color}.${move.uci}`).join(','); }
+  pieceAt(): null { return null; }
+  pieces(): Array<{ square: number; piece: never }> { return []; }
+  hand(): readonly string[] { return []; }
+  legalUci(): string[] { return this.legalUciFor(this.turn); }
+  legalUciFor(color: Color): string[] { return this.activePlayers().includes(color) ? ['a1a2', 'b1b2', 'c1c2'] : []; }
+  move(uci: string): VariantMoveRecord<Color> { return this.moveFor(this.turn, uci); }
+  moveFor(color: Color, uci: string): VariantMoveRecord<Color> {
+    if (!this.legalUciFor(color).includes(uci)) throw new IllegalMoveError(uci);
+    const enemy: Color = color === 'w' ? 'b' : 'w';
+    const captured = uci === 'c1c2' ? { color: enemy, type: 'p', promoted: false } : null;
+    const record: VariantMoveRecord<Color> = { color, uci, san: uci, piece: { color, type: 'p', promoted: false }, captured, action: captured ? 'capture' : 'move', to: 0, fenAfter: '' };
+    if (captured) {
+      this.opening = false;
+      this.next = color === 'w' ? 'b' : 'w';
+    }
+    this.history.push(record);
+    record.fenAfter = this.fen();
+    return record;
+  }
+  undo(): VariantMoveRecord<Color> | null { return this.history.pop() ?? null; }
+  moves(): VariantMoveRecord<Color>[] { return [...this.history]; }
+  lastMove(): VariantMoveRecord<Color> | null { return this.history.at(-1) ?? null; }
+  status() { return { kind: 'ongoing' as const }; }
+  isGameOver(): boolean { return false; }
+  inCheck(): boolean { return false; }
+  checkedKingSquare(): null { return null; }
+  attackedSquares(): number[] { return []; }
+  counting(): null { return null; }
+}
+
+const concurrentVariant: Variant<ConcurrentSessionGame> = {
+  id: 'concurrent-session-test', files: 8, ranks: 8, startFen: '', pieceTypes: ['p'], hasHands: false,
+  createGame: () => new ConcurrentSessionGame(),
+};
 
 describe('game session on a Variant (plat-005b)', () => {
   it('starts in setup and plays with a clock that presses with increment and flags', () => {
@@ -58,6 +101,32 @@ describe('game session on a Variant (plat-005b)', () => {
     createGameSession(makruk).getState().start(null);
     expect(localStorage.getItem('test.bad')).not.toBeNull();
     expect(localStorage.length).toBe(2);
+  });
+
+  it('saves actor-tagged concurrent actions and retracts only while the phase remains open', () => {
+    const session = createGameSession(concurrentVariant, 'test.concurrent');
+    session.getState().start(null);
+    expect(session.getState().moveFor('w', 'a1a2')).not.toBeNull();
+    expect(session.getState().moveFor('b', 'b1b2')).not.toBeNull();
+    expect(session.getState().game.moves().map((move) => move.color)).toEqual(['w', 'b']);
+    expect(session.getState().retract('b', 0)).toBe(false);
+    expect(session.getState().retract('w', 0)).toBe(true);
+    expect(session.getState().game.moves().map((move) => move.color)).toEqual(['b']);
+
+    const reloaded = createGameSession(concurrentVariant, 'test.concurrent');
+    expect(reloaded.getState().game.moves().map((move) => [move.color, move.uci])).toEqual([['b', 'b1b2']]);
+    expect(reloaded.getState().retract('b', 0)).toBe(true);
+    expect(reloaded.getState().game.moves()).toEqual([]);
+  });
+
+  it('keeps a timed simultaneous opening paused when an action is retracted', () => {
+    const session = createGameSession(concurrentVariant);
+    session.getState().start({ initialMs: 60_000, incrementMs: 1_000 }, undefined, 0);
+    session.getState().moveFor('w', 'a1a2', 5_000);
+    const before = session.getState().clock;
+    expect(before?.running).toBeNull();
+    expect(session.getState().retract('w', 0)).toBe(true);
+    expect(session.getState().clock).toEqual(before);
   });
 });
 

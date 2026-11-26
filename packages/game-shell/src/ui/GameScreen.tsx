@@ -12,6 +12,7 @@ import {
   type Color,
   type Piece,
   type Square,
+  activePlayers,
   squareNameOf,
   timesAt,
   usesSetupPhase,
@@ -147,6 +148,14 @@ export function GameScreen<G extends VariantGame>({
   const s = useSession();
   useFocusMode('game');
   const { game, version, result, clock, viewPly, startFen } = s;
+  // The game object mutates in place, so `version` invalidates its actor list after a move.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const activeSeats = useMemo(() => activePlayers(game) as Color[], [game, version]);
+  const sessionSeat = 'you' in s ? s.you as Color | null : undefined;
+  const inputPlayers = useMemo(
+    () => sessionSeat === undefined ? activeSeats : sessionSeat && activeSeats.includes(sessionSeat) ? [sessionSeat] : [],
+    [activeSeats, sessionSeat],
+  );
   const [dismissedVersion, setDismissedVersion] = useState<number | null>(null);
   const [confirmResign, setConfirmResign] = useState(false);
   const boardHandle = useRef<BoardHandle>(null);
@@ -188,8 +197,9 @@ export function GameScreen<G extends VariantGame>({
   const input = useMoveInput({
     game,
     version,
-    canMove: inputEnabled && !result && viewPly === null,
-    onMove: (m) => s.move(m),
+    players: inputPlayers,
+    canMove: inputEnabled && !result && viewPly === null && inputPlayers.length > 0,
+    onMove: (m, color) => s.moveFor(color as Color, m),
     files: variant.files,
   });
 
@@ -224,7 +234,7 @@ export function GameScreen<G extends VariantGame>({
       captured={capturedBy(records.slice(0, shownPly), color)}
       advantage={color === 'w' ? balance : -balance}
       timeMs={times ? times[color] : null}
-      active={!result && game.turn === color}
+      active={!result && activeSeats.includes(color)}
       rotated={rotated}
       renderPiece={renderPiece}
       avatarType={avatarType}
@@ -245,11 +255,11 @@ export function GameScreen<G extends VariantGame>({
         renderPiece={renderPiece}
         label={handLabel(color)}
         describePiece={describeHandPiece}
-        selected={game.turn === color ? input.selectedHand : null}
-        canSelect={(type) => game.turn === color && input.canSelectHand(type)}
-        onSelect={input.onHandSelect}
+        selected={input.selectedHandColor === color ? input.selectedHand : null}
+        canSelect={(type) => inputPlayers.includes(color) && input.canSelectHand(type, color)}
+        onSelect={(type) => input.onHandSelect(type, color)}
         board={boardHandle}
-        onDropOnBoard={input.onDropFromHand}
+        onDropOnBoard={(type, square) => input.onDropFromHand(type, square, color)}
       />
     );
   };

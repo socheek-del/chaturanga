@@ -26,6 +26,8 @@ export interface SavedGame {
   startFen: string;
   /** Coordinate notation, as played. */
   moves: string[];
+  /** Acting seat for each move in variants with concurrent actions; older records omit this. */
+  moveActors?: string[];
   result: GameResult | null;
   players: Record<Color, PlayerTag>;
   /** The side the viewer played; null for pass-and-play and imports. */
@@ -107,7 +109,8 @@ export function createHistoryStore(product: ProductConfig, storage: () => StateS
 
 function isSavedGame(value: unknown): value is SavedGame {
   const g = value as SavedGame;
-  return !!g && typeof g.id === 'string' && typeof g.startFen === 'string' && Array.isArray(g.moves) && !!g.players;
+  return !!g && typeof g.id === 'string' && typeof g.startFen === 'string' && Array.isArray(g.moves) &&
+    (!g.moveActors || (Array.isArray(g.moveActors) && g.moveActors.length === g.moves.length && g.moveActors.every((color) => typeof color === 'string'))) && !!g.players;
 }
 
 export type HistoryStore = ReturnType<typeof createHistoryStore>;
@@ -119,7 +122,7 @@ export function findGame(id: string, store: HistoryStore): SavedGame | undefined
 /** What the recorder reads from a game session on every change. */
 export interface ObservedSession {
   phase: 'setup' | 'playing';
-  game: { moves(): ReadonlyArray<{ uci: string }> };
+  game: { moves(): ReadonlyArray<{ uci: string; color: string }> };
   startFen: string;
   result: GameResult | null;
   timeControl: TimeControl | null;
@@ -152,7 +155,9 @@ export function createRecorder({ mode, store, describe, idFor }: RecorderOptions
   };
 
   return (session: ObservedSession, now = Date.now()) => {
-    const moves = session.game.moves().map((r) => r.uci);
+    const records = session.game.moves();
+    const moves = records.map((r) => r.uci);
+    const moveActors = records.map((r) => r.color);
     const fixedId = idFor?.(session) ?? null;
 
     if (session.game !== lastGame) {
@@ -161,7 +166,7 @@ export function createRecorder({ mode, store, describe, idFor }: RecorderOptions
       const continues =
         fixedId !== null
           ? fixedId === id
-          : !!existing && moves.length > 0 && existing.startFen === session.startFen && samePrefix(existing.moves, moves);
+          : !!existing && moves.length > 0 && existing.startFen === session.startFen && samePrefix(existing.moves, moves, existing.moveActors, moveActors);
       if (!continues) finishPrevious();
     }
     if (moves.length === 0) return;
@@ -179,6 +184,7 @@ export function createRecorder({ mode, store, describe, idFor }: RecorderOptions
       updatedAt: now,
       startFen: session.startFen,
       moves,
+      moveActors,
       result: session.result,
       players: who.players,
       you: who.you,
@@ -187,9 +193,12 @@ export function createRecorder({ mode, store, describe, idFor }: RecorderOptions
   };
 }
 
-function samePrefix(a: readonly string[], b: readonly string[]): boolean {
+function samePrefix(a: readonly string[], b: readonly string[], actorsA?: readonly string[], actorsB?: readonly string[]): boolean {
   const n = Math.min(a.length, b.length);
-  for (let i = 0; i < n; i++) if (a[i] !== b[i]) return false;
+  for (let i = 0; i < n; i++) {
+    if (a[i] !== b[i]) return false;
+    if (actorsA && actorsB && actorsA[i] !== actorsB[i]) return false;
+  }
   return true;
 }
 

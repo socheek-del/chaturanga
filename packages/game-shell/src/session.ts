@@ -1,15 +1,18 @@
 import {
   type ClockState,
   type Color,
+  activePlayers,
   createClock,
   flaggedSide,
   IllegalMoveError,
+  moveFor as applyMoveFor,
   pressClock,
   runFor,
   stopClock,
   usesSetupPhase,
   type Variant,
   type VariantGame,
+  replayVariantMoves,
 } from '@chaturanga/rules-core';
 import { create, type StateCreator, type StoreApi, type UseBoundStore } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
@@ -34,6 +37,10 @@ export interface GameSessionState<G extends VariantGame = VariantGame> {
   start: (timeControl: TimeControl | null, fen?: string, now?: number) => void;
   /** Plays a move in coordinate notation; null when it is illegal or play is not possible. */
   move: (move: string, now?: number) => MoveRecordOf<G> | null;
+  /** Applies an action for a seat during a variant's concurrent phase. */
+  moveFor: (color: Color, move: string, now?: number) => MoveRecordOf<G> | null;
+  /** Retracts one of the acting seat's non-capturing actions while concurrent play is still open. */
+  retract: (color: Color, index: number) => boolean;
   undo: (now?: number) => void;
   resign: (color: Color, now?: number) => void;
   /** Ends a game as a draw by mutual agreement. */
@@ -64,6 +71,8 @@ interface SavedSession {
   phase: GameSessionState['phase'];
   startFen: string;
   moves: string[];
+  /** The seat responsible for each move in games that allow concurrent actions. */
+  moveActors?: string[];
   timeControl: TimeControl | null;
   clock: ClockState | null;
   result: GameResult | null;
@@ -71,8 +80,8 @@ interface SavedSession {
 }
 
 /**
- * Clocks do not run while pieces are being placed: a clock created during setup starts stopped and runs
- * for the side to move once the last piece is placed. Games without a setup phase behave like a normal clock.
+ * Clocks do not run while pieces are being placed or while a variant waits on simultaneous actions. They start
+ * for the side to move once that phase ends. Ordinary turn-based games behave like a normal clock.
  */
 function sessionCreator<G extends VariantGame>(variant: Variant<G>): StateCreator<GameSessionState<G>> {
   return (set, get) => ({
@@ -89,7 +98,7 @@ function sessionCreator<G extends VariantGame>(variant: Variant<G>): StateCreato
     start: (timeControl, fen = variant.startFen, now = Date.now()) => {
       const game = variant.createGame(fen); // throws FenError for invalid positions
       let clock = timeControl ? createClock(timeControl.initialMs, now, game.turn) : null;
-      if (clock && inSetupPhaseOf(variant, game)) clock = stopClock(clock, now);
+      if (clock && (inSetupPhaseOf(variant, game) || activePlayers(game).length > 1)) clock = stopClock(clock, now);
       set((s) => ({
         phase: 'playing',
         game,
@@ -102,15 +111,17 @@ function sessionCreator<G extends VariantGame>(variant: Variant<G>): StateCreato
       }));
     },
 
-    move: (move, now = Date.now()) => {
+    move: (move, now = Date.now()) => get().moveFor(get().game.turn as Color, move, now),
+
+    moveFor: (color, move, now = Date.now()) => {
       get().tick(now);
       const { game, result, viewPly, clock, timeControl } = get();
-      if (result || viewPly !== null) return null;
-      const mover = game.turn;
+      if (result || viewPly !== null || !activePlayers(game).includes(color)) return null;
+      const concurrent = activePlayers(game).length > 1;
       const placing = inSetupPhaseOf(variant, game);
       let record: MoveRecordOf<G>;
       try {
-        record = game.move(move) as MoveRecordOf<G>;
+        record = applyMoveFor(game, color, move) as MoveRecordOf<G>;
       } catch (err) {
         if (err instanceof IllegalMoveError) return null;
         throw err;
@@ -118,12 +129,35 @@ function sessionCreator<G extends VariantGame>(variant: Variant<G>): StateCreato
       const nextResult = resultFromStatus(game.status());
       let nextClock = clock;
       if (clock && timeControl) {
-        if (!placing) nextClock = pressClock(clock, mover, now, timeControl.incrementMs);
-        else if (!inSetupPhaseOf(variant, game)) nextClock = runFor(clock, game.turn, now);
+        if (concurrent && activePlayers(game).length === 1) nextClock = runFor(clock, game.turn, now);
+        else if (!concurrent && !placing) nextClock = pressClock(clock, color, now, timeControl.incrementMs);
+        else if (!concurrent && !inSetupPhaseOf(variant, game)) nextClock = runFor(clock, game.turn, now);
       }
       if (nextClock && nextResult) nextClock = stopClock(nextClock, now);
       set((s) => ({ result: nextResult, clock: nextClock, version: s.version + 1 }));
       return record;
+    },
+
+    retract: (color, index) => {
+      const { game, result, viewPly, startFen, phase } = get();
+      const history = game.moves();
+      if (
+        phase !== 'playing' || result || viewPly !== null || activePlayers(game).length < 2 ||
+        !Number.isInteger(index) || index < 0 || index >= history.length
+      ) return false;
+      const removed = history[index]!;
+      if (removed.color !== color) return false;
+      if (removed.captured || (removed.captures?.length ?? 0) > 0 || removed.action === 'capture') return false;
+      const remaining = history.filter((_, i) => i !== index);
+      let rebuilt: G;
+      try {
+        rebuilt = replayVariantMoves(variant, startFen, remaining.map((move) => move.uci), remaining.map((move) => move.color));
+      } catch {
+        return false;
+      }
+      if (activePlayers(rebuilt).length < 2) return false;
+      set((s) => ({ game: rebuilt, result: resultFromStatus(rebuilt.status()), viewPly: null, version: s.version + 1 }));
+      return true;
     },
 
     undo: (now = Date.now()) => {
@@ -189,8 +223,7 @@ function restore<G extends VariantGame>(
 ): GameSessionState<G> {
   if (!saved || saved.phase !== 'playing' || typeof saved.startFen !== 'string' || !Array.isArray(saved.moves)) return current;
   try {
-    const game = variant.createGame(saved.startFen);
-    for (const uci of saved.moves) game.move(uci);
+    const game = replayVariantMoves(variant, saved.startFen, saved.moves, saved.moveActors);
     return {
       ...current,
       phase: 'playing',
@@ -223,6 +256,7 @@ export function createGameSession<G extends VariantGame>(variant: Variant<G>, st
         phase: s.phase,
         startFen: s.startFen,
         moves: s.game.moves().map((r) => r.uci),
+        moveActors: s.game.moves().map((r) => r.color),
         timeControl: s.timeControl,
         clock: s.clock,
         result: s.result,

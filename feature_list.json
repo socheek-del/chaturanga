@@ -3931,18 +3931,19 @@
       "milestone": "M53",
       "title": "Per-seat concurrent actions for simultaneous openings",
       "user_visible_behavior": "A game can allow more than one seat to make validated actions in a simultaneous phase, then switch to ordinary turn-taking without breaking saves or online replay.",
-      "status": "in_progress",
+      "status": "passing",
       "verification": [
         "Extend Variant with optional per-seat active-player, legal-action and move-application capabilities while retaining turn-based defaults.",
         "Persist actor identity for concurrent actions and replay it in local sessions, saved games, protocol snapshots and server-authoritative rooms.",
         "Validate accepted/retracted opening actions against the selected Variant and ensure ordinary turn-based games retain existing history and room behavior.",
-        "Add focused tests and run full workspace verification; stage the first consumer on Melon before public promotion."
+        "Add focused tests and run full workspace verification. The first consumer's release feature must stage on Melon before public promotion."
       ],
       "evidence": [
         "2026-11-26: Senterej is the next rights-cleared product candidate. Its concurrent Werera phase and retraction need actor-aware replay; current Variant/game-shell/server-kit APIs are strict turn-based. The seam and required behavior are documented in apps/senterej/docs/PLAN.md.",
-        "2026-11-26: Added optional `activePlayers`, `legalUciFor(color)` and `moveFor(color, uci)` to VariantGame plus shared actor-aware helpers and `replayVariantMoves`. Legacy behavior defaults to `turn`; focused rules-core tests pass 49/49, package typecheck and ESLint pass. Session persistence, protocol and server-room actor history/retraction remain ahead."
+        "2026-11-26: Added optional `activePlayers`, `legalUciFor(color)` and `moveFor(color, uci)` to VariantGame plus shared actor-aware helpers and `replayVariantMoves`. Legacy behavior defaults to `turn`; focused rules-core tests pass 49/49, package typecheck and ESLint pass. Session persistence, protocol and server-room actor history/retraction remain ahead.",
+        "2026-11-26: Finished actor identity through local saves, review, shared board input, protocol snapshots, online sessions and authoritative room replay/retraction. Regression coverage passes: board-ui 50/50, game-shell 97/97, protocol 8/8 and server-kit 24/24; full loopback-enabled workspace verification passed (lint, all typechecks and all tests). No runtime product exists to deploy yet; stage Senterej on Melon before its public promotion."
       ],
-      "notes": "Scope is the narrow generic capability required by Senterej. Existing turn-based games default to game.turn. The interface and stored room history must remain replayable after reconnect, restart and copied-state restore."
+      "notes": "Scope is the narrow generic capability required by Senterej. Existing turn-based games default to game.turn. The interface and stored room history remain replayable after reconnect, restart and copied-state restore. The consumer is not publicly promotable until its Senterej release feature passes Melon staging."
     },
     {
       "id": "senterej-001",
@@ -3952,16 +3953,16 @@
       "milestone": "M54",
       "title": "Release Senterej",
       "user_visible_behavior": "Players learn the documented historical Senterej rules and play against bots, locally and in private online rooms with concurrent Werera actions.",
-      "status": "blocked",
+      "status": "in_progress",
       "verification": [
         "Implement the source-linked historical profile in packages/senterej/RULES.md with explicit choices for Werera end, retractions, check, promotion, material and first turn.",
-        "Complete plat-023 actor-aware replay and server validation before engine integration.",
+        "Use the completed plat-023 actor-aware replay and server validation for concurrent Werera actions and legal retractions.",
         "Deliver seeded bots, an interactive rules tutorial, an independent offline PWA, concurrent private rooms and isolated Melon storage.",
-        "Run rules conformance, bot legality, tutorial, full verification, build, exact-SHA CI and stage browser/recovery verification."
+        "Run rules conformance, bot legality, tutorial, full verification, build, exact-SHA CI and Melon stage browser/recovery verification before any public promotion."
       ],
       "evidence": [
         "2026-11-26: Plowden’s 1868 account and corroborating historical research are source-linked in apps/senterej/docs/PLAN.md and packages/senterej/RULES.md. This historical profile does not claim a contemporary popularity ranking.",
-        "2026-11-26: Clean-room historical rules work is ready; implementation awaits the generic actor-aware Variant/session/server capability in plat-023."
+        "2026-11-26: Clean-room historical rules work is ready; plat-023 actor-aware Variant, session, protocol and server support is passing. Senterej engine implementation is now active."
       ],
       "notes": "Historical sources are used as provenance, not copied prose or art. First-capture Werera ending, first ordinary side, check/stalemate/repetition procedures and seven-move lone-capital ending follow the documented digital choices."
     }

@@ -2,7 +2,7 @@
 
 ## Current roadmap state (2026-11-26)
 
-`jg-009` is complete. Full workspace verification passed with loopback access, and the production family smoke passed 7/7 for the currently released sites. The published-state filter keeps three staged games with unavailable hostnames out of public sibling navigation and production tests. Current live navigation already matched the six released siblings, so no live deploy was necessary. Djambi, Martian Chess, Apocalypse and Game of the Generals have documented source/adoption/rights gates and remain blocked before implementation; no rights-holder contact was sent. Senterej has a clean-room historical rules contract and is the next rights-cleared candidate. Active feature: `plat-023` — add per-seat concurrent actions and actor-aware history/replay in rules-core, game-shell, protocol and server-kit; then build Senterej. See `apps/senterej/docs/PLAN.md` and `packages/senterej/RULES.md`.
+`jg-009` is complete. Full workspace verification passed with loopback access, and the production family smoke passed 7/7 for the currently released sites. The published-state filter keeps three staged games with unavailable hostnames out of public sibling navigation and production tests; current live navigation already matched the six released siblings, so no live deploy was needed. Djambi, Martian Chess, Apocalypse and Game of the Generals have documented source/adoption/rights gates and remain blocked before implementation; no rights-holder contact was sent. `plat-023` now passes: actor identity is preserved through local saves/review, shared board input, protocol snapshots and server-authoritative concurrent move/retraction. Full workspace verification passed with loopback access. Active feature: `senterej-001`, starting with the pure rules engine from the clean-room historical contract. No platform-only deployment was needed; stage the first Senterej release on Melon before any public promotion. See `apps/senterej/docs/PLAN.md` and `packages/senterej/RULES.md`.
 
 Arimaa (`arimaa-001`) is implemented and privately staged on Melon at port 19920 from `bc212e2232b7a975614053314a99b153c9f9c8a1`; exact-SHA CI run 45761054022 passed. Its tutorial, bot, offline PWA, mobile, room sync, restart and copied-state restore passed. Public promotion remains blocked on its license conditions and public DNS/TLS/HTTPS/WSS; do not change public routing or the app directory.
 
@@ -12,7 +12,9 @@ The private Arimaa, Four-handed Chess and Chaturaji stages remain running. Prese
 
 ## Active work
 
-Implement the [42-entry rollout](docs/CHESS-LIKE-ROADMAP.md) one product at a time, with an interactive tutorial, bots and applicable multiplayer. Shatar, Fortress, Crazyhouse, Congo, Jeson Mor and Suffragetto remain staged on Melon; their public promotions wait for DNS/TLS and HTTPS/WSS checks.
+Implement the 42-entry rollout in `docs/CHESS-LIKE-ROADMAP.md` one product at a time. Current feature is `senterej-001`: build the pure Variant first, then bots, the interactive tutorial, independent PWA and private rooms with the actor-aware platform path. Melon staging and browser/recovery checks are release gates before public promotion.
+
+Each product needs its own interactive tutorial, bots and applicable multiplayer. Shatar, Fortress, Crazyhouse, Congo, Jeson Mor and Suffragetto remain staged on Melon; public promotion waits for DNS/TLS and HTTPS/WSS checks.
 
 Chu Shogi's implementation and isolated Melon stage are complete. Feature `chu-shogi-001` is blocked only at public promotion: Melon has no DNS answer for `chu-shogi.beanroti.com`, and the product name/design awaits owner review. No Caddy route or catalog entry changed. Keep `chaturanga-stage-chu-shogi-19919` running at `/home/melon/chaturanga-release.chu-shogi.NJyO3x`.
 

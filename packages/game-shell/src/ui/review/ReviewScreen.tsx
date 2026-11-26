@@ -1,5 +1,5 @@
 import { Board, type BoardTheme, parseUci } from '@chaturanga/board-ui';
-import type { Color, Piece, VariantGame } from '@chaturanga/rules-core';
+import { moveFor as applyMoveFor, type Color, type Piece, type VariantGame } from '@chaturanga/rules-core';
 import { Button, buttonClasses, Card, cn, ProgressBar } from '@chaturanga/ui';
 import { ChevronLeft, ChevronRight, ClipboardCopy, FlipVertical2, ListChecks, LoaderCircle } from 'lucide-react';
 import { type MouseEvent, type ReactNode, useEffect, useMemo, useState } from 'react';
@@ -108,8 +108,11 @@ function Review<G extends VariantGame>({
 
   const records = useMemo(() => {
     const board = variant.createGame(game.startFen);
-    return game.moves.map((m) => board.move(m));
-  }, [variant, game.startFen, game.moves]);
+    return game.moves.map((m, index) => {
+      const actor = (game.moveActors?.[index] ?? board.turn) as Color;
+      return { ...applyMoveFor(board, actor, m), color: actor };
+    });
+  }, [variant, game.startFen, game.moves, game.moveActors]);
   const shown = useMemo(
     () => variant.createGame(ply === 0 ? game.startFen : records[ply - 1]!.fenAfter),
     [variant, ply, records, game.startFen],

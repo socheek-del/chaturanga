@@ -46,6 +46,8 @@ export const GameSnapshot = z.object({
   startFen: z.string(),
   /** Moves in coordinate notation, e.g. e3e4, a5a6m, d5d5f, K@e1. */
   moves: z.array(z.string()),
+  /** Seat that made each move; absent on older turn-based snapshots. */
+  moveActors: z.array(Color).optional(),
   players: z.object({ w: SeatInfo.nullable(), b: SeatInfo.nullable() }),
   timeControl: TimeControl.nullable(),
   rated: z.boolean(),
@@ -58,6 +60,10 @@ export const GameSnapshot = z.object({
   nextCode: z.string().nullable(),
   /** A disconnected player loses by abandonment if not back by `at`. */
   disconnect: z.object({ color: Color, at: z.number() }).nullable(),
+}).superRefine((snapshot, context) => {
+  if (snapshot.moveActors && snapshot.moveActors.length !== snapshot.moves.length) {
+    context.addIssue({ code: 'custom', path: ['moveActors'], message: 'Move actor history must match move history' });
+  }
 });
 export type GameSnapshot = z.infer<typeof GameSnapshot>;
 
@@ -71,6 +77,7 @@ const UCI = z.string().regex(/^(?:pass|ROLL[1-6]{2}|X[0-6][0-6]@[a-z]\d{1,2}|[A-
 
 export const ClientMessage = z.discriminatedUnion('type', [
   z.object({ type: z.literal('move'), uci: UCI, ply: z.number().int().min(0) }),
+  z.object({ type: z.literal('retract'), index: z.number().int().min(0), ply: z.number().int().min(0) }),
   z.object({ type: z.literal('resign') }),
   z.object({ type: z.literal('offerDraw') }),
   z.object({ type: z.literal('acceptDraw') }),

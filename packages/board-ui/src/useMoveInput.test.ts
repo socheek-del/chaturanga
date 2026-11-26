@@ -82,6 +82,41 @@ describe('useMoveInput with Makruk (plat-005a)', () => {
   });
 });
 
+describe('useMoveInput with concurrent seats (plat-023)', () => {
+  it('keeps the actor attached to each seat’s legal board move', () => {
+    const game: MoveSource = {
+      turn: 'w',
+      activePlayers: () => ['w', 'b'],
+      legalUci: () => ['a1a2'],
+      legalUciFor: (color) => color === 'w' ? ['a1a2'] : color === 'b' ? ['b1b2'] : [],
+      pieceAt: (square) => square === 0 ? { color: 'w' } : square === 1 ? { color: 'b' } : null,
+    };
+    const onMove = vi.fn();
+    const hook = renderHook(() => useMoveInput({ game, version: 0, canMove: true, onMove }));
+
+    act(() => hook.result.current.onSquareClick(1));
+    expect(hook.result.current.targets).toEqual([9]);
+    act(() => hook.result.current.onSquareClick(9));
+    expect(onMove).toHaveBeenCalledWith('b1b2', 'b');
+  });
+
+  it('limits concurrent legal actions to the permitted online seat', () => {
+    const game: MoveSource = {
+      turn: 'w',
+      activePlayers: () => ['w', 'b'],
+      legalUci: () => ['a1a2'],
+      legalUciFor: (color) => color === 'w' ? ['a1a2'] : color === 'b' ? ['b1b2'] : [],
+      pieceAt: (square) => square === 0 ? { color: 'w' } : square === 1 ? { color: 'b' } : null,
+    };
+    const onMove = vi.fn();
+    const hook = renderHook(() => useMoveInput({ game, version: 0, canMove: true, players: ['w'], onMove }));
+    act(() => hook.result.current.onSquareClick(1));
+    expect(hook.result.current.selected).toBeNull();
+    act(() => hook.result.current.onSquareClick(0));
+    expect(hook.result.current.targets).toEqual([8]);
+  });
+});
+
 describe('useMoveInput with Sittuyin: hands and promotion (plat-005a)', () => {
   it('during setup only hand pieces can be selected, and they show their placement squares', () => {
     const { hook } = setup(new SittuyinGame());

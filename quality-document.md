@@ -102,6 +102,7 @@ needs work.
 
 | Layer | Grade | Boundary Enforcement | Agent Legibility | Key Gaps | Last Updated |
 |-------|-------|---------------------|-----------------|----------|-------------|
+| Concurrent actor path (`plat-023`) | B | Full loopback-enabled workspace verification; rules-core 49, board-ui 50, game-shell 97, protocol 8 and server-kit 24 focused tests pass | Optional actor-aware Variant helpers, actor-tagged local/review/protocol/server histories, per-seat board input and validated retractions | Senterej is the first consumer; its product and Melon stage are still ahead | 2026-11-26 |
 | `packages/rules-core` | A | Engine purity lint rule; Variant enforced by `satisfies` + shared conformance suite | variant, board8, attacks, errors, testing/ | — | 2026-09-14 |
 | `packages/rithmomachia` | A | Pure Variant, deterministic compact FEN, shared conformance, and focused movement/capture/end-condition checks | layout, position, movement, game, variant | No product yet | 2026-11-26 |
 | `packages/rithmomachia-ai` | B | ai-core adapter and deterministic six-persona node budgets; tactical and both-color tests | bots, adapter, index, ai.test | Relative strength ladder not run yet | 2026-11-26 |
@@ -149,6 +150,7 @@ needs work.
 
 ### 2026-11-26
 
+- Completed `plat-023`: optional seat-specific action APIs with turn-based defaults, actor-aware local saves/review, shared board input, protocol history, online sessions and server-authoritative replay/retraction. Full workspace verification passed with loopback access. The platform package has no runtime destination; Senterej is the first consumer and must pass Melon staging before public promotion.
 - Added and fully verified Rithmomachia's pure rules Variant, bots, tutorial, standalone PWA and authoritative private rooms. Exact-SHA CI, Melon stage, offline and recovery checks pass. Public promotion is blocked by missing DNS and the open name/design review; Chu Shogi is next.
 - Added six bounded Rithmomachia bot personas with a pure ai-core adapter; both-color, tactic, determinism, and restore checks pass. A strength ladder and product design/tutorial/PWA/online stages remain ahead.
 - Completed Arimaa rules/adoption/licensing research and recorded the canonical standard two-player profile and public-release gate. Baseline workspace verification and adjacent 8×8 browser smoke passed; the pure Variant is next.

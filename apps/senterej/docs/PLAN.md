@@ -31,12 +31,13 @@ included.
   bot, the human may move repeatedly while the bot responds between human actions. Online rooms provide the
   intended separate concurrent inputs.
 
-## Platform prerequisite
+## Platform support
 
-The current Variant and online server assume a strict `game.turn`. Add a narrow, optional per-seat action
-capability before the Senterej engine: variants can declare which seats may act now, produce that seat's legal
-actions, and apply an action on behalf of that seat. Existing variants retain their turn-based defaults.
-Online retraction must validate and rebuild the authoritative history rather than editing client state.
+The actor-aware capability is implemented as `plat-023`. A variant can declare active seats, list legal actions
+for a seat and apply an action on that seat's behalf; ordinary variants retain `game.turn` defaults. Local and
+online histories carry each actor, saved reviews replay actors, and server rooms validate/replay actor-tagged
+actions. Online retraction rebuilds the authoritative history and accepts only a legal remainder that stays in
+Werera. Senterej is the first consumer and its first release must be staged on Melon before public promotion.
 
 ## Historical clean-room basis
 

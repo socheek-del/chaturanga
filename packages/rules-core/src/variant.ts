@@ -1,4 +1,5 @@
 import type { Color, GameStatus, Piece, Square } from './types';
+import { IllegalMoveError } from './errors';
 
 /** What every rules engine records for a played move. */
 export interface VariantMoveRecord<C extends string = Color> {
@@ -28,14 +29,20 @@ export interface VariantMoveRecord<C extends string = Color> {
  */
 export interface VariantGame<C extends string = Color> {
   readonly turn: C;
+  /** Seats allowed to act in the current phase; omitted for ordinary turn-taking games. */
+  activePlayers?(): readonly C[];
   fen(): string;
   pieceAt(square: Square): Piece<string, C> | null;
   pieces(): Array<{ square: Square; piece: Piece<string, C> }>;
   /** Piece types a side still holds in hand (setup placements, drops); always empty without hands. */
   hand(color: C): readonly string[];
   legalUci(): string[];
+  /** Legal actions for a seat during a concurrent phase; omitted when only `turn` may act. */
+  legalUciFor?(color: C): string[];
   /** Plays a move in coordinate notation; throws IllegalMoveError. */
   move(uci: string): VariantMoveRecord<C>;
+  /** Applies a validated action on behalf of `color` during a concurrent phase. */
+  moveFor?(color: C, uci: string): VariantMoveRecord<C>;
   /** Applies a chance event from an injected seed when the game is waiting for one, if applicable. */
   prepareTurn?(seed: number): VariantMoveRecord<C> | null;
   undo(): VariantMoveRecord<C> | null;
@@ -83,6 +90,48 @@ export interface Variant<G extends VariantGame<string> = VariantGame> {
   readonly hasSetupPhase?: boolean;
   /** Creates a game from a FEN, by default the start position; throws FenError. */
   createGame(fen?: string): G;
+}
+
+/** The seat-specific form of a move, needed when multiple seats can act before the turn changes. */
+export interface VariantAction<C extends string = Color> {
+  color: C;
+  uci: string;
+}
+
+/** The seats that may act now; ordinary variants keep their existing `turn` behavior. */
+export function activePlayers<G extends VariantGame<string>>(game: G): readonly string[] {
+  return game.activePlayers?.() ?? [game.turn];
+}
+
+/** Legal actions for a seat, with a turn-based default for existing games. */
+export function legalUciFor<G extends VariantGame<string>>(game: G, color: string): string[] {
+  if (game.legalUciFor) return game.legalUciFor(color);
+  return game.turn === color ? game.legalUci() : [];
+}
+
+/** Applies a move for a specific seat while preserving the ordinary turn-based default. */
+export function moveFor<G extends VariantGame<string>>(game: G, color: string, uci: string): VariantMoveRecord<string> {
+  if (game.moveFor) return game.moveFor(color, uci);
+  if (game.turn !== color) throw new IllegalMoveError(uci);
+  return game.move(uci);
+}
+
+/** Rebuilds a game from coordinate moves and their actors. Older turn-based histories omit actors. */
+export function replayVariantMoves<G extends VariantGame<string>>(
+  variant: Variant<G>,
+  startFen: string,
+  moves: readonly string[],
+  actors?: readonly string[],
+): G {
+  if (actors && actors.length !== moves.length) throw new RangeError('Move actor history must match move history');
+  const game = variant.createGame(startFen);
+  for (let index = 0; index < moves.length; index++) {
+    const uci = moves[index]!;
+    const actor = actors?.[index];
+    if (actor === undefined) game.move(uci);
+    else moveFor(game, actor, uci);
+  }
+  return game;
 }
 
 /** Whether a non-empty hand in this variant means a setup phase rather than pieces to drop in play. */

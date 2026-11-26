@@ -228,4 +228,6 @@
 - [x] Save source/adoption/rights reports and mark Djambi, Martian Chess, Apocalypse and Game of the Generals blocked before code. No external contact was sent.
 - [x] Pin the clean-room historical Senterej profile and document `plat-023` as its actor-aware replay/retraction prerequisite; keep `senterej-001` blocked until that platform feature passes.
 - [ ] Implement `plat-023` one capability slice at a time; run its focused tests and full repository verification before marking it passing.
+- [x] Add optional actor-aware Variant methods/helpers with `turn` defaults; rules-core tests 49/49, typecheck and lint pass.
+- [ ] Persist actors in local and online history; validate/replay actor-tagged online actions and server-side retractions.
 - [ ] Build Senterej only after rules-core, local session, saved history, protocol snapshots and server-kit all preserve the acting seat through simultaneous Werera play and legal retractions.

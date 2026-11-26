@@ -36,7 +36,8 @@ handoff; no agent updates it automatically.
 - Full `NODE_OPTIONS=--no-experimental-webstorage npm run verify` passed with loopback access: lint, workspace typechecks and tests. The unprivileged run had failed only because Cloudflare Worker test pools could not bind `127.0.0.1` (`EPERM`).
 - The Chaturaji stage remains healthy and private at `/home/melon/chaturanga-release.chaturaji.yoXEwM`, port 19922, pinned to `cf328621aab6bcdd2575c7abd0be147cc8f8546a`. Its DNS gate remains unchanged.
 - Rights/adoption/source reports are saved for Djambi, Martian Chess, Apocalypse and Game of the Generals; each is blocked before implementation pending applicable rights clearance. No contact was made. Senterej's public-domain historical rules profile and source decisions are recorded; `plat-023` is the active prerequisite for actor-aware concurrent actions, persistence and server replay.
-- Next code task: extend the Variant seam with per-seat active/legal/apply capabilities while keeping existing turn-based games on their current defaults. Product notes: `apps/senterej/docs/PLAN.md`; rules contract: `packages/senterej/RULES.md`.
+- `plat-023` first slice: rules-core now has optional per-seat active/legal/apply APIs, shared actor-aware helpers and replay from actor-tagged moves. Focused tests pass 49/49 plus typecheck/lint; game-shell persistence and server authority/retraction still remain.
+- Next code task: carry actor identity through local saves, review, protocol snapshots and server room replay/retraction, keeping existing turn-based histories backward-compatible. Product notes: `apps/senterej/docs/PLAN.md`; rules contract: `packages/senterej/RULES.md`.
 
 ## Session Log
 
@@ -1851,3 +1852,10 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 - No live behavior delta exists for the seven released sites: their generated six-sibling navigation already matched the published set. No deployment or public route/catalog change was needed. Future staged builds now exclude unpromoted products.
 - Completed source/adoption/rights plans for Djambi, Martian Chess, Apocalypse and Game of the Generals. All four are blocked before code pending applicable rights; no external messages were sent.
 - Recorded Senterej's clean-room historical rules contract. Its concurrent Werera actions and retractions require an actor-aware Variant/session/server seam; `plat-023` is now the active feature and `senterej-001` waits on it.
+
+### Session 115 (Actor-aware rules-core seam)
+
+- Added optional `activePlayers`, `legalUciFor(color)` and `moveFor(color, uci)` VariantGame capabilities. Existing variants keep their `turn` defaults.
+- Added common helpers to query active seats/legal moves, apply a move for its actor, and replay histories with an optional actor list; old histories without actors still replay through `move`.
+- `npm test -w packages/rules-core` passed 49/49, `npm run typecheck -w packages/rules-core` passed, and ESLint passed for the changed source/test files.
+- Remaining in `plat-023`: actor-aware local sessions/saves and review, optional actor arrays in protocol state, server-side seat validation/replay and tested simultaneous move retraction. Then begin the Senterej engine and PWA.

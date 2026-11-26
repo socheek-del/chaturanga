@@ -3939,7 +3939,8 @@
         "Add focused tests and run full workspace verification; stage the first consumer on Melon before public promotion."
       ],
       "evidence": [
-        "2026-11-26: Senterej is the next rights-cleared product candidate. Its concurrent Werera phase and retraction need actor-aware replay; current Variant/game-shell/server-kit APIs are strict turn-based. The seam and required behavior are documented in apps/senterej/docs/PLAN.md."
+        "2026-11-26: Senterej is the next rights-cleared product candidate. Its concurrent Werera phase and retraction need actor-aware replay; current Variant/game-shell/server-kit APIs are strict turn-based. The seam and required behavior are documented in apps/senterej/docs/PLAN.md.",
+        "2026-11-26: Added optional `activePlayers`, `legalUciFor(color)` and `moveFor(color, uci)` to VariantGame plus shared actor-aware helpers and `replayVariantMoves`. Legacy behavior defaults to `turn`; focused rules-core tests pass 49/49, package typecheck and ESLint pass. Session persistence, protocol and server-room actor history/retraction remain ahead."
       ],
       "notes": "Scope is the narrow generic capability required by Senterej. Existing turn-based games default to game.turn. The interface and stored room history must remain replayable after reconnect, restart and copied-state restore."
     },

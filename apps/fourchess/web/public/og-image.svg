@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f1eadb"/>
+  <path d="M0 0h1200v17H0z" fill="#172522"/>
+  <text x="78" y="110" fill="#60736a" font-family="sans-serif" font-size="20" letter-spacing="7">FOUR SEATS · FREE FOR ALL</text>
+  <text x="72" y="244" fill="#172522" font-family="Georgia,serif" font-size="104">Fourfold</text>
+  <text x="78" y="304" fill="#172522" font-family="sans-serif" font-size="31">Chess on the 160-square crossboard.</text>
+  <g transform="translate(778 72)">
+    <rect x="48" y="48" width="270" height="270" fill="#d6d1c3" stroke="#172522" stroke-width="5"/>
+    <rect x="102" y="0" width="162" height="366" fill="#9caa9c" stroke="#172522" stroke-width="5"/>
+    <rect x="0" y="102" width="366" height="162" fill="#9caa9c" stroke="#172522" stroke-width="5"/>
+    <circle cx="183" cy="183" r="33" fill="#172522"/>
+    <circle cx="183" cy="30" r="13" fill="#a8443e"/><circle cx="336" cy="183" r="13" fill="#416d83"/>
+    <circle cx="183" cy="336" r="13" fill="#b18a35"/><circle cx="30" cy="183" r="13" fill="#4a7967"/>
+  </g>
+  <text x="80" y="565" fill="#60736a" font-family="sans-serif" font-size="18" letter-spacing="4">LEARN · PLAY · KEEP YOUR SEAT</text>
+</svg>

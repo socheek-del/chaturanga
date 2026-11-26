@@ -42,4 +42,12 @@ export type GameStatus<C extends string = Color> =
   /** The generals faced each other for two positions in a row; the points decide (Janggi). */
   | { kind: 'bikjang'; winner: C }
   /** Both sides passed in a row; the points decide (Janggi). */
-  | { kind: 'double-pass'; winner: C };
+  | { kind: 'double-pass'; winner: C }
+  /** A multi-seat game ended by its point standings. Tied winners share the result. */
+  | {
+      kind: 'points';
+      reason: 'elimination' | 'repetition' | 'insufficient-material' | 'fifty-move' | 'resignation';
+      winners: readonly C[];
+      winner: C | null;
+      scores: Readonly<Record<C, number>>;
+    };

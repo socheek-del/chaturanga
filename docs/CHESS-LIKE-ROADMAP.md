@@ -4,6 +4,8 @@ Scope snapshot, 2026-11-24. The [Wikipedia section](https://en.wikipedia.org/wik
 
 The section defines the catalog. For each game, use its linked description and primary rules where available. Record the selected edition, source, setup, turn, edge cases and outcomes in the product rules document before implementing. Prefer the most widely played documented variant when supported by evidence. Where usage data is missing, use an established tournament edition or a clearly identified reconstruction. The selections below are planning defaults. Confirm incomplete or conflicting rules before committing an engine.
 
+Progress note, 2026-11-26: Arimaa's engine, bots, 15-lesson PWA and private rooms are complete and privately staged on Melon; public promotion is gated by the publisher license conditions and public DNS/TLS/HTTPS/WSS checks. Hive is blocked before implementation until its digital-adaptation rights are established. Four-handed Chess now has its clean-room FFA engine, bots, 11-step tutorial/PWA and authoritative four-seat Worker; full workspace verification, product build and browser smoke pass locally. Melon stage, four-seat recovery smoke, exact-SHA CI and public endpoint checks are the remaining release steps. Keep working on this product before advancing to Chaturaji.
+
 ## Existing products
 
 | Wikipedia entry | Work |

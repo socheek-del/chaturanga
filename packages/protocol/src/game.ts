@@ -18,7 +18,12 @@ export type TimeControl = z.infer<typeof TimeControl>;
 export const ResultReason = z.enum(RESULT_REASONS);
 export type ResultReason = z.infer<typeof ResultReason>;
 
-export const GameResult = z.object({ winner: Color.nullable(), reason: ResultReason });
+export const GameResult = z.object({
+  winner: Color.nullable(),
+  reason: ResultReason,
+  winners: z.array(z.string()).optional(),
+  scores: z.record(z.string(), z.number()).optional(),
+});
 export type GameResult = z.infer<typeof GameResult>;
 
 export const PublicUser = z.object({

@@ -185,3 +185,16 @@
 - [x] The room recovered across container restart; a stopped-state copy recovered both seats and move history and accepted/synchronized another legal turn. Removed the temporary copy/container and confirmed the primary stage healthy.
 - [x] Keep Arimaa public promotion blocked pending owner confirmation of the no-user/no-ad-revenue condition, authorization for the required Discord announcement, and public DNS/TLS/HTTPS/WSS checks. No public route/catalog changes or external contact were made.
 - [x] Add `ko-shogi-001` as a blocked feature and preserve Arimaa as the next ready roadmap row.
+
+### Hive and Four-handed chess
+
+- [x] Review Gen42's official Hive rules, publisher context and public terms. Save the report and notes; keep `hive-001` blocked because no general digital-adaptation license was found. No publisher contact was made.
+- [x] Select a modern, tournament-documented FFA profile for Four-handed chess without claiming a popularity winner; save source/adoption/rights notes and an explicit original rules contract.
+- [x] Add `hive-001` as blocked and `fourchess-001` as the active next ready feature without reordering unrelated entries in `feature_list.json`.
+- [x] Run full `NODE_OPTIONS=--no-experimental-webstorage npm run verify` with loopback access; lint, all workspace typechecks and tests passed. `./init.sh` dependency refresh remains blocked by registry DNS (`ENOTFOUND`); this shell lacks pinned Node 22.23.1/nvm and used installed Node 25.9.
+- [x] Implement `packages/fourchess`: verify the 160-cell board/start fixture, four-seat move generation, promotion, castling/en passant, elimination/scoring, replay/undo and shared conformance; focused rules tests pass 24/24.
+- [x] Add three bounded deterministic bots; focused AI tests pass 4/4. Add shared four-seat colors and point-scored result serialization with regression tests.
+- [x] Build the English Fourfold Chess PWA, local game modes, three bot seats, offline assets and 11-step interactive tutorial; tutorial content test and production build pass.
+- [x] Add authoritative private four-seat rooms with isolated archive and no chat; Worker tests pass 3/3. Local Playwright browser smoke passed 4/4 scenarios.
+- [ ] Commit and push the verified change to main, confirm exact-SHA CI, then stage on Melon at port 19921.
+- [ ] Run Melon health, four-seat sync/reconnect, restart recovery and copied-state restore smoke; verify public DNS/TLS/HTTPS/WSS before changing Caddy or publishing the directory entry.

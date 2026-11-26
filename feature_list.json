@@ -3752,6 +3752,53 @@
         "2026-11-26: Public release remains blocked until the owner confirms the Arimaa Public License v2025.02 no-user/no-ad-revenue condition and authorizes its required Discord announcement; public DNS/TLS/HTTPS/WSS smoke is also outstanding. No external announcement, contact, Caddy change or catalog publication has occurred."
       ],
       "notes": "The rules engine, six bounded bots, original English PWA, 15 interactive lessons, private invite/quick-match rooms and isolated archive are implemented and privately staged. The exact-SHA CI run and Melon browser, restart and copied-state recovery checks passed. This release feature is blocked at public promotion by the Arimaa Public License Section 3 conditions and unrun public DNS/TLS/HTTPS/WSS checks. No contact or announcement has been made; do not change public routing or catalog until the gate is cleared. A full opening turn list contains 20,652 options, so keep UI/bot choice bounded."
+    },
+    {
+      "id": "hive-001",
+      "product": "hive",
+      "priority": 197,
+      "area": "release",
+      "milestone": "M46",
+      "title": "Release Hive",
+      "user_visible_behavior": "Players learn the selected Hive rules through an interactive tutorial and play complete games against bots, locally, and in private online rooms.",
+      "status": "blocked",
+      "verification": [
+        "Select and source-link the base two-player Hive edition and record adoption limits without claiming an unsupported popularity winner.",
+        "Establish an applicable digital-adaptation license or written permission before rules-engine work.",
+        "If rights clear, implement the pure rules Variant, bounded bots, complete interactive tutorial, independent PWA, private online rooms, isolated Melon service, and required verification."
+      ],
+      "evidence": [
+        "2026-11-26: Source-linked review is saved in apps/hive/docs/reports/Hive rules adoption and rights.md with notes under apps/hive/docs/research_notes/. Gen42’s official rules PDF attributes the game to John Yianni and carries a Gen42 Games copyright notice; Gen42’s About Us page invites digital games developers to contact the publisher.",
+        "2026-11-26: No general public digital-adaptation license was found in the official pages reviewed. No publisher contact was made; the owner has not authorized external contact. Keep implementation blocked under the repository rights gate."
+      ],
+      "notes": "Planning default is the base two-player edition; evidence does not prove it is the most popular edition. Do not implement or reuse Gen42 art, logo, diagrams, rule text, or product identity until an applicable license or written permission is documented. The next ready roadmap row is Four-handed chess."
+    },
+    {
+      "id": "fourchess-001",
+      "product": "fourchess",
+      "priority": 198,
+      "area": "release",
+      "milestone": "M47",
+      "title": "Release Four-handed chess",
+      "user_visible_behavior": "Four players can learn the selected Free-for-All four-handed chess rules and play against bots, pass-and-play, and in private online rooms.",
+      "status": "in_progress",
+      "verification": [
+        "Pin the source-linked 160-square board, four-seat setup/order, movement, promotion, elimination, scoring and digital draw conventions in packages/fourchess/RULES.md.",
+        "Implement a pure four-seat Variant with source-backed setup fixtures, shared conformance, deterministic replay/undo and focused rules/outcome tests.",
+        "Add bounded deterministic bots for all four seats, an interactive tutorial and an independent offline PWA with original product identity.",
+        "Provide four-seat server-authoritative private rooms and isolated Melon storage; verify legality, reconnect, restart and copied-state restore.",
+        "Run relevant verification, builds, exact-SHA CI, Melon stage, multiplayer/recovery smoke and public HTTPS/WSS checks before public promotion."
+      ],
+      "evidence": [
+        "2026-11-26: Source-linked selection and adoption limits are saved in apps/fourchess/docs/reports/Four-handed chess rules and adoption.md and apps/fourchess/docs/research_notes/. The 2026 tournament source confirms current FFA tournament use but does not establish a popularity ranking across forms.",
+        "2026-11-26: The first complete v1 rules contract is packages/fourchess/RULES.md. It fixes the 14×14/160-cell cross, Red/Blue/Yellow/Green seat order, setup, orthodox movement, castling/en passant, eighth-rank promotion, delayed checkmate/stalemate elimination, score values, draws and no-clock resignation behavior.",
+        "2026-11-26: Rights review uses the U.S. Copyright Office Games guidance to distinguish game mechanics from protected prose/art. This is not a global legal opinion; implementation must be clean-room with original name, art, code and lesson text. No external contact or source-asset reuse occurred.",
+        "2026-11-26: Implemented the pure Variant, 24 rules/conformance tests, and three seeded bounded bots with 4 focused tests. The shared board accepts four seat colors; shared point-scored results and protocol preserve multiple winners and final standings.",
+        "2026-11-26: Implemented the Fourfold Chess English PWA, local saves, pass-and-play, bots, and 11 interactive rules lessons; tutorial content test passes 1/1. Added isolated four-seat online Worker with server validation, stable seats, reconnect and archive; Worker tests pass 3/3 and app tests pass 1/1.",
+        "2026-11-26: Full NODE_OPTIONS=--no-experimental-webstorage npm run verify passed with loopback access; npm run build:fourchess passed for the PWA and Worker. Local Playwright smoke passed 4/4 scenarios. Local environment uses Node 25.9 because Node 22.23.1/nvm are unavailable; exact-SHA CI is still required.",
+        "2026-11-26: Melon staging and four-seat/restart/copied-state recovery checks remain pending. No Caddy route or directory entry has been published. Keep the feature in_progress until staging and release gates are verified."
+      ],
+      "notes": "Active product because Hive is blocked at the project rights gate. The selected form is an established current FFA convention, not a proven popularity winner. Rules, bots, tutorial/PWA, online Worker, focused browser smoke and local build/full verification are implemented and pass. Stage the verified main SHA on Melon; test four seats, restart and copied-state restore, then check public DNS/TLS/HTTPS/WSS before routing or directory publication."
     }
   ]
 }

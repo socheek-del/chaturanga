@@ -1,5 +1,17 @@
 import { describe, expect, it } from 'vitest';
-import { ClientMessage, HealthResponse } from './index';
+import { ClientMessage, GameResult, HealthResponse } from './index';
+
+describe('GameResult point standings', () => {
+  it('preserves multi-seat winners and fractional scores', () => {
+    const result = {
+      winner: null,
+      reason: 'elimination',
+      winners: ['r', 'y'],
+      scores: { r: 4.5, b: 1, y: 4.5, g: 0 },
+    } as const;
+    expect(GameResult.parse(result)).toEqual(result);
+  });
+});
 
 describe('HealthResponse', () => {
   it('accepts a valid payload', () => {

@@ -17,15 +17,15 @@ export interface BoardHandle {
   squareAt(clientX: number, clientY: number): Square | null;
 }
 
-export interface BoardProps {
-  pieces: ReadonlyArray<{ square: Square; piece: Piece }>;
+export interface BoardProps<C extends string = Color> {
+  pieces: ReadonlyArray<{ square: Square; piece: Piece<string, C> }>;
   theme: BoardTheme;
   /** Draws a piece; the app owns the piece art. */
-  renderPiece: (piece: Piece, className: string) => ReactNode;
+  renderPiece: (piece: Piece<string, C>, className: string) => ReactNode;
   /** Accessible name of the board. */
   label: string;
   /** Accessible name of a square, e.g. "e4, white Khun". */
-  describeSquare: (square: string, piece: Piece | null) => string;
+  describeSquare: (square: string, piece: Piece<string, C> | null) => string;
   files?: number;
   ranks?: number;
   /**
@@ -95,9 +95,9 @@ function attackFill(attack: 'own' | 'enemy' | 'both', own: string, enemy: string
 /** Drops the alpha of an `rgba()` colour; any other colour passes through. */
 const opaque = (color: string) => color.replace(/^rgba\((\s*[\d.]+\s*,\s*[\d.]+\s*,\s*[\d.]+\s*),\s*[\d.]+\s*\)$/, 'rgb($1)');
 
-interface DragState {
+interface DragState<C extends string> {
   from: Square;
-  piece: Piece;
+  piece: Piece<string, C>;
   pointerId: number;
   startX: number;
   startY: number;
@@ -110,7 +110,7 @@ interface DragState {
 /** Pointer travel (px) before a press becomes a drag; shorter presses are taps. */
 const DRAG_THRESHOLD = 6;
 
-export const pieceCode = (piece: Piece): string => `${piece.color}${piece.type}${piece.promoted ? '~' : ''}`;
+export const pieceCode = <C extends string>(piece: Piece<string, C>): string => `${piece.color}${piece.type}${piece.promoted ? '~' : ''}`;
 
 const REDUCED_MOTION = '(prefers-reduced-motion: reduce)';
 
@@ -128,7 +128,7 @@ function usePrefersReducedMotion(): boolean {
 
 const cx = (...classes: Array<string | false | null | undefined>) => classes.filter(Boolean).join(' ');
 
-export function Board({
+export function Board<C extends string = Color>({
   pieces,
   theme,
   renderPiece,
@@ -158,12 +158,12 @@ export function Board({
   overlay,
   underlay,
   className,
-}: BoardProps) {
+}: BoardProps<C>) {
   const points = grid === 'points';
   // On a points board, cell-wide highlights become discs around the point.
   const mark = points ? 'absolute inset-[6%] rounded-full' : 'absolute inset-0';
   const boardRef = useRef<HTMLDivElement>(null);
-  const [drag, setDrag] = useState<DragState | null>(null);
+  const [drag, setDrag] = useState<DragState<C> | null>(null);
   const droppedOn = useRef<Square | null>(null);
   const reducedMotion = usePrefersReducedMotion();
 

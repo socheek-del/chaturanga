@@ -21,6 +21,8 @@ import { PRODUCT as XIANGQI } from '../../../apps/xiangqi/web/product.config';
 import { SITE_URL as XIANGQI_URL } from '../../../apps/xiangqi/web/site.config';
 import { PRODUCT as HIASHATAR } from '../../../apps/hiashatar/web/product.config';
 import { SITE_URL as HIASHATAR_URL } from '../../../apps/hiashatar/web/site.config';
+import { PRODUCT as FOURCHESS } from '../../../apps/fourchess/web/product.config';
+import { SITE_URL as FOURCHESS_URL } from '../../../apps/fourchess/web/site.config';
 import { type GameId, GAMES } from './games';
 
 /** A link from one site to a sibling, with what the linking site needs to pick the right language. */
@@ -43,6 +45,7 @@ export const SITES: Readonly<Record<GameId, { url: string; locales: readonly str
   janggi: { url: JANGGI_URL, locales: JANGGI.locales, defaultLocale: JANGGI.defaultLocale },
   threechess: { url: THREECHESS_URL, locales: THREECHESS.locales, defaultLocale: THREECHESS.defaultLocale },
   hiashatar: { url: HIASHATAR_URL, locales: HIASHATAR.locales, defaultLocale: HIASHATAR.defaultLocale },
+  fourchess: { url: FOURCHESS_URL, locales: FOURCHESS.locales, defaultLocale: FOURCHESS.defaultLocale },
 };
 
 /** Every declared language of every family site, for checking that each game has a name in it. */

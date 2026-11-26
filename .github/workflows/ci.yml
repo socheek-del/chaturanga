@@ -27,6 +27,7 @@ jobs:
       - run: npm run build:janggi
       - run: npm run build:chess
       - run: npm run build:threechess
+      - run: npm run build:fourchess
       - run: npm run build:beanroti-apps
       - run: npm run build -w apps/shatranj/web -w apps/shatranj/worker
       - run: npm run build -w apps/chaturanga/web -w apps/chaturanga/worker

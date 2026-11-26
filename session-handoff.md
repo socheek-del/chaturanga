@@ -1,5 +1,13 @@
 # Session Handoff
 
+## Current roadmap state (2026-11-26)
+
+Arimaa (`arimaa-001`) is implemented and privately staged on Melon at port 19920 from `bc212e2232b7a975614053314a99b153c9f9c8a1`; exact-SHA CI run 45761054022 passed. The stage passed tutorial, bot, offline PWA, mobile, two-seat move sync, restart and copied-state restore checks. Public promotion remains blocked on the Arimaa license conditions and public DNS/TLS/HTTPS/WSS checks; do not change public routing or the app directory.
+
+Hive (`hive-001`) is blocked before implementation until an applicable digital-adaptation license or written permission is documented. No publisher contact was made. Four-handed Chess (`fourchess-001`) is the active product. Its clean-room FFA rules are in `packages/fourchess/RULES.md`; rules, three bots, the Fourfold Chess PWA/11-step tutorial, and four-seat server-authoritative private rooms are implemented. Focused rules/AI/Worker/web tests pass 24/4/3/1; full workspace verification, PWA+Worker build, and local browser smoke pass. The exact-SHA CI and Melon private stage/recovery checks remain. Stage the committed SHA on port 19921, test four seats, restart and copied-state restore, and check DNS/TLS/HTTPS/WSS before touching Caddy or the app directory. Chaturaji is next after this release gate.
+
+The current private Arimaa stage remains running. Preserve the complete stage/path/recovery record below. `./init.sh` is presently unable to refresh npm because registry DNS returns `ENOTFOUND`; this session's full `npm run verify` passed using the existing lockfile dependencies and `NODE_OPTIONS=--no-experimental-webstorage`, with loopback access. The shell has Node 25.9 and no nvm/Node 22.23.1; exact-SHA CI must run on the pinned Node from `.nvmrc`.
+
 ## Active work
 
 Implement the [42-entry rollout](docs/CHESS-LIKE-ROADMAP.md) one product at a time, with an interactive tutorial, bots and applicable multiplayer. Shatar, Fortress, Crazyhouse, Congo, Jeson Mor and Suffragetto remain staged on Melon; their public promotions wait for DNS/TLS and HTTPS/WSS checks.

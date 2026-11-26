@@ -2645,14 +2645,16 @@
       "milestone": "M22",
       "title": "Janggi computer opponents",
       "user_visible_behavior": "Six bots on ai-core that understand passes, bikjang and points.",
-      "status": "in_progress",
+      "status": "passing",
       "verification": [
         "ai.test.ts",
         "Strength ladder: each level beats the one below"
       ],
       "evidence": [
-        "2026-11-23: 17 tests pass. Local ladder (20 games each): L2-L1 +18 -2, L3-L2 +18 -2, L4-L3 +20, L5-L4 +20. L6-L5 +3 -0 so far (10 planned): a full L6 run is still to be completed."
-      ]
+        "2026-11-23: 17 tests pass. Local ladder (20 games each): L2-L1 +18 -2, L3-L2 +18 -2, L4-L3 +20, L5-L4 +20. L6-L5 +3 -0 so far (10 planned): a full L6 run is still to be completed.",
+        "2026-11-26: Completed the remaining L6/L5 ladder games. Full 20-game result is L6/L5 +20 -0 =0; earlier tiers remain L2/L1 +18 -2, L3/L2 +18 -2, L4/L3 +20 -0, L5/L4 +20 -0. `npm test -w packages/janggi-ai` passed 17/17 and package typecheck passed."
+      ],
+      "notes": "Six deterministic Janggi bots are implemented and the full adjacent ladder passes 20 games per tier. Latest verification: package tests 17/17, typecheck clean, ladder L6/L5 +20 -0 =0. Existing historical results are retained in packages/janggi-ai/strength-results.log."
     },
     {
       "id": "jg-004",

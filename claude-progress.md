@@ -1835,3 +1835,9 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 - Fixed the Chaturaji browser helper to wait for the visible action counter after each server-confirmed die action. Re-running the full staged browser smoke passed 6/6 with the updated helper.
 - A four-seat room with saved player identities and history recovered after container restart. With the writer stopped, a state copy restored all four seats/history in a separate container on port 19923; another action synchronized to every seat. Removed the test container and copy, restarted the primary stage, and confirmed port-19922 health. The Four-handed Chess follow-up CI run `45799805729` also passed.
 - Melon's resolver returned no address for `chaturaji.beanroti.com`. Public HTTPS/WSS and promotion remain blocked; no Caddy or catalog change was made. The release feature is blocked only at this DNS gate. Next: begin Djambi adoption/rules/rights review while preserving the Chaturaji stage.
+
+### Session 113 (Janggi bot ladder completion)
+
+- Resumed the unfinished `jg-003` verification before starting new roadmap implementation. The resumable local ladder had 10/20 L6-vs-L5 games recorded; the remaining games completed successfully.
+- Full six-level ladder: L2/L1 +18 -2 =0; L3/L2 +18 -2 =0; L4/L3 +20 -0 =0; L5/L4 +20 -0 =0; L6/L5 +20 -0 =0, each over 20 games. `npm test -w packages/janggi-ai` passed 17/17 and `npm run typecheck -w packages/janggi-ai` passed.
+- No runtime code changed; Janggi remains live. Updated the feature evidence and status to passing. The next rollout research has started with Djambi and Martian Chess rights gates, then Apocalypse and Game of the Generals, before the Senterej platform prerequisite.

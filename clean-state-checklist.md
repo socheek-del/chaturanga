@@ -279,6 +279,7 @@
 - [x] Run full workspace verification under pinned Node 22.23.1 with loopback enabled; lint, all workspace typechecks and tests pass.
 - [x] Run `npm run build:ko-shogi`; PWA and Worker dry-run pass. Note the non-blocking 553.13 kB PWA entry-chunk warning.
 - [x] Local browser smoke passes tutorial completion/compound-route exercise, all 65 piece forms, bot play, offline reload, private-room legal move sync, and 390px mobile layout with no page exceptions.
-- [ ] Commit/push the verified implementation and verify exact-SHA CI.
-- [ ] Stage the pinned commit on Melon port 19926; verify built PWA/tutorial/room, restart recovery and copied-state recovery, then leave the stage healthy.
-- [ ] Check public DNS/TLS/HTTPS/WSS on Melon before any public Caddy route or app-directory entry.
+- [x] Commit/push `c13b307e6f2757db6b0b92466c1abc37c993e0c3` and verify exact-SHA CI run 45909245372.
+- [x] Stage the pinned commit on Melon port 19926; health and built PWA pass. Targeted Ko web/Worker production audit finds zero vulnerabilities; full monorepo install reports five aggregate audit findings (4 moderate, 1 high).
+- [x] Built-stage browser smoke passes 10/10. A two-seat room survived restart, and a stopped-state copy restored both identities/history and synchronized another legal turn; removed temporary recovery resources and left the original stage healthy.
+- [x] Check DNS on Melon: `ko-shogi.beanroti.com` has no answer. HTTPS/WSS and public promotion remain unavailable; do not change Caddy or the app directory. Keep the private stage running.

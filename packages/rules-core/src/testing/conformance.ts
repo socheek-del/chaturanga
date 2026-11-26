@@ -24,7 +24,7 @@ export interface ConformanceFixtures<G extends VariantGame<string, VariantSquare
   sampleLegalMove?: (game: G, rng: () => number) => string | null;
   /** Empty and occupied sparse coordinates to probe when the variant has no finite board to enumerate. */
   sampleSquares?: (game: G) => readonly VariantSquareOf<G>[];
-  /** Destination coordinate for a move when its UCI format is not the bounded-board coordinate format. */
+  /** Destination coordinate for a move when its UCI format does not end with the landing square. */
   destinationOfMove?: (uci: string) => VariantSquareOf<G>;
   /** Exact attack-query fixtures for an unbounded board, checked at the start and throughout seeded play. */
   attackSamples?: (game: G) => readonly { color: string; square: VariantSquareOf<G>; attacked: boolean }[];
@@ -137,7 +137,10 @@ export function describeVariantConformance<G extends VariantGame<string, Variant
             expect(record.san).toBeTruthy();
           } else if (variant.boardTopology !== 'unbounded') {
             expect(record.to).toBeGreaterThanOrEqual(0);
-            expect(squareNameOf(Number(record.to), variant.files)).toBe(uci.match(/[a-q]\d{1,2}/g)!.at(-1));
+            const destination = fixtures.destinationOfMove?.(uci) ?? squareOf(uci.match(/[a-z]\d{1,2}/g)!.at(-1)!, variant.files);
+            expect(squareNameOf(Number(record.to), variant.files)).toBe(typeof destination === 'string'
+              ? destination
+              : squareNameOf(Number(destination), variant.files));
           } else {
             expect(typeof record.to).toBe('string');
           }
@@ -205,7 +208,7 @@ export function describeVariantConformance<G extends VariantGame<string, Variant
             if (uci === 'pass' || /^ROLL[1-6]{2}$/.test(uci) || uci.includes('@')) continue;
             const to = variant.boardTopology === 'unbounded'
               ? fixtures.destinationOfMove?.(uci)
-              : squareOf(uci.match(/[a-q]\d{1,2}/g)!.at(-1)!, variant.files);
+              : fixtures.destinationOfMove?.(uci) ?? squareOf(uci.match(/[a-z]\d{1,2}/g)!.at(-1)!, variant.files);
             if (to !== undefined) {
               const target = game.pieceAt(to as VariantSquareOf<G>);
               if (target && target.color !== color) {

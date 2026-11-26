@@ -24,7 +24,7 @@ The product follows the detailed English profile where an old text is incomplete
 ## Work sequence
 
 1. **Rules contract and provenance** — complete. Use this document and `packages/ko-shogi/RULES.md` as the frozen v1 profile; change it only when a test exposes a contradiction or a newly verified source passage requires a documented decision.
-2. **Pure rules package** — implement setup/FEN, every starting/promoted movement, shots, captures, promotion triggers, burn, suppression, nets, objectives, repetition, undo/replay and `Variant` conformance. Add focused fixtures for each movement family and special transition.
+2. **Pure rules package** — complete. `packages/ko-shogi` implements the 19×19 setup/FEN, all declared piece profiles, routes/shots, promotions/effects, objectives, repetition, undo/replay and `Variant` conformance. The focused fixtures and full workspace verification pass; downstream product checks remain.
 3. **Bots** — six deterministic strength levels, both roles, bounded node budgets and legality/strength evidence.
 4. **Product shell and identity** — original design proposal in `apps/ko-shogi/docs/design.md`; keep name/design proposal separate from historical rules. Do not use association branding or trace archive/Commons diagrams.
 5. **PWA and tutorial** — English locale, local/pass-and-play/bot, complete interactive tutorial, saves, install/offline operation and narrow phone-board usability.
@@ -42,4 +42,4 @@ The product follows the detailed English profile where an old text is incomplete
 
 - Primary-source setup and movement pages were reviewed; the source-derived setup has been normalized into coordinates and sums to 90 pieces per side.
 - `packages/ko-shogi/RULES.md` has the complete v1 movement/promotion chart and records the disputed mechanics. The product-local transcription and source-rights update are recorded with the rules gate.
-- No engine, bot, app, Worker, tutorial, PWA, room service, or public route exists yet. The next action is implement the pure rules package, then proceed through the numbered sequence without skipping verification.
+- The pure Variant and focused rule fixtures are implemented in `packages/ko-shogi`; full workspace verification passed. Bot, app, Worker, tutorial, PWA, rooms, product build and Melon stage are still outstanding. Continue with the bounded bot package.

@@ -13,6 +13,8 @@ The old Japanese books are the source for rules facts. Code, explanations, move 
 
 The surviving texts do not prove which reconstruction is most popular. This product names its profile plainly. Black moves first as a digital convention; the scanned setup text does not state a first-move rule. A five-intersection effect uses Chebyshev distance (the square is within five king-steps), an inference from the ambiguous phrase “within five intersections.” Skyward/Earthward Nets immobilize enemies on unobstructed rays along their listed ranging directions. Banner-and-Drum fills either or both Banner/Drum roles while it remains on the board. A multi-leg turn may promote if its route touches the six-rank enemy camp. Promotion opportunities in camp are optional; special capture promotions below are automatic. When all legal moves are exhausted, the player with no move loses; this is the digital stalemate convention.
 
+For executable edge cases, an eligible **one-step mover** means Aide-de-camp, Aide, Staff, Chief of Staff, Engineer, Banner, Drum, Sentry, Shield, or Middle Troop. This selected classification does not include pieces that also have a jump or range option. Cavalry’s second knight jump repeats the first displacement or reverses it to return to the origin. Capturing either the Taoist Priest or Spiritual Monk marks that side’s priest family as lost, disables later Banner/Drum promotion and reverts its Flag Wavers and Thunderclaps. A pre-existing Banner-and-Drum still supplies both roles. These interpretations are recorded because the available wording does not settle each distinction.
+
 The 1770 movement passage and modern English piece chart differ on a few individual movement readings. This implementation follows the English chart where the intended move is stated clearly; the disputed lines remain listed in `apps/ko-shogi/docs/research_notes/Ko Shogi rules adoption rights/transcription.md`. Do not present those readings as a scholarly translation.
 
 ## Board and opening setup
@@ -137,6 +139,8 @@ When a Clerk promotes to Master-at-Arms, every friendly Advance Guard and Rear G
 ## Digital move records
 
 A serialized move records its origin, every landing square in route order, any shot target after the landing where the shot is taken, and the final promotion choice. A route, all its captures, promotions, burn/reversion effects, and turn change are one atomic action for save/replay and server validation. For example, `j3-j4-j3` is a two-leg return route; `j5-k6@l6` is a move followed by a shot. The engine’s canonical grammar and FEN version are defined alongside its parser in `src/` and covered by round-trip tests.
+
+The implemented move grammar is `from-to[@shot-target...][-next-landing...][=promotion-type]`. Each `-` begins another movement leg; `@` attaches a shot to the immediately preceding landing; `=type` is an optional camp promotion after the final leg. Files are `a`–`s` and ranks `1`–`19`. The versioned position format is `ks1 <turn> <lost-priest-colors|-> <placement>`; placement has 19 slash-separated ranks from 19 down to 1, with 19 comma-separated cells per rank. A cell is `-` or `<color>:<lowercase-piece-id>[+]`; `+` marks a piece that has promoted. The lost-priest field preserves the Banner/Drum restriction across FEN replay.
 
 ## References
 

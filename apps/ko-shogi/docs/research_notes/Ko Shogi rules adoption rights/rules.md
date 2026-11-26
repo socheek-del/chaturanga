@@ -1,5 +1,11 @@
 # Ko Shogi Rules and Provenance
 
+## 2026-11-27 source access update
+
+The Tōhoku University IIIF scan of Sorai's 1770 *Kōshōgifu* is now accessible at the record's manifest. Visual review of all 14 images confirms that the setup is described in the text and that the later pages contain movement descriptions and diagrams. The rules have not yet been transcribed individually. The 1773 *Gukai* is a separately catalogued second volume by Bun’yū, according to the German Union Catalogue; the Noda record's 1770 date remains a catalog discrepancy. Use the 1770 volume as the rules baseline and compare the second volume only where it clarifies a rule. [Tōhoku catalog and IIIF manifest](https://touda.tohoku.ac.jp/collection/database/library/10010000019232); [German Union Catalogue, entry 283](https://rep.adw-goe.de/bitstream/handle/11858/2327/2397_VOHD_XXVII5.pdf?sequence=1); [Noda catalog](https://www.library-noda.jp/homepage/digilib/shogi/01.html)
+
+The scan images were fetched only to temporary storage for visual inspection and are not included in this repository. Continue to write an independent source-derived rules profile and original diagrams.
+
 ## Historical basis and defensible rules profile
 
 ### Takeaway

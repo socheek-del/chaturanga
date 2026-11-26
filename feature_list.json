@@ -3728,9 +3728,11 @@
       "evidence": [
         "2026-11-26: Source-linked research is recorded in apps/ko-shogi/docs/reports/Ko Shogi rules adoption rights.md and the product-local notes. The recommended candidate is a reconstruction based on Sorai’s 1770 Kōshōgifu and the 1773 Gukai commentary, not a proven popular edition.",
         "2026-11-26: The modern profile describes a 19×19 board, 90 pieces per side and 34 starting types; the full movement chart and setup still need independent verification. Sources disagree on 53 versus 65 distinct moves and leave several mechanics unresolved.",
-        "2026-11-26: Available sources do not support a popularity claim. Waseda image reuse requires advance application, NIJL item terms are unverified, and the author/license of a modern English reconstruction was not verified. The clean-room route is not yet enough to meet the repository permission gate. No rights-holder contact was made."
+        "2026-11-27: Tōhoku University's 1770 *Kōshōgifu* catalog exposes a 14-image scan; visual review confirms setup text and movement diagrams are present, but the full chart has not yet been transcribed. The separately catalogued *Gukai* is 1773; Noda's 1770 label remains a catalog discrepancy.",
+        "2026-11-27: Project rights inference: Sorai died in 1728 and Japan's general author term is 70 years after death, so the 1770 rules text clears the rules-content gate. Archive image terms are item-specific; no scan image will be reused or committed. Check any 1773-only rule source separately. No rights-holder contact was made.",
+        "2026-11-27: No popularity winner is supported. Keep this feature blocked before engine code until all setup and movement rules are transcribed, 1773 commentary is compared where relevant, and the 53-versus-65 count and disputed mechanics are resolved."
       ],
-      "notes": "Blocked before implementation pending full primary-source review of the piece/setup chart and a cleared project rights basis. Do not copy modern rule prose, diagrams, or scans. If the gate cannot be met, leave this feature blocked and proceed to Arimaa. See apps/ko-shogi/docs/PLAN.md."
+      "notes": "Blocked before engine code pending full transcription/review of setup, base and promoted movement, the 53-versus-65 count, and disputed mechanics. The 1770 rules-content gate is clear; do not reuse archive images or modern reconstruction prose/diagrams. Continue Ko Shogi source review rather than skipping it for rights reasons. See apps/ko-shogi/docs/PLAN.md."
     },
     {
       "id": "arimaa-001",

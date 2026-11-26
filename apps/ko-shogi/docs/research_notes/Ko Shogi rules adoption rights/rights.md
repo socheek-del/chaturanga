@@ -1,6 +1,6 @@
 # Ko Shogi rights and source boundaries
 
-Research note for implementation planning, checked 2026-11-26. This is a conservative product-research note, not legal advice. The project will publish a playable implementation, tutorial text, and original visual assets, so each source's text, scans, and graphics should be treated separately.
+Research note for implementation planning, updated 2026-11-27. This is a conservative product-research note, not legal advice. The project will publish a playable implementation, tutorial text, and original visual assets, so each source's text, scans, and graphics should be treated separately.
 
 ## Q1. Can the historical game rules be implemented, and what limits apply to modern reconstructions?
 
@@ -25,6 +25,10 @@ NIJL warns that digitized-image conditions vary by holding institution; it says 
 **Inferences.** Sorai's 1728 death is many centuries before Japan's 70-year post-mortem term, so the original authored text is very likely public domain in Japan; the 1773 commentary is similarly old, though its author and precise publication record should be verified against the catalog/source before relying on that conclusion. Treat a digital image as a separate asset with separate terms: public-domain status of the underlying book does not override a repository's stated contractual/use conditions. Cite bibliographic records and link users to the hosting institution instead of republishing source scans.
 
 **Gaps.** Waseda's catalog metadata and image-use policy are not a substitute for item-specific permission or legal analysis of the scan. The NIJL record's image license/rights icon and owner terms remain unchecked. Do not download for redistribution, embed, or modify either library scan until the current item page clearly authorizes that use.
+
+### 2026-11-27 source-rights decision
+
+The Tōhoku University record for Sorai's 1770 *Kōshōgifu* exposes a 14-image scan and links to item-specific image terms. Its general policy says image reuse terms vary by content. The project does not need to republish or trace those images: Ogyū Sorai is dated 1666–1728 by the National Diet Library, and Japan's Copyright Act generally protects a known author's work for 70 years after death. The conclusion that the 1770 rules text is public domain for use as a source of game mechanics is an inference from those facts; it clears this project's rules-content gate for that work. Do not treat it as clearance for the 1773 commentary's unique content or for any library scan. The rules chart is still incomplete, so implementation remains blocked. ([Tōhoku University catalog](https://touda.tohoku.ac.jp/collection/database/library/10010000019232), [Tōhoku image-use policy](https://touda.tohoku.ac.jp/collection/database/library/use_of_materials), [National Diet Library authority](https://id.ndl.go.jp/auth/ndlna/00271301), [Japan Copyright Act, Article 51](https://www.cric.or.jp/english/clj/cl2.html))
 
 ## Q3. What is the safe policy for code, piece art, setup diagrams, and tutorial content?
 

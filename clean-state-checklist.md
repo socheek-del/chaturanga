@@ -245,3 +245,11 @@
 - [x] Built-stage browser smoke 4/4 and offline PWA smoke 1/1 pass.
 - [x] Live two-seat room survives restart; copied-state recovery restores the same seats and history, then syncs another legal move. Temporary restore resources removed; primary stage healthy.
 - [x] Check DNS on Melon: the configured hostname has no answer. HTTPS/WSS remain unavailable; keep public routing and the app directory unchanged.
+
+### Infinite Chess (blocked before implementation)
+
+- [x] Research official Classical rules, edition adoption, official source licenses, and Apeiron bot candidate; record the sources and evidence under `apps/infinite-chess/docs/`.
+- [x] Record Classical as the official default and first tournament edition, without claiming a popularity winner where usage counts are unavailable.
+- [x] Save a provisional rules contract and technical plan; list unverified initial-position and digital edge cases before any engine work.
+- [x] Keep `infinite-chess-001` blocked: the reviewed AGPL-3.0-or-later website license and GPL-3.0 engine license do not establish a clear independent adaptation grant under the repo's GPL-3.0 policy. No code/assets/copy/identity were reused and no external contact was made.
+- [ ] Resume only after owner authorization for rights-holder contact or an applicable explicit adaptation license and a compatible product-license plan are recorded.

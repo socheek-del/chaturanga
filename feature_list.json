@@ -3980,7 +3980,7 @@
       "milestone": "M55",
       "title": "Release Infinite Chess Classical",
       "user_visible_behavior": "Players learn the selected Infinite Chess rules through an interactive tutorial and play against a bounded bot, locally, and in private online rooms.",
-      "status": "in_progress",
+      "status": "blocked",
       "verification": [
         "Verify the official Classical rules, source provenance, adoption and rights; identify documented ambiguities and do not claim a popularity winner without evidence.",
         "Record board coordinates, piece movement, unbounded rays, legal-move constraints, check and end conditions in a source-linked product plan and rules contract before engine implementation.",
@@ -3989,10 +3989,11 @@
         "Add seeded bounded bots, a complete interactive tutorial, an independent offline PWA and server-authoritative private multiplayer rooms with isolated Melon storage.",
         "Run full verification, product build, exact-SHA CI, staged browser/PWA smoke, restart and copied-state recovery. Check DNS/TLS/HTTPS/WSS before public promotion."
       ],
-      "evidence": [
-        "2026-11-26: Selected by the Wave 5 roadmap as InfiniteChess.org Classical, with the official guide and Apeiron project listed as research leads. The source, adoption/popularity evidence and project-specific digital rights have not yet been verified; no engine or product implementation has started."
-      ],
-      "notes": "Research is the active slice. Keep implementation blocked until the official rules, selection rationale, digital-adaptation rights basis and technical requirements are documented. No external contact has been made."
+    "evidence": [
+      "2026-11-26: Official guide identifies Classical as its default; the official archive says the site's first tournament used Classical (2024) and a later tournament used another starting position (2025). No comparative player/game counts were found, so the chosen edition is an established default/tournament form, not a proven most-popular variant. See apps/infinite-chess/docs/reports/Infinite Chess rules adoption and rights.md.",
+      "2026-11-26: Recorded the source-grounded planning profile in packages/infinite-chess/RULES.md and technical/release requirements in apps/infinite-chess/docs/PLAN.md. The official web software is AGPL-3.0-or-later and Apeiron is GPL-3.0; no separate explicit adaptation grant for an independent faithful project was found. Reconcile the rights basis and AGPL obligations with the repository GPL-3.0 policy before implementation. No engine, bot, PWA, tutorial or worker code was written, and no external contact was made."
+    ],
+    "notes": "Blocked before implementation: the official software code is published under AGPL-3.0-or-later, but the reviewed sources do not clearly grant this repository an independent faithful digital adaptation license, and adopting AGPL-covered code needs a product/repository license plan. Do not use official art, branding, prose or source. No external contact was made; owner authorization is required before contacting the creator/maintainers. Classical is the best-supported planning default and an established tournament edition, but no comparative usage data establishes it as the most popular variant. Resume only after an applicable rights basis and license plan are recorded; then verify remaining rule details against the official Classical implementation."
     }
   ]
 }

@@ -107,6 +107,53 @@ describe('Chu Shogi movement', () => {
     expect(eagleMoves).not.toContain('f6f7e8');
   });
 
+  it('pins every starting and promoted rank to its published movement family', () => {
+    const examples = [
+      { token: 'w:king', reaches: ['f6g7'], blocked: ['f6h7'] },
+      { token: 'w:free-king', reaches: ['f6l6', 'f6g7'], blocked: ['f6g8'] },
+      { token: 'w:drunk-elephant', reaches: ['f6f7', 'f6g6'], blocked: ['f6f5'] },
+      { token: 'w:kirin', reaches: ['f6g7', 'f6h6'], blocked: ['f6f7'] },
+      { token: 'w:phoenix', reaches: ['f6f7', 'f6h8'], blocked: ['f6g7'] },
+      { token: 'w:rook', reaches: ['f6f12', 'f6l6'], blocked: ['f6g7'] },
+      { token: 'w:bishop', reaches: ['f6l12', 'f6g7'], blocked: ['f6f7'] },
+      { token: 'w:dragon-king', reaches: ['f6f12', 'f6g7'], blocked: ['f6g8'] },
+      { token: 'w:dragon-horse', reaches: ['f6l12', 'f6f7'], blocked: ['f6g8'] },
+      { token: 'w:vertical-mover', reaches: ['f6f12', 'f6g6'], blocked: ['f6g7'] },
+      { token: 'w:side-mover', reaches: ['f6l6', 'f6f7'], blocked: ['f6g7'] },
+      { token: 'w:reverse-chariot', reaches: ['f6f12'], blocked: ['f6g6'] },
+      { token: 'w:lance', reaches: ['f6f12'], blocked: ['f6f5'] },
+      { token: 'w:blind-tiger', reaches: ['f6f5', 'f6g6'], blocked: ['f6f7'] },
+      { token: 'w:ferocious-leopard', reaches: ['f6g7', 'f6f5'], blocked: ['f6g6'] },
+      { token: 'w:gold-general', reaches: ['f6g7', 'f6f5'], blocked: ['f6e5'] },
+      { token: 'w:silver-general', reaches: ['f6g7', 'f6e5'], blocked: ['f6f5'] },
+      { token: 'w:copper-general', reaches: ['f6g7', 'f6f5'], blocked: ['f6f7'] },
+      { token: 'w:go-between', reaches: ['f6f7', 'f6f5'], blocked: ['f6g6'] },
+      { token: 'w:pawn', reaches: ['f6f7'], blocked: ['f6f5'] },
+      { token: 'w:drunk-elephant:+', reaches: ['f6g7', 'f6f5'], blocked: ['f6g8'] },
+      { token: 'w:phoenix:+', reaches: ['f6l6', 'f6g7'], blocked: ['f6g8'] },
+      { token: 'w:rook:+', reaches: ['f6f12', 'f6g7'], blocked: ['f6g8'] },
+      { token: 'w:bishop:+', reaches: ['f6l12', 'f6f7'], blocked: ['f6g8'] },
+      { token: 'w:dragon-king:+', reaches: ['f6f12', 'f6g7', 'f6g7h8'], blocked: ['f6g8'] },
+      { token: 'w:dragon-horse:+', reaches: ['f6l6', 'f6f7', 'f6f7f8'], blocked: ['f6g8'] },
+      { token: 'w:vertical-mover:+', reaches: ['f6f12', 'f6g7'], blocked: ['f6g6'] },
+      { token: 'w:side-mover:+', reaches: ['f6l6', 'f6g7'], blocked: ['f6f12'] },
+      { token: 'w:reverse-chariot:+', reaches: ['f6f12', 'f6e5'], blocked: ['f6g7'] },
+      { token: 'w:lance:+', reaches: ['f6f12', 'f6g7'], blocked: ['f6g5'] },
+      { token: 'w:blind-tiger:+', reaches: ['f6f10', 'f6g6'], blocked: ['f6g8'] },
+      { token: 'w:ferocious-leopard:+', reaches: ['f6l12'], blocked: ['f6f12'] },
+      { token: 'w:gold-general:+', reaches: ['f6f12', 'f6l6'], blocked: ['f6g7'] },
+      { token: 'w:silver-general:+', reaches: ['f6f12', 'f6g6'], blocked: ['f6g7'] },
+      { token: 'w:copper-general:+', reaches: ['f6l6', 'f6f7'], blocked: ['f6g7'] },
+      { token: 'w:go-between:+', reaches: ['f6f7', 'f6g6'], blocked: ['f6f5'] },
+      { token: 'w:pawn:+', reaches: ['f6f7', 'f6g7'], blocked: ['f6g8'] },
+    ];
+    for (const { token, reaches, blocked } of examples) {
+      const moves = uciFrom(position({ f6: token }), 'f6');
+      for (const uci of reaches) expect(moves, `${token} should include ${uci}`).toContain(uci);
+      for (const uci of blocked) expect(moves, `${token} should exclude ${uci}`).not.toContain(uci);
+    }
+  });
+
   it('blocks protected Lion captures except adjacent captures and eligible tsukegui routes', () => {
     const protectedLion = position({ f4: 'w:lion', f6: 'b:lion', f7: 'b:pawn' });
     expect(uciFrom(protectedLion, 'f4')).not.toContain('f4f5f6');

@@ -12,6 +12,15 @@ import { fenOf, keyOf, opposite, parseFen, PIECE_TYPES, squareName, START_FEN, t
 interface HistoryEntry {
   readonly position: Position;
   readonly record: VariantMoveRecord;
+  readonly effect: MoveEffect;
+}
+
+interface MoveEffect {
+  readonly color: Color;
+  readonly uci: string;
+  readonly givesRoyalAttack: boolean;
+  readonly attacksPiece: boolean;
+  readonly jitto: boolean;
 }
 
 function routeSan(move: Move): string {
@@ -46,6 +55,74 @@ function barrenWinner(position: Position): Color | null {
   const piece = other[0]!.piece;
   if (!piece.promoted && (piece.type === 'pawn' || piece.type === 'go-between')) return null;
   return piece.color;
+}
+
+function capturesEveryRoyal(move: Move, board: Position['board'], color: Color): boolean {
+  const royals = royalSquares(board, color);
+  return royals.length > 0 && royals.every((square) => move.captures.some((capture) => capture.square === square));
+}
+
+function canCaptureEveryRoyal(position: Position, attacker: Color): boolean {
+  const target = opposite(attacker);
+  const royals = royalSquares(position.board, target);
+  if (!royals.length) return true;
+  return generateMoves(position, attacker).some((move) => capturesEveryRoyal(move, position.board, target));
+}
+
+function forcedRoyalMate(position: Position, replies: readonly Move[]): boolean {
+  const defender = position.turn;
+  const attacker = opposite(defender);
+  const royals = royalSquares(position.board, defender);
+  if (!royals.length || !royals.some((square) => squareAttackedBy(position.board, square, attacker))) return false;
+
+  if (!replies.length) return canCaptureEveryRoyal(position, attacker);
+  for (const reply of replies) {
+    const after = applyMove(position, reply);
+    if (winnerForRoyalCapture(after) === defender || barrenWinner(after) === defender) return false;
+    if (!canCaptureEveryRoyal(after, attacker)) return false;
+  }
+  return true;
+}
+
+function repetitionResponsible(keys: readonly string[], effects: readonly MoveEffect[]): Color | null {
+  const current = keys.at(-1)!;
+  const occurrences = keys.flatMap((key, index) => key === current ? [index] : []);
+  if (occurrences.length < 4) return null;
+
+  const [start, , , end] = occurrences.slice(-4);
+  const cycle = effects.slice(start, end);
+  const checkingSides = (['w', 'b'] as const).filter((color) => {
+    const turns = cycle.filter((effect) => effect.color === color);
+    return turns.length > 0 && turns.every((effect) => effect.givesRoyalAttack);
+  });
+  if (checkingSides.length === 1) return checkingSides[0]!;
+
+  const attackingSides = (['w', 'b'] as const).filter((color) => cycle.some((effect) =>
+    effect.color === color && effect.attacksPiece));
+  if (attackingSides.length === 1) return attackingSides[0]!;
+
+  if (cycle.length > 0 && cycle.every((effect) => effect.jitto)) {
+    return cycle.find((effect) => effect.jitto)!.color;
+  }
+
+  // Digital convention for quiet or mixed repetitions: the side to move at
+  // the repeated position bears the duty to vary.
+  return effects.at(-1)?.color === 'w' ? 'b' : 'w';
+}
+
+function effectAfter(position: Position, move: Move): MoveEffect {
+  const after = applyMove(position, move);
+  const opponent = opposite(move.color);
+  const enemyRoyals = new Set(royalSquares(after.board, opponent));
+  const attacks = generateMoves(after, move.color);
+  return {
+    color: move.color,
+    uci: move.uci,
+    givesRoyalAttack: attacks.some((candidate) => candidate.captures.some((capture) => enemyRoyals.has(capture.square))),
+    attacksPiece: attacks.some((candidate) => candidate.captures.some((capture) => capture.piece.color === opponent)),
+    jitto: move.path.length === 2 && move.path[0] !== move.from && move.path[1] === move.from &&
+      move.captures.length === 0 && !move.promote,
+  };
 }
 
 export class Game {
@@ -88,10 +165,12 @@ export class Game {
     const barren = barrenWinner(this.position);
     if (barren) return { kind: 'bare-king', winner: barren };
 
-    const currentKey = this.keys.at(-1)!;
-    if (this.keys.filter((key) => key === currentKey).length >= 4) return { kind: 'repetition' };
+    const responsible = repetitionResponsible(this.keys, this.history.map(({ effect }) => effect));
+    if (responsible) return { kind: 'repetition', winner: opposite(responsible) };
 
-    if (this.availableMoves().length === 0) return { kind: 'stalemate', winner: opposite(this.turn) };
+    const moves = this.availableMoves();
+    if (forcedRoyalMate(this.position, moves)) return { kind: 'checkmate', winner: opposite(this.turn) };
+    if (moves.length === 0) return { kind: 'stalemate', winner: opposite(this.turn) };
 
     return { kind: 'ongoing' };
   }
@@ -124,7 +203,7 @@ export class Game {
       fenAfter: this.fen(),
       san: routeSan(move),
     };
-    this.history.push({ position: before, record });
+    this.history.push({ position: before, record, effect: effectAfter(before, move) });
     return record;
   }
 

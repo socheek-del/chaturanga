@@ -260,5 +260,7 @@
 - [x] Pass full `NODE_OPTIONS=--no-experimental-webstorage npm run verify`, `npm run build:infinite-chess`, local browser E2E 5/5 and installability/offline E2E 2/2. Production entry is 511.30 kB minified and emits a non-blocking chunk-size warning.
 - [x] Commit and push implementation `5d525ff7dde0a5027fb3d28b0408b6052f840f89` directly to `main`.
 - [x] Add `npm run build:infinite-chess` to the main-branch CI build sequence; push this workflow follow-up before stage.
-- [ ] Confirm exact-SHA CI on the follow-up commit, then deploy that pinned build to Melon port 19925.
-- [ ] Run built-stage browser/PWA smoke, restart and copied-state room recovery; check Melon DNS/TLS/HTTPS/WSS before any public promotion or app-directory entry.
+- [x] Exact-SHA CI run 45878199946 passed on `17e14063fbca0f17614c8abc781d87d6e39d15d4`, including `npm run build:infinite-chess`.
+- [x] Deploy the pinned build to Melon port 19925 at `/home/melon/chaturanga-release.infinite-chess.TZl1ZF`; health, homepage, manifest and service worker pass; production dependency audit reports 0 vulnerabilities.
+- [x] Built-stage browser smoke passes 5/5; offline/installability PWA smoke passes 2/2. A live room survives container restart and copied-state recovery, restoring seats/history and syncing another legal move; temporary recovery resources were removed and the primary stage is healthy.
+- [x] Check DNS on Melon: `infinite-chess.beanroti.com` has no answer. Public TLS/HTTPS/WSS and catalog promotion are blocked; no Caddy route or app-directory entry changed. Keep the private stage running on port 19925.

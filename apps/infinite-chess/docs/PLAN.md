@@ -57,6 +57,8 @@ need to be assessed independently if that changes. No external contact has been 
 `plat-024` has passed: sparse string coordinates and bounded attack queries are available through the shared
 `Variant` contract while numeric-square defaults remain intact. The pure Variant, bounded bot, ten-practice
 interactive tutorial, independent PWA and private multiplayer are implemented. Full workspace verification, the
-product build, five local browser scenarios and two offline/installability scenarios pass. Next commit and push the
-verified increment, confirm exact-SHA CI, stage on Melon, then run built-stage browser/PWA, restart and copied-state
-recovery checks. Public promotion still requires DNS, TLS, HTTPS/WSS and catalog checks.
+product build, exact-SHA CI run 45878199946, five local and five staged browser scenarios, two local and two staged
+offline/installability scenarios, service restart and copied-state room recovery pass. The pinned private stage is
+`/home/melon/chaturanga-release.infinite-chess.TZl1ZF` on Melon port 19925; its production dependency audit found
+zero vulnerabilities. Melon's resolver has no DNS answer for `infinite-chess.beanroti.com`. Public promotion remains
+blocked at DNS/TLS/HTTPS/WSS, and no Caddy route or app-directory entry has been changed.

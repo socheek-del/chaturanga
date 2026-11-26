@@ -18,6 +18,7 @@ is `packages/infinite-chess/RULES.md`.
   Use original code, art, interface and tutorial wording. The product plan and rules contract record the license
   scope; the engine, bot, PWA, tutorial and isolated room service are implemented.
 - No external contact was made. Do not contact the creator or maintainers without owner authorization.
-- Full workspace verification, product build, local browser smoke and offline PWA checks pass. Remaining release
-  work under `infinite-chess-001` is exact-SHA CI, the Melon stage browser/PWA smoke and storage recovery. Public
-  promotion also requires DNS, TLS, HTTPS and WSS checks.
+- Full workspace verification, product build, local and Melon browser/PWA smoke, exact-SHA CI, restart recovery and
+  copied-state restore pass. The pinned private stage remains healthy on Melon port 19925. Remaining release work
+  is public DNS/TLS/HTTPS/WSS; `infinite-chess.beanroti.com` has no DNS answer, so keep public routing and the app
+  directory unchanged until that gate passes.

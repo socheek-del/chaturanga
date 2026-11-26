@@ -3812,7 +3812,7 @@
       "milestone": "M48",
       "title": "Release Chaturaji",
       "user_visible_behavior": "Players learn a historically attested four-seat dice version of Chaturaji and play against bots, pass-and-play, and in private online rooms.",
-      "status": "in_progress",
+      "status": "blocked",
       "verification": [
         "Record a source-linked Al-Biruni-based rules reconstruction, all four starting formations, dice-to-piece mapping, scoring and explicitly chosen procedures for source ambiguities.",
         "Implement a pure four-seat Variant with injected seed/state, serializable dice, recorded rolls, deterministic replay/undo, shared conformance and focused tests for all selected movement and scoring rules.",
@@ -3830,9 +3830,13 @@
         "2026-11-26: Added a private four-seat Worker and isolated D1 archive. Server actions validate through the Variant; future dice are server-seeded and recorded as ROLL events. Room-state tests pass 3/3 for stable seats, turn/revision/legality, replay and server rolls.",
         "2026-11-26: Product typechecks and lint pass; web and Worker production build passes. Playwright local browser suite passes 4/4 for complete tutorial, bot play, local saves/mobile layout, four-seat online turn rotation/reconnect and unknown rooms. Built PWA suite passes 2/2 for installability and offline tutorial, pass-and-play and cached bot response. Desktop/mobile visual review reported zero page errors.",
         "2026-11-26: NODE_OPTIONS=--no-experimental-webstorage ./init.sh passed clean installation, repository lint, all workspace typechecks and tests under local Node 25.9 (nvm is unavailable; CI is pinned to Node 22.23.1). npm run build:chaturaji passed for the PWA and Worker; Wrangler's local log permission warning was non-fatal and dry-run exited 0 with the expected bindings.",
-        "2026-11-26: Exact-SHA CI, Melon staging/recovery and public DNS/TLS checks remain before release status can pass."
+        "2026-11-26: Exact-SHA commit cf328621aab6bcdd2575c7abd0be147cc8f8546a passed GitHub CI run 45800394175, including full workspace verification and the Chaturaji production build.",
+        "2026-11-26: Melon staged the exact SHA at /home/melon/chaturanga-release.chaturaji.yoXEwM on 127.0.0.1:19922 in chaturanga-stage-chaturaji-19922. Isolated DB/0001_games.sql migration applied; Worker health and built PWA homepage returned healthy Chaturaji responses.",
+        "2026-11-26: Built-stage Playwright passed 6/6 for the complete tutorial, bot, mobile/local save, four-seat server-validated play, reconnect and invalid-room behavior. Offline/installability PWA checks passed 2/2.",
+        "2026-11-26: A four-seat room retained its identities and move history after container restart. With the writer stopped, state was copied to state-restore-test and opened in an isolated container on 19923; all seats/history returned and a legal/pass action synchronized. The restore container and copy were removed; the primary port-19922 stage was restarted and health passed.",
+        "2026-11-26: Melon's resolver returned no address for chaturaji.beanroti.com. Public HTTPS/WSS checks and promotion cannot proceed; no Caddy route or directory entry was changed. Feature is blocked only at public promotion."
       ],
-      "notes": "Active after Four-handed Chess reached a verified private Melon stage but its public hostname failed DNS resolution. This feature implements the historically attested dice reconstruction as a clearly labeled source-based playable reconstruction; it does not claim popularity or perfect recovery of every historical procedure. Rules, deterministic bots, the PWA/tutorial and authoritative private rooms now exist and their focused/browser checks pass. Full repository verification and product build pass. Next: direct main commit/push, exact-SHA CI, then Melon stage, migration and restart/copied-state recovery. Check DNS/TLS before any public route or app-directory entry."
+      "notes": "Implemented and privately staged from cf328621aab6bcdd2575c7abd0be147cc8f8546a. Exact-SHA CI, full workspace verification, product build, staged tutorial/bot/room/PWA smoke and restart/copied-state restore pass. This is the historically attested dice reconstruction and does not claim a popularity winner or perfect recovery of every historical procedure. Public promotion is blocked because Melon's resolver has no answer for chaturaji.beanroti.com; keep Caddy and the app directory unchanged. The next roadmap product is Djambi."
     }
   ]
 }

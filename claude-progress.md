@@ -32,12 +32,11 @@ handoff; no agent updates it automatically.
 
 ## Active rollout snapshot (2026-11-26)
 
-- Current feature: `chaturaji-001` in `feature_list.json`. Source-based Al-Biruni dice reconstruction; no popularity claim. Rules/AI/PWA/tutorial/online implementation is now present. Product app notes: `apps/chaturaji/AGENTS.md`; executable decisions: `packages/chaturaji/RULES.md`.
-- Focused checks currently recorded: rules 16/16, bot 4/4, tutorial/locale 2/2, Worker room state 3/3, browser e2e 4/4, offline/installability PWA 2/2. Product web and Worker builds and typechecks passed; desktop/mobile visual review showed zero page errors.
-- `NODE_OPTIONS=--no-experimental-webstorage ./init.sh` and `npm run build:chaturaji` now pass. Local Node is 25.9 because nvm and the pinned 22.23.1 are unavailable; GitHub CI uses `.nvmrc`.
-- Next: update final evidence, commit/push Chaturaji to `main`, verify exact-SHA CI, then stage on Melon at port 19922 and test migration, four-seat rooms, reconnect, restart and copied-state restore.
-- Public Chaturaji DNS/TLS/HTTPS/WSS has not been checked; keep Caddy and `apps/beanroti/web/public/apps.json` unchanged until public smoke succeeds. Preserve running Arimaa and Four-handed Chess stages. Their DNS/license gates remain as recorded in `session-handoff.md`.
-- Current workspace contains the Chaturaji implementation and release evidence. Four-handed Chess timing/docs changes were committed as `fff44eb` and pushed; exact-SHA CI is running.
+- Current feature: `chaturaji-001` in `feature_list.json`, implemented and staged; blocked only at public promotion. The Al-Biruni dice reconstruction is explicitly source-based and makes no popularity claim. Product app notes: `apps/chaturaji/AGENTS.md`; executable decisions: `packages/chaturaji/RULES.md`.
+- Verification: clean `./init.sh`, product build, exact-SHA CI run `45800394175`, built-stage browser smoke 6/6 and offline PWA smoke 2/2 pass. Melon applied its isolated migration. A four-seat room recovered its identities/history after restart and copied-state restore, and accepted another synchronized action.
+- Stage: `cf328621aab6bcdd2575c7abd0be147cc8f8546a` at `/home/melon/chaturanga-release.chaturaji.yoXEwM`, port 19922. The primary stage is running. Temporary copied-state resources are removed.
+- `chaturaji.beanroti.com` has no DNS answer from Melon; do not change Caddy or `apps/beanroti/web/public/apps.json`. Preserve the Arimaa and Four-handed Chess stages and their license/DNS gates in `session-handoff.md`.
+- Next roadmap product: Djambi. Start with adoption, source and rights research, and keep the Chaturaji private stage in service.
 
 ## Session Log
 
@@ -1828,3 +1827,11 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 - `npm run build:chaturaji` passed for the PWA and Worker. Wrangler printed a non-fatal local log-file `EPERM` warning, then exited 0 after producing the dry-run bundle with the expected Durable Object, D1 and asset bindings.
 - The final Four-handed Chess local browser suite passed 4/4 after adding explicit seat-turn waits. Committed its evidence/timing assertion as `fff44eb` and pushed to `main`; exact-SHA CI run `45799805729` is in progress.
 - Chaturaji remains the active product. Next: commit and push its verified source/docs increment to `main`, confirm exact-SHA CI, stage on Melon port 19922, and verify the isolated migration, four-seat room, reconnect, restart and copied-state recovery. Check public DNS/TLS/HTTPS/WSS before considering a route or catalog entry.
+
+### Session 112 (Chaturaji Melon verification)
+
+- Exact-SHA CI run `45800394175` passed for `cf328621aab6bcdd2575c7abd0be147cc8f8546a`. Melon staged it at `/home/melon/chaturanga-release.chaturaji.yoXEwM` on loopback port 19922; `DB/0001_games.sql` applied, and health/homepage passed.
+- Built-stage browser smoke passed 6/6, including the 13-step rules tutorial, bot, pass-and-play/local save/mobile layout, four-seat server-validated turns, reconnect and invalid room. Offline/installability PWA smoke passed 2/2.
+- Fixed the Chaturaji browser helper to wait for the visible action counter after each server-confirmed die action. Re-running the full staged browser smoke passed 6/6 with the updated helper.
+- A four-seat room with saved player identities and history recovered after container restart. With the writer stopped, a state copy restored all four seats/history in a separate container on port 19923; another action synchronized to every seat. Removed the test container and copy, restarted the primary stage, and confirmed port-19922 health. The Four-handed Chess follow-up CI run `45799805729` also passed.
+- Melon's resolver returned no address for `chaturaji.beanroti.com`. Public HTTPS/WSS and promotion remain blocked; no Caddy or catalog change was made. The release feature is blocked only at this DNS gate. Next: begin Djambi adoption/rules/rights review while preserving the Chaturaji stage.

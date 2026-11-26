@@ -10,6 +10,9 @@ async function openRoom(browser: Browser, url: string): Promise<Page> {
 }
 
 async function makeAction(page: Page, player: string) {
+  const actionNumber = page.locator('.turn-count');
+  const before = await actionNumber.innerText();
+  const waitForAction = async () => expect.poll(() => actionNumber.innerText()).not.toBe(before);
   const face = (await page.locator('.die-tile.is-current strong').innerText()).toLowerCase();
   const types = face.includes('pawn') ? ['p', 'k'] : face.includes('boat') ? ['b'] : face.includes('horse') ? ['h'] : ['e'];
   for (const type of types) {
@@ -17,10 +20,15 @@ async function makeAction(page: Page, player: string) {
     for (let index = 0; index < await sources.count(); index++) {
       await sources.nth(index).click();
       const target = page.locator('[data-target="true"]').first();
-      if (await target.count()) { await target.click(); return; }
+      if (await target.count()) {
+        await target.click();
+        await waitForAction();
+        return;
+      }
     }
   }
   await page.getByRole('button', { name: 'Pass this action' }).click();
+  await waitForAction();
 }
 
 async function finishTurn(page: Page, player: string) {

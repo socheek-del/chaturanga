@@ -213,6 +213,7 @@
 - [x] Add authoritative private four-seat rooms and isolated D1 storage; room-state tests pass 3/3.
 - [x] Browser smoke passes 4/4 for tutorial, bot, local save/mobile layout, room rotation/reconnect and invalid rooms; offline PWA/installability passes 2/2, including the cached bot worker. Desktop/mobile visual review reports zero page errors.
 - [x] Run `NODE_OPTIONS=--no-experimental-webstorage ./init.sh` and final `build:chaturaji`; full verification and build pass. Local Node is 25.9 because nvm is unavailable; CI uses pinned Node 22.23.1.
-- [ ] Commit Chaturaji directly to main, push and verify exact-SHA CI.
-- [ ] Stage the verified SHA on Melon port 19922, apply isolated migration, and verify four-seat play, reconnect, restart and copied-state restore.
-- [ ] Check public DNS/TLS/HTTPS/WSS. Do not change Caddy or publish the directory until public smoke passes.
+- [x] Commit Chaturaji directly to main as `cf328621aab6bcdd2575c7abd0be147cc8f8546a`, push, and verify exact-SHA CI run `45800394175`.
+- [x] Stage the verified SHA on Melon port 19922; `DB/0001_games.sql` applied. Built-stage browser smoke 6/6 and offline PWA smoke 2/2 pass.
+- [x] Verify four saved seats and room history after container restart, then restore a copied state in an isolated container and synchronize another action. Remove the temporary restore container/copy and leave the primary stage healthy.
+- [x] Check Chaturaji DNS from Melon: no answer. Do not change Caddy or the directory before public DNS/TLS/HTTPS/WSS smoke passes.

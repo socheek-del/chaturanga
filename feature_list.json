@@ -3718,7 +3718,7 @@
       "milestone": "M45",
       "title": "Release Arimaa",
       "user_visible_behavior": "Players learn a clearly identified Arimaa ruleset through an interactive tutorial and play complete games against bots, locally, and in private online rooms.",
-      "status": "in_progress",
+      "status": "blocked",
       "verification": [
         "Confirm the current standard two-player rules, source provenance, adoption context and rights before scheduling engine work.",
         "Record setup, four-step turns, push/pull, traps, freezing, rabbit movement, victory and digital conventions in a source-linked product plan and RULES.md.",
@@ -3744,9 +3744,14 @@
         "2026-11-26: Added a dedicated Arimaa Worker with private invite rooms, quick-match matchmaker, reconnectable Durable Object rooms, local D1 finished-game archive, generated development secret and root dev/build commands. Every setup placement and full turn is checked by the Arimaa Variant; chat is rejected.",
         "2026-11-26: Worker integration suite passes 6/6 across health/404, seat creation/join, quick-match pairing, incorrect/stale/illegal move rejection, setup clock pause/start, all 32 setup placements, legal complete turns, reconnect after object eviction, no chat and isolated result archiving. `apps/arimaa/web` tests pass 6/6 after adding a mutable-board regression test.",
         "2026-11-26: Integrated the shared private-room/quick-match lobby with an Arimaa setup and full-turn UI, draw/resign/rematch and no chat. Built PWA plus local Worker Chromium smoke passed: two separate seats created/joined a room, synchronized all 32 setup placements and a complete turn, verified service-worker control and reported zero page errors.",
-        "2026-11-26: `npm run build:arimaa` passed for the PWA and Worker dry-run. The main chunk is 507.9 kB minified (Vite threshold warning); Wrangler also emitted a non-fatal sandbox log-file permission warning. Exact-SHA CI and private Melon port 19920 stage/restart/copied-state checks remain."
+        "2026-11-26: `npm run build:arimaa` passed for the PWA and Worker dry-run. The main chunk is 507.9 kB minified (Vite threshold warning); Wrangler also emitted a non-fatal sandbox log-file permission warning.",
+        "2026-11-26: Commit bc212e2232b7a975614053314a99b153c9f9c8a1 was pushed directly to main; exact-SHA GitHub CI run 45761054022 passed verification and all configured builds.",
+        "2026-11-26: Pinned commit bc212e2232b7a975614053314a99b153c9f9c8a1 is privately staged on Melon at 127.0.0.1:19920 in /home/melon/chaturanga-release.arimaa.gcnx9k as chaturanga-stage-arimaa-19920. D1 migration, Worker health and PWA homepage passed; public routing was not changed.",
+        "2026-11-26: Built-stage Chromium verified the 390px PWA, service-worker control, all 15 lessons offline, an interactive correct quiz, and a bot reply after the opening turn; no overflow or page errors.",
+        "2026-11-26: Built-stage two-seat browser smoke synchronized all 32 server-validated setup placements and legal turns. Both seats recovered the same room after container restart. A stopped-state copy restored both seat identities and 34 move records in an isolated container, accepted and synchronized another legal turn, then was removed; the primary stage returned healthy with its original state.",
+        "2026-11-26: Public release remains blocked until the owner confirms the Arimaa Public License v2025.02 no-user/no-ad-revenue condition and authorizes its required Discord announcement; public DNS/TLS/HTTPS/WSS smoke is also outstanding. No external announcement, contact, Caddy change or catalog publication has occurred."
       ],
-      "notes": "The pure rules engine, six bounded bots, original English PWA, local bot/pass-and-play flow, 15 interactive lessons, online invite/quick-match UI, server-validated private rooms and product-local archive are implemented. Full verification and Arimaa build passed; a board cache bug found by the first browser smoke was fixed and has a regression test plus passing built two-seat smoke. Next: rerun full verification after that regression fix, commit/push to main, confirm exact-SHA CI, and stage privately on Melon port 19920 with restart/copied-state recovery. A full opening turn list contains 20,652 options, so keep UI/bot choice bounded. Public release stays gated on confirming no user/advertising revenue and owner authorization for the required Discord announcement; no contact or announcement has been made."
+      "notes": "The rules engine, six bounded bots, original English PWA, 15 interactive lessons, private invite/quick-match rooms and isolated archive are implemented and privately staged. The exact-SHA CI run and Melon browser, restart and copied-state recovery checks passed. This release feature is blocked at public promotion by the Arimaa Public License Section 3 conditions and unrun public DNS/TLS/HTTPS/WSS checks. No contact or announcement has been made; do not change public routing or catalog until the gate is cleared. A full opening turn list contains 20,652 options, so keep UI/bot choice bounded."
     }
   ]
 }

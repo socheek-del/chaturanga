@@ -178,6 +178,10 @@
 - [x] Add 15 interactive lessons; web/locale checks pass 5/5. All lesson fixtures/solutions pass the engine, and production Chromium checked setup interaction, 390px/desktop overflow, service-worker control and offline lesson loading.
 - [x] Run full `NODE_OPTIONS=--no-experimental-webstorage npm run verify` after the PWA increment; repository lint, all workspace typechecks and all tests pass.
 - [x] Add the isolated Arimaa Worker, server-authoritative invite rooms, quick-match handler and product-local archive. Worker integration tests pass 6/6 for room/setup/turn validation, reconnect/eviction, quick-match pairing, no chat and finished-game archive.
-- [x] Integrate the online lobby and Arimaa-specific setup/full-turn UI. Built PWA + Worker Chromium smoke synchronized two seats through all 32 placements and one turn; service worker controlled the page, with zero page errors. Add and pass a mutable-board regression test (web tests 6/6).
-- [ ] Rerun full verification after the final regression fix, push directly to main, confirm exact-SHA CI and stage the pinned revision privately on Melon port 19920. Test restart and copied-state recovery; leave public route/catalog unchanged until DNS/TLS and HTTPS/WSS smoke and the license gate.
+- [x] Integrate the online lobby and Arimaa-specific setup/full-turn UI. Worker tests pass 6/6; web tests pass 6/6, including the mutable-board regression test.
+- [x] Rerun `NODE_OPTIONS=--no-experimental-webstorage npm run verify`; push `bc212e2232b7a975614053314a99b153c9f9c8a1` directly to main; exact-SHA CI run 45761054022 passed.
+- [x] Privately stage that SHA on Melon port 19920 in `/home/melon/chaturanga-release.arimaa.gcnx9k`; D1 migration, health and homepage passed.
+- [x] Built-stage Chromium passed interactive tutorial, all 15 lessons offline, service-worker control, bot reply and 390px layout; the two-seat room synchronized 32 setup placements and legal turns with zero browser errors.
+- [x] The room recovered across container restart; a stopped-state copy recovered both seats and move history and accepted/synchronized another legal turn. Removed the temporary copy/container and confirmed the primary stage healthy.
+- [x] Keep Arimaa public promotion blocked pending owner confirmation of the no-user/no-ad-revenue condition, authorization for the required Discord announcement, and public DNS/TLS/HTTPS/WSS checks. No public route/catalog changes or external contact were made.
 - [x] Add `ko-shogi-001` as a blocked feature and preserve Arimaa as the next ready roadmap row.

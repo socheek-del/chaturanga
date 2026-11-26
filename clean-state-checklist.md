@@ -233,12 +233,15 @@
 - [x] Run full `NODE_OPTIONS=--no-experimental-webstorage npm run verify` with loopback access; lint, all workspace typechecks and tests pass.
 - [x] Move `plat-023` to passing and set `senterej-001` active. The generic platform package has no runtime route to deploy.
 
-### Senterej (active)
+### Senterej (privately staged; public DNS gate)
 
 - [x] Complete the historical profile and clean-room source/rights notes; no popularity claim is made.
 - [x] Complete actor-aware platform prerequisite `plat-023`.
 - [x] Implement the pure Variant with source-profiled movements, concurrent Werera actors, first-capture transition, automatic Ferz promotion, ending rules, FEN, undo and actor replay; focused tests 27/27, package typecheck and lint pass.
 - [x] Add six seeded bounded bots (AI tests 3/3), an original independent English PWA, eight interactive lessons, saved bot/pass-and-play games, offline shell, and an isolated authoritative Worker with private concurrent Werera rooms and legal retractions (Worker tests 5/5).
 - [x] Run the full workspace verify; Senterej web tests 40/40, browser E2E 4/4, offline PWA E2E 1/1, and production PWA/Worker build pass.
-- [ ] Commit/push the verified implementation; confirm exact-SHA CI, then stage on Melon port 19923 and pass built-app browser, restart and copied-state recovery checks.
-- [ ] Check the hostname DNS/TLS/HTTPS/WSS. Keep public routing and the app directory unchanged unless those checks pass.
+- [x] Commit/push the implementation; exact-SHA CI run 45846364938 passes at 64ec507cb5b8ad2325594024bc67c0d3a117b0b3.
+- [x] Stage the pinned release on Melon port 19924; migration, health and homepage pass.
+- [x] Built-stage browser smoke 4/4 and offline PWA smoke 1/1 pass.
+- [x] Live two-seat room survives restart; copied-state recovery restores the same seats and history, then syncs another legal move. Temporary restore resources removed; primary stage healthy.
+- [x] Check DNS on Melon: the configured hostname has no answer. HTTPS/WSS remain unavailable; keep public routing and the app directory unchanged.

@@ -3841,7 +3841,7 @@
         "2026-11-26: A four-seat room retained its identities and move history after container restart. With the writer stopped, state was copied to state-restore-test and opened in an isolated container on 19923; all seats/history returned and a legal/pass action synchronized. The restore container and copy were removed; the primary port-19922 stage was restarted and health passed.",
         "2026-11-26: Melon's resolver returned no address for chaturaji.beanroti.com. Public HTTPS/WSS checks and promotion cannot proceed; no Caddy route or directory entry was changed. Feature is blocked only at public promotion."
       ],
-      "notes": "Implemented and privately staged from cf328621aab6bcdd2575c7abd0be147cc8f8546a. Exact-SHA CI, full workspace verification, product build, staged tutorial/bot/room/PWA smoke and restart/copied-state restore pass. This is the historically attested dice reconstruction and does not claim a popularity winner or perfect recovery of every historical procedure. Public promotion is blocked because Melon's resolver has no answer for chaturaji.beanroti.com; keep Caddy and the app directory unchanged. The next roadmap product is Djambi."
+      "notes": "Implemented and privately staged from cf328621aab6bcdd2575c7abd0be147cc8f8546a. Exact-SHA CI, full workspace verification, product build, staged tutorial/bot/room/PWA smoke and restart/copied-state restore pass. This is the historically attested dice reconstruction and does not claim a popularity winner or perfect recovery of every historical procedure. Public promotion is blocked because Melon's resolver has no answer for chaturaji.beanroti.com; keep Caddy and the app directory unchanged. Djambi, Martian Chess, Apocalypse and Game of the Generals remain rights-blocked before implementation; the next ready roadmap row is Infinite chess, starting with source, adoption and rights research."
     },
     {
       "id": "djambi-001",
@@ -3941,9 +3941,9 @@
       "evidence": [
         "2026-11-26: Senterej is the next rights-cleared product candidate. Its concurrent Werera phase and retraction need actor-aware replay; current Variant/game-shell/server-kit APIs are strict turn-based. The seam and required behavior are documented in apps/senterej/docs/PLAN.md.",
         "2026-11-26: Added optional `activePlayers`, `legalUciFor(color)` and `moveFor(color, uci)` to VariantGame plus shared actor-aware helpers and `replayVariantMoves`. Legacy behavior defaults to `turn`; focused rules-core tests pass 49/49, package typecheck and ESLint pass. Session persistence, protocol and server-room actor history/retraction remain ahead.",
-        "2026-11-26: Finished actor identity through local saves, review, shared board input, protocol snapshots, online sessions and authoritative room replay/retraction. Regression coverage passes: board-ui 50/50, game-shell 97/97, protocol 8/8 and server-kit 24/24; full loopback-enabled workspace verification passed (lint, all typechecks and all tests). No runtime product exists to deploy yet; stage Senterej on Melon before its public promotion."
+        "2026-11-26: Finished actor identity through local saves, review, shared board input, protocol snapshots, online sessions and authoritative room replay/retraction. Regression coverage passes: board-ui 50/50, game-shell 97/97, protocol 8/8 and server-kit 24/24; full loopback-enabled workspace verification passed (lint, all typechecks and all tests). Senterej now passes exact-SHA CI and private Melon stage verification; public release remains gated independently by DNS/TLS checks."
       ],
-      "notes": "Scope is the narrow generic capability required by Senterej. Existing turn-based games default to game.turn. The interface and stored room history remain replayable after reconnect, restart and copied-state restore. The consumer is not publicly promotable until its Senterej release feature passes Melon staging."
+      "notes": "Scope is the narrow generic capability required by Senterej. Existing turn-based games default to game.turn. The interface and stored room history remain replayable after reconnect, restart and copied-state restore. Senterej passed Melon staging; its public promotion is blocked separately by hostname DNS/TLS/HTTPS/WSS checks."
     },
     {
       "id": "senterej-001",
@@ -3953,7 +3953,7 @@
       "milestone": "M54",
       "title": "Release Senterej",
       "user_visible_behavior": "Players learn the documented historical Senterej rules and play against bots, locally and in private online rooms with concurrent Werera actions.",
-      "status": "in_progress",
+      "status": "blocked",
       "verification": [
         "Implement the source-linked historical profile in packages/senterej/RULES.md with explicit choices for Werera end, retractions, check, promotion, material and first turn.",
         "Use the completed plat-023 actor-aware replay and server validation for concurrent Werera actions and legal retractions.",
@@ -3965,9 +3965,34 @@
         "2026-11-26: Clean-room historical rules work is ready; plat-023 actor-aware Variant, session, protocol and server support is passing. Senterej engine implementation is now active.",
         "2026-11-26: Implemented the pure Senterej Variant, including concurrent Werera actors, non-capturing-move state, first-capture transition, historical piece moves, Ferz promotion, endings, repetition, FEN, undo and replay. Focused rules suite passes 27/27, typecheck and ESLint pass. Bot, tutorial, independent PWA, private online rooms and Melon stage remain.",
         "2026-11-26: Added six seeded, node-bounded bots; an original English Field of Ochre PWA; eight interactive rules lessons; saved bot/pass-and-play games; offline shell; and isolated authoritative invite rooms supporting concurrent Werera actions and legal retractions. Focused tests: AI 3/3, web 40/40, Worker 5/5; browser E2E 4/4 and installed offline PWA E2E 1/1 pass.",
-        "2026-11-26: Full `NODE_OPTIONS=--no-experimental-webstorage npm run verify` passes (lint, all workspace typechecks and tests); `npm run build:senterej` passes for the PWA and Worker dry-run. Melon stage, exact-SHA CI and recovery evidence remain required before public release."
+        "2026-11-26: Full `NODE_OPTIONS=--no-experimental-webstorage npm run verify` passes (lint, all workspace typechecks and tests); `npm run build:senterej` passes for the PWA and Worker dry-run. Exact-SHA CI run 45846364938 passed commit 64ec507cb5b8ad2325594024bc67c0d3a117b0b3, including workspace verification and build:senterej.",
+        "2026-11-26: Staged that SHA on Melon at 127.0.0.1:19924 in /home/melon/chaturanga-release.senterej.umZ25h (container chaturanga-stage-senterej-19924); DB/0001_games.sql applied, and health/homepage returned Senterej. Built-stage browser smoke passed 4/4 and offline PWA smoke 1/1 through a fresh SSH tunnel.",
+        "2026-11-26: Two-seat Werera play and move sync passed. Room history replayed after container restart; a stopped-writer copy restored the room and both correct seats in a separate container, and another legal move synchronized to both browsers. The temporary restore container/data were removed and the original stage was restarted healthy. The earlier pre-fix stage remains on 19923 as rollback.",
+        "2026-11-26: Melon's resolver returned no DNS address for the configured Senterej hostname. Public HTTPS/WSS smoke cannot run; no Caddy route or app-directory entry was changed. Status is blocked only at public promotion."
       ],
-      "notes": "Historical sources are provenance, not copied prose or art. First-capture Werera ending, first ordinary side, check/stalemate/repetition procedures and seven-move lone-capital ending follow the documented digital choices. Product identity approval and DNS/HTTPS/WSS promotion checks remain open."
+      "notes": "The implemented historical profile follows the documented digital choices for first-capture Werera ending, first ordinary side, check/stalemate/repetition procedures and the seven-move lone-capital ending. The product is implemented and privately staged; public promotion is blocked because Melon's resolver returns no DNS address for its hostname, leaving HTTPS/WSS checks unavailable. Keep Caddy and the app directory unchanged. The Field of Ochre identity proposal still awaits owner review. The next ready roadmap row is Infinite chess; complete its source, adoption and rights review before implementation."
+    },
+    {
+      "id": "infinite-chess-001",
+      "product": "infinite-chess",
+      "priority": 206,
+      "area": "release",
+      "milestone": "M55",
+      "title": "Release Infinite Chess Classical",
+      "user_visible_behavior": "Players learn the selected Infinite Chess rules through an interactive tutorial and play against a bounded bot, locally, and in private online rooms.",
+      "status": "in_progress",
+      "verification": [
+        "Verify the official Classical rules, source provenance, adoption and rights; identify documented ambiguities and do not claim a popularity winner without evidence.",
+        "Record board coordinates, piece movement, unbounded rays, legal-move constraints, check and end conditions in a source-linked product plan and rules contract before engine implementation.",
+        "Establish an applicable rights basis for the digital adaptation before coding; use original code, art, interface and tutorial wording, and do not contact external parties without owner authorization.",
+        "If the rights and rules gates clear, implement a pure Variant using sparse coordinates and validated ray queries, with deterministic replay/undo and conformance coverage.",
+        "Add seeded bounded bots, a complete interactive tutorial, an independent offline PWA and server-authoritative private multiplayer rooms with isolated Melon storage.",
+        "Run full verification, product build, exact-SHA CI, staged browser/PWA smoke, restart and copied-state recovery. Check DNS/TLS/HTTPS/WSS before public promotion."
+      ],
+      "evidence": [
+        "2026-11-26: Selected by the Wave 5 roadmap as InfiniteChess.org Classical, with the official guide and Apeiron project listed as research leads. The source, adoption/popularity evidence and project-specific digital rights have not yet been verified; no engine or product implementation has started."
+      ],
+      "notes": "Research is the active slice. Keep implementation blocked until the official rules, selection rationale, digital-adaptation rights basis and technical requirements are documented. No external contact has been made."
     }
   ]
 }

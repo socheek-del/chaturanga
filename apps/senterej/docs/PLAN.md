@@ -37,7 +37,7 @@ The actor-aware capability is implemented as `plat-023`. A variant can declare a
 for a seat and apply an action on that seat's behalf; ordinary variants retain `game.turn` defaults. Local and
 online histories carry each actor, saved reviews replay actors, and server rooms validate/replay actor-tagged
 actions. Online retraction rebuilds the authoritative history and accepts only a legal remainder that stays in
-Werera. Senterej is the first consumer and its first release must be staged on Melon before public promotion.
+Werera. Senterej is the first consumer; its implementation has passed private Melon stage and recovery checks.
 
 ## Historical clean-room basis
 
@@ -58,6 +58,14 @@ See [`reports/Senterej rules adoption and rights.md`](reports/Senterej%20rules%2
   piece marks, interface and tutorial copy are original.
 - The independent English PWA includes eight interactive lessons, pass-and-play, saved bot games and offline
   access. Its isolated Worker supports private concurrent-action rooms and has no chat.
-- Product, Worker and repository verification pass locally. Exact-SHA CI and the isolated Melon release stage,
-  built-app browser smoke, restart and copied-state recovery remain before the feature can pass. Public
-  promotion additionally requires the independent hostname to resolve and pass HTTPS/WSS checks.
+- Exact-SHA CI run `45846364938` passed commit `64ec507cb5b8ad2325594024bc67c0d3a117b0b3`.
+- Melon stage `chaturanga-stage-senterej-19924` runs at `127.0.0.1:19924` from
+  `/home/melon/chaturanga-release.senterej.umZ25h`. The product migration, health endpoint and homepage pass;
+  built-stage browser smoke passed 4/4 and the offline PWA smoke passed 1/1.
+- The online room replayed its two-seat history after container restart. A stopped-writer copy restored the
+  same room and both seats in a separate container, and another legal move synchronized to both clients.
+  Temporary restore resources were removed and the primary stage was restarted healthy. The prior stage at
+  port `19923` remains available for rollback.
+- Public promotion is blocked because Melon's resolver returned no DNS address for the configured hostname.
+  HTTPS/WSS checks cannot run; do not change Caddy or the app directory. The Field of Ochre identity proposal
+  also awaits owner review.

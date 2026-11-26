@@ -3684,6 +3684,56 @@
         "2026-11-26: Melon DNS resolves no address for chu-shogi.beanroti.com. Public HTTPS/WSS and Caddy/catalog promotion remain gated on DNS/TLS and owner review of the public product name/design. No route or catalog entry changed; the verified stage remains available."
       ],
       "notes": "Implementation and isolated Melon stage are complete. Commit 3475a21d6c3723e57be4e8c7daaa6d5eecc71f1b passed exact-SHA CI run 45736686982. The pinned stage at port 19919 passed migration, health, tutorial, bot, online room/archive, offline PWA, restart and copied-state restore checks. Status is blocked only at public promotion: chu-shogi.beanroti.com has no DNS address, and the public product name/design awaits owner review. No public Caddy route or app-directory entry was added. Stage directory: /home/melon/chaturanga-release.chu-shogi.NJyO3x. See apps/chu-shogi/docs/PLAN.md and Session 096 in claude-progress.md."
+    },
+    {
+      "id": "ko-shogi-001",
+      "product": "ko-shogi",
+      "priority": 195,
+      "area": "release",
+      "milestone": "M44",
+      "title": "Release Ko Shogi reconstruction",
+      "user_visible_behavior": "Players learn a source-based Ko Shogi reconstruction through an interactive tutorial and play complete games against bots, locally, and in private online rooms.",
+      "status": "blocked",
+      "verification": [
+        "Compare the 1770 Kōshōgifu and 1773 commentary, record source provenance, adoption limits and rights before scheduling engine work.",
+        "Transcribe and source-check all 19×19 setup cells, piece movements, shooting and special mechanics; resolve the 53-versus-65 move-count conflict before pinning packages/ko-shogi/RULES.md.",
+        "Implement a pure @chaturanga/ko-shogi Variant with source-backed fixtures, shared conformance, deterministic replay/undo and focused multi-leg/special-rule tests.",
+        "Add bounded bots for both roles and an interactive tutorial covering the selected rules and every digital convention.",
+        "Ship an independent original PWA with local saves, offline install, complete locale keys and product-local site/service configuration.",
+        "Provide server-authoritative private rooms and isolated Melon storage; verify legality, reconnect, restart and copied-state restore.",
+        "Pass exact-SHA CI and Melon stage smoke. Public route/catalog promotion requires DNS/TLS and HTTPS/WebSocket smoke."
+      ],
+      "evidence": [
+        "2026-11-26: Source-linked research is recorded in apps/ko-shogi/docs/reports/Ko Shogi rules adoption rights.md and the product-local notes. The recommended candidate is a reconstruction based on Sorai’s 1770 Kōshōgifu and the 1773 Gukai commentary, not a proven popular edition.",
+        "2026-11-26: The modern profile describes a 19×19 board, 90 pieces per side and 34 starting types; the full movement chart and setup still need independent verification. Sources disagree on 53 versus 65 distinct moves and leave several mechanics unresolved.",
+        "2026-11-26: Available sources do not support a popularity claim. Waseda image reuse requires advance application, NIJL item terms are unverified, and the author/license of a modern English reconstruction was not verified. The clean-room route is not yet enough to meet the repository permission gate. No rights-holder contact was made."
+      ],
+      "notes": "Blocked before implementation pending full primary-source review of the piece/setup chart and a cleared project rights basis. Do not copy modern rule prose, diagrams, or scans. If the gate cannot be met, leave this feature blocked and proceed to Arimaa. See apps/ko-shogi/docs/PLAN.md."
+    },
+    {
+      "id": "arimaa-001",
+      "product": "arimaa",
+      "priority": 196,
+      "area": "release",
+      "milestone": "M45",
+      "title": "Release Arimaa",
+      "user_visible_behavior": "Players learn a clearly identified Arimaa ruleset through an interactive tutorial and play complete games against bots, locally, and in private online rooms.",
+      "status": "in_progress",
+      "verification": [
+        "Confirm the current standard two-player rules, source provenance, adoption context and rights before scheduling engine work.",
+        "Record setup, four-step turns, push/pull, traps, freezing, rabbit movement, victory and digital conventions in a source-linked product plan and RULES.md.",
+        "Implement a pure @chaturanga/arimaa Variant with source-backed fixtures, shared conformance, deterministic replay/undo and focused push/pull/trap tests.",
+        "Add bounded bots for both roles and an interactive tutorial covering all selected rules and conventions.",
+        "Ship an independent original PWA with local saves, offline install, complete locale keys and product-local site/service configuration.",
+        "Provide server-authoritative private rooms and isolated Melon storage; verify legality, reconnect, restart and copied-state restore.",
+        "Meet the current publisher license/permission terms before public release; pass exact-SHA CI and Melon stage smoke. Public promotion requires DNS/TLS and HTTPS/WebSocket smoke."
+      ],
+      "evidence": [
+        "2026-11-26: Research complete in apps/arimaa/docs/reports/Arimaa rules adoption licensing.md and its three source-linked notes. Selected the official standard two-player rules; available sources support it as the canonical profile but do not prove a most-popular variant.",
+        "2026-11-26: The rules contract records the 8x8 board, four trap squares, 16-piece armies, player-chosen two-rank setup, four-step turns, push/pull, freezing, per-step trap captures, rabbit goals/elimination, immobilization, and third-repetition loss.",
+        "2026-11-26: Arimaa Public License v2025.02 Section 3 is a possible route only for a free product with no user or advertising revenue. It requires visible notices/attribution and a Discord announcement. No announcement or rights-holder contact has been made; original art and prose are required."
+      ],
+      "notes": "Research is complete and the source-linked rules/rights contract is recorded. Engine implementation may proceed as private development and Melon staging using original assets. Keep public release gated on confirming no user/advertising revenue and owner authorization for the required Discord announcement; do not contact anyone without explicit authorization."
     }
   ]
 }

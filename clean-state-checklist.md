@@ -159,4 +159,15 @@
 - [x] A live room recovered both seats/history through container restart and continued; a stopped-state copy restored both seats/two plies and synchronized another move. Removed temporary restore resources; primary stage healthy.
 - [x] `chu-shogi.beanroti.com` has no DNS address. Public HTTPS/WSS, Caddy promotion and catalog publication are blocked pending DNS/TLS and owner review of product name/design; no public route or catalog entry changed. No Cloudflare limitation was found.
 - [x] Record the verified release state and remaining public gate in feature list, progress, handoff, quality notes and product plan; inspect `git status` before ending.
-- [x] Leave the next roadmap row, Ko Shogi, ready for rules/edition/adoption/rights research.
+- [x] Complete Ko Shogi rules/edition/adoption/rights research and save the source-linked report/plan; block implementation on the unverified full movement chart and unresolved project rights gate. Arimaa is the next roadmap row.
+
+### Ko Shogi
+
+- [x] Save the source-linked report and notes under `apps/ko-shogi/docs/`; record a clearly labeled 1770/1773 historical reconstruction candidate and make no popularity claim.
+- [x] Record the 19×19/90-piece/34-starting-type modern profile as provisional. The 53/65 move-count conflict, complete setup chart and several special rules still need source review before a rules contract.
+- [x] Keep Ko Shogi blocked before implementation: modern reconstruction author/license and NIJL item terms are unresolved; Waseda scan reuse requires advance application. Do not reuse modern prose/images or scans. No contact was made.
+- [x] Complete Arimaa rules, adoption and licensing research; select official standard two-player rules without claiming a popularity winner. Save the report, notes, product plan and source-linked rules contract under `apps/arimaa/` and `packages/arimaa/`.
+- [x] Record the Arimaa Public License v2025.02 Section 3 conditions. Keep public release gated on confirming a free/no-user-or-ad-revenue product and owner authorization for the required Discord announcement; no contact or announcement has been made.
+- [x] Pass baseline `NODE_OPTIONS=--no-experimental-webstorage ./init.sh` and adjacent 8×8 browser smoke (5/5; optional installed-offline scenario skipped).
+- [ ] Implement the Arimaa Variant setup phase and deterministic FEN, then verify setup and four-step-turn rules before starting bots or product UI. Reserve Melon staging port 19920; use original art/prose and no public route/catalog changes.
+- [x] Add `ko-shogi-001` as a blocked feature and preserve Arimaa as the next ready roadmap row.

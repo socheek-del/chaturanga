@@ -1,4 +1,4 @@
-import { legalUciFor, moveFor as applyMoveFor, type Color, squareOf, type Variant, type VariantGame } from '@chaturanga/rules-core';
+import { legalUciFor, moveFor as applyMoveFor, type Color, squareOf, type FiniteVariantGame, type Variant } from '@chaturanga/rules-core';
 import type { EngineLine, PositionEval } from './engine';
 import type { Opening, OpeningBook } from './openings';
 import type { Score } from './uci';
@@ -35,7 +35,7 @@ export const MISS_SLACK = 5;
  * What the labels need to know about a game beyond its engine scores. The king (`k`) is valued as more than
  * any exchange, whatever the product's material table says.
  */
-export interface ReviewRules<G extends VariantGame = VariantGame> {
+export interface ReviewRules<G extends FiniteVariantGame = FiniteVariantGame> {
   variant: Variant<G>;
   /** Material in pawns per piece type, as the product counts it for its players. */
   pieceValues: Readonly<Record<string, number>>;
@@ -132,7 +132,7 @@ export interface GameReview {
   opening: Opening | null;
 }
 
-export interface ReviewInput<G extends VariantGame = VariantGame> {
+export interface ReviewInput<G extends FiniteVariantGame = FiniteVariantGame> {
   rules: ReviewRules<G>;
   startFen: string;
   moves: readonly string[];
@@ -150,7 +150,7 @@ const fromSide = (score: Score, color: Color): Score =>
  * The rules' verdict on a position the game has ended in, shaped like an engine result so that a mate
  * reads as won and a draw as level. Null while the game can go on.
  */
-export function terminalEval(game: VariantGame): PositionEval | null {
+export function terminalEval(game: FiniteVariantGame): PositionEval | null {
   const status = game.status();
   if (status.kind === 'ongoing') return null;
   // A decided ending (mate, a stalemate some variants score as a win) reads as won; anything else as level.
@@ -160,7 +160,7 @@ export function terminalEval(game: VariantGame): PositionEval | null {
 }
 
 /** Labels every move, and sums up each side (ch-015, plat-017). Pure: the engine's work comes in `evals`. */
-export function reviewGame<G extends VariantGame>({ rules, startFen, moves, moveActors, evals, book }: ReviewInput<G>): GameReview {
+export function reviewGame<G extends FiniteVariantGame>({ rules, startFen, moves, moveActors, evals, book }: ReviewInput<G>): GameReview {
   if (evals.length !== moves.length + 1) throw new Error(`need ${moves.length + 1} evaluations, got ${evals.length}`);
   const { variant } = rules;
   const game = variant.createGame(startFen);
@@ -271,7 +271,7 @@ function isOnlyMove(lines: readonly EngineLine[], color: Color, winBefore: numbe
 }
 
 /** SAN of a line from the game's current position, stopping at the first move that does not fit. */
-export function sanOf(variant: Variant, game: VariantGame, line: readonly string[]): string[] {
+export function sanOf(variant: Variant, game: FiniteVariantGame, line: readonly string[]): string[] {
   const copy = variant.createGame(game.fen());
   const out: string[] = [];
   for (const uci of line) {
@@ -288,7 +288,7 @@ export function sanOf(variant: Variant, game: VariantGame, line: readonly string
  * Material the opponent (to move) can win by exchanges on the mover's pieces, the most on any one square:
  * a piece worth SACRIFICE_PIECE or more left where it can be taken for less.
  */
-export function sacrificeValue(rules: ReviewRules, game: VariantGame, mover: Color): number {
+export function sacrificeValue(rules: ReviewRules, game: FiniteVariantGame, mover: Color): number {
   let most = 0;
   for (const { square, piece } of game.pieces()) {
     if (piece.color !== mover || piece.type === 'k' || valueOf(rules, piece.type) < SACRIFICE_PIECE) continue;
@@ -317,7 +317,7 @@ export function hangingBefore(rules: ReviewRules, fen: string, mover: Color): nu
  * paying. Moves are read from their coordinate notation, so any board size works; a capture that can promote
  * in several ways is tried once.
  */
-export function exchangeGain(rules: ReviewRules, game: VariantGame, square: number): number {
+export function exchangeGain(rules: ReviewRules, game: FiniteVariantGame, square: number): number {
   const target = game.pieceAt(square);
   if (!target) return 0;
   const { files } = rules.variant;

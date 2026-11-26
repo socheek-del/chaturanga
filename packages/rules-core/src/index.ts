@@ -12,4 +12,4 @@ export * from './pgn';
 export * from './result';
 export type * from './types';
 export type * from './variant';
-export { activePlayers, legalUciFor, moveFor, replayVariantMoves, usesSetupPhase } from './variant';
+export { activePlayers, legalUciFor, legalUciInFor, moveFor, replayVariantMoves, usesSetupPhase } from './variant';

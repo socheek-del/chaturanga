@@ -1,4 +1,4 @@
-import { PgnError, type VariantGame } from '@chaturanga/rules-core';
+import { PgnError, type FiniteVariantGame } from '@chaturanga/rules-core';
 import { Badge, Button, buttonClasses, Card, Modal } from '@chaturanga/ui';
 import { ClipboardCopy, Download, FileUp, History, Trash2 } from 'lucide-react';
 import { useState } from 'react';
@@ -17,13 +17,13 @@ const OUTCOME_TONE: Record<Outcome, 'primary' | 'danger' | 'secondary' | 'neutra
   unfinished: 'neutral',
 };
 
-export interface GamesScreenProps<G extends VariantGame> {
+export interface GamesScreenProps<G extends FiniteVariantGame> {
   kit: ReviewKit<G>;
   links: ReviewLinks;
 }
 
 /** Every game saved in this browser, newest first (ch-014, plat-017). */
-export function GamesScreen<G extends VariantGame>({ kit, links }: GamesScreenProps<G>) {
+export function GamesScreen<G extends FiniteVariantGame>({ kit, links }: GamesScreenProps<G>) {
   const { t } = useTranslation();
   const games = kit.history((s) => s.games);
   const [importing, setImporting] = useState(false);
@@ -82,7 +82,7 @@ export function GamesScreen<G extends VariantGame>({ kit, links }: GamesScreenPr
   );
 }
 
-function GameRow<G extends VariantGame>({
+function GameRow<G extends FiniteVariantGame>({
   kit,
   links,
   game,
@@ -135,7 +135,7 @@ function GameRow<G extends VariantGame>({
   );
 }
 
-function ImportDialog<G extends VariantGame>({
+function ImportDialog<G extends FiniteVariantGame>({
   kit,
   links,
   open,
@@ -203,7 +203,7 @@ function ImportDialog<G extends VariantGame>({
   );
 }
 
-export function ExportDialog<G extends VariantGame>({ kit, game, onClose }: { kit: ReviewKit<G>; game: SavedGame | null; onClose: () => void }) {
+export function ExportDialog<G extends FiniteVariantGame>({ kit, game, onClose }: { kit: ReviewKit<G>; game: SavedGame | null; onClose: () => void }) {
   const { t } = useTranslation();
   const [copied, setCopied] = useState(false);
   const pgn = game ? savedGameToPgn(kit.rules.variant, game, t, kit.pgn) : '';

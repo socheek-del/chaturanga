@@ -2,7 +2,7 @@
 
 **Research date:** 2026-11-26
 
-**Decision:** Select the official Classical default for planning; block implementation pending a clear adaptation-rights basis. No external contact was made.
+**Decision:** Select the official Classical default and proceed with product-local AGPL-3.0-or-later licensing for source-derived software. No external contact was made.
 
 ## Edition selection and adoption
 
@@ -36,18 +36,18 @@ digital edge case.
 
 ## Rights review
 
-The official `infinitechess.org` repository's `docs/COPYING.md` says its files are AGPL-3.0-or-later unless an
-exception applies, and that works derived from its software must use the same license. The repository README also
-describes the project as open source and says its license aims to keep the game free. Apeiron has a separate
-GPL-3.0 license. These grants clearly matter if code is copied or modified; this project has not copied either codebase.
+The official `infinitechess.org` repository's `docs/COPYING.md` says files are AGPL-3.0-or-later unless an exception
+applies, and that works derived from its software must use the same license. Infinite Chess product-specific source
+derived from that project will use AGPL-3.0-or-later and preserve Naviary's copyright/license notices; the rest of
+the monorepo keeps its GPL-3.0-or-later terms. The GNU FAQ says AGPLv3 and GPLv3 code may be combined; the AGPL
+section 13 network-source requirement applies to the combined program. The product therefore needs a prominent
+source link to complete corresponding source covering the web client and online service.
 
-The reviewed materials did not provide a separate, explicit license granting this repository the right to release
-an independently authored faithful digital adaptation, use the official branding, or redistribute the official
-art/text. The source-code licenses alone are not recorded as clearance for that broader adaptation under this
-repository's rights gate. A compliant route could be an applicable explicit adaptation grant or permission, plus a
-resolved product/repository license plan if any AGPL-covered code is reused. Until then, use no official source,
-art, logo, prose, or identity and do not start implementation. No creator/maintainer contact was sent because owner
-authorization for external contact has not been provided.
+This establishes a source-license route for a derived software implementation. It does not grant the
+InfiniteChess.org brand, art, prose or files excluded by the official COPYING exceptions; those will not be reused.
+New product code, art, interface and tutorial wording will be original and the app will be independently branded.
+The separate Apeiron engine has GPL-3.0 terms and is not part of the selected implementation. This review is not a
+legal opinion. No external contact was made or is needed for this route.
 
 ## Sources
 

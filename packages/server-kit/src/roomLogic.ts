@@ -20,7 +20,10 @@ import {
   replayVariantMoves,
   type Variant,
   type VariantGame,
+  type VariantSquare,
 } from '@chaturanga/rules-core';
+
+type RoomGame = VariantGame<Color, VariantSquare>;
 
 export interface RoomState {
   code: string;
@@ -45,8 +48,8 @@ export interface RoomState {
 
 export const other = (c: Color): Color => (c === 'w' ? 'b' : 'w');
 
-export function createRoom(
-  variant: Variant,
+export function createRoom<G extends RoomGame>(
+  variant: Variant<G>,
   options: {
     code: string;
     creator: PublicUser;
@@ -86,7 +89,7 @@ export function roomStatus(room: RoomState): GameSnapshot['status'] {
   return room.players.w && room.players.b ? 'playing' : 'waiting';
 }
 
-export function replay(variant: Variant, room: RoomState): VariantGame {
+export function replay<G extends RoomGame>(variant: Variant<G>, room: RoomState): G {
   return replayVariantMoves(variant, room.startFen, room.moves, room.moveActors);
 }
 
@@ -97,7 +100,7 @@ export function seatOf(room: RoomState, userId: string): Color | null {
 }
 
 /** True while pieces are still being placed from hand (the Sittuyin setup phase). */
-function inSetup(game: VariantGame): boolean {
+function inSetup(game: RoomGame): boolean {
   return game.hand('w').length + game.hand('b').length > 0;
 }
 
@@ -105,7 +108,7 @@ function inSetup(game: VariantGame): boolean {
  * Both seats are taken: create the clock. Clocks do not run while pieces are being placed, so a game
  * that opens with a setup phase gets a stopped clock that starts after the last placement.
  */
-function startIfReady(variant: Variant, room: RoomState, now: number): RoomState {
+function startIfReady<G extends RoomGame>(variant: Variant<G>, room: RoomState, now: number): RoomState {
   if (!room.players.w || !room.players.b || room.clock || !room.timeControl) return room;
   const game = replay(variant, room);
   const clock = createClock(room.timeControl.initialMs, now, game.turn);
@@ -123,7 +126,7 @@ function finish(room: RoomState, result: GameResult, now: number): RoomState {
 }
 
 /** Joins or rejoins a room. Returns the user's seat (null = spectator). */
-export function join(variant: Variant, room: RoomState, user: PublicUser, now: number): { room: RoomState; color: Color | null } {
+export function join<G extends RoomGame>(variant: Variant<G>, room: RoomState, user: PublicUser, now: number): { room: RoomState; color: Color | null } {
   const seated = seatOf(room, user.id);
   if (seated) {
     const back = room.disconnect?.color === seated ? { ...room, disconnect: null } : room;
@@ -161,8 +164,8 @@ export interface ApplyResult {
   rematch?: boolean;
 }
 
-export function applyMessage(
-  variant: Variant,
+export function applyMessage<G extends RoomGame>(
+  variant: Variant<G>,
   current: RoomState,
   color: Color | null,
   message: ClientMessage,
@@ -215,7 +218,7 @@ export function applyMessage(
       if (removed.captured || (removed.captures?.length ?? 0) > 0 || removed.action === 'capture') return { room, error: 'illegal_move' };
       const moves = room.moves.filter((_, index) => index !== message.index);
       const moveActors = actors.filter((_, index) => index !== message.index);
-      let rebuilt: VariantGame;
+      let rebuilt: G;
       try {
         rebuilt = replayVariantMoves(variant, room.startFen, moves, moveActors);
       } catch {

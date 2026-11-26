@@ -3973,27 +3973,50 @@
       "notes": "The implemented historical profile follows the documented digital choices for first-capture Werera ending, first ordinary side, check/stalemate/repetition procedures and the seven-move lone-capital ending. The product is implemented and privately staged; public promotion is blocked because Melon's resolver returns no DNS address for its hostname, leaving HTTPS/WSS checks unavailable. Keep Caddy and the app directory unchanged. The Field of Ochre identity proposal still awaits owner review. The next ready roadmap row is Infinite chess; complete its source, adoption and rights review before implementation."
     },
     {
+      "id": "plat-024",
+      "product": "platform",
+      "priority": 206,
+      "area": "platform",
+      "milestone": "M55",
+      "title": "Sparse unbounded board contract",
+      "user_visible_behavior": "A rules engine can represent exact sparse coordinates on an unbounded board and answer bounded attack queries without pretending the board is finite.",
+      "status": "passing",
+      "verification": [
+        "Generalize VariantGame square coordinates with a numeric default so all current finite games retain their existing APIs.",
+        "Describe unbounded topology explicitly and add targeted square-attack and viewport-limited legal-move capabilities; do not enumerate infinite rays or attack maps.",
+        "Extend shared Variant conformance to check finite boards as before and sparse unbounded boards through explicit sample-square and attack fixtures.",
+        "Run rules-core tests and typecheck, then full workspace verification. This shared package has no runtime service to deploy."
+      ],
+      "evidence": [
+        "2026-11-26: Baseline `NODE_OPTIONS=--no-experimental-webstorage npm run verify` passed lint, all workspace typechecks and tests with loopback access. `./init.sh` could not refresh dependencies because registry.npmjs.org did not resolve; existing installed dependencies were used.",
+        "2026-11-26: Extended `VariantGame` with generic square coordinates that default to numeric squares, explicit unbounded topology, finite destination filtering, and point-attack queries. Shared conformance now checks sparse unbounded fixtures. Exact large coordinate strings survive local session save/replay. Focused suites passed: rules-core 57/57, game-shell 100/100, server-kit 24/24; focused package typechecks passed.",
+        "2026-11-26: Full `NODE_OPTIONS=--no-experimental-webstorage npm run verify` passed repository lint, all workspace typechecks, and all workspace tests with loopback access. No runtime deployment is required for this shared contract."
+      ],
+      "notes": "This is the shared prerequisite for Infinite Chess Classical. Keep numeric finite-square defaults and all existing products unchanged. The Infinite Chess app will use a product-local AGPL-3.0-or-later license for source-derived product code, with a prominent corresponding-source link for remote users."
+    },
+    {
       "id": "infinite-chess-001",
       "product": "infinite-chess",
-      "priority": 206,
+      "priority": 207,
       "area": "release",
       "milestone": "M55",
       "title": "Release Infinite Chess Classical",
       "user_visible_behavior": "Players learn the selected Infinite Chess rules through an interactive tutorial and play against a bounded bot, locally, and in private online rooms.",
-      "status": "blocked",
+      "status": "in_progress",
       "verification": [
         "Verify the official Classical rules, source provenance, adoption and rights; identify documented ambiguities and do not claim a popularity winner without evidence.",
         "Record board coordinates, piece movement, unbounded rays, legal-move constraints, check and end conditions in a source-linked product plan and rules contract before engine implementation.",
-        "Establish an applicable rights basis for the digital adaptation before coding; use original code, art, interface and tutorial wording, and do not contact external parties without owner authorization.",
+        "Use product-local AGPL-3.0-or-later terms for source-derived software, preserve required notices, check official file exceptions before adapting source, and provide complete corresponding source prominently to remote users; use original art, interface, tutorial wording and brand.",
         "If the rights and rules gates clear, implement a pure Variant using sparse coordinates and validated ray queries, with deterministic replay/undo and conformance coverage.",
         "Add seeded bounded bots, a complete interactive tutorial, an independent offline PWA and server-authoritative private multiplayer rooms with isolated Melon storage.",
         "Run full verification, product build, exact-SHA CI, staged browser/PWA smoke, restart and copied-state recovery. Check DNS/TLS/HTTPS/WSS before public promotion."
       ],
     "evidence": [
       "2026-11-26: Official guide identifies Classical as its default; the official archive says the site's first tournament used Classical (2024) and a later tournament used another starting position (2025). No comparative player/game counts were found, so the chosen edition is an established default/tournament form, not a proven most-popular variant. See apps/infinite-chess/docs/reports/Infinite Chess rules adoption and rights.md.",
-      "2026-11-26: Recorded the source-grounded planning profile in packages/infinite-chess/RULES.md and technical/release requirements in apps/infinite-chess/docs/PLAN.md. The official web software is AGPL-3.0-or-later and Apeiron is GPL-3.0; no separate explicit adaptation grant for an independent faithful project was found. Reconcile the rights basis and AGPL obligations with the repository GPL-3.0 policy before implementation. No engine, bot, PWA, tutorial or worker code was written, and no external contact was made."
+        "2026-11-26: Completed the rules and licensing gates. The official Classical preset confirms the exact 32-piece start and four promotion choices; its source sets a 100-half-move draw threshold and resets after pawn moves/captures. Classical is the official default and a tournament edition, with no comparative usage counts. The AGPL-3.0-or-later source-derived product scope and corresponding-source link are recorded; implementation will use original code, art, prose and brand. No upstream files or assets were copied and no external contact was made.",
+        "2026-11-26: `plat-024` passed full workspace verification and is committed separately before this product implementation begins. Next: implement the pure exact-coordinate rules Variant and its edge-case fixtures."
     ],
-    "notes": "Blocked before implementation: the official software code is published under AGPL-3.0-or-later, but the reviewed sources do not clearly grant this repository an independent faithful digital adaptation license, and adopting AGPL-covered code needs a product/repository license plan. Do not use official art, branding, prose or source. No external contact was made; owner authorization is required before contacting the creator/maintainers. Classical is the best-supported planning default and an established tournament edition, but no comparative usage data establishes it as the most popular variant. Resume only after an applicable rights basis and license plan are recorded; then verify remaining rule details against the official Classical implementation."
+      "notes": "The source-license route is recorded: product-specific source-derived software will use AGPL-3.0-or-later; GNU's GPLv3/AGPLv3 compatibility terms allow combining it with the GPLv3 monorepo, with the AGPL network-source requirement applying to the combined program. Shared prerequisite `plat-024` passed. Preserve license notices and provide complete corresponding source prominently. Do not use official art, branding or prose. No upstream files/assets were copied and no contact was made. Classical is the official default and an established tournament edition, but no comparative usage data establishes it as the most popular variant."
     }
   ]
 }

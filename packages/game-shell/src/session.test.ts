@@ -1,6 +1,6 @@
 // @vitest-environment happy-dom
 import { makruk } from '@chaturanga/makruk';
-import { IllegalMoveError, timesAt, type Color, type Variant, type VariantGame, type VariantMoveRecord } from '@chaturanga/rules-core';
+import { FenError, IllegalMoveError, timesAt, type Color, type Variant, type VariantGame, type VariantMoveRecord } from '@chaturanga/rules-core';
 import { sittuyin } from '@chaturanga/sittuyin';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { capturedBy, isUndoableResult, materialBalance, resultFromStatus } from './result';
@@ -49,6 +49,68 @@ class ConcurrentSessionGame implements VariantGame<Color> {
 const concurrentVariant: Variant<ConcurrentSessionGame> = {
   id: 'concurrent-session-test', files: 8, ranks: 8, startFen: '', pieceTypes: ['p'], hasHands: false,
   createGame: () => new ConcurrentSessionGame(),
+};
+
+const SPARSE_START = 'w|9007199254740993,1';
+class SparseSessionGame implements VariantGame<Color, string> {
+  private side: Color;
+  private square: string;
+  private history: VariantMoveRecord<Color, string>[] = [];
+  constructor(fen = SPARSE_START) {
+    const match = /^([wb])\|(-?\d+,-?\d+)$/.exec(fen);
+    if (!match) throw new FenError('Invalid sparse session FEN', fen);
+    this.side = match[1] as Color;
+    this.square = match[2]!;
+  }
+  get turn(): Color { return this.side; }
+  fen(): string { return `${this.side}|${this.square}`; }
+  pieceAt(square: string) { return square === this.square ? { color: 'w' as const, type: 'k', promoted: false } : null; }
+  pieces() { return [{ square: this.square, piece: { color: 'w' as const, type: 'k', promoted: false } }]; }
+  hand(): readonly string[] { return []; }
+  legalUciIn(squares: readonly string[]): string[] {
+    const [x, y] = this.square.split(',').map(BigInt) as [bigint, bigint];
+    const target = `${x + 1n},${y}`;
+    return this.side === 'w' && squares.includes(target) ? [`${this.square}>${target}`] : [];
+  }
+  move(uci: string): VariantMoveRecord<Color, string> {
+    const target = this.legalUciIn([uci.split('>')[1] ?? ''])[0];
+    if (target !== uci) throw new IllegalMoveError(uci);
+    const to = uci.split('>')[1]!;
+    const record: VariantMoveRecord<Color, string> = {
+      color: this.side,
+      uci,
+      san: uci,
+      piece: { color: 'w', type: 'k', promoted: false },
+      captured: null,
+      action: 'move',
+      to,
+      fenAfter: '',
+    };
+    this.square = to;
+    this.side = 'b';
+    record.fenAfter = this.fen();
+    this.history.push(record);
+    return record;
+  }
+  undo(): VariantMoveRecord<Color, string> | null { return this.history.pop() ?? null; }
+  moves(): VariantMoveRecord<Color, string>[] { return [...this.history]; }
+  lastMove(): VariantMoveRecord<Color, string> | null { return this.history.at(-1) ?? null; }
+  status() { return { kind: 'ongoing' as const }; }
+  isGameOver(): boolean { return false; }
+  inCheck(): boolean { return false; }
+  checkedKingSquare(): null { return null; }
+  counting(): null { return null; }
+}
+
+const sparseVariant: Variant<SparseSessionGame> = {
+  id: 'sparse-session-test',
+  files: 0,
+  ranks: 0,
+  boardTopology: 'unbounded',
+  startFen: SPARSE_START,
+  pieceTypes: ['k'],
+  hasHands: false,
+  createGame: (fen) => new SparseSessionGame(fen),
 };
 
 describe('game session on a Variant (plat-005b)', () => {
@@ -101,6 +163,18 @@ describe('game session on a Variant (plat-005b)', () => {
     createGameSession(makruk).getState().start(null);
     expect(localStorage.getItem('test.bad')).not.toBeNull();
     expect(localStorage.length).toBe(2);
+  });
+
+  it('replays serialized string-square moves without rounding large coordinates', () => {
+    const session = createGameSession(sparseVariant, 'test.sparse');
+    session.getState().start(null);
+    const move = '9007199254740993,1>9007199254740994,1';
+    expect(session.getState().move(move)?.to).toBe('9007199254740994,1');
+
+    const reloaded = createGameSession(sparseVariant, 'test.sparse').getState();
+    expect(reloaded.game.pieceAt('9007199254740994,1')?.type).toBe('k');
+    expect(reloaded.game.fen()).toBe('b|9007199254740994,1');
+    expect(reloaded.game.moves().map(({ uci }) => uci)).toEqual([move]);
   });
 
   it('saves actor-tagged concurrent actions and retracts only while the phase remains open', () => {

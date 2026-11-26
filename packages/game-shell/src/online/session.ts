@@ -8,12 +8,13 @@ import {
   replayVariantMoves,
   type Variant,
   type VariantGame,
+  type VariantSquare,
 } from '@chaturanga/rules-core';
 import { create, type StoreApi, type UseBoundStore } from 'zustand';
 import type { GameSessionState } from '../session';
 import type { ConnectionStatus } from './connection';
 
-export interface OnlineSessionState<G extends VariantGame = VariantGame> extends GameSessionState<G> {
+export interface OnlineSessionState<G extends VariantGame<Color, VariantSquare> = VariantGame> extends GameSessionState<G> {
   snapshot: GameSnapshot | null;
   /** Local time the latest snapshot arrived (pairs with snapshot.serverTime for countdowns). */
   receivedAt: number;
@@ -26,7 +27,7 @@ export interface OnlineSessionState<G extends VariantGame = VariantGame> extends
   bindSender: (send: (message: ClientMessage) => void) => void;
 }
 
-export type OnlineSessionStore<G extends VariantGame = VariantGame> = UseBoundStore<StoreApi<OnlineSessionState<G>>>;
+export type OnlineSessionStore<G extends VariantGame<Color, VariantSquare> = VariantGame> = UseBoundStore<StoreApi<OnlineSessionState<G>>>;
 
 /** Server clock values are "remaining at serverTime"; we count down locally from the moment they arrive. */
 export function clockFromSnapshot(snapshot: GameSnapshot, receivedAt: number): ClockState | null {
@@ -39,7 +40,7 @@ export function clockFromSnapshot(snapshot: GameSnapshot, receivedAt: number): C
  * Adapts the server-authoritative room to the same session interface the local game screen uses.
  * Moves (placements included) are applied optimistically and replaced by the next server snapshot.
  */
-export function createOnlineSession<G extends VariantGame>(variant: Variant<G>): OnlineSessionStore<G> {
+export function createOnlineSession<G extends VariantGame<Color, VariantSquare>>(variant: Variant<G>): OnlineSessionStore<G> {
   let sender: (message: ClientMessage) => void = () => {};
 
   return create<OnlineSessionState<G>>((set, get) => ({

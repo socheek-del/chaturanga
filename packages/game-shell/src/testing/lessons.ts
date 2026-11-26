@@ -8,13 +8,13 @@
  * a coverage list) belongs in the product's own test.
  */
 import { parseUci } from '@chaturanga/board-ui';
-import { squareNameOf, squareOf, type Variant, type VariantGame } from '@chaturanga/rules-core';
+import { squareNameOf, squareOf, type FiniteVariantGame, type Variant } from '@chaturanga/rules-core';
 import { describe, expect, it } from 'vitest';
 import type { L10n, Lesson, LessonStep } from '../lessons';
 import type { ProductConfig } from '../product';
 
 /** Registers the lesson content tests for a product. */
-export function describeLessons<L extends string, G extends VariantGame, Verify>(
+export function describeLessons<L extends string, G extends FiniteVariantGame, Verify>(
   product: ProductConfig<L>,
   variant: Variant<G>,
   lessons: ReadonlyArray<Lesson<Verify>>,

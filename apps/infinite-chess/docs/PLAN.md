@@ -1,6 +1,6 @@
 # Infinite Chess product plan
 
-**Status:** blocked before implementation pending an adaptation-rights decision.
+**Status:** selected for implementation after the shared unbounded-board prerequisite. Product-specific code derived from the official software will be released under AGPL-3.0-or-later.
 
 **Selected edition:** InfiniteChess.org Classical default.
 
@@ -20,8 +20,11 @@ official default and an established tournament edition, without claiming it is s
 The official guide says the board is unbounded in both directions, sliding pieces have no range limit, squares use
 integer `(x,y)` coordinates with `a1 = (1,1)` and `h8 = (8,8)`, and Classical pawns promote on ranks 8 and 1. It says
 the remaining rules follow classical chess, naming checkmate, stalemate, threefold repetition, the 50-move rule,
-castling and en passant. Before coding, pin the exact initial position and the precise draw, castling, en-passant
-and promotion semantics against the official implementation or a sufficiently explicit source.
+castling and en passant. The official Classical preset in `src/shared/chess/variants/variantdictionary.ts` confirms
+the standard 32-piece arrangement and the four choices knight, bishop, rook or queen. The official game rules set
+the 50-move threshold to 100 half-moves and reset it after a pawn move or capture (`variant.ts`, `movepiece.ts`, and
+`state.ts`). Use the orthodox castling and en-passant conditions from that Classical preset. These sources are linked
+in the rules contract; no upstream code will be copied into the implementation.
 
 If cleared, the rules engine will use sparse coordinates and validate a selected destination by ray queries; it
 must never allocate the infinite plane or enumerate every destination on an unbounded sliding ray. State and move
@@ -35,14 +38,24 @@ applicable and should use isolated server storage with server-side move validati
 English PWA must include an interactive tutorial covering the objective, coordinates, unbounded movement, pawn
 promotion, check/endings, and practice with feedback.
 
-## Rights and release gate
+## Rights and license plan
 
-The official website source is licensed AGPL-3.0-or-later and Apeiron is GPL-3.0. These are software licenses; the
-review found no separate adaptation grant for this repository. The repository is GPL-3.0 and requires an applicable
-license or permission for a faithful digital adaptation of newly authored/published games. Do not start the engine,
-reuse upstream assets or prose, adopt the InfiniteChess.org identity, or publish this product until an applicable
-rights basis is recorded and any AGPL compatibility obligations are resolved. No external contact has been made.
+The official website's [`docs/COPYING.md`](https://github.com/Infinite-Chess/infinitechess.org/blob/main/docs/COPYING.md)
+licenses project files AGPL-3.0-or-later unless a listed exception applies, and requires derived software to use that
+license. Source-derived Infinite Chess product code will use AGPL-3.0-or-later and preserve Naviary's copyright and
+license notices. The shared repository remains GPL-3.0-or-later; GNU's license text and FAQ explicitly permit
+AGPLv3/GPLv3 combinations, with AGPL section 13's network-source requirement applying to the combined program. The
+product must show a prominent source link to the complete corresponding source for the web client and online service.
+Product-local packages, app files and deployment instructions must make this scope clear. This is a documented
+license-compliance route, not a legal opinion.
 
-After clearance: implement and verify the pure Variant, bounded bot, interactive tutorial, independent PWA, and
+We will write original game code, board UI, piece art and tutorial wording, and will not adopt InfiniteChess.org's
+brand or copy assets/prose. Before adapting any upstream file, check its path against the official COPYING
+exceptions and retain attribution. Apeiron is not the chosen bot dependency; its separate GPL-3.0 license would
+need to be assessed independently if that changes. No external contact has been made or is needed for this route.
+
+`plat-024` has passed: sparse string coordinates and bounded attack queries are available through the shared
+`Variant` contract while numeric-square defaults remain intact. Implement and verify the pure Variant,
+bounded bot, interactive tutorial, independent PWA, and
 private multiplayer; pass workspace verification/build and exact-SHA CI; stage on Melon, then run browser/PWA,
 restart and copied-state recovery checks. Public promotion still requires DNS, TLS, HTTPS/WSS and catalog checks.

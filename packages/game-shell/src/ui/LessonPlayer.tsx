@@ -1,5 +1,5 @@
 import { Board, type BoardHandle, type BoardTheme, HandTray, parseUci, useMoveInput } from '@chaturanga/board-ui';
-import { type Color, type Piece, type Square, squareNameOf, squareOf, type Variant, type VariantGame } from '@chaturanga/rules-core';
+import { type Color, type FiniteVariantGame, type Piece, type Square, squareNameOf, squareOf, type Variant } from '@chaturanga/rules-core';
 import { Button, Card, cn, Modal, ProgressBar } from '@chaturanga/ui';
 import { CheckCircle2, Star, X, XCircle } from 'lucide-react';
 import { type CSSProperties, type ReactNode, useEffect, useRef, useState } from 'react';
@@ -14,7 +14,7 @@ export type LessonMood = 'explaining' | 'thinking' | 'correct' | 'wrong' | 'comp
 
 export type LessonSound = 'correct' | 'wrong' | 'complete';
 
-export interface LessonPlayerProps<G extends VariantGame, Verify = never> {
+export interface LessonPlayerProps<G extends FiniteVariantGame, Verify = never> {
   variant: Variant<G>;
   lesson: Lesson<Verify>;
   onExit: () => void;
@@ -59,7 +59,7 @@ export interface LessonPlayerProps<G extends VariantGame, Verify = never> {
  * colours, mascot and sounds — is a prop. The words it reads are listed in
  * `packages/game-shell/KEYS.md`.
  */
-export function LessonPlayer<G extends VariantGame, Verify = never>(props: LessonPlayerProps<G, Verify>) {
+export function LessonPlayer<G extends FiniteVariantGame, Verify = never>(props: LessonPlayerProps<G, Verify>) {
   const { lesson, onFinish } = props;
   const { t } = useTranslation();
   const [index, setIndex] = useState(0);
@@ -117,7 +117,7 @@ export function LessonPlayer<G extends VariantGame, Verify = never>(props: Lesso
   );
 }
 
-type StepProps<G extends VariantGame, Verify, S extends LessonStep<Verify>> = LessonPlayerProps<G, Verify> & {
+type StepProps<G extends FiniteVariantGame, Verify, S extends LessonStep<Verify>> = LessonPlayerProps<G, Verify> & {
   step: S;
   feedback: Feedback;
   onAnswer: (correct: boolean) => void;
@@ -125,7 +125,7 @@ type StepProps<G extends VariantGame, Verify, S extends LessonStep<Verify>> = Le
   onRetry: () => void;
 };
 
-function StepView<G extends VariantGame, Verify>(props: StepProps<G, Verify, LessonStep<Verify>>) {
+function StepView<G extends FiniteVariantGame, Verify>(props: StepProps<G, Verify, LessonStep<Verify>>) {
   switch (props.step.kind) {
     case 'info':
       return <InfoStep {...(props as StepProps<G, Verify, Extract<LessonStep<Verify>, { kind: 'info' }>>)} />;
@@ -211,7 +211,7 @@ function solutionOrigins(solutions: readonly string[], files: number): Square[] 
 }
 
 /** The lesson board never animates: every step starts from its own FEN and is played once. */
-function StepBoard<G extends VariantGame, Verify>({
+function StepBoard<G extends FiniteVariantGame, Verify>({
   props,
   game,
   ...rest
@@ -347,7 +347,7 @@ function Footer({
   );
 }
 
-function InfoStep<G extends VariantGame, Verify>(props: StepProps<G, Verify, Extract<LessonStep<Verify>, { kind: 'info' }>>) {
+function InfoStep<G extends FiniteVariantGame, Verify>(props: StepProps<G, Verify, Extract<LessonStep<Verify>, { kind: 'info' }>>) {
   const { step, feedback } = props;
   const [game] = useState(() => (step.fen ? props.variant.createGame(step.fen) : null));
   return (
@@ -379,7 +379,7 @@ function sameSquares(a: string, b: string, files: number): boolean {
     pa.path.length === pb.path.length && pa.path.every((square, index) => square === pb.path[index]);
 }
 
-function MoveStep<G extends VariantGame, Verify>(props: StepProps<G, Verify, Extract<LessonStep<Verify>, { kind: 'move' }>>) {
+function MoveStep<G extends FiniteVariantGame, Verify>(props: StepProps<G, Verify, Extract<LessonStep<Verify>, { kind: 'move' }>>) {
   const { step, feedback, onAnswer } = props;
   const { t } = useTranslation();
   const [game] = useState(() => props.variant.createGame(step.fen));
@@ -507,7 +507,7 @@ function MoveStep<G extends VariantGame, Verify>(props: StepProps<G, Verify, Ext
   );
 }
 
-function SquaresStep<G extends VariantGame, Verify>(props: StepProps<G, Verify, Extract<LessonStep<Verify>, { kind: 'squares' }>>) {
+function SquaresStep<G extends FiniteVariantGame, Verify>(props: StepProps<G, Verify, Extract<LessonStep<Verify>, { kind: 'squares' }>>) {
   const { step, feedback, onAnswer } = props;
   const [game] = useState(() => props.variant.createGame(step.fen));
   const [picked, setPicked] = useState<string[]>([]);
@@ -547,7 +547,7 @@ function SquaresStep<G extends VariantGame, Verify>(props: StepProps<G, Verify, 
   );
 }
 
-function QuizStep<G extends VariantGame, Verify>(props: StepProps<G, Verify, Extract<LessonStep<Verify>, { kind: 'quiz' }>>) {
+function QuizStep<G extends FiniteVariantGame, Verify>(props: StepProps<G, Verify, Extract<LessonStep<Verify>, { kind: 'quiz' }>>) {
   const { step, feedback, onAnswer, translate } = props;
   const [game] = useState(() => (step.fen ? props.variant.createGame(step.fen) : null));
   const [choice, setChoice] = useState<number | null>(null);
@@ -595,7 +595,7 @@ function QuizStep<G extends VariantGame, Verify>(props: StepProps<G, Verify, Ext
   );
 }
 
-function LessonComplete<G extends VariantGame, Verify>({
+function LessonComplete<G extends FiniteVariantGame, Verify>({
   lesson,
   stars,
   onContinue,

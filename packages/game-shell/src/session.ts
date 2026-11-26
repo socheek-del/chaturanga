@@ -12,6 +12,7 @@ import {
   usesSetupPhase,
   type Variant,
   type VariantGame,
+  type VariantSquare,
   replayVariantMoves,
 } from '@chaturanga/rules-core';
 import { create, type StateCreator, type StoreApi, type UseBoundStore } from 'zustand';
@@ -19,9 +20,9 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 import { FINAL_REASONS, type GameResult, resultFromStatus } from './result';
 import type { TimeControl } from './timeControls';
 
-type MoveRecordOf<G extends VariantGame> = ReturnType<G['move']>;
+type MoveRecordOf<G extends VariantGame<Color, VariantSquare>> = ReturnType<G['move']>;
 
-export interface GameSessionState<G extends VariantGame = VariantGame> {
+export interface GameSessionState<G extends VariantGame<Color, VariantSquare> = VariantGame> {
   phase: 'setup' | 'playing';
   game: G;
   startFen: string;
@@ -51,10 +52,10 @@ export interface GameSessionState<G extends VariantGame = VariantGame> {
   exitToSetup: () => void;
 }
 
-export type GameSessionStore<G extends VariantGame = VariantGame> = UseBoundStore<StoreApi<GameSessionState<G>>>;
+export type GameSessionStore<G extends VariantGame<Color, VariantSquare> = VariantGame> = UseBoundStore<StoreApi<GameSessionState<G>>>;
 
 /** True while pieces are still being placed from hand (Sittuyin setup phase). */
-export function inSetupPhase(game: VariantGame): boolean {
+export function inSetupPhase(game: VariantGame<string, VariantSquare>): boolean {
   return game.hand('w').length + game.hand('b').length > 0;
 }
 
@@ -62,7 +63,7 @@ export function inSetupPhase(game: VariantGame): boolean {
  * The same question for a variant whose hands fill from captures: Shogi has hands all game long but no
  * setup phase, so its clocks run and its banner names the side to move from the first ply.
  */
-export function inSetupPhaseOf(variant: Pick<Variant, 'hasHands' | 'hasSetupPhase'>, game: VariantGame): boolean {
+export function inSetupPhaseOf(variant: Pick<Variant, 'hasHands' | 'hasSetupPhase'>, game: VariantGame<string, VariantSquare>): boolean {
   return usesSetupPhase(variant) && inSetupPhase(game);
 }
 
@@ -83,7 +84,7 @@ interface SavedSession {
  * Clocks do not run while pieces are being placed or while a variant waits on simultaneous actions. They start
  * for the side to move once that phase ends. Ordinary turn-based games behave like a normal clock.
  */
-function sessionCreator<G extends VariantGame>(variant: Variant<G>): StateCreator<GameSessionState<G>> {
+function sessionCreator<G extends VariantGame<Color, VariantSquare>>(variant: Variant<G>): StateCreator<GameSessionState<G>> {
   return (set, get) => ({
     phase: 'setup',
     game: variant.createGame(),
@@ -216,7 +217,7 @@ function sessionCreator<G extends VariantGame>(variant: Variant<G>): StateCreato
 }
 
 /** Rebuilds a saved game; anything unreadable (old format, bad FEN, illegal move) starts fresh. */
-function restore<G extends VariantGame>(
+function restore<G extends VariantGame<Color, VariantSquare>>(
   variant: Variant<G>,
   saved: Partial<SavedSession> | undefined,
   current: GameSessionState<G>,
@@ -245,7 +246,7 @@ function restore<G extends VariantGame>(
  * A local game session for a rules Variant. With `storageKey` the game is saved in localStorage on every
  * change and restored when the page loads, so an accidental refresh does not lose the game.
  */
-export function createGameSession<G extends VariantGame>(variant: Variant<G>, storageKey?: string): GameSessionStore<G> {
+export function createGameSession<G extends VariantGame<Color, VariantSquare>>(variant: Variant<G>, storageKey?: string): GameSessionStore<G> {
   if (!storageKey) return create<GameSessionState<G>>()(sessionCreator(variant));
   return create<GameSessionState<G>>()(
     persist(sessionCreator(variant), {

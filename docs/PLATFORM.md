@@ -61,25 +61,38 @@ The root README describes the family. Each game has its own README and translate
 already call on Makruk's `Game`, so it is a **stateful game** rather than pure position functions:
 
 ```ts
-interface Variant<G extends VariantGame> {
+interface Variant<G extends VariantGame<string, VariantSquare>> {
   id; files; ranks; startFen; pieceTypes; hasHands;
+  boardTopology?: 'unbounded';                  // absent = bounded; unbounded uses files = ranks = 0
   createGame(fen?): G;                          // throws FenError
 }
 
-interface VariantGame {
+interface VariantGame<C = Color, S = Square> {
   turn; fen(); pieceAt(sq); pieces(); hand(color);
-  legalUci(): string[];                         // 'e3e4', 'a5a6m', 'h5g4f', 'K@h3'
+  legalUci?(): string[];                        // complete on bounded boards
+  legalUciIn?(destinations: S[]): string[];     // finite viewport/candidate query on an unbounded board
   move(uci): VariantMoveRecord;                 // throws IllegalMoveError
   undo(); moves(); lastMove();
   status(): GameStatus;                         // union of every variant's end kinds
   isGameOver(); inCheck(); checkedKingSquare(); counting();
+  attackedSquares?(color): S[];                 // complete map only when the board is bounded
+  isAttackedAt?(color, square): boolean;        // point query; does not enumerate an infinite ray
 }
 ```
+
+`VariantGame` defaults `S` to the legacy numeric `Square`; current finite engines do not change. Unbounded games
+store only occupied cells and use canonical serializable string square keys (for example exact integer coordinate
+pairs); the game engine owns parsing and arithmetic. A finite board widget and complete move/attack lists must not
+be used for an unbounded variant. `FiniteVariantGame` is the type required by the shared rectangular board and
+lesson/review screens. The server and session/replay layer accept the broader `VariantGame` contract and continue
+validating submitted UCI through `move()`.
 
 - Each engine exports a variant object (`makruk`, `sittuyin`) declared with `satisfies Variant<Game>`, so the
   compiler proves its `Game` class conforms. No adapter layer.
 - `@chaturanga/rules-core/testing` has `describeVariantConformance`. Every engine runs it; it covers FEN
   round-trips, typed errors, random playouts that replay from the move list and undo to the start, and mate.
+  Bounded engines enumerate every square and attack; unbounded engines provide sparse sample-square and point-attack
+  fixtures plus finite destination queries.
 - rules-core also owns what the Makruk-family engines share:
   - the numeric 8x8 board and move tables (neutral names: `FERZ` = Met/Sit-ke, `SILVER` = Khon/Sin)
   - attack detection

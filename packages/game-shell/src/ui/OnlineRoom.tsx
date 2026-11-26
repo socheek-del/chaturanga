@@ -1,5 +1,5 @@
 import type { GameSnapshot } from '@chaturanga/protocol';
-import { activePlayers, type Color, type Variant, type VariantGame } from '@chaturanga/rules-core';
+import { activePlayers, type Color, type FiniteVariantGame, type Variant } from '@chaturanga/rules-core';
 import { Button, Card } from '@chaturanga/ui';
 import { Handshake, LoaderCircle, WifiOff } from 'lucide-react';
 import QRCode from 'qrcode';
@@ -13,18 +13,18 @@ import { useIdentity } from './useIdentity';
 import { useNow } from './useNow';
 
 /** The game-screen props an online room decides; the product adds its identity (art, words, sounds). */
-export type OnlineScreenProps<G extends VariantGame> = Pick<
+export type OnlineScreenProps<G extends FiniteVariantGame> = Pick<
   GameScreenProps<G>,
   'useSession' | 'title' | 'orientation' | 'names' | 'inputEnabled' | 'canUndo' | 'onUndo' | 'resignColor' | 'status' | 'turnLabel' | 'actions' | 'onRematch'
 >;
 
-export interface OnlineRoomContext<G extends VariantGame> {
+export interface OnlineRoomContext<G extends FiniteVariantGame> {
   session: OnlineSessionStore<G>;
   snapshot: GameSnapshot;
   you: Color | null;
 }
 
-export interface OnlineRoomProps<G extends VariantGame> {
+export interface OnlineRoomProps<G extends FiniteVariantGame> {
   /** Upper-case room code. Mount one room per code (`key={code}`) so a rematch starts fresh. */
   code: string;
   variant: Variant<G>;
@@ -42,7 +42,7 @@ export interface OnlineRoomProps<G extends VariantGame> {
 const other = (c: Color): Color => (c === 'w' ? 'b' : 'w');
 
 /** An online room: connects, shows the waiting room until both seats are taken, then the game. */
-export function OnlineRoom<G extends VariantGame>({ code, variant, identity: source, roomUrl, onEnterRoom, onLeave, renderGame }: OnlineRoomProps<G>) {
+export function OnlineRoom<G extends FiniteVariantGame>({ code, variant, identity: source, roomUrl, onEnterRoom, onLeave, renderGame }: OnlineRoomProps<G>) {
   const { t } = useTranslation();
   const { identity, failed } = useIdentity(source);
   const [session] = useState(() => createOnlineSession(variant));
@@ -129,7 +129,7 @@ function WaitingRoom({ code, link }: { code: string; link: string }) {
   );
 }
 
-function OnlineGame<G extends VariantGame>({
+function OnlineGame<G extends FiniteVariantGame>({
   session,
   snapshot,
   renderGame,

@@ -3,6 +3,9 @@ export type Color = 'w' | 'b';
 /** 0..63 with a1 = 0, b1 = 1, …, h8 = 63. */
 export type Square = number;
 
+/** A square coordinate understood by a Variant. Existing finite variants use numeric `Square`s. */
+export type VariantSquare = Square | string;
+
 export interface Piece<T extends string = string, C extends string = Color> {
   color: C;
   /** FEN letter in lower case, e.g. 'k'. */

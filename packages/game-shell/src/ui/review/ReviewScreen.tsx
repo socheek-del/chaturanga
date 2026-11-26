@@ -1,5 +1,5 @@
 import { Board, type BoardTheme, parseUci } from '@chaturanga/board-ui';
-import { moveFor as applyMoveFor, type Color, type Piece, type VariantGame } from '@chaturanga/rules-core';
+import { moveFor as applyMoveFor, type Color, type FiniteVariantGame, type Piece } from '@chaturanga/rules-core';
 import { Button, buttonClasses, Card, cn, ProgressBar } from '@chaturanga/ui';
 import { ChevronLeft, ChevronRight, ClipboardCopy, FlipVertical2, ListChecks, LoaderCircle } from 'lucide-react';
 import { type MouseEvent, type ReactNode, useEffect, useMemo, useState } from 'react';
@@ -53,7 +53,7 @@ export function moveNumber(startFen: string, ply: number): number {
   return (Number(full) || 1) + Math.floor((ply - 1 + (turn === 'b' ? 1 : 0)) / 2);
 }
 
-export interface ReviewScreenProps<G extends VariantGame> {
+export interface ReviewScreenProps<G extends FiniteVariantGame> {
   kit: ReviewKit<G>;
   gameId: string;
   look: BoardLook;
@@ -61,7 +61,7 @@ export interface ReviewScreenProps<G extends VariantGame> {
 }
 
 /** Review of one saved game (ch-016, plat-017): a short summary first, then a walk through the moves. */
-export function ReviewScreen<G extends VariantGame>({ kit, gameId, look, links }: ReviewScreenProps<G>) {
+export function ReviewScreen<G extends FiniteVariantGame>({ kit, gameId, look, links }: ReviewScreenProps<G>) {
   const { t } = useTranslation();
   const game = kit.history((s) => s.games.find((g) => g.id === gameId));
   const analysis = useGameAnalysis(kit, game);
@@ -80,7 +80,7 @@ export function ReviewScreen<G extends VariantGame>({ kit, gameId, look, links }
   return <Review kit={kit} game={game} look={look} links={links} review={analysis.status === 'done' ? analysis.review : null} progress={analysis} />;
 }
 
-function Review<G extends VariantGame>({
+function Review<G extends FiniteVariantGame>({
   kit,
   game,
   look,

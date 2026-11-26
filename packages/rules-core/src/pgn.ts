@@ -1,4 +1,5 @@
 import type { Variant, VariantGame } from './variant';
+import type { VariantSquare } from './types';
 
 /** A game as PGN carries it: the tag pairs, the starting position and the moves in coordinate notation. */
 export interface PgnGame {
@@ -22,7 +23,7 @@ export class PgnError extends Error {
 }
 
 /** Finds the legal move a SAN token names, in coordinate notation, or null. */
-export type SanResolver<G extends VariantGame = VariantGame> = (game: G, token: string) => string | null;
+export type SanResolver<G extends VariantGame<string, VariantSquare> = VariantGame> = (game: G, token: string) => string | null;
 
 /** The Seven Tag Roster comes first, in this order; any other tag follows it. */
 const ROSTER = ['Event', 'Site', 'Date', 'Round', 'White', 'Black', 'Result'];
@@ -33,7 +34,7 @@ const RESULTS = new Set(['1-0', '0-1', '1/2-1/2', '*']);
  * and a game that does not start from the variant's usual position gets its `SetUp` and `FEN` tags. Move
  * text wraps at 80 columns. The move number comes from the FEN's sixth field.
  */
-export function writePgn<G extends VariantGame>(variant: Variant<G>, game: PgnGame): string {
+export function writePgn<G extends VariantGame<string, VariantSquare>>(variant: Variant<G>, game: PgnGame): string {
   const tags: Record<string, string> = {};
   for (const name of ROSTER) tags[name] = game.tags[name] ?? (name === 'Result' ? '*' : '?');
   for (const [name, value] of Object.entries(game.tags)) if (!(name in tags)) tags[name] = value;
@@ -76,7 +77,7 @@ export function writePgn<G extends VariantGame>(variant: Variant<G>, game: PgnGa
  * each move is found by `resolve` (by default: the legal move whose SAN matches, ignoring check marks,
  * annotations and `=`), and every move must be legal.
  */
-export function readPgn<G extends VariantGame>(variant: Variant<G>, text: string, resolve: SanResolver<G> = resolveBySan): PgnGame {
+export function readPgn<G extends VariantGame<string, VariantSquare>>(variant: Variant<G>, text: string, resolve: SanResolver<G> = resolveBySan): PgnGame {
   const tags: Record<string, string> = {};
   const body = text.replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n');
   const tagPattern = /^\s*\[\s*([A-Za-z0-9_]+)\s+"((?:[^"\\]|\\.)*)"\s*\]\s*$/;
@@ -161,10 +162,10 @@ function tokenize(movetext: string): string[] {
 const normalizeSan = (san: string): string => san.replace(/[+#!?=]/g, '').replace(/^0-0(-0)?$/, (m) => m.replace(/0/g, 'O'));
 
 /** The legal move whose SAN, as this variant writes it, matches the token. */
-export function resolveBySan(game: VariantGame, token: string): string | null {
+export function resolveBySan<G extends VariantGame<string, VariantSquare>>(game: G, token: string): string | null {
   const wanted = normalizeSan(token);
   const found: string[] = [];
-  for (const uci of game.legalUci()) {
+  for (const uci of game.legalUci?.() ?? []) {
     const record = game.move(uci);
     game.undo();
     if (normalizeSan(record.san) === wanted) found.push(uci);

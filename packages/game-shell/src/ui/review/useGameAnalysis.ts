@@ -1,4 +1,4 @@
-import { replayVariantMoves, type Variant, type VariantGame } from '@chaturanga/rules-core';
+import { replayVariantMoves, type FiniteVariantGame, type Variant } from '@chaturanga/rules-core';
 import { useEffect, useMemo, useState } from 'react';
 import { type GameReview, reviewGame, terminalEval } from '../../review/analysis';
 import type { PositionEval, UciEngine } from '../../review/engine';
@@ -25,7 +25,7 @@ export function positionsOf(variant: Variant, game: Pick<SavedGame, 'startFen' |
  * that is left and reopened carries on where it stopped (ch-015, plat-017). A finished analysis is labelled
  * straight from storage, without starting the engine.
  */
-export function useGameAnalysis<G extends VariantGame>(kit: ReviewKit<G>, game: SavedGame | undefined): AnalysisState {
+export function useGameAnalysis<G extends FiniteVariantGame>(kit: ReviewKit<G>, game: SavedGame | undefined): AnalysisState {
   const [state, setState] = useState<AnalysisState>({ status: 'loading' });
   const { variant } = kit.rules;
   const key = game ? `${game.id}:${game.moves.join(' ')}:${game.moveActors?.join(' ') ?? ''}` : '';

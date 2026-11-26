@@ -258,7 +258,7 @@ describe('any variant', () => {
 
   it('validates a Sittuyin setup drop that Makruk would reject', () => {
     const room = sittuyinRoom();
-    const drop = replay(sittuyin, room).legalUci().find((uci) => uci.startsWith('K@'))!;
+    const drop = (replay(sittuyin, room).legalUci?.() ?? []).find((uci) => uci.startsWith('K@'))!;
     const accepted = applyMessage(sittuyin, room, 'w', { type: 'move', uci: drop, ply: 0 }, 2_000, code);
     expect(accepted.error).toBeUndefined();
     expect(accepted.room.moves).toEqual([drop]);
@@ -281,7 +281,7 @@ describe('any variant', () => {
     let now = 1_000;
     for (let ply = 0; ply < 16; ply++) {
       const game = replay(sittuyin, room);
-      const drop = game.legalUci().find((uci) => uci.includes('@'))!;
+      const drop = (game.legalUci?.() ?? []).find((uci) => uci.includes('@'))!;
       now += 5_000;
       const applied = applyMessage(sittuyin, room, game.turn, { type: 'move', uci: drop, ply }, now, code);
       expect(applied.error, drop).toBeUndefined();

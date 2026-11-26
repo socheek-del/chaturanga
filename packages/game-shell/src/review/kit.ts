@@ -1,4 +1,4 @@
-import type { SanResolver, VariantGame } from '@chaturanga/rules-core';
+import type { FiniteVariantGame, SanResolver } from '@chaturanga/rules-core';
 import type { ReviewRules } from './analysis';
 import type { AnalysisStore } from './analysisStore';
 import type { UciEngine } from './engine';
@@ -11,7 +11,7 @@ import type { BotName } from './savedGame';
  * rules and material, where its games and analyses are stored, how to start its engine, and how its PGN
  * reads and writes.
  */
-export interface ReviewKit<G extends VariantGame = VariantGame> {
+export interface ReviewKit<G extends FiniteVariantGame = FiniteVariantGame> {
   rules: ReviewRules<G>;
   history: HistoryStore;
   analysis: AnalysisStore;

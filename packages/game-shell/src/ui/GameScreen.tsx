@@ -17,7 +17,7 @@ import {
   timesAt,
   usesSetupPhase,
   type Variant,
-  type VariantGame,
+  type FiniteVariantGame,
 } from '@chaturanga/rules-core';
 import { Button, Card, Modal, Switch } from '@chaturanga/ui';
 import { type CSSProperties, type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
@@ -33,7 +33,7 @@ import { MoveList } from './MoveList';
 import { PlayerBar } from './PlayerBar';
 import { useNow } from './useNow';
 
-export interface GameScreenProps<G extends VariantGame> {
+export interface GameScreenProps<G extends FiniteVariantGame> {
   variant: Variant<G>;
   useSession: GameSessionStore<G>;
   title: string;
@@ -105,7 +105,7 @@ export interface GameScreenProps<G extends VariantGame> {
   attackMap?: { on: boolean; onToggle: (on: boolean) => void };
 }
 
-export function GameScreen<G extends VariantGame>({
+export function GameScreen<G extends FiniteVariantGame>({
   variant,
   useSession,
   title,
@@ -218,7 +218,12 @@ export function GameScreen<G extends VariantGame>({
   const top: Color = orientation === 'w' ? 'b' : 'w';
   const showAttacks = !!attackMap?.on;
   const attacks = useMemo(
-    () => (showAttacks ? { own: shown.attackedSquares(orientation), enemy: shown.attackedSquares(top) } : null),
+    () => {
+      const attackedSquares = shown.attackedSquares;
+      return showAttacks && attackedSquares
+        ? { own: attackedSquares.call(shown, orientation), enemy: attackedSquares.call(shown, top) }
+        : null;
+    },
     [showAttacks, shown, orientation, top, version], // eslint-disable-line react-hooks/exhaustive-deps
   );
   const times = clock ? timesAt(clock, now) : null;

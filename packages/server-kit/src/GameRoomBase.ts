@@ -1,5 +1,5 @@
 import { ClientMessage, type Color, type PublicUser, type RoomSummary, type ServerMessage, type TimeControl } from '@chaturanga/protocol';
-import type { Variant } from '@chaturanga/rules-core';
+import type { Variant, VariantGame, VariantSquare } from '@chaturanga/rules-core';
 import { DurableObject } from 'cloudflare:workers';
 import { generateRoomCode } from './roomCode';
 import { applyMessage, createRoom, join, leave, nextAlarm, type RoomState, roomStatus, settle, snapshot } from './roomLogic';
@@ -45,9 +45,12 @@ const DEFAULT_GRACE_MS = 60_000;
  *
  * A product subclasses this, names its `variant`, and may override `onFinished` to store the game.
  */
-export abstract class GameRoomBase<E extends RoomEnv> extends DurableObject<E> {
+export abstract class GameRoomBase<
+  E extends RoomEnv,
+  G extends VariantGame<Color, VariantSquare> = VariantGame,
+> extends DurableObject<E> {
   /** The rules this room plays. Every move is replayed through it before it is accepted. */
-  protected abstract readonly variant: Variant;
+  protected abstract readonly variant: Variant<G>;
 
   /** Called once, when a game reaches a result. Failures here must never break the game. */
   protected async onFinished(_room: RoomState): Promise<void> {}

@@ -170,6 +170,7 @@
 - [x] Record the Arimaa Public License v2025.02 Section 3 conditions. Keep public release gated on confirming a free/no-user-or-ad-revenue product and owner authorization for the required Discord announcement; no contact or announcement has been made.
 - [x] Pass baseline `NODE_OPTIONS=--no-experimental-webstorage ./init.sh` and adjacent 8×8 browser smoke (5/5; optional installed-offline scenario skipped).
 - [x] Implement the pure Arimaa Variant with chosen setup, deterministic FEN, four-step turns, push/pull, freezing/traps, result order and repetition; 22/22 focused tests, package/rules-core typechecks and lint pass.
-- [x] Run full repository `NODE_OPTIONS=--no-experimental-webstorage npm run verify` with loopback permission; all displayed suites completed without reported failures. Re-run after the next runtime code increment.
-- [ ] Add deterministic bounded bots; use a draft turn editor in the UI rather than materializing the entire legal opening list for board input. Keep original art/prose, private Melon port 19920 and no public route/catalog changes.
+- [x] Add six seeded bounded bots; tests cover legal setup/full-turn choices, determinism, terminal scoring and state restoration.
+- [x] Run full repository `NODE_OPTIONS=--no-experimental-webstorage npm run verify` with loopback permission after the engine and bot changes; lint, typechecks and all workspace tests pass.
+- [ ] Write the original design brief and build the PWA with a step draft editor rather than materializing the full legal turn list. Keep original art/prose, private Melon port 19920 and no public route/catalog changes.
 - [x] Add `ko-shogi-001` as a blocked feature and preserve Arimaa as the next ready roadmap row.

@@ -6,7 +6,7 @@ Arimaa is the next ready game in `docs/CHESS-LIKE-ROADMAP.md`. Select the offici
 
 ```text
 packages/arimaa/       @chaturanga/arimaa — pure Variant, setup and four-step turns
-packages/arimaa-ai/    @chaturanga/arimaa-ai — bounded bots for both roles
+packages/arimaa-ai/    @chaturanga/arimaa-ai — six seeded, bounded bots for both roles
 apps/arimaa/web/       independent English PWA, original art, local play, bots and tutorial
 apps/arimaa/worker/    isolated server-kit Worker and product-local archive
 ```
@@ -24,6 +24,7 @@ No Discord announcement or rights-holder contact has been made. Development and 
 - Research and the initial source-based rules contract are complete.
 - `./init.sh` passed full workspace install, lint, typecheck and tests with `NODE_OPTIONS=--no-experimental-webstorage`; the adjacent standard-chess browser smoke passed 5/5 (one optional offline scenario skipped).
 - `@chaturanga/arimaa` is implemented as a pure Variant with two-stage chosen setup, stable FEN, complete one-to-four-step turns, atomic push/pull, per-step traps, freeze/thaw, goals, elimination, immobilization and third-repetition loss.
-- The engine's focused suite passes 22/22, with typecheck and ESLint passing. Full repository verification passed before the last two narrowly scoped engine fixtures; the final Arimaa package suite still passes.
-- No Arimaa bot, PWA, interactive tutorial, or Worker code exists yet.
-- Next implementation slice: add deterministic bounded bots for both roles and test the bot against the authoritative Variant. Use a draft turn editor in the PWA so the player selects one to four steps without presenting the entire 20,652-turn opening list as route choices.
+- `@chaturanga/arimaa-ai` supplies six seeded opponent levels. Setup considers the finite placements; midgame levels sample at most 1–256 distinct complete turns and score them through the authoritative Variant, avoiding the 20,652-turn opening list.
+- Full `NODE_OPTIONS=--no-experimental-webstorage npm run verify` passed after the current engine and bot changes: lint, every workspace typecheck and all tests. Arimaa focused suites pass 22/22 rules and 4/4 bot checks.
+- No product PWA, interactive tutorial, or Worker code exists yet.
+- Next: write the original product design brief, then implement the independent PWA with a draft turn editor so players select one to four steps without seeing complete turns as route choices. Continue with interactive tutorial, isolated Worker and private Melon stage on port 19920.

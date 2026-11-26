@@ -1718,3 +1718,11 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 - Added a seeded turn sampler hook to the shared conformance suite for high-branching variants; default full legal-list and uniqueness checks remain unchanged for existing variants. `@chaturanga/arimaa` passes its shared conformance replay/undo plus focused rules suite (22/22); package/rules-core typechecks and focused ESLint pass.
 - Ran `NODE_OPTIONS=--no-experimental-webstorage npm run verify` with loopback permission: lint, all workspace typechecks, and workspace tests completed without reported failures. The Arimaa package had 20 tests at that point; three final targeted fixtures were then added and the current 22-test Arimaa suite/typechecks/lint passed independently.
 - Updated the source rules contract and product plan. No bot/app/Worker code exists yet. Next: add deterministic bounded bots for both sides and run a strength smoke before designing the PWA. Keep the public-release license gate unchanged.
+
+### Session 100 (Arimaa bounded bots)
+
+- Added `@chaturanga/arimaa-ai` with six seeded levels named for Arimaa's animals. Setup candidates are the finite legal placements; midgame levels sample up to 1, 8, 24, 64, 128 or 256 distinct complete turns rather than constructing the exhaustive root list.
+- Added material, rabbit advancement, freezing, trap support and terminal-result evaluation. Candidate turns are applied and undone through the authoritative `Game`, preserving the caller's live state and repetition history.
+- Focused bot suite passes 4/4: legal setup and full-turn selection, deterministic output for the same seed, immediate goal scoring, terminal-game handling and setup state restoration. Arimaa AI typecheck and focused ESLint pass.
+- `NODE_OPTIONS=--no-experimental-webstorage npm run verify` passed after the bot increment: root lint, all workspace typechecks and all workspace tests. Arimaa rules pass 22/22 and bot tests pass 4/4. Existing Vite config-extension and worker event-return console warnings remain informational.
+- Updated the product plan, feature evidence, quality grade, session handoff and clean-state checklist. Next: original product design brief, then step-draft PWA/tutor. The full opening turn list is 20,652; maintain a bounded UI. Public release gate remains unchanged and no contact/announcement has been made.

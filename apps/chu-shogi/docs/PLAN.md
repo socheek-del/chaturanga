@@ -28,6 +28,12 @@ apps/chu-shogi/worker/    isolated server-kit Worker and its own persistent game
 
 The 12×12 `Variant` dimensions and `board-ui` grid are generic. Opaque move strings already carry multi-square routes in the protocol. The integration seam is input: the product must present every legal complete Lion route and its capture/promotion consequences without assuming only one from/to move. `VariantMoveRecord.captures` carries both captured pieces. Promotion eligibility, the first-Lion one-turn event, repetition responsibility, and result history belong in serializable game state. No Shogi files should be changed for Chu behavior.
 
+### Initial bot line-up
+
+The first six ai-core personas are Pawn, Go-Between, Copper General, Silver General, Dragon Horse and Free King. Their deterministic node ceilings are 3k, 8k, 20k, 55k, 120k and 250k; browser time caps are 400ms through 2.5s. The bot adapter represents each complete route, including promotion, as one search action. Evaluation covers material, promotion and advancement; King/Prince captures, the narrow barren-material ending and no-legal-move loss receive terminal scores. Repetition uses the product's duty-to-vary adjudication when a root game history is available. When the caller does not inject an RNG, selection uses a fixed seeded source for reproducible runs; the web worker should pass a per-game seeded generator.
+
+The first L2-versus-L1 sample completed two seeded games to a 100-ply cap: L2 checkmated once at ply 82 and drew once (1.5/2). This is a smoke and early relative-strength signal only. Run the remaining adjacent-level pairs and larger samples before claiming a stable strength ordering.
+
 ## Work sequence and completion evidence
 
 1. **Rules and rights record** — done for research. Pin the literal Renmei win clause and the documented digital conventions above. Keep the popularity caveat and branding gate visible.

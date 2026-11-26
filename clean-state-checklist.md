@@ -145,14 +145,18 @@
 - [x] Push the rules checkpoint `09a3db77e63b12f2bee7a28850b35443d52f6c0e`; exact-SHA CI run `45726420396` passed full workspace verification and configured builds.
 - [x] Add six bounded ai-core bots. AI tests 5/5 exercise all six levels as both colors, rules and AI package typechecks, and focused ESLint passed. The first L2/L1 sample finished one checkmate and one 100-ply draw (1.5/2).
 - [x] Push the verified bot package as `57968bf536a0ac29b4677fd90ace1c49cceb1f2d`; exact-SHA CI run `45728808992` passed.
-- [ ] Measure the other five adjacent bot pairs and tune any clear regressions.
+- [x] Measure all five remaining adjacent bot pairs. Two-game seeded 100-ply scores: L3/L2 1/2, L4/L3 1/2, L5/L4 1.5/2 and L6/L5 1.5/2; no higher level lost. Samples are too small for stable ratings.
 - [x] Create the original Chu Shogi design and piece marks in `apps/chu-shogi/docs/design.md` and the local web app; keep name review separate from descriptive game naming.
 - [x] Build the standalone English PWA with pass-and-play, bot worker, local saves and all six bot levels. Tests and local browser smoke passed; verify installed offline reload on Melon.
 - [x] Add twelve interactive rules tutorials, validated through the authoritative engine, and test English locale completeness.
 - [x] Add the isolated server-authoritative private Worker with no chat, own D1/DO storage, reconnect and archived finished games; Worker tests pass 10/10.
 - [x] Verify two-browser invite/join, move synchronization, reload reconnect, complete Lion route selection, and built PWA offline atlas (29/29).
 - [x] Pass full `NODE_OPTIONS=--no-experimental-webstorage npm run verify` across all workspaces.
-- [ ] Measure the other five adjacent bot pairs and tune any clear regressions.
-- [ ] Commit/push and pass exact-SHA CI; stage the pinned code on Melon port 19919 and smoke the built PWA/Worker, restart and copied-state recovery.
-- [ ] Keep the product out of public routes/catalog until product-name review and Melon DNS/TLS plus HTTPS/WSS smoke pass. No Cloudflare route unless Melon has a documented delivery limitation.
-- [ ] Record final active state and open risks in feature list, progress, handoff, quality notes and this checklist; inspect `git status` before ending.
+- [ ] Measure the last two adjacent bot pairs and tune any clear regressions.
+- [x] Push online increment `3475a21d6c3723e57be4e8c7daaa6d5eecc71f1b`; exact-SHA CI run `45736686982` passed.
+- [x] Stage the pinned code on Melon port 19919 in `/home/melon/chaturanga-release.chu-shogi.NJyO3x`; isolated migration, health and homepage passed.
+- [x] Built-stage Chromium passed the tutorial answer, bot reply, private two-seat room, synchronized moves, draw agreement/archive, 390px offline PWA reload and no-overflow check.
+- [x] A live room recovered both seats/history through container restart and continued; a stopped-state copy restored both seats/two plies and synchronized another move. Removed temporary restore resources; primary stage healthy.
+- [x] `chu-shogi.beanroti.com` has no DNS address. Public HTTPS/WSS, Caddy promotion and catalog publication are blocked pending DNS/TLS and owner review of product name/design; no public route or catalog entry changed. No Cloudflare limitation was found.
+- [x] Record the verified release state and remaining public gate in feature list, progress, handoff, quality notes and product plan; inspect `git status` before ending.
+- [x] Leave the next roadmap row, Ko Shogi, ready for rules/edition/adoption/rights research.

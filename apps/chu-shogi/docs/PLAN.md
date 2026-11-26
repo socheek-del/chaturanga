@@ -35,10 +35,12 @@ and a 29-rank/18-promotion atlas are in `apps/chu-shogi/web/`. The PWA uses the 
 has product-specific Durable Objects and a D1 archive. Its local Durable Object tests cover legality,
 quick match, reconnect, chat rejection, archived draws, and full two-leg Lion-route replay. Two Chromium
 clients created and joined an invite room, synchronized moves, reconnected after reload, and selected the
-exact Lion route. Chromium also loaded all 29 atlas entries from the built PWA with network access disabled.
-Melon staging, restart/copy recovery, exact-SHA CI for this Worker increment, remaining bot ladder pairs,
-and public DNS/TLS/name gates are still ahead. The route chooser and shared game shell support Chu's
-full-path-before-promotion input and no-check-attention rule.
+exact Lion route. Exact-SHA CI passed for `3475a21d6c3723e57be4e8c7daaa6d5eecc71f1b`. The pinned SHA is
+staged on Melon at port 19919 in `/home/melon/chaturanga-release.chu-shogi.NJyO3x`; migration, health and
+homepage passed. Built-stage browser checks covered the guided tutorial, bot reply, two-seat move sync,
+draw agreement/archive, offline atlas reload at 390px, restart recovery, and a separate copied-state restore.
+The temporary restore resources are removed and the primary stage is healthy. The route chooser and shared
+game shell support Chu's full-path-before-promotion input and no-check-attention rule.
 
 The 12×12 `Variant` dimensions and `board-ui` grid are generic. Opaque move strings already carry multi-square routes in the protocol. The integration seam is input: the product must present every legal complete Lion route and its capture/promotion consequences without assuming only one from/to move. `VariantMoveRecord.captures` carries both captured pieces. Promotion eligibility, the first-Lion one-turn event, repetition responsibility, and result history belong in serializable game state. No Shogi files should be changed for Chu behavior.
 
@@ -46,7 +48,10 @@ The 12×12 `Variant` dimensions and `board-ui` grid are generic. Opaque move str
 
 The first six ai-core personas are Pawn, Go-Between, Copper General, Silver General, Dragon Horse and Free King. Their deterministic node ceilings are 3k, 8k, 20k, 55k, 120k and 250k; browser time caps are 400ms through 2.5s. The bot adapter represents each complete route, including promotion, as one search action. Evaluation covers material, promotion and advancement; King/Prince captures, the narrow barren-material ending and no-legal-move loss receive terminal scores. Repetition uses the product's duty-to-vary adjudication when a root game history is available. When the caller does not inject an RNG, selection uses a fixed seeded source for reproducible runs; the web worker should pass a per-game seeded generator.
 
-The first L2-versus-L1 sample completed two seeded games to a 100-ply cap: L2 checkmated once at ply 82 and drew once (1.5/2). This is a smoke and early relative-strength signal only. Run the remaining adjacent-level pairs and larger samples before claiming a stable strength ordering.
+The default seeded two-game, 100-ply ladder completed all adjacent pairs: L2/L1 scored 1.5/2 (win + draw),
+L3/L2 1/2 (two draws), L4/L3 1/2 (two draws), L5/L4 1.5/2 (win + draw), and L6/L5 1.5/2 (win + draw).
+No higher level lost in these measured pairs. This is initial relative-strength evidence only; two games per
+pair do not establish a stable rating order.
 
 ## Work sequence and completion evidence
 
@@ -57,6 +62,10 @@ The first L2-versus-L1 sample completed two seeded games to a 100-ply cap: L2 ch
 5. **English web PWA** — the responsive 12×12 board, local saves, pass-and-play, bot worker, full-route chooser, PWA manifest/service worker and game-local address setting are implemented. Verify installed offline use on the built Melon stage. No family/catalog entry until public hosting is verified.
 6. **Interactive tutorial** — twelve lessons teach setup/turns/captures/no drops, movement families, all ranks, promotions and deferrals, Prince, Lion routes/igui/jitto/protection/tsukegui/first-Lion, endings and repetition. Move and square exercises use the engine; locale and lesson suites pass.
 7. **Private online play** — two seats, invite codes and applicable quick match, no chat, server-side move validation by the Chu Variant, own Worker and isolated storage. Verify restart, reconnect, finished game archive, and copied-state recovery.
-8. **Exact-SHA CI and Melon stage** — add the game build to CI, push the verified increment to `main`, deploy pinned code with `ssh melon`, migrate its own data and test the built PWA/Worker/recovery. Current next free staging port is 19919.
-9. **Public release gate** — only after a distinctive public-facing brand is reviewed, Melon DNS and TLS exist, and public HTTPS/WSS smoke passes; then update the app directory. No Cloudflare route unless Melon has a documented limitation.
+8. **Exact-SHA CI and Melon stage** — complete. Commit `3475a21d6c3723e57be4e8c7daaa6d5eecc71f1b` passed CI run `45736686982`; Melon stage `chaturanga-stage-chu-shogi-19919` is running from `/home/melon/chaturanga-release.chu-shogi.NJyO3x` with its own Durable Object and D1 state. Tutorial, bot, online archive, offline PWA, restart and copied-state recovery passed.
+9. **Public release gate** — blocked until `chu-shogi.beanroti.com` has DNS/TLS and the public-facing name/design receives owner review. Then validate public HTTPS/WSS and update the app directory. No Caddy route or catalog entry was changed. No Melon limitation has been found, so Cloudflare remains unused.
+
+## Current release state
+
+Melon DNS lookup for `chu-shogi.beanroti.com` returned no address. Keep the isolated stage running while the public gate is unresolved. The design proposal and public product-name review remain open; no association affiliation is claimed.
 

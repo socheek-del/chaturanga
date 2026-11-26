@@ -37,3 +37,4 @@ jobs:
       - run: npm run build:arimaa
       - run: npm run build:chaturaji
       - run: npm run build:senterej
+      - run: npm run build:infinite-chess

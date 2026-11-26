@@ -258,5 +258,7 @@
 - [x] Add seeded bounded bots (4/4) and the independent English PWA with offline service worker, local bot/pass-and-play, saved games and ten interactive rule practices; web/locale tests 7/7.
 - [x] Add server-authoritative private invite rooms with isolated Durable Objects, no chat and legal move validation; Worker tests 2/2.
 - [x] Pass full `NODE_OPTIONS=--no-experimental-webstorage npm run verify`, `npm run build:infinite-chess`, local browser E2E 5/5 and installability/offline E2E 2/2. Production entry is 511.30 kB minified and emits a non-blocking chunk-size warning.
-- [ ] Commit/push the implementation, confirm exact-SHA CI, and deploy the pinned build to Melon port 19925.
+- [x] Commit and push implementation `5d525ff7dde0a5027fb3d28b0408b6052f840f89` directly to `main`.
+- [x] Add `npm run build:infinite-chess` to the main-branch CI build sequence; push this workflow follow-up before stage.
+- [ ] Confirm exact-SHA CI on the follow-up commit, then deploy that pinned build to Melon port 19925.
 - [ ] Run built-stage browser/PWA smoke, restart and copied-state room recovery; check Melon DNS/TLS/HTTPS/WSS before any public promotion or app-directory entry.

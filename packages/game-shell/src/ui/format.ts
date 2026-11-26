@@ -10,6 +10,12 @@ export function formatClock(ms: number): string {
   return `${minutes}:${String(seconds).padStart(2, '0')}`;
 }
 
+/** Keeps floating-point material sums readable while retaining common half-point values. */
+export function formatAdvantage(value: number): string | null {
+  const rounded = Math.round(value * 10) / 10;
+  return rounded > 0 ? `+${rounded}` : null;
+}
+
 /** Sounds the game screen asks for. Each product decides how one is played, or plays nothing. */
 export type GameSound = 'move' | 'capture' | 'check' | 'gameEnd';
 

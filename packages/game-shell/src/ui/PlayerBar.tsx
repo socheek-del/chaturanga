@@ -2,7 +2,7 @@ import type { Color, Piece } from '@chaturanga/rules-core';
 import { cn } from '@chaturanga/ui';
 import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { formatClock } from './format';
+import { formatAdvantage, formatClock } from './format';
 
 export interface PlayerBarProps {
   color: Color;
@@ -20,6 +20,7 @@ export interface PlayerBarProps {
 export function PlayerBar({ color, name, captured, advantage, timeMs, active, rotated, renderPiece, avatarType = 'k' }: PlayerBarProps) {
   const { t } = useTranslation();
   const low = timeMs !== null && timeMs < 10_000;
+  const advantageLabel = formatAdvantage(advantage);
   return (
     <div
       data-testid={`player-${color}`}
@@ -44,7 +45,7 @@ export function PlayerBar({ color, name, captured, advantage, timeMs, active, ro
               {renderPiece(piece, '-mr-1.5 h-5 w-5')}
             </span>
           ))}
-          {advantage > 0 && <span className="ml-2.5 text-xs font-extrabold text-muted">+{advantage}</span>}
+          {advantageLabel && <span className="ml-2.5 text-xs font-extrabold text-muted">{advantageLabel}</span>}
         </span>
       </div>
       {timeMs !== null && (

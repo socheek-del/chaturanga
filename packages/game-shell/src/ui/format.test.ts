@@ -1,6 +1,15 @@
 import { Game } from '@chaturanga/makruk';
 import { describe, expect, it } from 'vitest';
-import { formatClock, soundForMove } from './format';
+import { formatAdvantage, formatClock, soundForMove } from './format';
+
+describe('formatAdvantage', () => {
+  it('rounds fractional material values and suppresses floating-point noise', () => {
+    expect(formatAdvantage(1.5)).toBe('+1.5');
+    expect(formatAdvantage(1.25)).toBe('+1.3');
+    expect(formatAdvantage(8.881784197001252e-16)).toBeNull();
+    expect(formatAdvantage(0)).toBeNull();
+  });
+});
 
 describe('formatClock', () => {
   it('formats minutes and tenths', () => {

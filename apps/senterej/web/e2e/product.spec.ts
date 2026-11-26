@@ -45,18 +45,20 @@ test('plays concurrent Werera actions in a private online room until capture swi
   await gold.goto(invite);
   await expect(ivory.getByTestId('player-w')).toContainText('You');
   await expect(gold.getByTestId('player-b')).toContainText('You');
+  await expect(ivory.getByTestId('connection-status')).toHaveCount(0);
+  await expect(gold.getByTestId('connection-status')).toHaveCount(0);
   await expect(ivory.getByTestId('turn-banner')).toContainText('both sides may act');
 
-  const move = async (page: typeof gold, from: string, to: string) => {
+  const move = async (page: typeof gold, observer: typeof ivory, from: string, to: string, ply: number) => {
     await page.locator(`[data-square="${from}"]`).click();
     await page.locator(`[data-square="${to}"]`).click();
+    await expect.poll(() => observer.locator('[data-testid="move-list"] [data-ply]').count(), { timeout: 20_000 }).toBe(ply);
   };
-  await move(gold, 'd7', 'd6');
-  await expect(ivory.locator('[data-testid="move-list"] [data-ply]')).toHaveCount(1);
-  await move(gold, 'd6', 'd5');
-  await move(ivory, 'e2', 'e3');
-  await move(ivory, 'e3', 'e4');
-  await move(ivory, 'e4', 'd5');
+  await move(gold, ivory, 'd7', 'd6', 1);
+  await move(gold, ivory, 'd6', 'd5', 2);
+  await move(ivory, gold, 'e2', 'e3', 3);
+  await move(ivory, gold, 'e3', 'e4', 4);
+  await move(ivory, gold, 'e4', 'd5', 5);
   await expect(gold.locator('[data-testid="move-list"] [data-ply]')).toHaveCount(5);
   await expect(gold.getByTestId('turn-banner')).toContainText('Gold to move');
   await expect(gold.locator('[data-testid="player-w"]')).not.toHaveAttribute('data-active', 'true');

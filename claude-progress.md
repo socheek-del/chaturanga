@@ -37,7 +37,8 @@ handoff; no agent updates it automatically.
 - The Chaturaji stage remains healthy and private at `/home/melon/chaturanga-release.chaturaji.yoXEwM`, port 19922, pinned to `cf328621aab6bcdd2575c7abd0be147cc8f8546a`. Its DNS gate remains unchanged.
 - Rights/adoption/source reports are saved for Djambi, Martian Chess, Apocalypse and Game of the Generals; each is blocked before implementation pending applicable rights clearance. No contact was made. Senterej's public-domain historical rules profile and source decisions are recorded; its implementation is now the active feature.
 - `plat-023` is passing: actor-aware Variant helpers, local save/review, shared board input, protocol actor histories and server-authoritative validation/retraction are implemented. Full loopback-enabled workspace verification passed lint, all workspace typechecks and tests. No runtime product exists for this platform-only increment; Senterej must be staged on Melon before public promotion.
-- Next code task: implement `senterej-001` from the source-linked contract, starting with the pure rules engine and focused verification. Product plan: `apps/senterej/docs/PLAN.md`; rules contract: `packages/senterej/RULES.md`.
+- `senterej-001` engine slice: the pure Variant is implemented in `packages/senterej`, with concurrent actor actions in Werera, retraction-compatible move history, transition on first capture, rules, endings, FEN, undo and replay. `npm test -w packages/senterej` passes 27/27; package typecheck and ESLint pass. `package-lock.json` includes the workspace. The shell does not have the `.nvmrc` Node setup (`~/.nvm/nvm.sh` is absent); package-lock-only update succeeded with Node 25.9 and existing dependencies.
+- Next code task: add the Senterej bot/search, then the independent app (interactive tutorial, PWA and private rooms). Keep release staging on Melon and use port 19923 unless `docs/MELON-RELEASE.md` assigns another port. Product plan: `apps/senterej/docs/PLAN.md`; rules contract: `packages/senterej/RULES.md`.
 
 ## Session Log
 
@@ -1868,3 +1869,11 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 - Focused tests pass: rules-core 49/49; board-ui 50/50; game-shell 97/97; protocol 8/8; server-kit 24/24. `NODE_OPTIONS=--no-experimental-webstorage npm run verify` passed with loopback access: lint, all workspace typechecks and all tests. The sandbox run failed only where Worker test pools could not bind loopback (`EPERM`); the permitted rerun passed.
 - No deployment was needed for the platform package because it has no runtime endpoint. The Senterej release feature now carries the Melon staging, browser and recovery gate before public promotion. `plat-023` passes and `senterej-001` is active.
 - Next: implement the Senterej pure Variant and rules tests from `packages/senterej/RULES.md`; preserve the concurrent Werera and first-capture transition contract.
+
+### Session 117 (Senterej rules engine)
+
+- Implemented the pure Senterej Variant in `packages/senterej`: historical piece movement, opposite-King setup, concurrent actor moves through Werera, first-capture transition, automatic Ferz promotion, bare-Negus and seven-move endings, repetition, FEN, undo and actor-aware replay.
+- The package suite passes 27/27; `npm run typecheck -w packages/senterej` and ESLint over the engine and conformance helper pass. The shared conformance runner now exercises legal actions for every active actor. The repetition fixture was corrected to avoid activating the seven-move ending rule.
+- Added the new workspace to `package-lock.json`. The documented nvm loader is absent in this shell; the lockfile-only operation succeeded with available Node 25.9 and existing dependencies.
+- Updated the feature evidence, checklist and handoff. The rules engine is a verified partial milestone; bots, tutorial, PWA, rooms, full verification, CI, Melon stage and production browser/recovery checks remain.
+- Next: implement `packages/senterej-ai`, then create the standalone `apps/senterej/{web,worker}` product with the interactive tutorial and actor-aware private rooms.

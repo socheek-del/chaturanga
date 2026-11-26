@@ -237,6 +237,6 @@
 
 - [x] Complete the historical profile and clean-room source/rights notes; no popularity claim is made.
 - [x] Complete actor-aware platform prerequisite `plat-023`.
-- [ ] Implement and verify the pure rules Variant, including Werera actor moves/retractions and ordinary-turn transition.
+- [x] Implement the pure Variant with source-profiled movements, concurrent Werera actors, first-capture transition, automatic Ferz promotion, ending rules, FEN, undo and actor replay; focused tests 27/27, package typecheck and lint pass.
 - [ ] Add deterministic bots, interactive tutorial, independent PWA and private online rooms.
 - [ ] Run full verification, build and exact-SHA CI; stage on Melon and pass browser/recovery smoke before public promotion.

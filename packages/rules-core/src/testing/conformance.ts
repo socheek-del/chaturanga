@@ -6,7 +6,7 @@ import { describe, expect, it } from 'vitest';
 import { squareNameOf, squareOf } from '../coords';
 import { FenError, IllegalMoveError } from '../errors';
 import type { GameStatus } from '../types';
-import type { Variant, VariantGame } from '../variant';
+import { activePlayers, legalUciFor, moveFor, type Variant, type VariantGame } from '../variant';
 import { usesSetupPhase } from '../variant';
 import { mulberry32 } from './random';
 
@@ -91,20 +91,22 @@ export function describeVariantConformance<G extends VariantGame<string>>(
             expect(prepared).toMatchObject({ color: game.turn, fenAfter: game.fen() });
             fens.push(game.fen());
           }
-          let uci: string | null;
-          if (fixtures.sampleLegalMove) uci = fixtures.sampleLegalMove(game, rand);
-          else {
-            const legal = game.legalUci();
-            expect(legal.length, `seed ${seed}: ongoing game has legal moves`).toBeGreaterThan(0);
-            expect(new Set(legal).size).toBe(legal.length);
-            uci = legal[Math.floor(rand() * legal.length)]!;
+          let action: { color: string; uci: string } | null;
+          if (fixtures.sampleLegalMove) {
+            const uci = fixtures.sampleLegalMove(game, rand);
+            action = uci ? { color: game.turn, uci } : null;
+          } else {
+            const legal = activePlayers(game).flatMap((color) => legalUciFor(game, color).map((uci) => ({ color, uci })));
+            expect(legal.length, `seed ${seed}: ongoing game has legal actions`).toBeGreaterThan(0);
+            expect(new Set(legal.map(({ color, uci }) => `${color}:${uci}`)).size).toBe(legal.length);
+            action = legal[Math.floor(rand() * legal.length)]!;
           }
-          expect(uci, `seed ${seed}: ongoing game has a sampled legal move`).toBeTruthy();
-          if (!uci) throw new Error(`seed ${seed}: ongoing game has no sampled legal move`);
-          const mover = game.turn;
+          expect(action, `seed ${seed}: ongoing game has a sampled legal action`).toBeTruthy();
+          if (!action) throw new Error(`seed ${seed}: ongoing game has no sampled legal action`);
+          const { color: mover, uci } = action;
           const handCountBefore = game.hand(mover).length;
           const inSetupPhase = usesSetupPhase(variant) && players.some((player) => game.hand(player).length > 0);
-          const record = game.move(uci);
+          const record = moveFor(game, mover, uci);
           expect(record).toMatchObject({ uci, color: mover, fenAfter: game.fen() });
           expect(game.lastMove()).toBe(record);
           if (game.turn === mover && usesSetupPhase(variant)) {
@@ -131,7 +133,7 @@ export function describeVariantConformance<G extends VariantGame<string>>(
 
         // The online server rebuilds a game from the start position and the move list.
         const replayed = variant.createGame();
-        for (const { uci } of game.moves()) replayed.move(uci);
+        for (const { uci, color } of game.moves()) moveFor(replayed, color, uci);
         expect(replayed.fen()).toBe(game.fen());
         expect(replayed.status()).toEqual(game.status());
 
@@ -152,22 +154,29 @@ export function describeVariantConformance<G extends VariantGame<string>>(
         while (!game.isGameOver() && game.moves().length < PLAYOUT_PLIES) {
           game.prepareTurn?.(Math.floor(rand() * 0x1_0000_0000));
           const side = game.turn;
-          const own = game.attackedSquares(side);
-          const enemy = [...new Set(players.filter((player) => player !== side).flatMap((player) => game.attackedSquares(player)))].sort((a, b) => a - b);
-          for (const squares of [own, enemy]) {
-            expect(squares).toEqual([...new Set(squares)].sort((a, b) => a - b));
-            for (const sq of squares) expect(sq >= 0 && sq < boardSize).toBe(true);
+          const active = activePlayers(game);
+          for (const actor of active) {
+            const own = game.attackedSquares(actor);
+            const enemy = [...new Set(players.filter((player) => player !== actor).flatMap((player) => game.attackedSquares(player)))].sort((a, b) => a - b);
+            for (const squares of [own, enemy]) {
+              expect(squares).toEqual([...new Set(squares)].sort((a, b) => a - b));
+              for (const sq of squares) expect(sq >= 0 && sq < boardSize).toBe(true);
+            }
+            const checked = actor === side ? game.checkedKingSquare() : null;
+            if (checked !== null) expect(enemy, `seed ${seed}: check is an attack`).toContain(checked);
           }
-          const checked = game.checkedKingSquare();
-          if (checked !== null) expect(enemy, `seed ${seed}: check is an attack`).toContain(checked);
-          const legal = fixtures.sampleLegalMove ? [fixtures.sampleLegalMove(game, rand)].filter((uci): uci is string => !!uci) : game.legalUci();
-          for (const uci of legal) {
+          const legal = fixtures.sampleLegalMove
+            ? [{ color: game.turn, uci: fixtures.sampleLegalMove(game, rand) }].filter((action): action is { color: string; uci: string } => !!action.uci)
+            : active.flatMap((color) => legalUciFor(game, color).map((uci) => ({ color, uci })));
+          expect(legal.length, `seed ${seed}: ongoing game has a legal action`).toBeGreaterThan(0);
+          for (const { color, uci } of legal) {
             if (uci === 'pass' || /^ROLL[1-6]{2}$/.test(uci) || uci.includes('@')) continue;
             const to = squareOf(uci.match(/[a-q]\d{1,2}/g)!.at(-1)!, variant.files)!;
             const target = game.pieceAt(to);
-            if (target && target.color !== side) expect(own, `seed ${seed}: ${uci} captures`).toContain(to);
+            if (target && target.color !== color) expect(game.attackedSquares(color), `seed ${seed}: ${uci} captures`).toContain(to);
           }
-          game.move(legal[Math.floor(rand() * legal.length)]!);
+          const selected = legal[Math.floor(rand() * legal.length)]!;
+          moveFor(game, selected.color, selected.uci);
         }
       }
     }, timeouts.attackedSquaresMs);

@@ -1,0 +1,254 @@
+{
+  "family": { "title": "More games" },
+  "brand": "Chaturaji",
+  "brandTagline": "A four-court game",
+  "navigation": {
+    "label": "Main navigation",
+    "home": "Home",
+    "learn": "Learn the rules",
+    "back": "Back",
+    "exitTutorial": "Exit tutorial"
+  },
+  "players": {
+    "r": "Red",
+    "g": "Green",
+    "y": "Yellow",
+    "b": "Black",
+    "you": "You",
+    "bot": "Computer"
+  },
+  "piece": {
+    "p": "Pawn",
+    "b": "Boat",
+    "h": "Horse",
+    "e": "Elephant",
+    "k": "King",
+    "short": { "p": "P", "b": "B", "h": "H", "e": "E", "k": "K" }
+  },
+  "die": {
+    "faces": {
+      "1": "Pawn or King",
+      "2": "Boat",
+      "3": "Horse",
+      "4": "Elephant",
+      "5": "Pawn or King",
+      "6": "Elephant"
+    }
+  },
+  "home": {
+    "eyebrow": "The four-player dice game",
+    "title": "Four courts. One board.",
+    "description": "Take a seat around the 8×8 board. Roll two dice, move the matching piece types, and score captured pieces as four armies compete.",
+    "playBots": "Play against computers",
+    "passPlay": "Play together",
+    "online": "Invite players",
+    "note": "A source-based reconstruction of the historical dice game; uncertain procedures are marked as choices.",
+    "factSeats": "players",
+    "factDice": "dice each turn",
+    "factBoard": "board",
+    "aboutEyebrow": "About this edition",
+    "aboutTitle": "An old game, reconstructed carefully",
+    "aboutBody": "This playable ruleset follows Al-Biruni’s account as compared with later historical research. Some details are not settled by the sources, so this edition names its digital choices in the rules notes.",
+    "learnRules": "Start the interactive tutorial",
+    "seatsEyebrow": "Four corners",
+    "boardArt": "A four-seat board diagram",
+    "boardCenter": "Four",
+    "direction": { "r": "East", "g": "South", "y": "West", "b": "North" }
+  },
+  "bot": {
+    "eyebrow": "Choose your place",
+    "title": "Take one seat",
+    "body": "Choose an army and a computer level. The other three seats play independently.",
+    "chooseSeat": "Choose your seat",
+    "level": "Computer level",
+    "levelName": "Level {{level}}",
+    "start": "Play as {{player}}",
+    "thinking": "The computer is choosing a move."
+  },
+  "game": {
+    "title": "Chaturaji",
+    "passMode": "Pass and play",
+    "botMode": "Against computers",
+    "seats": "Four players and their scores",
+    "turn": "{{player}} acts for {{army}}",
+    "thinking": "{{player}} is thinking",
+    "controlledBy": "Controlled by {{player}}",
+    "originalKing": "Original King: {{state}}",
+    "safe": "on board",
+    "lost": "captured",
+    "pointsShort": "pts",
+    "boardLabel": "Chaturaji board",
+    "square": "{{square}}, {{piece}}",
+    "moveHint": "Choose a {{piece}} for the highlighted die, then tap a marked square.",
+    "finishedHint": "The game is complete.",
+    "diceEyebrow": "Chance",
+    "diceTitle": "This turn’s dice",
+    "actionCount": "Action {{current}} of 2",
+    "firstDie": "First action",
+    "secondDie": "Second action",
+    "waitingForRoll": "Preparing the next seat’s roll…",
+    "eligiblePieces": "This result allows: {{pieces}}.",
+    "pass": "Pass this action",
+    "scoreEyebrow": "Captured value",
+    "scoreTitle": "Score table",
+    "capturedPool": "Pieces captured by each player",
+    "capturedPiece": "Captured {{piece}}",
+    "recordEyebrow": "Turn record",
+    "recordTitle": "Actions",
+    "noMoves": "Moves and dice rolls will appear here.",
+    "event": { "move": "move", "capture": "capture", "pass": "pass", "roll": "roll" },
+    "resultEyebrow": "Game complete",
+    "winner": "Winner: {{players}}",
+    "resultBody": "The third original King was captured. Final points decide the winner.",
+    "newGame": "New game"
+  },
+  "tutorial": {
+    "eyebrow": "Interactive guide",
+    "title": "Learn at the board",
+    "progressLabel": "Tutorial progress",
+    "step": "{{current}} / {{total}}",
+    "answers": "Choose an answer",
+    "correct": "That’s right. Keep going.",
+    "tryAgain": "Not quite. Try another answer.",
+    "exercisePrompt": "Select a Red piece and make a legal move on the board.",
+    "makeMove": "The current result is {{face}}. Make one legal Red move on the board.",
+    "continue": "Continue",
+    "diagramLabel": "Diagram: {{topic}}",
+    "completeEyebrow": "Ready to play",
+    "completeTitle": "The table is yours",
+    "completeBody": "You have covered the selected movement, dice, scoring, promotion and ending rules. Start a game and learn the rhythm of all four seats.",
+    "playNow": "Play a game",
+    "replay": "Review the tutorial",
+    "topic": {
+      "seats": "Four armies",
+      "turn-order": "Turn order",
+      "dice": "The dice",
+      "movement": "Movement",
+      "pawns": "Pawns",
+      "check": "No check",
+      "scoring": "Capture points",
+      "promotion": "Promotion",
+      "boat-triumph": "Boat triumph",
+      "throne": "Allied throne",
+      "ending": "The ending"
+    },
+    "diagram": {
+      "seats": "Each army begins in a corner, facing toward the middle.",
+      "turn-order": "Play moves clockwise around the board.",
+      "dice": "Use each result for one eligible piece action.",
+      "movement": "A piece may move only when its type matches the current die.",
+      "pawns": "Pawns advance outward toward the opposite edge.",
+      "check": "Kings are captured like other pieces; there is no check rule.",
+      "scoring": "Captured pieces add their printed value to your score.",
+      "promotion": "A pawn reaching its far edge promotes to a piece already captured.",
+      "boat-triumph": "A Boat reaching the opposite Boat corner captures the enemy King.",
+      "throne": "A King landing on its allied throne can take control of that army.",
+      "ending": "After three original Kings fall, the highest score wins."
+    },
+    "lessons": {
+      "four-armies": {
+        "title": "Four armies share the board",
+        "body": "Red, Green, Yellow and Black each begin in a corner with a King, Elephant, Horse, Boat and four Pawns. Which statement is true?",
+        "options": ["There are four armies.", "There are two armies.", "There are three armies.", "There are six armies."]
+      },
+      "turn-order": {
+        "title": "Move clockwise",
+        "body": "Red takes the first turn. Seats then act clockwise. Which army follows Red?",
+        "options": ["Yellow", "Green", "Black", "Red again"]
+      },
+      "dice-one-five": {
+        "title": "Read a one or a five",
+        "body": "The dice select which pieces may act. A one and a five have the same choices. Which pieces are eligible?",
+        "options": ["Pawn or King", "Boat only", "Horse only", "Elephant only"]
+      },
+      "make-a-move": {
+        "title": "Try a move",
+        "body": "Only a piece type allowed by the current die can move. The board marks the legal destinations for the selected piece.",
+        "options": []
+      },
+      "dice-two-three": {
+        "title": "A two or a three",
+        "body": "Each die result names a piece type for one action. What does a two allow?",
+        "options": ["King", "Elephant", "Boat", "Pawn"]
+      },
+      "elephant-and-boat": {
+        "title": "Long moves and a diagonal jump",
+        "body": "The Elephant slides like a rook. The Boat makes a single two-square diagonal jump, even if the middle square is occupied. What does a six allow?",
+        "options": ["Boat", "Elephant", "Horse", "King"]
+      },
+      "pawns": {
+        "title": "Pawns advance outward",
+        "body": "Each Pawn advances toward the opposite edge from its starting side. Pawns move one square forward and capture one square diagonally forward. Can a Pawn move two squares on its first move?",
+        "options": ["No, it moves one square.", "Yes, always.", "Only on a five.", "Only after a capture."]
+      },
+      "no-check": {
+        "title": "There is no check",
+        "body": "The King moves one square in any direction. In this reconstruction, Kings are captured like other pieces; players do not announce or escape check. What happens when a King is attacked?",
+        "options": ["It must castle.", "Its owner is in check.", "Nothing special; it can be captured.", "The turn is skipped."]
+      },
+      "capture-points": {
+        "title": "Captures add points",
+        "body": "A captured Pawn is worth 1, Boat 2, Horse 3, Elephant 4 and King 5. How many points is a captured Horse worth?",
+        "options": ["2", "3", "4", "5"]
+      },
+      "promotion": {
+        "title": "Promotion uses your capture pool",
+        "body": "When a Pawn reaches the far edge, it promotes to a piece type you have already captured. What must you have to promote to a Horse?",
+        "options": ["A captured Horse in your pool", "A Horse still on the board", "A six on the die", "An allied King"]
+      },
+      "boat-triumph": {
+        "title": "The Boat has a triumph",
+        "body": "A Boat that reaches the opposite Boat’s corner captures that army’s King. This is the Boat triumph. What does it capture there?",
+        "options": ["The opposing Pawn", "The opposing Elephant", "The opposing King", "Every piece in that army"]
+      },
+      "allied-throne": {
+        "title": "An allied throne can change control",
+        "body": "Each army has an opposite ally. If your King lands on your ally’s throne, you take control of that army too. Which armies are allied in this edition?",
+        "options": ["Red and Green", "Red and Yellow", "Green and Yellow", "All seats are allies"]
+      },
+      "game-end": {
+        "title": "Three captured Kings end the game",
+        "body": "The game ends when three original Kings have been captured. Scores are then compared; the top score wins, and a tied top score shares the win. How many original Kings must fall?",
+        "options": ["Three", "One", "Two", "Four"]
+      }
+    }
+  },
+  "online": {
+    "eyebrow": "Four seats, one table",
+    "title": "Invite three players",
+    "body": "Create a private room and share its link. Each seat reconnects to its original army. The server checks every move and dice result.",
+    "creating": "Creating room…",
+    "create": "Create a private room",
+    "code": "Six-character room code",
+    "join": "Join room",
+    "back": "Back to lobby",
+    "room": "Room {{code}}",
+    "inviteTitle": "Bring the other three players",
+    "inviteBody": "Share this private room link. All four seats must join before the first move.",
+    "copy": "Copy invite link",
+    "copied": "Copied",
+    "seats": "Online seats",
+    "waiting": "Waiting for all four players",
+    "waitingTurn": "{{player}} has the turn",
+    "connecting": "Connecting to the room…",
+    "reconnecting": "Connection lost. Reconnecting…",
+    "ready": "Connected",
+    "empty": "Open seat",
+    "online": "Connected",
+    "offline": "Disconnected",
+    "full": "This room already has four seats.",
+    "notFound": "Room not found.",
+    "invalid": "Enter a valid six-character room code.",
+    "unavailable": "The room service is unavailable. Try again.",
+    "copyFailed": "Could not copy the invite link. Copy the address from your browser.",
+    "errors": {
+      "bad-message": "That action could not be read.",
+      "room-full": "This room already has four seats.",
+      "waiting": "All four players need to join before play starts.",
+      "finished": "This game has ended.",
+      "wrong-turn": "It is another seat’s turn.",
+      "stale": "The board changed. Your view has been refreshed.",
+      "illegal-move": "That move is not legal for this die."
+    }
+  }
+}

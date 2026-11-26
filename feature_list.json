@@ -3781,7 +3781,7 @@
       "milestone": "M47",
       "title": "Release Four-handed chess",
       "user_visible_behavior": "Four players can learn the selected Free-for-All four-handed chess rules and play against bots, pass-and-play, and in private online rooms.",
-      "status": "in_progress",
+      "status": "blocked",
       "verification": [
         "Pin the source-linked 160-square board, four-seat setup/order, movement, promotion, elimination, scoring and digital draw conventions in packages/fourchess/RULES.md.",
         "Implement a pure four-seat Variant with source-backed setup fixtures, shared conformance, deterministic replay/undo and focused rules/outcome tests.",
@@ -3795,10 +3795,44 @@
         "2026-11-26: Rights review uses the U.S. Copyright Office Games guidance to distinguish game mechanics from protected prose/art. This is not a global legal opinion; implementation must be clean-room with original name, art, code and lesson text. No external contact or source-asset reuse occurred.",
         "2026-11-26: Implemented the pure Variant, 24 rules/conformance tests, and three seeded bounded bots with 4 focused tests. The shared board accepts four seat colors; shared point-scored results and protocol preserve multiple winners and final standings.",
         "2026-11-26: Implemented the Fourfold Chess English PWA, local saves, pass-and-play, bots, and 11 interactive rules lessons; tutorial content test passes 1/1. Added isolated four-seat online Worker with server validation, stable seats, reconnect and archive; Worker tests pass 3/3 and app tests pass 1/1.",
-        "2026-11-26: Full NODE_OPTIONS=--no-experimental-webstorage npm run verify passed with loopback access; npm run build:fourchess passed for the PWA and Worker. Local Playwright smoke passed 4/4 scenarios. Local environment uses Node 25.9 because Node 22.23.1/nvm are unavailable; exact-SHA CI is still required.",
-        "2026-11-26: Melon staging and four-seat/restart/copied-state recovery checks remain pending. No Caddy route or directory entry has been published. Keep the feature in_progress until staging and release gates are verified."
+        "2026-11-26: Full NODE_OPTIONS=--no-experimental-webstorage npm run verify passed with loopback access; npm run build:fourchess passed for the PWA and Worker. Local Playwright smoke passed 4/4 scenarios. Local environment uses Node 25.9 because Node 22.23.1/nvm are unavailable.",
+        "2026-11-26: Commit 1e067b9d00c766f7d12824b0a520e51dd12baf79 is on main; exact-SHA GitHub CI run 45780002660 passed workspace verification and the Four-handed Chess build.",
+        "2026-11-26: Pinned SHA is staged in /home/melon/chaturanga-release.fourchess.UGrfdi at 127.0.0.1:19921. The active container chaturanga-stage-fourchess-19921 uses the verified copied state directory state-restore-test; the stopped original container is retained as chaturanga-stage-fourchess-19921-pre-restore. Health and homepage passed.",
+        "2026-11-26: Built-stage Playwright passed 4/4 scenarios, including four stable seats, four server-validated moves, reconnect, mobile/PWA metadata, tutorial/bot, and invalid room. Added turn-state waits between seat moves to remove a test timing race.",
+        "2026-11-26: A live four-seat room retained all seats and four plies after container restart. With the source stopped, copied state-restore-test into a separate restore container; all four identities and history recovered, and Red completed a fifth legal move synchronized to all clients.",
+        "2026-11-26: getent returned no address for fourchess.beanroti.com. Public TLS/HTTPS/WSS smoke and directory publication cannot run; no Caddy route or catalog entry was changed. Feature is blocked only at public promotion."
       ],
-      "notes": "Active product because Hive is blocked at the project rights gate. The selected form is an established current FFA convention, not a proven popularity winner. Rules, bots, tutorial/PWA, online Worker, focused browser smoke and local build/full verification are implemented and pass. Stage the verified main SHA on Melon; test four seats, restart and copied-state restore, then check public DNS/TLS/HTTPS/WSS before routing or directory publication."
+      "notes": "Implemented and privately staged from 1e067b9d00c766f7d12824b0a520e51dd12baf79. Exact-SHA CI, built-stage browser smoke, restart and copied-state restore all pass. Public release is blocked because fourchess.beanroti.com has no DNS answer; keep Caddy and the app directory unchanged. The next ready roadmap feature is Chaturaji."
+    },
+    {
+      "id": "chaturaji-001",
+      "product": "chaturaji",
+      "priority": 199,
+      "area": "release",
+      "milestone": "M48",
+      "title": "Release Chaturaji",
+      "user_visible_behavior": "Players learn a historically attested four-seat dice version of Chaturaji and play against bots, pass-and-play, and in private online rooms.",
+      "status": "in_progress",
+      "verification": [
+        "Record a source-linked Al-Biruni-based rules reconstruction, all four starting formations, dice-to-piece mapping, scoring and explicitly chosen procedures for source ambiguities.",
+        "Implement a pure four-seat Variant with injected seed/state, serializable dice, recorded rolls, deterministic replay/undo, shared conformance and focused tests for all selected movement and scoring rules.",
+        "Add seeded bots for every color, complete interactive tutorial, and independent offline PWA using original name treatment, art, and tutorial wording.",
+        "Provide server-authoritative private four-seat rooms with validated rolls/moves and isolated Melon storage; verify reconnect, restart and copied-state restore.",
+        "Run full verification, product build, exact-SHA CI, staged browser smoke and recovery checks. Check DNS/TLS/HTTPS/WSS before any public route or directory update."
+      ],
+      "evidence": [
+        "2026-11-26: Initial source review is documented in apps/chaturaji/docs/reports/Chaturaji rules and adoption.md and its research_notes folder. Al-Biruni's c. 1030 account, translated by Sachau (1910), and Murray's 1913 source comparison establish the historic dice form; sources leave important dice/turn/turn-order details uncertain.",
+        "2026-11-26: No comparative participation evidence establishes a most-popular Chaturaji form. The roadmap's historically attested dice reconstruction remains the planning default; the late-19th-century diceless form is documented as a distinct alternative, not selected.",
+        "2026-11-26: Pinned the playable reconstruction in packages/chaturaji/RULES.md: four corner armies, two recorded six-sided results, piece mapping, independent scoring, third-King ending, 54-point maximum, promotion, Boat triumph and allied throne control. Ambiguous details are marked as digital choices.",
+        "2026-11-26: Implemented packages/chaturaji as a pure seeded Variant with FEN, roll/pass actions, die-filtered legal moves, capture pools, scoring, promotion, Boat triumph, throne control, points result, replay and undo. Focused tests 16/16 pass; rules-core 46/46 and protocol 7/7 pass.",
+        "2026-11-26: Added @chaturanga/chaturaji-ai with bounded deterministic four-seat Max-n search and six difficulty levels; focused bot tests pass 4/4, covering all seats and legal responses.",
+        "2026-11-26: Added the independent English Chaturaji PWA with four-seat pass-and-play, one-human/three-bot play, seed-backed local save/replay, original Courtyard Ledger design, and a 13-step interactive tutorial with an engine-validated board move. Tutorial and locale content tests pass 2/2.",
+        "2026-11-26: Added a private four-seat Worker and isolated D1 archive. Server actions validate through the Variant; future dice are server-seeded and recorded as ROLL events. Room-state tests pass 3/3 for stable seats, turn/revision/legality, replay and server rolls.",
+        "2026-11-26: Product typechecks and lint pass; web and Worker production build passes. Playwright local browser suite passes 4/4 for complete tutorial, bot play, local saves/mobile layout, four-seat online turn rotation/reconnect and unknown rooms. Built PWA suite passes 2/2 for installability and offline tutorial, pass-and-play and cached bot response. Desktop/mobile visual review reported zero page errors.",
+        "2026-11-26: NODE_OPTIONS=--no-experimental-webstorage ./init.sh passed clean installation, repository lint, all workspace typechecks and tests under local Node 25.9 (nvm is unavailable; CI is pinned to Node 22.23.1). npm run build:chaturaji passed for the PWA and Worker; Wrangler's local log permission warning was non-fatal and dry-run exited 0 with the expected bindings.",
+        "2026-11-26: Exact-SHA CI, Melon staging/recovery and public DNS/TLS checks remain before release status can pass."
+      ],
+      "notes": "Active after Four-handed Chess reached a verified private Melon stage but its public hostname failed DNS resolution. This feature implements the historically attested dice reconstruction as a clearly labeled source-based playable reconstruction; it does not claim popularity or perfect recovery of every historical procedure. Rules, deterministic bots, the PWA/tutorial and authoritative private rooms now exist and their focused/browser checks pass. Full repository verification and product build pass. Next: direct main commit/push, exact-SHA CI, then Melon stage, migration and restart/copied-state recovery. Check DNS/TLS before any public route or app-directory entry."
     }
   ]
 }

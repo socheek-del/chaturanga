@@ -40,7 +40,7 @@ describe('ClientMessage move notation', () => {
   });
 
   it('still accepts ordinary moves, in-place promotions, and drops', () => {
-    for (const uci of ['e2e4', 'd5d5f', 'K@e1', 'C100@a1', 'X21@b1'])
+    for (const uci of ['e2e4', 'd5d5f', 'K@e1', 'C100@a1', 'X21@b1', 'pass', 'ROLL16'])
       expect(ClientMessage.safeParse({ type: 'move', uci, ply: 0 }).success, uci).toBe(true);
   });
 

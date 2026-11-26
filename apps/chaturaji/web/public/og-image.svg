@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f1e8d5"/>
+  <path d="M0 0h1200v18H0zM0 612h1200v18H0z" fill="#17211f"/>
+  <circle cx="900" cy="315" r="228" fill="none" stroke="#a9a087" stroke-width="2"/>
+  <circle cx="900" cy="315" r="188" fill="none" stroke="#c9b98f" stroke-width="1" stroke-dasharray="5 10"/>
+  <g transform="translate(774 189)">
+    <rect width="252" height="252" rx="22" fill="#17211f"/>
+    <g fill="#f1e8d5">
+      <path d="M28 28h82v82H28zm114 0h82v82h-82zM28 142h82v82H28zm114 0h82v82h-82z"/>
+    </g>
+    <path d="M142 28h82v82h-82z" fill="#c3933d"/>
+    <circle cx="126" cy="126" r="12" fill="#17211f" stroke="#efb655" stroke-width="5"/>
+    <circle cx="69" cy="69" r="18" fill="#b34438" stroke="#f1e8d5" stroke-width="5"/>
+    <circle cx="183" cy="69" r="18" fill="#385d87" stroke="#f1e8d5" stroke-width="5"/>
+    <circle cx="69" cy="183" r="18" fill="#4f7457" stroke="#f1e8d5" stroke-width="5"/>
+    <circle cx="183" cy="183" r="18" fill="#ad8a38" stroke="#f1e8d5" stroke-width="5"/>
+  </g>
+  <text x="100" y="259" fill="#17211f" font-family="Georgia,serif" font-size="76">Chaturaji</text>
+  <text x="104" y="324" fill="#45524a" font-family="Arial,sans-serif" font-size="27" letter-spacing="5">FOUR SEATS · TWO DICE</text>
+  <path d="M104 377h365" stroke="#c3933d" stroke-width="4"/>
+  <text x="104" y="432" fill="#45524a" font-family="Arial,sans-serif" font-size="24">A playable reconstruction of a historic game</text>
+</svg>

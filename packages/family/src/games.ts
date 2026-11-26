@@ -1,7 +1,7 @@
 /** Every language any family site declares. A new site language adds a name for every game here. */
 export type FamilyLanguage = 'th' | 'my' | 'zh-Hans' | 'ja' | 'ko' | 'en';
 
-export type GameId = 'makruk' | 'sittuyin' | 'xiangqi' | 'shogi' | 'chess' | 'janggi' | 'threechess' | 'hiashatar' | 'fourchess';
+export type GameId = 'makruk' | 'sittuyin' | 'xiangqi' | 'shogi' | 'chess' | 'janggi' | 'threechess' | 'hiashatar' | 'fourchess' | 'chaturaji';
 
 export interface FamilyGame {
   id: GameId;
@@ -45,5 +45,9 @@ export const GAMES: readonly FamilyGame[] = [
   {
     id: 'fourchess',
     names: { th: 'หมากรุกสี่คน', my: 'လူလေးဦး စစ်တုရင်', 'zh-Hans': '四人国际象棋', ja: '四人チェス', ko: '4인 체스', en: 'Four-handed chess' },
+  },
+  {
+    id: 'chaturaji',
+    names: { th: 'จตุราจิ', my: 'ချတူရာဂျီ', 'zh-Hans': '恰图拉吉', ja: 'チャトラジ', ko: '차투라지', en: 'Chaturaji' },
   },
 ];

@@ -10,14 +10,14 @@ export interface VariantMoveRecord<C extends string = Color> {
   piece: Piece<string, C>;
   captured: Piece<string, C> | null;
   /** The action kind when a variant has captures or drops that do not follow ordinary board movement. */
-  action?: 'move' | 'capture' | 'drop';
+  action?: 'move' | 'capture' | 'drop' | 'pass' | 'roll';
   /** Additional pieces removed by a multi-capture move, in route order. */
   captures?: Piece<string, C>[];
   /** True when a legal move's mover is removed at turn end, as with Congo river drowning. */
   movedPieceRemoved?: boolean;
   /** The final coordinate may contain an opposing piece when a multi-piece turn ends with a pull. */
   multiPieceMove?: boolean;
-  /** Destination square; the placement square for a drop. */
+  /** Destination square; the placement square for a drop. Non-board actions use -1. */
   to: Square;
   fenAfter: string;
 }
@@ -36,6 +36,8 @@ export interface VariantGame<C extends string = Color> {
   legalUci(): string[];
   /** Plays a move in coordinate notation; throws IllegalMoveError. */
   move(uci: string): VariantMoveRecord<C>;
+  /** Applies a chance event from an injected seed when the game is waiting for one, if applicable. */
+  prepareTurn?(seed: number): VariantMoveRecord<C> | null;
   undo(): VariantMoveRecord<C> | null;
   moves(): VariantMoveRecord<C>[];
   lastMove(): VariantMoveRecord<C> | null;

@@ -1,0 +1,24 @@
+{
+  "name": "@chaturanga/chaturaji-worker",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "GPL-3.0-or-later",
+  "scripts": {
+    "dev": "mkdir -p ../web/dist && wrangler d1 migrations apply chaturaji --local && wrangler dev --port 8795 --var AUTH_SECRET:local-chaturaji-development-secret",
+    "build": "wrangler deploy --dry-run --outdir dist",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@cloudflare/workers-types": "^5.20260911.1",
+    "@chaturanga/chaturaji": "*",
+    "@chaturanga/protocol": "*",
+    "@chaturanga/server-kit": "*",
+    "hono": "^4.13.7",
+    "zod": "^4.6.4"
+  },
+  "devDependencies": {
+    "wrangler": "^4.131.1"
+  }
+}

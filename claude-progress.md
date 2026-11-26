@@ -30,6 +30,15 @@ handoff; no agent updates it automatically.
   - `xq-011`: native Chinese reviewer completes `apps/xiangqi/docs/i18n-review.md`
   - `sit-011`: native Burmese reviewer completes `apps/sittuyin/docs/i18n-review.md`
 
+## Active rollout snapshot (2026-11-26)
+
+- Current feature: `chaturaji-001` in `feature_list.json`. Source-based Al-Biruni dice reconstruction; no popularity claim. Rules/AI/PWA/tutorial/online implementation is now present. Product app notes: `apps/chaturaji/AGENTS.md`; executable decisions: `packages/chaturaji/RULES.md`.
+- Focused checks currently recorded: rules 16/16, bot 4/4, tutorial/locale 2/2, Worker room state 3/3, browser e2e 4/4, offline/installability PWA 2/2. Product web and Worker builds and typechecks passed; desktop/mobile visual review showed zero page errors.
+- `NODE_OPTIONS=--no-experimental-webstorage ./init.sh` and `npm run build:chaturaji` now pass. Local Node is 25.9 because nvm and the pinned 22.23.1 are unavailable; GitHub CI uses `.nvmrc`.
+- Next: update final evidence, commit/push Chaturaji to `main`, verify exact-SHA CI, then stage on Melon at port 19922 and test migration, four-seat rooms, reconnect, restart and copied-state restore.
+- Public Chaturaji DNS/TLS/HTTPS/WSS has not been checked; keep Caddy and `apps/beanroti/web/public/apps.json` unchanged until public smoke succeeds. Preserve running Arimaa and Four-handed Chess stages. Their DNS/license gates remain as recorded in `session-handoff.md`.
+- Current workspace contains the Chaturaji implementation and release evidence. Four-handed Chess timing/docs changes were committed as `fff44eb` and pushed; exact-SHA CI is running.
+
 ## Session Log
 
 ### Session 001
@@ -1784,3 +1793,38 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 - Final result review caught two cross-game collisions: Four-handed Blue must not occupy the legacy two-seat Black winner field, and shared point standings must allow Janggi's fractional komi. The converter regression is included in the 46 passing rules-core tests; the protocol now accepts fractional scores and its focused suite passes 7/7 with typecheck. These last protocol-schema edits followed the full workspace run, so exact-SHA CI is the final full-suite check for the commit.
 - Local shell is Node 25.9 with no nvm or pinned Node 22.23.1. `./init.sh` could not refresh dependencies because registry DNS returned `ENOTFOUND`; verification used the existing lockfile/install with the repository's Web Storage compatibility flag. CI will exercise the pinned Node version.
 - Next: review and commit the complete implementation plus state updates, push to main, confirm exact-SHA CI, then stage on Melon port 19921. Test four independent seats, reconnect, restart, and copied-state recovery. Do not add a Caddy route or app-directory entry until DNS/TLS and HTTPS/WSS smoke pass. Hive stays rights-blocked; Chaturaji follows Four-handed Chess.
+
+### Session 108 (Four-handed Chess Melon release and Chaturaji selection)
+
+- Pushed commit `1e067b9d00c766f7d12824b0a520e51dd12baf79` to `main`; exact-SHA GitHub CI run `45780002660` passed full workspace verification and `build:fourchess`.
+- Staged the exact SHA on Melon at loopback port 19921 in `/home/melon/chaturanga-release.fourchess.UGrfdi`, container `chaturanga-stage-fourchess-19921`. Isolated D1 migration, Worker health and homepage passed. Caddy was not changed.
+- The first built-stage browser pass exposed a test race: turns were clicked without waiting for the preceding server state. Added explicit turn waits to `apps/fourchess/web/e2e/online.spec.ts`; the staged browser suite passed 4/4 after the fix.
+- A four-seat room with four plies recovered all identities and history after container restart. Then the source container was stopped, its persistent state copied, and a separate container restored it; all four identities/history returned and a fifth legal move synchronized. The active restored container now uses `/home/melon/chaturanga-release.fourchess.UGrfdi/state-restore-test` under the standard stage name; the exited original is retained as `chaturanga-stage-fourchess-19921-pre-restore`.
+- `getent` found no address for `fourchess.beanroti.com`. Public HTTPS/WSS, Caddy promotion, and app-directory publication remain blocked. No Caddy or catalog change was made. The release feature is blocked only at this public gate.
+- Updated Four-handed Chess evidence and handoff. Began Chaturaji source/adoption/rights review in `apps/chaturaji/docs/`. Al-Biruni's c. 1030 dice game is the best-attested historic target; no popularity winner is evidenced. Murray's comparison flags unresolved dice procedure, turn direction, unusable rolls, King capture and promotion. Keep these explicit as digital conventions in the rules contract.
+- Next: settle the Chaturaji playable reconstruction in `packages/chaturaji/RULES.md`, especially initial placement, result handling, promotion and Boat-triumph/*sinhasana* scope; then implement the pure seeded Variant and replayable dice. Preserve Four-handed Chess's Melon stage and leave public routing unchanged.
+
+### Session 109 (Chaturaji rules contract and engine)
+
+- Updated the Four-handed Chess staged-browser timing test to wait for each seat's turn. The change is in `apps/fourchess/web/e2e/online.spec.ts` and awaits its next commit; no release path or public route changed.
+- Completed the Chaturaji source-led rules contract and documented the implementation choices, including clockwise four-seat order, two die actions, pass behavior, first-pair FEN, later `ROLLxy` replay events, capture scoring, third-original-King ending, 54-point award, promotion mapping, Boat triumph and allied throne takeover.
+- Implemented `packages/chaturaji` as a pure seeded Variant with 8×8 setup/movement, die-filtered move generation, scores and captured-piece pools, promotion, Boat triumph, controller transfer, FEN, roll/pass records, replay and undo.
+- `npm test -w packages/chaturaji` passed 16/16, including shared Variant conformance and seeded random replay/undo. `npm run typecheck -w packages/chaturaji`, `npm run typecheck -w packages/rules-core`, and `npm run typecheck -w packages/protocol` passed. `npm test -w packages/rules-core` passed 46/46; `npm test -w packages/protocol` passed 7/7.
+- Full `npm run typecheck` passed across every workspace. The package lock includes the new workspace. Full lint/test suite, app implementation, bot, tutorial, online rooms, CI and Melon staging remain outstanding.
+- Updated feature evidence, roadmap, quality document, clean-state checklist, product plan, research report and session handoff. Next: implement four deterministic bots and focused AI tests; preserve the Four-handed Chess Melon stage and keep its public routing/catalog unchanged.
+
+### Session 110 (Chaturaji bots, PWA, tutorial and online rooms)
+
+- Added the six-level seeded Max-n bots in `packages/chaturaji-ai`; the focused suite passes 4/4 across all seats.
+- Built `apps/chaturaji/web` as an independent English PWA with local seeded save/replay, pass-and-play, one human against three bots, the original Courtyard Ledger layout and 13 interactive lessons. The path includes a real legal board move and checks the selected dice, movement, scoring, promotion, Boat triumph, allied throne and ending rules. Tutorial/locale tests pass 2/2.
+- Added an isolated four-seat online Worker and D1 archive. Stable seats reconnect, every accepted action is checked through the Variant, and the server creates future seeded `ROLLxy` records. Room-state suite passes 3/3; no chat route or message was added.
+- Fixed a stale lockfile that caused `npm ci` to reject the new workspaces; clean install then completed. `./init.sh` exposed the incomplete web scaffold and missing DOM/JSX TypeScript settings; the scaffold now typechecks. Full `./init.sh` verification has not yet been rerun.
+- Product typechecks and ESLint pass; web/Worker production builds pass. Browser suite passes 4/4 for tutorial, bot response, saved pass-and-play/mobile layout, four-seat online rotation, reconnect and unknown-room behavior. Built PWA suite passes 2/2 for installability and offline tutorial, pass-and-play and bot-worker response. Desktop/390px captures were inspected after fixing the missing family-footer translation; no page errors.
+- Updated `feature_list.json`, `clean-state-checklist.md`, `quality-document.md`, product plan, roadmap and handoff. Next run the standard full repo check, finalize build, commit/push directly to `main`, inspect exact-SHA CI, then stage on Melon port 19922 with restart/copy restore. Public DNS/TLS has not been checked; keep public routing/catalog untouched.
+
+### Session 111 (Chaturaji full verification and release preparation)
+
+- `NODE_OPTIONS=--no-experimental-webstorage ./init.sh` passed after a clean install: repository lint, every workspace typecheck and every workspace test passed. The local shell used Node 25.9 because nvm and pinned Node 22.23.1 are unavailable; CI uses the checked-in `.nvmrc`.
+- `npm run build:chaturaji` passed for the PWA and Worker. Wrangler printed a non-fatal local log-file `EPERM` warning, then exited 0 after producing the dry-run bundle with the expected Durable Object, D1 and asset bindings.
+- The final Four-handed Chess local browser suite passed 4/4 after adding explicit seat-turn waits. Committed its evidence/timing assertion as `fff44eb` and pushed to `main`; exact-SHA CI run `45799805729` is in progress.
+- Chaturaji remains the active product. Next: commit and push its verified source/docs increment to `main`, confirm exact-SHA CI, stage on Melon port 19922, and verify the isolated migration, four-seat room, reconnect, restart and copied-state recovery. Check public DNS/TLS/HTTPS/WSS before considering a route or catalog entry.

@@ -196,5 +196,23 @@
 - [x] Add three bounded deterministic bots; focused AI tests pass 4/4. Add shared four-seat colors and point-scored result serialization with regression tests.
 - [x] Build the English Fourfold Chess PWA, local game modes, three bot seats, offline assets and 11-step interactive tutorial; tutorial content test and production build pass.
 - [x] Add authoritative private four-seat rooms with isolated archive and no chat; Worker tests pass 3/3. Local Playwright browser smoke passed 4/4 scenarios.
-- [ ] Commit and push the verified change to main, confirm exact-SHA CI, then stage on Melon at port 19921.
-- [ ] Run Melon health, four-seat sync/reconnect, restart recovery and copied-state restore smoke; verify public DNS/TLS/HTTPS/WSS before changing Caddy or publishing the directory entry.
+- [x] Commit and push `1e067b9d00c766f7d12824b0a520e51dd12baf79`; exact-SHA CI run `45780002660` passed workspace verification and the Four-handed Chess build.
+- [x] Stage that SHA on Melon port 19921 in `/home/melon/chaturanga-release.fourchess.UGrfdi`; migration, health and homepage passed. Built-stage browser smoke passed 4/4 after adding move-turn synchronization waits.
+- [x] Four-seat room identities and four-ply history recovered after container restart. A stopped-state copy restored the room in a separate container and synchronized a fifth legal move; the active recovered copy is the standard stage and the original stopped container is retained for rollback.
+- [x] Checked `fourchess.beanroti.com`: DNS has no answer. Public HTTPS/WSS, Caddy promotion and directory publication are blocked; no Caddy/catalog change was made.
+- [x] Update feature evidence, progress, handoff, quality snapshot, product plan and this checklist. Keep the verified Melon stage running.
+- [x] Begin Chaturaji source/adoption/rights review. The dice reconstruction is selected as a historical target, not a proven popularity winner; settle the explicit digital rules contract before implementing its engine.
+
+### Chaturaji
+
+- [x] Complete source-linked rules/adoption/rights review and pin the Al-Biruni-based reconstruction in `packages/chaturaji/RULES.md`; label uncertain procedures as digital choices.
+- [x] Implement `packages/chaturaji` as a pure four-seat Variant with seeded initial dice, recorded roll/pass actions, movement, capture pools, scoring, promotion, Boat triumph, *sinhasana*, terminal standings, replay and undo.
+- [x] Focused Chaturaji tests pass 16/16, including shared Variant conformance; rules-core tests pass 46/46; protocol tests pass 7/7.
+- [x] Add six bounded deterministic bots and test legal decisions for all seats (bot tests 4/4).
+- [x] Build the independent English PWA, original identity, local replay, four-seat play and 13-step interactive tutorial (tutorial tests 2/2).
+- [x] Add authoritative private four-seat rooms and isolated D1 storage; room-state tests pass 3/3.
+- [x] Browser smoke passes 4/4 for tutorial, bot, local save/mobile layout, room rotation/reconnect and invalid rooms; offline PWA/installability passes 2/2, including the cached bot worker. Desktop/mobile visual review reports zero page errors.
+- [x] Run `NODE_OPTIONS=--no-experimental-webstorage ./init.sh` and final `build:chaturaji`; full verification and build pass. Local Node is 25.9 because nvm is unavailable; CI uses pinned Node 22.23.1.
+- [ ] Commit Chaturaji directly to main, push and verify exact-SHA CI.
+- [ ] Stage the verified SHA on Melon port 19922, apply isolated migration, and verify four-seat play, reconnect, restart and copied-state restore.
+- [ ] Check public DNS/TLS/HTTPS/WSS. Do not change Caddy or publish the directory until public smoke passes.

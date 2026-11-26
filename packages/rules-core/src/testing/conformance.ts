@@ -86,6 +86,11 @@ export function describeVariantConformance<G extends VariantGame<string>>(
         const game = variant.createGame();
         const fens = [game.fen()];
         while (!game.isGameOver() && game.moves().length < PLAYOUT_PLIES) {
+          const prepared = game.prepareTurn?.(Math.floor(rand() * 0x1_0000_0000));
+          if (prepared) {
+            expect(prepared).toMatchObject({ color: game.turn, fenAfter: game.fen() });
+            fens.push(game.fen());
+          }
           let uci: string | null;
           if (fixtures.sampleLegalMove) uci = fixtures.sampleLegalMove(game, rand);
           else {
@@ -101,15 +106,22 @@ export function describeVariantConformance<G extends VariantGame<string>>(
           const inSetupPhase = usesSetupPhase(variant) && players.some((player) => game.hand(player).length > 0);
           const record = game.move(uci);
           expect(record).toMatchObject({ uci, color: mover, fenAfter: game.fen() });
-          expect(squareNameOf(record.to, variant.files)).toBe(uci.match(/[a-q]\d{1,2}/g)!.at(-1));
           expect(game.lastMove()).toBe(record);
-          if (game.turn === mover) {
+          if (game.turn === mover && usesSetupPhase(variant)) {
             expect(inSetupPhase).toBe(true);
             expect(game.hand(mover).length).toBeLessThan(handCountBefore);
           }
-          if (record.action === 'capture') {
+          if (record.action === 'roll' || record.action === 'pass') {
+            expect(record.san).toBeTruthy();
+          } else {
+            expect(record.to).toBeGreaterThanOrEqual(0);
+            expect(squareNameOf(record.to, variant.files)).toBe(uci.match(/[a-q]\d{1,2}/g)!.at(-1));
+          }
+          if (record.action === 'roll' || record.action === 'pass') {
+            // Chance and pass actions have no board destination or capture.
+          } else if (record.action === 'capture') {
             expect(record.captured).not.toBeNull();
-            expect(game.hand(mover).length).toBeGreaterThan(handCountBefore);
+            if (variant.hasHands) expect(game.hand(mover).length).toBeGreaterThan(handCountBefore);
           } else if (record.movedPieceRemoved) expect(game.pieceAt(record.to)).toBeNull();
           else if (record.multiPieceMove) expect(game.pieceAt(record.to)).not.toBeNull();
           else expect(game.pieceAt(record.to)?.color).toBe(mover);
@@ -138,6 +150,7 @@ export function describeVariantConformance<G extends VariantGame<string>>(
         const rand = mulberry32(seed);
         const game = variant.createGame();
         while (!game.isGameOver() && game.moves().length < PLAYOUT_PLIES) {
+          game.prepareTurn?.(Math.floor(rand() * 0x1_0000_0000));
           const side = game.turn;
           const own = game.attackedSquares(side);
           const enemy = [...new Set(players.filter((player) => player !== side).flatMap((player) => game.attackedSquares(player)))].sort((a, b) => a - b);
@@ -149,7 +162,7 @@ export function describeVariantConformance<G extends VariantGame<string>>(
           if (checked !== null) expect(enemy, `seed ${seed}: check is an attack`).toContain(checked);
           const legal = fixtures.sampleLegalMove ? [fixtures.sampleLegalMove(game, rand)].filter((uci): uci is string => !!uci) : game.legalUci();
           for (const uci of legal) {
-            if (uci.includes('@')) continue;
+            if (uci === 'pass' || /^ROLL[1-6]{2}$/.test(uci) || uci.includes('@')) continue;
             const to = squareOf(uci.match(/[a-q]\d{1,2}/g)!.at(-1)!, variant.files)!;
             const target = game.pieceAt(to);
             if (target && target.color !== side) expect(own, `seed ${seed}: ${uci} captures`).toContain(to);

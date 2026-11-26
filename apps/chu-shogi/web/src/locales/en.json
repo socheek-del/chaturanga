@@ -1,0 +1,93 @@
+{
+  "nav": { "label": "Main navigation", "home": "Home", "play": "Play", "learn": "Tutorial", "atlas": "Piece atlas", "leave": "Leave screen" },
+  "theme": { "toggle": "Change color theme", "dark": "Dark", "light": "Light" },
+  "colors": { "w": "White", "b": "Black" },
+  "pieces": {
+    "king": "King", "lion": "Lion", "free-king": "Free King", "drunk-elephant": "Drunk Elephant", "kirin": "Kirin", "phoenix": "Phoenix",
+    "rook": "Rook", "bishop": "Bishop", "dragon-king": "Dragon King", "dragon-horse": "Dragon Horse", "vertical-mover": "Vertical Mover",
+    "side-mover": "Side Mover", "reverse-chariot": "Reverse Chariot", "lance": "Lance", "blind-tiger": "Blind Tiger",
+    "ferocious-leopard": "Ferocious Leopard", "gold-general": "Gold General", "silver-general": "Silver General", "copper-general": "Copper General",
+    "go-between": "Go-Between", "pawn": "Pawn"
+  },
+  "board": {
+    "label": "Chu Shogi board", "squareEmpty": "{{square}}, empty",
+    "squarePiece": "{{square}}, {{color}} {{piece}}{{promoted}}", "promoted": ", promoted"
+  },
+  "home": {
+    "title": "Chu Shogi", "brandLine": "The Meridian Table", "edition": "A 12 × 12 strategy game",
+    "intro": "Forty-six pieces per side. Long sliding ranks, sudden jumps, and complete Lion turns that can change direction midway.",
+    "playBot": "Play a bot", "passAndPlay": "Pass and play", "learn": "Learn the rules", "atlas": "Explore every piece",
+    "profile": "Rules used: Chu Shogi Renmei competition profile (2019), with the 2004 Lion clarifications. This is the best-documented current association standard, not a claim about popularity.",
+    "diagram": "THE OPENING FIELD", "boardCaption": "A measured field of twelve ranks", "footer": "A standalone Chu Shogi product · offline play and tutorials"
+  },
+  "setup": {
+    "eyebrow": "Choose a table", "title": "Set up a game", "intro": "Saved on this device as you play. Choose an opponent or share the board.",
+    "mode": "PLAY STYLE", "bot": "Play a bot", "botDetail": "Six fixed strengths, from a first lesson to a patient search.",
+    "local": "Pass and play", "localDetail": "Take turns on this device.", "strength": "BOT STRENGTH", "levelCount": "{{count}} levels",
+    "side": "YOUR SIDE", "localNote": "Both sides use the same board. Pass the device after every complete move.", "start": "Start game"
+  },
+  "game": {
+    "botLabel": "Playing {{name}}", "localLabel": "A shared board", "saved": "Saved on this device", "you": "You",
+    "thinking": "{{name}} is considering a move…"
+  },
+  "play": {
+    "turn": "{{color}} to move", "check": "Check", "captured": "Captured pieces", "clockOf": "{{color}}'s clock",
+    "moves": "Moves", "noMoves": "No moves yet", "first": "First move", "back": "Previous move", "forward": "Next move", "last": "Latest move",
+    "flip": "Flip the board", "undo": "Take back", "resign": "Resign", "backToLive": "Return to the game", "newGame": "New game", "rematch": "Play again", "review": "Review",
+    "cancel": "Cancel", "resignConfirm": "Resign for {{color}}?", "promoteAsk": "Promote this piece?", "promoteYes": "Promote", "promoteNo": "Keep its current rank",
+    "promoteTo": "Promote to", "chooseRoute": "Choose a complete route", "captures": "Capture: {{pieces}}", "captures_one": "{{count}} capture: {{pieces}}", "captures_other": "{{count}} captures: {{pieces}}", "captureAt": "{{square}}: {{piece}}", "promotion": "promotes", "promotedRank": "Promoted rank",
+    "result": { "whiteWins": "White wins", "blackWins": "Black wins", "draw": "Draw" },
+    "reason": {
+      "checkmate": "All opposing royals defeated", "stalemate": "No legal move loses", "repetition": "Duty to vary was not met",
+      "bare-king": "Barren material ending", "timeout": "Out of time", "resign": "Resigned", "agreement": "Draw agreed", "abandon": "Opponent left"
+    }
+  },
+  "computer": { "you": "You", "thinking": "{{name}} is thinking", "sideWhite": "White", "sideBlack": "Black", "sideRandom": "Random" },
+  "bots": {
+    "pawn": { "name": "Pawn", "description": "Learns the board and takes simple chances." },
+    "go-between": { "name": "Go-Between", "description": "Looks for clean captures and safe advances." },
+    "copper": { "name": "Copper General", "description": "Balances immediate threats with position." },
+    "silver": { "name": "Silver General", "description": "Plans beyond the next exchange." },
+    "dragon-horse": { "name": "Dragon Horse", "description": "Searches several complete turns ahead." },
+    "free-king": { "name": "Free King", "description": "The deepest search in this first set of bots." }
+  },
+  "learn": {
+    "eyebrow": "Guided practice", "title": "Learn the rules", "intro": "Twelve short lessons, with positions and moves checked by the Chu Shogi rules engine.",
+    "exit": "Leave lesson", "progress": "Lesson progress", "check": "Check answer", "continue": "Continue", "correct": "Correct", "wrong": "Not quite", "tryAgain": "Try again", "complete": "Lesson complete!", "stars": "Stars: {{count}}", "hint": "Show a hint", "steps": "steps"
+  },
+  "atlas": {
+    "eyebrow": "Movement reference", "title": "The piece atlas", "intro": "Twenty-one ranks begin on the board. Eighteen promotions lead to twenty-nine distinct movement ranks; several promotions take on a rank already in the starting set.",
+    "rankCount": "distinct movement ranks", "promotionCount": "promotion changes", "promotionsTitle": "Promotion table",
+    "ranks": {
+      "king": { "name": "King", "movement": "Steps one square in any direction." },
+      "lion": { "name": "Lion", "movement": "Can make up to two King steps in one turn, turn between landings, capture on either, or jump two squares straight." },
+      "freeKing": { "name": "Free King", "movement": "Slides any distance in any of the eight directions." },
+      "drunkElephant": { "name": "Drunk Elephant", "movement": "Steps one square in any direction except straight backward." },
+      "kirin": { "name": "Kirin", "movement": "Steps diagonally or jumps two squares orthogonally." },
+      "phoenix": { "name": "Phoenix", "movement": "Steps orthogonally or jumps two squares diagonally." },
+      "rook": { "name": "Rook", "movement": "Slides any distance along a rank or file." },
+      "bishop": { "name": "Bishop", "movement": "Slides any distance along a diagonal." },
+      "dragonKing": { "name": "Dragon King", "movement": "Slides orthogonally and steps one square diagonally." },
+      "dragonHorse": { "name": "Dragon Horse", "movement": "Slides diagonally and steps one square orthogonally." },
+      "verticalMover": { "name": "Vertical Mover", "movement": "Slides forward or backward; steps one square sideways." },
+      "sideMover": { "name": "Side Mover", "movement": "Slides sideways; steps one square forward or backward." },
+      "reverseChariot": { "name": "Reverse Chariot", "movement": "Slides any distance forward or backward." },
+      "lance": { "name": "Lance", "movement": "Slides forward any distance." },
+      "blindTiger": { "name": "Blind Tiger", "movement": "Steps one square in any direction except straight forward." },
+      "ferociousLeopard": { "name": "Ferocious Leopard", "movement": "Steps one square diagonally or straight forward or backward." },
+      "goldGeneral": { "name": "Gold General", "movement": "Steps one square orthogonally or diagonally forward." },
+      "silverGeneral": { "name": "Silver General", "movement": "Steps one square diagonally or straight forward." },
+      "copperGeneral": { "name": "Copper General", "movement": "Steps one square diagonally forward or straight backward." },
+      "goBetween": { "name": "Go-Between", "movement": "Steps one square forward or backward." },
+      "pawn": { "name": "Pawn", "movement": "Steps one square forward." },
+      "prince": { "name": "Prince", "movement": "Steps one square in any direction. This is a second royal piece." },
+      "soaringEagle": { "name": "Soaring Eagle", "movement": "Slides orthogonally and backward-diagonally; has Lion-power turns on forward diagonals." },
+      "hornedFalcon": { "name": "Horned Falcon", "movement": "Slides diagonally and sideways; has Lion-power turns straight forward." },
+      "flyingOx": { "name": "Flying Ox", "movement": "Slides vertically and on every diagonal." },
+      "freeBoar": { "name": "Free Boar", "movement": "Slides sideways and on every diagonal." },
+      "whale": { "name": "Whale", "movement": "Slides vertically and on backward diagonals." },
+      "whiteHorse": { "name": "White Horse", "movement": "Slides vertically and on forward diagonals." },
+      "flyingStag": { "name": "Flying Stag", "movement": "Steps one square any way; also slides forward or backward." }
+    }
+  }
+}

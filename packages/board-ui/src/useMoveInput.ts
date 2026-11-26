@@ -118,8 +118,14 @@ export function useMoveInput({ game, version, canMove, onMove, files = 8 }: Move
     const candidates = boardMoves.filter((m) => m.from === from && m.to === to);
     if (candidates.length === 0) return false;
     setSelection(null);
-    // More than one move on the same squares: choose a promotion, or choose the capture route.
+    // Distinct full routes must be chosen before promotion: a Chu Shogi route can also offer a promotion.
     if (candidates.length > 1) {
+      const paths = new Set(candidates.map((candidate) => candidate.path.join(',')));
+      if (paths.size > 1) {
+        setPending(null);
+        setRoutePending({ version, from, to, choices: candidates.map(({ uci, path }) => ({ uci, path })) });
+        return true;
+      }
       const promotions = new Set(candidates.map((candidate) => candidate.promotion));
       if (promotions.size > 1) {
         setRoutePending(null);

@@ -26,6 +26,17 @@ apps/chu-shogi/web/       English PWA, original piece art, local saves, pass-and
 apps/chu-shogi/worker/    isolated server-kit Worker and its own persistent game archive
 ```
 
+## Current implementation — 2026-11-26
+
+The pure rules package and six bounded bots are implemented. The product design brief, English PWA shell,
+original geometric piece marks, bot/pass-and-play setup, per-seat local saves, twelve engine-checked lessons,
+and a 29-rank/18-promotion atlas are in `apps/chu-shogi/web/`. The PWA uses the product-local
+`CHU_SHOGI_SITE_URL` setting and its own offline precache. The first local browser pass covered desktop home,
+bot opening and reply, first tutorial quiz, full atlas, dark theme and narrow-screen home/game layouts. The
+private online Worker, built-app offline browser check, Melon stage, and public release gates remain ahead.
+The board route chooser and shared game shell were extended narrowly for Chu's full-path-before-promotion
+input and no-check-attention rule; their targeted suites pass.
+
 The 12×12 `Variant` dimensions and `board-ui` grid are generic. Opaque move strings already carry multi-square routes in the protocol. The integration seam is input: the product must present every legal complete Lion route and its capture/promotion consequences without assuming only one from/to move. `VariantMoveRecord.captures` carries both captured pieces. Promotion eligibility, the first-Lion one-turn event, repetition responsibility, and result history belong in serializable game state. No Shogi files should be changed for Chu behavior.
 
 ### Initial bot line-up
@@ -39,9 +50,9 @@ The first L2-versus-L1 sample completed two seeded games to a 100-ply cap: L2 ch
 1. **Rules and rights record** — done for research. Pin the literal Renmei win clause and the documented digital conventions above. Keep the popularity caveat and branding gate visible.
 2. **Setup fixture and pure Variant** — implement exact 12×12 start coordinates, 46-piece inventories, canonical FEN, coordinate helpers, complete-turn UCI, move generation for all base/promoted pieces, stateful promotion, Lion restrictions, endings, replay/undo and `Variant` conformance. Each movement class and controversial rule gets a fixture. Use a legally compatible reference only where its profile matches; do not use an incompatible engine as a false oracle.
 3. **Bots** — six strengths for both colors using ai-core; score material, royal safety, promotion potential and Lion tactics. Record deterministic node limits and a bot ladder.
-4. **Original product identity** — create a distinct visual system and original glyph art for every face; no association trade dress. Keep the public name/branding review open until checked.
-5. **English web PWA** — responsive 12×12 board, local saves/replay, pass-and-play, bot worker, full-route Lion input, offline install and a single game-local address setting. No family/catalog entry until public hosting is verified.
-6. **Interactive tutorial** — lessons teach setup/turns/captures/no drops, all movement families, promotions and deferrals, Prince, Lion routes/igui/jitto/protection/tsukegui/first-Lion, the selected endgames and repetition duties. Exercises validate through the game engine; every declared locale has complete content.
+4. **Original product identity** — implemented as The Meridian Table with original geometric rank glyphs. Keep the public name/branding review open until checked.
+5. **English web PWA** — the responsive 12×12 board, local saves, pass-and-play, bot worker, full-route chooser, PWA manifest/service worker and game-local address setting are implemented. Verify installed offline use on the built Melon stage. No family/catalog entry until public hosting is verified.
+6. **Interactive tutorial** — twelve lessons teach setup/turns/captures/no drops, movement families, all ranks, promotions and deferrals, Prince, Lion routes/igui/jitto/protection/tsukegui/first-Lion, endings and repetition. Move and square exercises use the engine; locale and lesson suites pass.
 7. **Private online play** — two seats, invite codes and applicable quick match, no chat, server-side move validation by the Chu Variant, own Worker and isolated storage. Verify restart, reconnect, finished game archive, and copied-state recovery.
 8. **Exact-SHA CI and Melon stage** — add the game build to CI, push the verified increment to `main`, deploy pinned code with `ssh melon`, migrate its own data and test the built PWA/Worker/recovery. Current next free staging port is 19919.
 9. **Public release gate** — only after a distinctive public-facing brand is reviewed, Melon DNS and TLS exist, and public HTTPS/WSS smoke passes; then update the app directory. No Cloudflare route unless Melon has a documented limitation.

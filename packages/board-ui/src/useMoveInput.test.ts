@@ -262,6 +262,21 @@ describe('useMoveInput with multi-capture routes', () => {
     expect(onMove).toHaveBeenCalledWith(routes[1]);
     expect(hook.result.current.pendingRoute).toBeNull();
   });
+
+  it('chooses the complete route before a route-specific promotion', () => {
+    const routes = ['d5c6d8+', 'd5e6d8'];
+    const game = { legalUci: () => routes };
+    const onMove = vi.fn();
+    const hook = renderHook(() => useMoveInput({ game, version: 0, canMove: true, onMove, files: 7 }));
+    const from = 4 * 7 + 3;
+    const to = 7 * 7 + 3;
+    act(() => hook.result.current.onSquareClick(from));
+    act(() => hook.result.current.onSquareClick(to));
+    expect(hook.result.current.pendingPromotion).toBeNull();
+    expect(hook.result.current.pendingRoute?.choices.map((choice) => choice.uci)).toEqual(routes);
+    act(() => hook.result.current.chooseRoute(routes[0]!));
+    expect(onMove).toHaveBeenCalledWith(routes[0]);
+  });
 });
 
 /**

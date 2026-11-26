@@ -23,6 +23,7 @@ jobs:
       - run: npm run build:sittuyin
       - run: npm run build:xiangqi
       - run: npm run build:shogi
+      - run: npm run build:chu-shogi
       - run: npm run build:janggi
       - run: npm run build:chess
       - run: npm run build:threechess

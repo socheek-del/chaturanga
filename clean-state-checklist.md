@@ -144,11 +144,12 @@
 - [x] Implement the 12×12 setup, all selected movement and promotion rules, Lion restrictions, full-turn routes, endgames, repetition, replay/FEN and Variant conformance; rules tests 40/40.
 - [x] Push the rules checkpoint `09a3db77e63b12f2bee7a28850b35443d52f6c0e`; exact-SHA CI run `45726420396` passed full workspace verification and configured builds.
 - [x] Add six bounded ai-core bots. AI tests 5/5 exercise all six levels as both colors, rules and AI package typechecks, and focused ESLint passed. The first L2/L1 sample finished one checkmate and one 100-ply draw (1.5/2).
-- [ ] Commit and push the verified bot package; record exact-SHA CI before starting the next production slice.
+- [x] Push the verified bot package as `57968bf536a0ac29b4677fd90ace1c49cceb1f2d`; exact-SHA CI run `45728808992` passed.
 - [ ] Measure the other five adjacent bot pairs and tune any clear regressions.
-- [ ] Create the original Chu Shogi product design and piece art; keep name review separate from descriptive game naming.
-- [ ] Build the standalone English PWA with pass-and-play, bot worker, local saves and offline install; expose all six bots for both colors.
-- [ ] Add complete interactive rules tutorials, validated through the authoritative engine.
+- [x] Create the original Chu Shogi design and piece marks in `apps/chu-shogi/docs/design.md` and the local web app; keep name review separate from descriptive game naming.
+- [x] Build the standalone English PWA with pass-and-play, bot worker, local saves and all six bot levels. Tests and local browser smoke passed; verify installed offline reload on Melon.
+- [x] Add twelve interactive rules tutorials, validated through the authoritative engine, and test English locale completeness.
+- [ ] Commit/push the product design and PWA/tutorial slice; verify exact-SHA CI before the online service milestone.
 - [ ] Add the isolated server-authoritative private Worker, no chat, own storage, reconnect, restart and copied-state recovery.
 - [ ] Pass full workspace verification, product builds and exact-SHA CI; stage pinned code on Melon at port 19919 and smoke the built PWA/Worker.
 - [ ] Keep the product out of public routes/catalog until product-name review and Melon DNS/TLS plus HTTPS/WSS smoke pass. No Cloudflare route unless Melon has a documented delivery limitation.

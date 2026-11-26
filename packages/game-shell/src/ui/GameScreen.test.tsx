@@ -207,6 +207,24 @@ describe('GameScreen with Makruk', () => {
   });
 });
 
+describe('GameScreen without check announcements', () => {
+  it('keeps an attacked royal unmarked when the variant does not announce check', () => {
+    const useSession = createGameSession(shogi);
+    useSession.getState().start(null, '4k4/4R4/9/9/9/9/9/9/4K4 b - - 0 1');
+    const view = render(
+      <GameScreen
+        {...play}
+        {...identity}
+        variant={shogi}
+        useSession={useSession}
+        showCheckStatus={false}
+      />,
+    );
+    expect(view.getByTestId('turn-banner').textContent).toBe('Black to move');
+    expect(square(view, 'e9').dataset.check).toBeUndefined();
+  });
+});
+
 describe('GameScreen board options (plat-009)', () => {
   it('draws squares with a square aspect by default', () => {
     const useSession = createGameSession(makruk);

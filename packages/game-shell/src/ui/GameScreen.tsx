@@ -48,6 +48,8 @@ export interface GameScreenProps<G extends VariantGame> {
   hint?: { from: Square; to: Square } | null;
   /** Extra status line under the turn banner (e.g. "thinking…"). */
   status?: ReactNode;
+  /** Hide check treatment for variants that permit exposing royals and do not announce check. */
+  showCheckStatus?: boolean;
   /** Extra action buttons (e.g. hint). */
   actions?: ReactNode;
   onRematch: () => void;
@@ -113,6 +115,7 @@ export function GameScreen<G extends VariantGame>({
   resignColor,
   hint,
   status,
+  showCheckStatus = true,
   actions,
   onRematch,
   showResultDialog = true,
@@ -283,7 +286,7 @@ export function GameScreen<G extends VariantGame>({
           fileLabels={fileLabels}
           rankLabels={rankLabels}
           lastMove={last ? { from: last.from, to: last.to } : null}
-          checkSquare={shown.checkedKingSquare()}
+          checkSquare={showCheckStatus ? shown.checkedKingSquare() : null}
           hint={viewPly === null ? hint : null}
           attackMap={attacks}
           animate={viewPly === null && last && lastRecord?.action !== 'capture' ? { from: last.from, to: last.to, key: `${livePly}` } : null}
@@ -309,14 +312,14 @@ export function GameScreen<G extends VariantGame>({
         <Card
           role="status"
           data-testid="turn-banner"
-          tone={result ? 'secondary' : game.inCheck() ? 'danger' : 'default'}
+          tone={result ? 'secondary' : showCheckStatus && game.inCheck() ? 'danger' : 'default'}
           className="py-2 text-center text-base font-extrabold lg:py-3 lg:text-lg"
         >
           {result
             ? t(resultTitleKey(result))
             : placing
               ? t('play.placing', { color: t(`colors.${game.turn}`) })
-              : t('play.turn', { color: t(`colors.${game.turn}`) }) + (game.inCheck() ? ` · ${t('play.check')}` : '')}
+              : t('play.turn', { color: t(`colors.${game.turn}`) }) + (showCheckStatus && game.inCheck() ? ` · ${t('play.check')}` : '')}
         </Card>
         {status}
         {renderPositionDetails?.(game, input.selected)}

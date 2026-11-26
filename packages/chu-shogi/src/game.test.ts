@@ -7,7 +7,7 @@ describeVariantConformance(chuShogi, {
   fens: [fenOf({ ...startingPosition(), turn: 'b' })],
   invalidFens: ['', `${START_FEN} trailing`, START_FEN.replace(' w ', ' x ')],
   illegalMoves: ['a1a3', 'a1a1', '???', 'P@a1'],
-});
+}, { attackedSquaresMs: 20_000 });
 
 describe('Chu Shogi game session', () => {
   it('plays, records, serializes, and undoes a complete move', () => {

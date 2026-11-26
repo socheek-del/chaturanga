@@ -270,3 +270,15 @@
 - [x] Deploy the pinned build to Melon port 19925 at `/home/melon/chaturanga-release.infinite-chess.TZl1ZF`; health, homepage, manifest and service worker pass; production dependency audit reports 0 vulnerabilities.
 - [x] Built-stage browser smoke passes 5/5; offline/installability PWA smoke passes 2/2. A live room survives container restart and copied-state recovery, restoring seats/history and syncing another legal move; temporary recovery resources were removed and the primary stage is healthy.
 - [x] Check DNS on Melon: `infinite-chess.beanroti.com` has no answer. Public TLS/HTTPS/WSS and catalog promotion are blocked; no Caddy route or app-directory entry changed. Keep the private stage running on port 19925.
+
+### Ko Shogi
+
+- [x] Complete the source-linked rules, adoption and rights gate; record the reconstructed rules and explicit digital choices without a popularity claim or archive imagery.
+- [x] Implement the pure Variant, six bounded bots and the standalone English PWA with 11 interactive lessons, saved local play, piece atlas, offline shell and responsive 19×19 board.
+- [x] Add private server-authoritative online rooms with isolated Worker storage and no chat; focused tests pass: engine 90/90, bots 4/4, web 7/7, Worker 3/3 and protocol 10/10.
+- [x] Run full workspace verification under pinned Node 22.23.1 with loopback enabled; lint, all workspace typechecks and tests pass.
+- [x] Run `npm run build:ko-shogi`; PWA and Worker dry-run pass. Note the non-blocking 553.13 kB PWA entry-chunk warning.
+- [x] Local browser smoke passes tutorial completion/compound-route exercise, all 65 piece forms, bot play, offline reload, private-room legal move sync, and 390px mobile layout with no page exceptions.
+- [ ] Commit/push the verified implementation and verify exact-SHA CI.
+- [ ] Stage the pinned commit on Melon port 19926; verify built PWA/tutorial/room, restart recovery and copied-state recovery, then leave the stage healthy.
+- [ ] Check public DNS/TLS/HTTPS/WSS on Melon before any public Caddy route or app-directory entry.

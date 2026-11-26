@@ -39,6 +39,12 @@ describe('ClientMessage move notation', () => {
     expect(ClientMessage.safeParse({ type: 'move', uci: 'a6a7+', ply: 0 }).success).toBe(true);
   });
 
+  it('accepts a complete Ko Shogi route with a shot and named promotion', () => {
+    expect(ClientMessage.safeParse({ type: 'move', uci: 'e5-f6@h8', ply: 0 }).success).toBe(true);
+    expect(ClientMessage.safeParse({ type: 'move', uci: 'm13-m14=town-brigade', ply: 0 }).success).toBe(true);
+    expect(ClientMessage.safeParse({ type: 'move', uci: 'a1-b2@c3-d4@e5', ply: 0 }).success).toBe(true);
+  });
+
   it('still accepts ordinary moves, in-place promotions, and drops', () => {
     for (const uci of ['e2e4', 'd5d5f', 'K@e1', 'C100@a1', 'X21@b1', 'pass', 'ROLL16'])
       expect(ClientMessage.safeParse({ type: 'move', uci, ply: 0 }).success, uci).toBe(true);
@@ -66,5 +72,15 @@ describe('ClientMessage move notation', () => {
     };
     expect(GameSnapshot.parse(snapshot).moveActors).toEqual(['w']);
     expect(GameSnapshot.safeParse({ ...snapshot, moveActors: [] }).success).toBe(false);
+  });
+
+  it('bounds but accepts the larger FENs used by formation games', () => {
+    const snapshot = {
+      code: 'ABCDEF', variant: 'ko-shogi', serverTime: 0, status: 'playing', startFen: 'k'.repeat(3_000), moves: [],
+      players: { w: null, b: null }, timeControl: null, rated: false, clock: null, result: null,
+      drawOfferBy: null, rematchOfferBy: null, nextCode: null, disconnect: null,
+    };
+    expect(GameSnapshot.safeParse(snapshot).success).toBe(true);
+    expect(GameSnapshot.safeParse({ ...snapshot, startFen: 'k'.repeat(16_385) }).success).toBe(false);
   });
 });

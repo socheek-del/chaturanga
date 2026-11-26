@@ -43,7 +43,8 @@ export const GameSnapshot = z.object({
   /** Server timestamp (ms) when this snapshot was taken; clients use it for countdowns. */
   serverTime: z.number(),
   status: z.enum(['waiting', 'playing', 'finished']),
-  startFen: z.string().max(2048),
+  // Some large-formation games serialize every named piece on a wide board; keep a finite but generous limit.
+  startFen: z.string().max(16_384),
   /** Moves in coordinate notation, e.g. e3e4, a5a6m, d5d5f, K@e1. */
   moves: z.array(z.string()),
   /** Seat that made each move; absent on older turn-based snapshots. */
@@ -75,7 +76,9 @@ export type GameSnapshot = z.infer<typeof GameSnapshot>;
  */
 const UCI = z.union([
   z.string().max(4096).regex(/^-?\d+,-?\d+>-?\d+,-?\d+[qrbn]?$/),
-  z.string().regex(/^(?:pass|ROLL[1-6]{2}|X[0-6][0-6]@[a-z]\d{1,2}|[A-Z][A-Z0-9]*@[a-z]\d{1,2}|(?:[a-z]\d{1,2}){2,}[+a-z]?)$/),
+  z.string().max(4096).regex(/^(?:pass|ROLL[1-6]{2}|X[0-6][0-6]@[a-z]\d{1,2}|[A-Z][A-Z0-9]*@[a-z]\d{1,2}|(?:[a-z]\d{1,2}){2,}[+a-z]?)$/),
+  // Ko Shogi complete turns use `-` route legs, `@` shot targets, and an optional named promotion.
+  z.string().max(4096).regex(/^[a-s](?:1[0-9]|[1-9])(?:[-@][a-s](?:1[0-9]|[1-9]))+(?:=[a-z][a-z-]*)?$/),
 ]);
 
 export const ClientMessage = z.discriminatedUnion('type', [
@@ -137,7 +140,7 @@ export const CreateGameRequest = z.object({
   timeControl: TimeControl.nullable(),
   color: z.enum(['w', 'b', 'random']),
   /** One of the variant's `startFens`; the room's start position when left out is `startFen`. */
-  startFen: z.string().max(2048).optional(),
+  startFen: z.string().max(16_384).optional(),
   /** Rated games update ratings when both players are signed in and the game is timed. */
   rated: z.boolean().default(true),
 });

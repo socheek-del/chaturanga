@@ -3963,9 +3963,11 @@
       "evidence": [
         "2026-11-26: Plowden’s 1868 account and corroborating historical research are source-linked in apps/senterej/docs/PLAN.md and packages/senterej/RULES.md. This historical profile does not claim a contemporary popularity ranking.",
         "2026-11-26: Clean-room historical rules work is ready; plat-023 actor-aware Variant, session, protocol and server support is passing. Senterej engine implementation is now active.",
-        "2026-11-26: Implemented the pure Senterej Variant, including concurrent Werera actors, non-capturing-move state, first-capture transition, historical piece moves, Ferz promotion, endings, repetition, FEN, undo and replay. Focused rules suite passes 27/27, typecheck and ESLint pass. Bot, tutorial, independent PWA, private online rooms and Melon stage remain."
+        "2026-11-26: Implemented the pure Senterej Variant, including concurrent Werera actors, non-capturing-move state, first-capture transition, historical piece moves, Ferz promotion, endings, repetition, FEN, undo and replay. Focused rules suite passes 27/27, typecheck and ESLint pass. Bot, tutorial, independent PWA, private online rooms and Melon stage remain.",
+        "2026-11-26: Added six seeded, node-bounded bots; an original English Field of Ochre PWA; eight interactive rules lessons; saved bot/pass-and-play games; offline shell; and isolated authoritative invite rooms supporting concurrent Werera actions and legal retractions. Focused tests: AI 3/3, web 40/40, Worker 5/5; browser E2E 4/4 and installed offline PWA E2E 1/1 pass.",
+        "2026-11-26: Full `NODE_OPTIONS=--no-experimental-webstorage npm run verify` passes (lint, all workspace typechecks and tests); `npm run build:senterej` passes for the PWA and Worker dry-run. Melon stage, exact-SHA CI and recovery evidence remain required before public release."
       ],
-      "notes": "Historical sources are used as provenance, not copied prose or art. First-capture Werera ending, first ordinary side, check/stalemate/repetition procedures and seven-move lone-capital ending follow the documented digital choices."
+      "notes": "Historical sources are provenance, not copied prose or art. First-capture Werera ending, first ordinary side, check/stalemate/repetition procedures and seven-move lone-capital ending follow the documented digital choices. Product identity approval and DNS/HTTPS/WSS promotion checks remain open."
     }
   ]
 }

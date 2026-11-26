@@ -15,7 +15,7 @@ import { useNow } from './useNow';
 /** The game-screen props an online room decides; the product adds its identity (art, words, sounds). */
 export type OnlineScreenProps<G extends VariantGame> = Pick<
   GameScreenProps<G>,
-  'useSession' | 'title' | 'orientation' | 'names' | 'inputEnabled' | 'canUndo' | 'onUndo' | 'resignColor' | 'status' | 'actions' | 'onRematch'
+  'useSession' | 'title' | 'orientation' | 'names' | 'inputEnabled' | 'canUndo' | 'onUndo' | 'resignColor' | 'status' | 'turnLabel' | 'actions' | 'onRematch'
 >;
 
 export interface OnlineRoomContext<G extends VariantGame> {

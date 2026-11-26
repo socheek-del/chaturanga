@@ -49,6 +49,7 @@
     "dev:crazyhouse": "concurrently -n worker,web -c yellow,green \"npm run dev -w apps/crazyhouse/worker\" \"npm run dev -w apps/crazyhouse/web\"",
     "dev:arimaa": "concurrently -n worker,web -c yellow,green \"npm run dev -w apps/arimaa/worker\" \"npm run dev -w apps/arimaa/web\"",
     "dev:chaturaji": "concurrently -n worker,web -c yellow,green \"npm run dev -w apps/chaturaji/worker\" \"npm run dev -w apps/chaturaji/web\"",
+    "dev:senterej": "concurrently -n worker,web -c yellow,green \"npm run dev -w apps/senterej/worker\" \"npm run dev -w apps/senterej/web\"",
     "build:beanroti-apps": "npm run build -w apps/beanroti/worker",
     "deploy:beanroti-apps": "npm run deploy -w apps/beanroti/worker",
     "build:janggi": "npm run build -w apps/janggi/web && npm run build -w apps/janggi/worker",
@@ -69,7 +70,9 @@
     "build:rithmomachia": "npm run build -w apps/rithmomachia/web && npm run build -w apps/rithmomachia/worker",
     "build:arimaa": "npm run build -w apps/arimaa/web && npm run build -w apps/arimaa/worker",
     "build:chaturaji": "npm run build -w apps/chaturaji/web && npm run build -w apps/chaturaji/worker",
-    "stage:chaturaji": "bash scripts/melon/stage.sh chaturaji \"$CHATURAJI_SHA\" 19922"
+    "build:senterej": "npm run build -w apps/senterej/web && npm run build -w apps/senterej/worker",
+    "stage:chaturaji": "bash scripts/melon/stage.sh chaturaji \"$CHATURAJI_SHA\" 19922",
+    "stage:senterej": "bash scripts/melon/stage.sh senterej \"$SENTEREJ_SHA\" 19923"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

@@ -116,6 +116,15 @@ describe('GameScreen with Makruk', () => {
     expect(view.getByTestId('move-list').textContent).toContain('e4');
   });
 
+  it('uses a product phase label when the variant lets both players act', () => {
+    const useSession = createGameSession(makruk);
+    useSession.getState().start(null);
+    const view = render(
+      <GameScreen {...play} {...identity} variant={makruk} useSession={useSession} turnLabel={<span>Both players may act</span>} />,
+    );
+    expect(view.getByTestId('turn-banner').textContent).toBe('Both players may act');
+  });
+
   it('tints the attack map from the bottom side only while the switch is on (plat-015)', () => {
     const useSession = createGameSession(makruk);
     useSession.getState().start(null);

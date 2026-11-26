@@ -48,3 +48,16 @@ game with original piece art, board, interface, tutorial and prose. Preserve the
 conflicts in the rules contract and report.
 
 See [`reports/Senterej rules adoption and rights.md`](reports/Senterej%20rules%20adoption%20and%20rights.md).
+
+## Implementation state
+
+- The pure Variant is implemented in `packages/senterej`; the source-linked contract remains in
+  `packages/senterej/RULES.md`.
+- Six seeded, node-bounded opponents are implemented in `packages/senterej-ai`.
+- The “Field of Ochre” identity proposal is `docs/design.md`; owner review is pending. Its board, geometric
+  piece marks, interface and tutorial copy are original.
+- The independent English PWA includes eight interactive lessons, pass-and-play, saved bot games and offline
+  access. Its isolated Worker supports private concurrent-action rooms and has no chat.
+- Product, Worker and repository verification pass locally. Exact-SHA CI and the isolated Melon release stage,
+  built-app browser smoke, restart and copied-state recovery remain before the feature can pass. Public
+  promotion additionally requires the independent hostname to resolve and pass HTTPS/WSS checks.

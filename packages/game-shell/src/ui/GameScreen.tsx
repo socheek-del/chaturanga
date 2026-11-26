@@ -49,6 +49,8 @@ export interface GameScreenProps<G extends VariantGame> {
   hint?: { from: Square; to: Square } | null;
   /** Extra status line under the turn banner (e.g. "thinking…"). */
   status?: ReactNode;
+  /** Replaces the ordinary side-to-move banner for phases where more than one player can act. */
+  turnLabel?: ReactNode;
   /** Hide check treatment for variants that permit exposing royals and do not announce check. */
   showCheckStatus?: boolean;
   /** Extra action buttons (e.g. hint). */
@@ -116,6 +118,7 @@ export function GameScreen<G extends VariantGame>({
   resignColor,
   hint,
   status,
+  turnLabel,
   showCheckStatus = true,
   actions,
   onRematch,
@@ -327,9 +330,9 @@ export function GameScreen<G extends VariantGame>({
         >
           {result
             ? t(resultTitleKey(result))
-            : placing
+            : turnLabel ?? (placing
               ? t('play.placing', { color: t(`colors.${game.turn}`) })
-              : t('play.turn', { color: t(`colors.${game.turn}`) }) + (showCheckStatus && game.inCheck() ? ` · ${t('play.check')}` : '')}
+              : t('play.turn', { color: t(`colors.${game.turn}`) }) + (showCheckStatus && game.inCheck() ? ` · ${t('play.check')}` : ''))}
         </Card>
         {status}
         {renderPositionDetails?.(game, input.selected)}

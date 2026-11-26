@@ -37,8 +37,8 @@ handoff; no agent updates it automatically.
 - The Chaturaji stage remains healthy and private at `/home/melon/chaturanga-release.chaturaji.yoXEwM`, port 19922, pinned to `cf328621aab6bcdd2575c7abd0be147cc8f8546a`. Its DNS gate remains unchanged.
 - Rights/adoption/source reports are saved for Djambi, Martian Chess, Apocalypse and Game of the Generals; each is blocked before implementation pending applicable rights clearance. No contact was made. Senterej's public-domain historical rules profile and source decisions are recorded; its implementation is now the active feature.
 - `plat-023` is passing: actor-aware Variant helpers, local save/review, shared board input, protocol actor histories and server-authoritative validation/retraction are implemented. Full loopback-enabled workspace verification passed lint, all workspace typechecks and tests. No runtime product exists for this platform-only increment; Senterej must be staged on Melon before public promotion.
-- `senterej-001` engine slice: the pure Variant is implemented in `packages/senterej`, with concurrent actor actions in Werera, retraction-compatible move history, transition on first capture, rules, endings, FEN, undo and replay. `npm test -w packages/senterej` passes 27/27; package typecheck and ESLint pass. `package-lock.json` includes the workspace. The shell does not have the `.nvmrc` Node setup (`~/.nvm/nvm.sh` is absent); package-lock-only update succeeded with Node 25.9 and existing dependencies.
-- Next code task: add the Senterej bot/search, then the independent app (interactive tutorial, PWA and private rooms). Keep release staging on Melon and use port 19923 unless `docs/MELON-RELEASE.md` assigns another port. Product plan: `apps/senterej/docs/PLAN.md`; rules contract: `packages/senterej/RULES.md`.
+- `senterej-001` local implementation is complete: pure historical Variant, six seeded bots, eight interactive lessons, original English PWA with saved local games/offline shell, and an isolated Worker for authoritative concurrent Werera rooms and legal retractions. Verification: engine 27/27; AI 3/3; web 40/40; Worker 5/5; browser E2E 4/4; offline PWA E2E 1/1; full workspace verify and `build:senterej` pass. Exact-SHA CI and Melon stage/recovery remain.
+- Current next step: commit/push the implementation to main, verify exact-SHA CI, then stage that SHA on Melon port 19923. Run built-stage tutorial/bot/room/offline smoke, restart and copied-state recovery. Do not promote a public route or family link until DNS/TLS/HTTPS/WSS checks pass. Product plan: `apps/senterej/docs/PLAN.md`; rules contract: `packages/senterej/RULES.md`.
 
 ## Session Log
 
@@ -1877,3 +1877,10 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 - Added the new workspace to `package-lock.json`. The documented nvm loader is absent in this shell; the lockfile-only operation succeeded with available Node 25.9 and existing dependencies.
 - Updated the feature evidence, checklist and handoff. The rules engine is a verified partial milestone; bots, tutorial, PWA, rooms, full verification, CI, Melon stage and production browser/recovery checks remain.
 - Next: implement `packages/senterej-ai`, then create the standalone `apps/senterej/{web,worker}` product with the interactive tutorial and actor-aware private rooms.
+
+### Session 118 (Senterej product implementation)
+
+- Added six seeded, bounded bots and the original English Senterej PWA with eight interactive lessons, saved bot/pass-and-play sessions, mobile layout, focus-mode tutorial/game flow and offline shell. Added the independent Worker, its own Durable Object namespace and D1 archive, private rooms and actor-aware server validation/retraction; no chat.
+- Full workspace verification passed with loopback access. Senterej AI 3/3, web 40/40, Worker 5/5, browser E2E 4/4 and offline PWA E2E 1/1 passed. `npm run build:senterej` passed for the production PWA and Worker dry-run.
+- Added a product README and documented the actual local implementation in the plan and feature evidence. Browser configs accept `PLAYWRIGHT_BASE_URL` so the same suites can target a forwarded Melon build.
+- Next: push the implementation, verify exact-SHA CI, stage on Melon port 19923, and verify the built product, online room, restart and copied-state recovery before assessing public DNS/TLS.

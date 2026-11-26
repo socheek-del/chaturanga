@@ -1,7 +1,7 @@
 /** Every language any family site declares. A new site language adds a name for every game here. */
 export type FamilyLanguage = 'th' | 'my' | 'zh-Hans' | 'ja' | 'ko' | 'en';
 
-export type GameId = 'makruk' | 'sittuyin' | 'xiangqi' | 'shogi' | 'chess' | 'janggi' | 'threechess' | 'hiashatar' | 'fourchess' | 'chaturaji';
+export type GameId = 'makruk' | 'sittuyin' | 'xiangqi' | 'shogi' | 'chess' | 'janggi' | 'threechess' | 'hiashatar' | 'fourchess' | 'chaturaji' | 'senterej';
 
 export interface FamilyGame {
   id: GameId;
@@ -61,5 +61,10 @@ export const GAMES: readonly FamilyGame[] = [
     id: 'chaturaji',
     published: false,
     names: { th: 'จตุราจิ', my: 'ချတူရာဂျီ', 'zh-Hans': '恰图拉吉', ja: 'チャトラジ', ko: '차투라지', en: 'Chaturaji' },
+  },
+  {
+    id: 'senterej',
+    published: false,
+    names: { th: 'เซนเตเรจ', my: 'ဆန်တရေ့ဂျ်', 'zh-Hans': '森特雷吉', ja: 'センテレジ', ko: '센테레지', en: 'Senterej' },
   },
 ];

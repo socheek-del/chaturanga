@@ -238,5 +238,7 @@
 - [x] Complete the historical profile and clean-room source/rights notes; no popularity claim is made.
 - [x] Complete actor-aware platform prerequisite `plat-023`.
 - [x] Implement the pure Variant with source-profiled movements, concurrent Werera actors, first-capture transition, automatic Ferz promotion, ending rules, FEN, undo and actor replay; focused tests 27/27, package typecheck and lint pass.
-- [ ] Add deterministic bots, interactive tutorial, independent PWA and private online rooms.
-- [ ] Run full verification, build and exact-SHA CI; stage on Melon and pass browser/recovery smoke before public promotion.
+- [x] Add six seeded bounded bots (AI tests 3/3), an original independent English PWA, eight interactive lessons, saved bot/pass-and-play games, offline shell, and an isolated authoritative Worker with private concurrent Werera rooms and legal retractions (Worker tests 5/5).
+- [x] Run the full workspace verify; Senterej web tests 40/40, browser E2E 4/4, offline PWA E2E 1/1, and production PWA/Worker build pass.
+- [ ] Commit/push the verified implementation; confirm exact-SHA CI, then stage on Melon port 19923 and pass built-app browser, restart and copied-state recovery checks.
+- [ ] Check the hostname DNS/TLS/HTTPS/WSS. Keep public routing and the app directory unchanged unless those checks pass.

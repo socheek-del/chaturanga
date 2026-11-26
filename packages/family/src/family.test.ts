@@ -7,6 +7,8 @@ import { PRODUCT as MAKRUK } from '../../../apps/makruk/web/product.config';
 import { SITE_URL as MAKRUK_URL } from '../../../apps/makruk/web/site.config';
 import { PRODUCT as SITTUYIN } from '../../../apps/sittuyin/web/product.config';
 import { SITE_URL as SITTUYIN_URL } from '../../../apps/sittuyin/web/site.config';
+import { PRODUCT as SENTEREJ } from '../../../apps/senterej/web/product.config';
+import { SITE_URL as SENTEREJ_URL } from '../../../apps/senterej/web/site.config';
 import { PRODUCT as XIANGQI } from '../../../apps/xiangqi/web/product.config';
 import { SITE_URL as XIANGQI_URL } from '../../../apps/xiangqi/web/site.config';
 import { GAMES } from './games';
@@ -42,6 +44,7 @@ describe('family (plat-006, plat-010)', () => {
     expect(SITES.sittuyin).toEqual({ url: SITTUYIN_URL, locales: SITTUYIN.locales, defaultLocale: SITTUYIN.defaultLocale });
     expect(SITES.xiangqi).toEqual({ url: XIANGQI_URL, locales: XIANGQI.locales, defaultLocale: XIANGQI.defaultLocale });
     expect(SITES.janggi).toEqual({ url: JANGGI_URL, locales: JANGGI.locales, defaultLocale: JANGGI.defaultLocale });
+    expect(SITES.senterej).toEqual({ url: SENTEREJ_URL, locales: SENTEREJ.locales, defaultLocale: SENTEREJ.defaultLocale });
   });
 
   it('links to every released sibling and never to itself', () => {

@@ -14,6 +14,9 @@ interface HistoryEntry {
   readonly afterKey: string;
   readonly record: VariantMoveRecord<Color>;
   readonly givesObjectiveAttack: boolean;
+  readonly searchCacheKey: string | null;
+  readonly searchCacheOptions: string | null;
+  readonly searchCandidates: Candidate[];
 }
 
 function clonePosition(position: Position): Position {
@@ -51,6 +54,9 @@ export class Game {
   private readonly keys: string[];
   private cacheKey: string | null = null;
   private cachedCandidates: Candidate[] = [];
+  private searchCacheKey: string | null = null;
+  private searchCacheOptions: string | null = null;
+  private cachedSearchCandidates: Candidate[] = [];
 
   constructor(fen: string = fenOf(startingPosition())) {
     this.position = parseFen(fen);
@@ -82,13 +88,40 @@ export class Game {
     const candidate = this.availableCandidates().find((move) => move.uci === uci);
     if (!candidate) throw new IllegalMoveError(uci);
 
+    return this.commit(candidate);
+  }
+
+  /** Bounded, per-piece candidate sample for search clients; every returned action is fully legal. */
+  searchCandidates(limit: number, perOrigin: number): readonly Candidate[] {
+    const key = positionKey(this.position);
+    const options = `${limit}/${perOrigin}`;
+    if (this.searchCacheKey !== key || this.searchCacheOptions !== options) {
+      this.cachedSearchCandidates = generateActions(this.position, limit, perOrigin);
+      this.searchCacheKey = key;
+      this.searchCacheOptions = options;
+    }
+    return this.cachedSearchCandidates;
+  }
+
+  /** Apply a candidate from searchCandidates without regenerating the complete legal action list. */
+  playSearchCandidate(candidate: Candidate): VariantMoveRecord<Color> {
+    const key = positionKey(this.position);
+    if (this.searchCacheKey !== key || !this.cachedSearchCandidates.includes(candidate) || candidate.color !== this.turn)
+      throw new IllegalMoveError(candidate.uci);
+    const command = commandOutcome(this.position.board);
+    if (command || repetitionResult(this.keys, this.history)) throw new IllegalMoveError(candidate.uci);
+    return this.commit(candidate);
+  }
+
+  private commit(candidate: Candidate): VariantMoveRecord<Color> {
+
     const before = clonePosition(this.position);
     this.position = clonePosition(candidate.resulting);
     const afterKey = positionKey(this.position);
     this.keys.push(afterKey);
     const captures = candidate.captures.map((piece) => clonePiece(piece));
     const record: VariantMoveRecord<Color> = {
-      uci,
+      uci: candidate.uci,
       san: routeSan(candidate),
       color: candidate.color,
       piece: clonePiece(candidate.piece),
@@ -102,8 +135,13 @@ export class Game {
       afterKey,
       record,
       givesObjectiveAttack: attacksSoleObjective(this.position.board, candidate.color),
+      searchCacheKey: this.searchCacheKey,
+      searchCacheOptions: this.searchCacheOptions,
+      searchCandidates: this.cachedSearchCandidates,
     });
     this.cacheKey = null;
+    this.searchCacheKey = null;
+    this.searchCacheOptions = null;
     return record;
   }
 
@@ -113,6 +151,9 @@ export class Game {
     this.position = entry.before;
     this.keys.pop();
     this.cacheKey = null;
+    this.searchCacheKey = entry.searchCacheKey;
+    this.searchCacheOptions = entry.searchCacheOptions;
+    this.cachedSearchCandidates = entry.searchCandidates;
     return entry.record;
   }
 
@@ -128,6 +169,12 @@ export class Game {
 
   counting(): null { return null; }
 
+  /** Fast terminal probe for search adapters; stops as soon as one complete legal action is found. */
+  hasAnyLegalAction(): boolean {
+    const key = positionKey(this.position);
+    return this.cacheKey === key ? this.cachedCandidates.length > 0 : generateActions(this.position, 1).length > 0;
+  }
+
   isGameOver(): boolean { return this.status().kind !== 'ongoing'; }
 
   status(): GameStatus<Color> {
@@ -136,7 +183,7 @@ export class Game {
     if (command) return { kind: 'progression', winner: command };
     const repetition = repetitionResult(this.keys, this.history);
     if (repetition) return repetition;
-    if (this.availableCandidates().length === 0) return { kind: 'stalemate', winner: opposite(this.turn) };
+    if (!this.hasAnyLegalAction()) return { kind: 'stalemate', winner: opposite(this.turn) };
     return { kind: 'ongoing' };
   }
 

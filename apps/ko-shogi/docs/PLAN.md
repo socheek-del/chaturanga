@@ -25,8 +25,8 @@ The product follows the detailed English profile where an old text is incomplete
 
 1. **Rules contract and provenance** — complete. Use this document and `packages/ko-shogi/RULES.md` as the frozen v1 profile; change it only when a test exposes a contradiction or a newly verified source passage requires a documented decision.
 2. **Pure rules package** — complete. `packages/ko-shogi` implements the 19×19 setup/FEN, all declared piece profiles, routes/shots, promotions/effects, objectives, repetition, undo/replay and `Variant` conformance. The focused fixtures and full workspace verification pass; downstream product checks remain.
-3. **Bots** — six deterministic strength levels, both roles, bounded node budgets and legality/strength evidence.
-4. **Product shell and identity** — original design proposal in `apps/ko-shogi/docs/design.md`; keep name/design proposal separate from historical rules. Do not use association branding or trace archive/Commons diagrams.
+3. **Bots** — complete locally. `packages/ko-shogi-ai` supplies six deterministic levels for both roles on `@chaturanga/ai-core`. A bounded root sample keeps the opening responsive while evaluating only fully legal actions; focused tests cover replay-safe search, both colors and all configured levels. The AI is deliberately one-ply because of Ko Shogi's exceptionally wide action space; a strength ladder remains a release check.
+4. **Product shell and identity** — field-atlas visual direction is recorded in `apps/ko-shogi/docs/design.md`; keep product identity separate from historical rules. Do not use association branding or trace archive/Commons diagrams.
 5. **PWA and tutorial** — English locale, local/pass-and-play/bot, complete interactive tutorial, saves, install/offline operation and narrow phone-board usability.
 6. **Private online play** — isolated Worker and storage, room reconnect and authoritative moves; verify restart and copied-state recovery.
 7. **Release checks** — full verification, product build, exact-SHA CI, Melon stage browser/PWA smoke, recovery checks, then public DNS/TLS/HTTPS/WSS. No product route/catalog entry until the public gate passes.
@@ -42,4 +42,4 @@ The product follows the detailed English profile where an old text is incomplete
 
 - Primary-source setup and movement pages were reviewed; the source-derived setup has been normalized into coordinates and sums to 90 pieces per side.
 - `packages/ko-shogi/RULES.md` has the complete v1 movement/promotion chart and records the disputed mechanics. The product-local transcription and source-rights update are recorded with the rules gate.
-- The pure Variant and focused rule fixtures are implemented in `packages/ko-shogi`; full workspace verification passed. Bot, app, Worker, tutorial, PWA, rooms, product build and Melon stage are still outstanding. Continue with the bounded bot package.
+- The pure Variant and focused rule fixtures are implemented in `packages/ko-shogi`. Six bounded bots now use `packages/ko-shogi-ai`, and the full workspace verification passes with loopback enabled. The field-atlas design direction is recorded. App, Worker, tutorial, PWA, rooms, product build and Melon stage are still outstanding. Next: build the standalone tutorial and local-play PWA.

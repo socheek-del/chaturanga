@@ -22,6 +22,8 @@ export interface SearchAdapter {
   evaluate(): number;
   /** Moves also searched in quiescence: captures and promotions. */
   isTactical(move: number): boolean;
+  /** Optional direct tactical generator for variants where filtering every legal move is expensive. */
+  tacticalMoves?(): number[];
   /** Move-ordering priority (e.g. MVV-LVA, promotions); higher is searched first. */
   orderKey(move: number): number;
   /** Position identity for repetition, comparable with the `history` keys. */
@@ -105,7 +107,7 @@ export function search(adapter: SearchAdapter, options: SearchOptions): SearchRe
     if (standPat >= beta) return beta;
     if (standPat > alpha) alpha = standPat;
     if (qdepth === 0 || shouldStop()) return alpha;
-    const tactical = adapter.legalMoves().filter((m) => adapter.isTactical(m));
+    const tactical = adapter.tacticalMoves?.() ?? adapter.legalMoves().filter((m) => adapter.isTactical(m));
     for (const m of orderMoves(adapter, tactical)) {
       adapter.make(m);
       const score = -quiesce(-beta, -alpha, qdepth - 1);

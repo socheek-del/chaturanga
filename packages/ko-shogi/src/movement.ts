@@ -534,10 +534,18 @@ function finalizeCandidate(
   void initial;
 }
 
-export function generateActions(position: Position): Candidate[] {
+export function generateActions(
+  position: Position,
+  limit = Number.POSITIVE_INFINITY,
+  perOrigin = Number.POSITIVE_INFINITY,
+): Candidate[] {
+  if (limit < 1) return [];
   const candidates = new Map<string, Candidate>();
   const color = position.turn;
   for (let origin = 0; origin < BOARD_SIZE; origin++) {
+    if (candidates.size >= limit) break;
+    const originStart = candidates.size;
+    const atOriginLimit = (): boolean => candidates.size >= limit || candidates.size - originStart >= perOrigin;
     const originalPiece = position.board[origin];
     if (!originalPiece || originalPiece.color !== color || isEnemyNetRay(position.board, origin, color)) continue;
     const initialWorking: WorkingPosition = { board: cloneBoard(position.board), priestLost: { ...position.priestLost } };
@@ -552,6 +560,7 @@ export function generateActions(position: Position): Candidate[] {
         captures: Piece[],
         deltas: Direction[],
       ): void => {
+        if (atOriginLimit()) return;
         const mover = current.board[square];
         if (!mover) return;
         const nextLeg = route.length + 1;
@@ -566,6 +575,7 @@ export function generateActions(position: Position): Candidate[] {
           const shotChoices = shotSpec ? shotVariants(moved, to, [...captures, ...legCaptures], shotSpec) : [{ position: moved, captures: [...captures, ...legCaptures], shots: [] as Square[] }];
 
           for (const choice of shotChoices) {
+            if (atOriginLimit()) return;
             const updatedSegments = [...segments, { to, shots: choice.shots }];
             const ended = hasWinner(choice.position.board);
             const canFinish = nextLeg >= (mode.minLegs ?? 1);

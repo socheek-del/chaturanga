@@ -1740,3 +1740,11 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 - Push and pull each remain one two-step draft action. The helper applies each step's trap effects before generating the next actions, caps the draft at four steps, and accounts for the third-repetition prohibition when deciding whether the draft may end.
 - Added fixtures for paired push/pull preview, same-side preview turn, live-state preservation, four-step completion, invalid/overlong prefixes and trap captures in previews. The focused Arimaa rules suite passes 25/25 with package typecheck and ESLint.
 - Updated `packages/arimaa/RULES.md`, product plan and durable handoff. Next: build the product PWA and interactive tutorial using this API; no full-turn list in the UI.
+
+### Session 103 (Arimaa PWA and tutorial)
+
+- Built the independent English Arimaa PWA in `apps/arimaa/web/`: original Field Manual styling and piece marks, accessible board buttons, self-hosted IBM Plex Sans, 192/512 install icons, light/dark theme, product-local `ARIMAA_SITE_URL`, local saved sessions, pass-and-play and six seeded bot levels in a Web Worker.
+- Added 15 interactive lessons for the selected setup, movement, freeze/support, push/pull, trap, win, repetition and turn-completion rules. Every position and marked solution is checked against `@chaturanga/arimaa`; added exact lesson/locale coverage tests (5/5).
+- Production PWA build passed. Built-app Chromium smoke passed on desktop and 390px: no horizontal overflow; completed the setup lesson; placed an army unit in a game; verified the service worker and all 15 tutorial lessons offline; zero page errors. Screenshots were inspected.
+- `NODE_OPTIONS=--no-experimental-webstorage npm run verify` passed after this increment: repository ESLint, all workspace typechecks and all workspace tests.
+- Added `apps/arimaa/README.md`, updated feature evidence, product plan, handoff, quality notes and clean-state checklist. The UI/tutor slice is committed next; continue with the isolated Worker, server-authoritative private rooms and archive, then private Melon staging on port 19920. Keep the Arimaa Public License public-release gate unchanged.

@@ -174,5 +174,8 @@
 - [x] Run full repository `NODE_OPTIONS=--no-experimental-webstorage npm run verify` with loopback permission after the engine and bot changes; lint, typechecks and all workspace tests pass.
 - [x] Write the original “Field Manual” product design proposal; approval remains open. Keep original art, piece marks and tutorial prose.
 - [x] Add a tested Arimaa turn-draft API exposing bounded atomic next actions, paired push/pull and preview state; 25/25 rules tests, typecheck and lint pass.
-- [ ] Build the PWA/tutorial on that API rather than materializing complete-turn route lists. Keep private Melon port 19920 and no public route/catalog changes.
+- [x] Build the independent English PWA with saved bot/pass-and-play games, six seeded Worker bots, self-hosted type, install icons and product-local site URL; web build, typecheck and ESLint pass.
+- [x] Add 15 interactive lessons; web/locale checks pass 5/5. All lesson fixtures/solutions pass the engine, and production Chromium checked setup interaction, 390px/desktop overflow, service-worker control and offline lesson loading.
+- [x] Run full `NODE_OPTIONS=--no-experimental-webstorage npm run verify` after the PWA increment; repository lint, all workspace typechecks and all tests pass.
+- [ ] Add the isolated Worker, server-authoritative private rooms and product-local archive; stage privately on Melon port 19920 after verification. Keep public routes/catalog unchanged until DNS/TLS and HTTPS/WSS smoke.
 - [x] Add `ko-shogi-001` as a blocked feature and preserve Arimaa as the next ready roadmap row.

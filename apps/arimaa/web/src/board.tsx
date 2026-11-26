@@ -59,7 +59,9 @@ export function ArimaaBoard({
   onSquare,
 }: ArimaaBoardProps) {
   const { t } = useTranslation();
-  const pieces = useMemo(() => new Map(game.pieces().map(({ square, piece }) => [square, piece])), [game]);
+  // Game instances are mutable. Online sessions bump their version while retaining this same object, so
+  // derive the 64-square lookup on every render instead of hiding an optimistic move behind object memoization.
+  const pieces = new Map(game.pieces().map(({ square, piece }) => [square, piece]));
   const route = useMemo(() => stepPairs(draftActions), [draftActions]);
   const routeMarks = new Map(route.map(({ square, index }) => [square, index]));
   const ranks = orientation === 'w' ? [...Array(8).keys()].reverse() : [...Array(8).keys()];

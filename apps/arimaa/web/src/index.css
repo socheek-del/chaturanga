@@ -307,6 +307,8 @@ a { color: inherit; }
 .quiz-choice.is-correct { border-color: #5c8e65; background: color-mix(in srgb, #5c8e65 13%, var(--surface)); }
 .quiz-choice.is-wrong { border-color: var(--trap); background: color-mix(in srgb, var(--trap) 11%, var(--surface)); }
 .simple-page { max-width: 760px; }
+.online-lobby { margin-top: 2rem; }
+.online-actions { display: grid; gap: .5rem; }
 .notice-card { margin-top: 2rem; padding: 1.2rem; }
 .notice-card > svg { color: var(--silver); }
 .notice-card p { color: var(--muted); font-size: .83rem; line-height: 1.65; }

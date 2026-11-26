@@ -1,13 +1,15 @@
 import { Button, Card } from '@chaturanga/ui';
 import { Game, PIECE_TYPES, arimaa, type PieceType } from '@chaturanga/arimaa';
 import { BOTS, botById } from '@chaturanga/arimaa-ai';
+import { createIdentity, storageKey, type OnlineSessionStore, type TimeControlChoice } from '@chaturanga/game-shell';
+import { OnlineLobby, OnlineRoom, type OnlineScreenProps } from '@chaturanga/game-shell/ui';
 import { mulberry32 } from '@chaturanga/ai-core';
 import type { Dispatch, SetStateAction } from 'react';
 import { squareName, type Color, type Square } from '@chaturanga/rules-core';
 import { ArrowDownRight, ArrowLeft, ArrowRight, BookOpen, Bot, Compass, Moon, Sun, Users } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, Navigate, Route, Routes, useNavigate } from 'react-router';
+import { Link, Navigate, Route, Routes, useNavigate, useParams } from 'react-router';
 import { PRODUCT } from '../product.config';
 import { ArimaaBoard, PieceMark } from './board';
 import { TurnEditor } from './components/TurnEditor';
@@ -25,6 +27,7 @@ interface SavedSession {
 }
 
 const STORAGE_KEY = `${PRODUCT.storagePrefix}session.current`;
+const onlineIdentity = createIdentity(storageKey(PRODUCT, 'identity'));
 
 function restoreSession(session: SavedSession): Game {
   const game = new Game(session.startFen);
@@ -134,7 +137,7 @@ function PlaySetup({ onStart }: { onStart: (session: SavedSession) => void }) {
   </main>;
 }
 
-function SetupControls({ game, disabled, botName, onPlace }: { game: Game; disabled: boolean; botName: string; onPlace: (uci: string) => void }) {
+function SetupControls({ game, disabled, botName, onPlace, orientation = game.turn }: { game: Game; disabled: boolean; botName: string; onPlace: (uci: string) => void; orientation?: Color }) {
   const { t } = useTranslation();
   const hand = game.hand(game.turn);
   const [selected, setSelected] = useState<PieceType | null>(null);
@@ -150,7 +153,7 @@ function SetupControls({ game, disabled, botName, onPlace }: { game: Game; disab
   };
 
   return <>
-    <ArimaaBoard game={game} orientation={game.turn} disabled={disabled || hand.length === 0} onSquare={clickSquare} />
+    <ArimaaBoard game={game} orientation={orientation} disabled={disabled || hand.length === 0} onSquare={clickSquare} />
     <Card className="setup-tray">
       <div className="tray-heading"><div><p className="field-label">{t('setup.chooseSetup')}</p><h2>{t('setup.available')}: {hand.length}</h2></div><span className="side-stamp">{t(`colors.${game.turn}`)}</span></div>
       <p>{t('setup.setupHint')}</p>
@@ -223,7 +226,65 @@ function GamePage({ session, game, thinking, onMove, onNewGame }: {
 
 function OnlinePage() {
   const { t } = useTranslation();
-  return <main className="page-width simple-page"><header className="page-heading"><Link className="back-link" to="/"><ArrowLeft size={16} aria-hidden />{t('nav.home')}</Link><p className="eyebrow"><span className="eyebrow-mark" />{t('online.title')}</p><h1>{t('online.title')}</h1><p>{t('online.body')}</p></header><Card className="notice-card"><Compass size={22} aria-hidden /><p>{t('online.coming')}</p><small>{t('online.noChat')}</small></Card></main>;
+  const navigate = useNavigate();
+  const [timeControl, setTimeControl] = useState<TimeControlChoice>({ kind: 'preset', id: '5+0' });
+  const [color, setColor] = useState<'w' | 'b' | 'random'>('random');
+  return <main className="page-width simple-page"><header className="page-heading"><Link className="back-link" to="/"><ArrowLeft size={16} aria-hidden />{t('nav.home')}</Link><p className="eyebrow"><span className="eyebrow-mark" />{t('online.title')}</p><h1>{t('online.title')}</h1><p>{t('online.body')}</p></header><section className="online-lobby"><OnlineLobby identity={onlineIdentity} timeControl={timeControl} onTimeControlChange={setTimeControl} color={color} onColorChange={setColor} onEnterRoom={(code) => navigate(`/online/${code}`)} /></section></main>;
+}
+
+function OnlineRoomRoute() {
+  const { code = '' } = useParams();
+  const navigate = useNavigate();
+  const normalized = code.toUpperCase();
+  return <OnlineRoom
+    key={normalized}
+    code={normalized}
+    variant={arimaa}
+    identity={onlineIdentity}
+    roomUrl={(roomCode) => `${location.origin}/online/${roomCode}`}
+    onEnterRoom={(roomCode) => navigate(`/online/${roomCode}`)}
+    onLeave={() => navigate('/online')}
+    renderGame={(screen, { session }) => <OnlineGamePage screen={screen} session={session} />}
+  />;
+}
+
+function OnlineGamePage({ screen, session }: { screen: OnlineScreenProps<Game>; session: OnlineSessionStore<Game> }) {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { game, result, version } = screen.useSession();
+  const snapshot = session((state) => state.snapshot);
+  const you = session((state) => state.you);
+  const inputEnabled = screen.inputEnabled && !result;
+  const setup = game.hand('w').length + game.hand('b').length > 0;
+  const ownMove = (uci: string) => session.getState().move(uci);
+  const resultStatus = result
+    ? {
+        title: result.winner ? t('game.result', { winner: t(result.winner === 'w' ? 'game.winnerGold' : 'game.winnerSilver') }) : t('game.draw'),
+        body: t(`online.result.${result.reason}`, { defaultValue: t('game.resultOther') }),
+      }
+    : statusCopy(game, t);
+
+  return <main className="game-page page-width">
+    <header className="game-topline"><Link className="back-link" to="/online"><ArrowLeft size={16} aria-hidden />{t('online.back')}</Link><span className="save-indicator"><span />{t('online.roomLabel', { code: snapshot?.code ?? '' })}</span></header>
+    <div className="game-layout">
+      <section className="board-column">
+        <div className="player-strip">
+          {(['b', 'w'] as const).map((color) => <div className={`player-card${game.turn === color && !result ? ' is-current' : ''}`} key={color}><span className={`player-token ${color === 'w' ? 'gold-token' : 'silver-token'}`}>{color === 'w' ? 'G' : 'S'}</span><span><small>{color === you ? t('computer.you') : t('online.opponent')}</small><strong>{t(`colors.${color}`)}</strong></span><b>{rabbitsLeft(game, color)} / 8</b></div>)}
+        </div>
+        <div className="turn-status" aria-live="polite">{resultStatus.title ? <><strong>{resultStatus.title}</strong><span>{resultStatus.body}</span></> : setup ? <strong>{t('game.place', { color: t(`colors.${game.turn}`), remaining: game.hand(game.turn).length })}</strong> : <strong>{t('game.toMove', { color: t(`colors.${game.turn}`) })}</strong>}</div>
+        {screen.status}
+        {setup
+          ? <SetupControls game={game} disabled={!inputEnabled} botName={t('online.opponent')} orientation={screen.orientation} onPlace={ownMove} />
+          : <TurnEditor key={version} game={game} disabled={!inputEnabled} onCommit={ownMove} />}
+      </section>
+      <aside className="game-aside">
+        {result && <Card className="result-card"><p className="field-label">{t('game.resultOther')}</p><h2>{resultStatus.title}</h2><p>{resultStatus.body}</p><Button onClick={screen.onRematch}>{t('online.rematch')}</Button><Button variant="secondary" onClick={() => navigate('/online')}>{t('online.back')}</Button></Card>}
+        <Card className="move-record"><div className="record-heading"><div><p className="field-label">{t('game.lastMoves')}</p><h2>{game.moves().length}</h2></div><span className="step-stamp">4<br /><small>MAX</small></span></div>{game.moves().length === 0 ? <p className="empty-record">{t('game.noMoves')}</p> : <ol>{game.moves().slice(-12).reverse().map((move, index) => <li key={`${move.uci}-${index}`}><span>{game.moves().length - index}</span><b>{t(`colors.${move.color}`)}</b><code>{move.uci}</code></li>)}</ol>}</Card>
+        <Card className="rules-note"><p className="field-label">{t('game.quickRule')}</p><p>{t('game.quickRuleText')}</p><Link to="/learn">{t('nav.learn')}<ArrowRight size={14} aria-hidden /></Link></Card>
+        {!result && <div className="online-actions">{screen.actions}<Button variant="outline" disabled={!you} onClick={() => session.getState().resign(screen.resignColor)}>{t('online.resign')}</Button></div>}
+      </aside>
+    </div>
+  </main>;
 }
 
 function AboutPage() {
@@ -322,6 +383,7 @@ export default function App() {
       <Route path="/learn" element={<LearnIndex />} />
       <Route path="/learn/:lessonId" element={<LessonRoute />} />
       <Route path="/online" element={<OnlinePage />} />
+      <Route path="/online/:code" element={<OnlineRoomRoute />} />
       <Route path="/about" element={<AboutPage />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

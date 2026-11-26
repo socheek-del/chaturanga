@@ -177,5 +177,7 @@
 - [x] Build the independent English PWA with saved bot/pass-and-play games, six seeded Worker bots, self-hosted type, install icons and product-local site URL; web build, typecheck and ESLint pass.
 - [x] Add 15 interactive lessons; web/locale checks pass 5/5. All lesson fixtures/solutions pass the engine, and production Chromium checked setup interaction, 390px/desktop overflow, service-worker control and offline lesson loading.
 - [x] Run full `NODE_OPTIONS=--no-experimental-webstorage npm run verify` after the PWA increment; repository lint, all workspace typechecks and all tests pass.
-- [ ] Add the isolated Worker, server-authoritative private rooms and product-local archive; stage privately on Melon port 19920 after verification. Keep public routes/catalog unchanged until DNS/TLS and HTTPS/WSS smoke.
+- [x] Add the isolated Arimaa Worker, server-authoritative invite rooms, quick-match handler and product-local archive. Worker integration tests pass 6/6 for room/setup/turn validation, reconnect/eviction, quick-match pairing, no chat and finished-game archive.
+- [x] Integrate the online lobby and Arimaa-specific setup/full-turn UI. Built PWA + Worker Chromium smoke synchronized two seats through all 32 placements and one turn; service worker controlled the page, with zero page errors. Add and pass a mutable-board regression test (web tests 6/6).
+- [ ] Rerun full verification after the final regression fix, push directly to main, confirm exact-SHA CI and stage the pinned revision privately on Melon port 19920. Test restart and copied-state recovery; leave public route/catalog unchanged until DNS/TLS and HTTPS/WSS smoke and the license gate.
 - [x] Add `ko-shogi-001` as a blocked feature and preserve Arimaa as the next ready roadmap row.

@@ -1,0 +1,2 @@
+# The dev launcher creates a private random key automatically when .dev.vars is missing.
+AUTH_SECRET=replace-with-a-random-local-secret

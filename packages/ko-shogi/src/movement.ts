@@ -538,11 +538,14 @@ export function generateActions(
   position: Position,
   limit = Number.POSITIVE_INFINITY,
   perOrigin = Number.POSITIVE_INFINITY,
+  origins?: readonly Square[],
 ): Candidate[] {
   if (limit < 1) return [];
   const candidates = new Map<string, Candidate>();
   const color = position.turn;
-  for (let origin = 0; origin < BOARD_SIZE; origin++) {
+  const originCount = origins?.length ?? BOARD_SIZE;
+  for (let originIndex = 0; originIndex < originCount; originIndex++) {
+    const origin = origins?.[originIndex] ?? originIndex;
     if (candidates.size >= limit) break;
     const originStart = candidates.size;
     const atOriginLimit = (): boolean => candidates.size >= limit || candidates.size - originStart >= perOrigin;

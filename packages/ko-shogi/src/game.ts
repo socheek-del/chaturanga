@@ -6,7 +6,7 @@ import {
   type Square,
   type VariantMoveRecord,
 } from '@chaturanga/rules-core';
-import { BOARD_SIZE, PIECE_TYPES, opposite, type PieceType, type Position, fenOf, parseFen, positionKey, startingPosition } from './position';
+import { BOARD_SIZE, PIECE_TYPES, opposite, squareOf, type PieceType, type Position, fenOf, parseFen, positionKey, startingPosition } from './position';
 import { attacksSoleObjective, attackedSquares, commandOutcome, generateActions, routeSan, type Candidate } from './movement';
 
 interface HistoryEntry {
@@ -17,6 +17,9 @@ interface HistoryEntry {
   readonly searchCacheKey: string | null;
   readonly searchCacheOptions: string | null;
   readonly searchCandidates: Candidate[];
+  readonly generatedCacheKey: string | null;
+  readonly generatedCacheOrigin: Square | null;
+  readonly generatedCandidates: Candidate[];
 }
 
 function clonePosition(position: Position): Position {
@@ -57,10 +60,26 @@ export class Game {
   private searchCacheKey: string | null = null;
   private searchCacheOptions: string | null = null;
   private cachedSearchCandidates: Candidate[] = [];
+  private generatedCacheKey: string | null = null;
+  private generatedCacheOrigin: Square | null = null;
+  private cachedGeneratedCandidates: Candidate[] = [];
 
   constructor(fen: string = fenOf(startingPosition())) {
     this.position = parseFen(fen);
     this.keys = [positionKey(this.position)];
+  }
+
+  /** Rebuild a saved game efficiently while preserving repetition and undo history. */
+  static replay(startFen: string, moves: readonly string[]): Game {
+    const game = new Game(startFen);
+    for (const uci of moves) {
+      const originName = uci.match(/^[a-s](?:1[0-9]|[1-9])/u)?.[0];
+      const origin = originName ? squareOf(originName) : null;
+      const candidate = origin === null ? undefined : game.legalCandidatesFrom(origin).find((action) => action.uci === uci);
+      if (!candidate) throw new IllegalMoveError(uci);
+      game.playGeneratedCandidate(candidate);
+    }
+    return game;
   }
 
   get turn(): Color { return this.position.turn; }
@@ -81,6 +100,29 @@ export class Game {
   legalUci(): string[] {
     if (this.status().kind !== 'ongoing') return [];
     return this.availableCandidates().map(({ uci }) => uci);
+  }
+
+  /** Generate the selected piece's complete legal turns without expanding the whole 19×19 position. */
+  legalCandidatesFrom(origin: Square): readonly Candidate[] {
+    if (!Number.isInteger(origin) || origin < 0 || origin >= BOARD_SIZE || this.status().kind !== 'ongoing') return [];
+    const key = positionKey(this.position);
+    if (this.generatedCacheKey !== key || this.generatedCacheOrigin !== origin) {
+      this.cachedGeneratedCandidates = generateActions(this.position, Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY, [origin]);
+      this.generatedCacheKey = key;
+      this.generatedCacheOrigin = origin;
+    }
+    return this.cachedGeneratedCandidates;
+  }
+
+  /** Apply an action returned by legalCandidatesFrom without generating actions for every other piece. */
+  playGeneratedCandidate(candidate: Candidate): VariantMoveRecord<Color> {
+    const key = positionKey(this.position);
+    if (this.generatedCacheKey !== key || !this.cachedGeneratedCandidates.includes(candidate)
+      || this.generatedCacheOrigin !== candidate.from || candidate.color !== this.turn)
+      throw new IllegalMoveError(candidate.uci);
+    const command = commandOutcome(this.position.board);
+    if (command || repetitionResult(this.keys, this.history)) throw new IllegalMoveError(candidate.uci);
+    return this.commit(candidate);
   }
 
   move(uci: string): VariantMoveRecord<Color> {
@@ -138,10 +180,15 @@ export class Game {
       searchCacheKey: this.searchCacheKey,
       searchCacheOptions: this.searchCacheOptions,
       searchCandidates: this.cachedSearchCandidates,
+      generatedCacheKey: this.generatedCacheKey,
+      generatedCacheOrigin: this.generatedCacheOrigin,
+      generatedCandidates: this.cachedGeneratedCandidates,
     });
     this.cacheKey = null;
     this.searchCacheKey = null;
     this.searchCacheOptions = null;
+    this.generatedCacheKey = null;
+    this.generatedCacheOrigin = null;
     return record;
   }
 
@@ -154,6 +201,9 @@ export class Game {
     this.searchCacheKey = entry.searchCacheKey;
     this.searchCacheOptions = entry.searchCacheOptions;
     this.cachedSearchCandidates = entry.searchCandidates;
+    this.generatedCacheKey = entry.generatedCacheKey;
+    this.generatedCacheOrigin = entry.generatedCacheOrigin;
+    this.cachedGeneratedCandidates = entry.generatedCandidates;
     return entry.record;
   }
 

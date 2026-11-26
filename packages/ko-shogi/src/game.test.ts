@@ -55,6 +55,31 @@ describe('Ko Shogi position and reconstructed rules', () => {
     expect(game.fen()).toBe(fenOf(position));
   });
 
+  it('replays stored turns into a game with intact undo and repetition history', () => {
+    const game = Game.replay(fenOf(emptyPosition()), ['a1-b1', 's19-r19']);
+    expect(game.moves().map(({ uci }) => uci)).toEqual(['a1-b1', 's19-r19']);
+    expect(game.turn).toBe('w');
+    expect(game.undo()?.uci).toBe('s19-r19');
+    expect(game.undo()?.uci).toBe('a1-b1');
+    expect(game.status().kind).toBe('ongoing');
+  });
+
+  it('generates and applies all complete legal turns for one selected piece only', () => {
+    const position = emptyPosition('w');
+    position.board[squareOf('e5')!] = makePiece('w', 'longbow');
+    position.board[squareOf('h8')!] = makePiece('b', 'pawn');
+    const game = new Game(fenOf(position));
+    const candidates = game.legalCandidatesFrom(squareOf('e5')!);
+    expect(candidates.length).toBeGreaterThan(1);
+    expect(candidates.every((candidate) => candidate.from === squareOf('e5'))).toBe(true);
+    const shot = candidates.find((candidate) => candidate.uci === 'e5-f6@h8')!;
+    const before = game.fen();
+    game.playGeneratedCandidate(shot);
+    expect(game.pieceAt(squareOf('h8')!)).toBeNull();
+    game.undo();
+    expect(game.fen()).toBe(before);
+  });
+
   it('makes a Longbow move before an optional shot and records the target capture', () => {
     const position = emptyPosition();
     position.board[squareOf('e5')!] = makePiece('w', 'longbow');

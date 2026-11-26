@@ -19,6 +19,7 @@ needs work.
 
 | Domain | Grade | Verification | Agent Legibility | Test Stability | Key Gaps | Last Updated |
 |--------|-------|-------------|-----------------|---------------|----------|-------------|
+| Family release navigation | A | Full workspace verify; seven-site production family smoke passed 7/7 | Published flag lives in `packages/family/src/games.ts`; shared filtering in `sites.ts` | Family unit test covers released subset; production smoke derives its expected list from the same registry | No actual deploy was needed because live output already matched; the next staged build should confirm the filter in its bundle | 2026-11-26 |
 | Rules engine (Makruk) | A | Unit + perft + lock-step vs Fairy-Stockfish + Variant conformance | packages/makruk/RULES.md, typed API | Deterministic seeds | Array-scan movegen limits AI depth | 2026-09-14 |
 | Rules engine (Sittuyin) | A | Unit + perft + lock-step (FEN, counting, game over) vs Fairy-Stockfish + Variant conformance | packages/sittuyin/RULES.md, every rule an ffish-probed test | Deterministic seeds | Not used by any app yet | 2026-09-14 |
 | Rules engine (Hiashatar) | B | 27 unit and conformance checks; selected reconstruction has no matching Fairy-Stockfish preset | packages/hiashatar/RULES.md and isolated package | Seeded replay/undo | No external oracle | 2026-11-25 |

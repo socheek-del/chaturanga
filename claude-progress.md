@@ -32,11 +32,11 @@ handoff; no agent updates it automatically.
 
 ## Active rollout snapshot (2026-11-26)
 
-- Current feature: `chaturaji-001` in `feature_list.json`, implemented and staged; blocked only at public promotion. The Al-Biruni dice reconstruction is explicitly source-based and makes no popularity claim. Product app notes: `apps/chaturaji/AGENTS.md`; executable decisions: `packages/chaturaji/RULES.md`.
-- Verification: clean `./init.sh`, product build, exact-SHA CI run `45800394175`, built-stage browser smoke 6/6 and offline PWA smoke 2/2 pass. Melon applied its isolated migration. A four-seat room recovered its identities/history after restart and copied-state restore, and accepted another synchronized action.
-- Stage: `cf328621aab6bcdd2575c7abd0be147cc8f8546a` at `/home/melon/chaturanga-release.chaturaji.yoXEwM`, port 19922. The primary stage is running. Temporary copied-state resources are removed.
-- `chaturaji.beanroti.com` has no DNS answer from Melon; do not change Caddy or `apps/beanroti/web/public/apps.json`. Preserve the Arimaa and Four-handed Chess stages and their license/DNS gates in `session-handoff.md`.
-- Next roadmap product: Djambi. Start with adoption, source and rights research, and keep the Chaturaji private stage in service.
+- `jg-009` is complete: production family smoke passed 7/7 released sites. The family registry now filters by `published`, and production checks only visit destinations with live routes. The seven live sites already showed the intended six siblings, so no public behavior changed and no redeploy was needed.
+- Full `NODE_OPTIONS=--no-experimental-webstorage npm run verify` passed with loopback access: lint, workspace typechecks and tests. The unprivileged run had failed only because Cloudflare Worker test pools could not bind `127.0.0.1` (`EPERM`).
+- The Chaturaji stage remains healthy and private at `/home/melon/chaturanga-release.chaturaji.yoXEwM`, port 19922, pinned to `cf328621aab6bcdd2575c7abd0be147cc8f8546a`. Its DNS gate remains unchanged.
+- Rights/adoption/source reports are saved for Djambi, Martian Chess, Apocalypse and Game of the Generals; each is blocked before implementation pending applicable rights clearance. No contact was made. Senterej's public-domain historical rules profile and source decisions are recorded; `plat-023` is the active prerequisite for actor-aware concurrent actions, persistence and server replay.
+- Next code task: extend the Variant seam with per-seat active/legal/apply capabilities while keeping existing turn-based games on their current defaults. Product notes: `apps/senterej/docs/PLAN.md`; rules contract: `packages/senterej/RULES.md`.
 
 ## Session Log
 
@@ -1841,3 +1841,13 @@ Commit `2858c15` was pushed to main; GitHub CI passed. Melon stage is healthy on
 - Resumed the unfinished `jg-003` verification before starting new roadmap implementation. The resumable local ladder had 10/20 L6-vs-L5 games recorded; the remaining games completed successfully.
 - Full six-level ladder: L2/L1 +18 -2 =0; L3/L2 +18 -2 =0; L4/L3 +20 -0 =0; L5/L4 +20 -0 =0; L6/L5 +20 -0 =0, each over 20 games. `npm test -w packages/janggi-ai` passed 17/17 and `npm run typecheck -w packages/janggi-ai` passed.
 - No runtime code changed; Janggi remains live. Updated the feature evidence and status to passing. The next rollout research has started with Djambi and Martian Chess rights gates, then Apocalypse and Game of the Generals, before the Senterej platform prerequisite.
+
+### Session 114 (Family release-state correction and Senterej prerequisite)
+
+- Completed `jg-009` production family verification: the production smoke passed all seven released sites. Initial failures were stale test expectations that included three staged products without live DNS destinations.
+- Added the `published` field to the family registry, filtered `familyLinks`, updated the four production family specs, and migrated legacy staged Vite configs to the shared helper. Family tests cover the published subset and passed within the full run.
+- Production TypeScript/Vite builds passed for all nine staged apps with changed family injection: Acedrex, Courier, Hiashatar, Maharajah, Shatar, Shatra, Shatranj, Tamerlane and Chaturanga. Existing chunk-size and native-config extension warnings were non-fatal.
+- `NODE_OPTIONS=--no-experimental-webstorage npm run verify` passed with loopback access: lint, typechecks and all workspace tests. The first sandboxed attempt showed `EPERM` from Worker test listeners and was rerun with loopback permission.
+- No live behavior delta exists for the seven released sites: their generated six-sibling navigation already matched the published set. No deployment or public route/catalog change was needed. Future staged builds now exclude unpromoted products.
+- Completed source/adoption/rights plans for Djambi, Martian Chess, Apocalypse and Game of the Generals. All four are blocked before code pending applicable rights; no external messages were sent.
+- Recorded Senterej's clean-room historical rules contract. Its concurrent Werera actions and retractions require an actor-aware Variant/session/server seam; `plat-023` is now the active feature and `senterej-001` waits on it.

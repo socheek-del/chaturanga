@@ -2,14 +2,13 @@ import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 import { defineConfig } from 'vitest/config';
-import { GAMES } from '../../../packages/family/src/games';
-import { SITES } from '../../../packages/family/src/sites';
+import { familyLinks } from '../../../packages/family/src/sites';
 import { SITE_URL } from './site.config';
 
 const worker = 'http://127.0.0.1:8809';
 
 export default defineConfig({
-  define: { __FAMILY__: JSON.stringify(GAMES.filter((game) => String(game.id) !== 'hiashatar').map((game) => ({ ...game, ...SITES[game.id] }))) },
+  define: { __FAMILY__: JSON.stringify(familyLinks('hiashatar')) },
   plugins: [
     react(),
     tailwindcss(),

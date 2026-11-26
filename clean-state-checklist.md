@@ -217,3 +217,15 @@
 - [x] Stage the verified SHA on Melon port 19922; `DB/0001_games.sql` applied. Built-stage browser smoke 6/6 and offline PWA smoke 2/2 pass.
 - [x] Verify four saved seats and room history after container restart, then restore a copied state in an isolated container and synchronize another action. Remove the temporary restore container/copy and leave the primary stage healthy.
 - [x] Check Chaturaji DNS from Melon: no answer. Do not change Caddy or the directory before public DNS/TLS/HTTPS/WSS smoke passes.
+
+### Family publication state and Senterej setup
+
+- [x] Confirm the production family smoke against every released site; all 7 pass and each links to the six other published products.
+- [x] Add release state to the family registry and update production checks and legacy staged Vite configs to exclude destinations without live routes.
+- [x] Run `NODE_OPTIONS=--no-experimental-webstorage npm run verify` with loopback access; lint, every workspace typecheck and test pass. The sandboxed pass failed only on Worker `listen EPERM` and is not verification evidence.
+- [x] TypeScript/Vite production builds pass for all nine staged apps whose family-injection config changed.
+- [x] Record that no live redeploy was needed: currently deployed family links already show the intended released set, with no user-visible delta.
+- [x] Save source/adoption/rights reports and mark Djambi, Martian Chess, Apocalypse and Game of the Generals blocked before code. No external contact was sent.
+- [x] Pin the clean-room historical Senterej profile and document `plat-023` as its actor-aware replay/retraction prerequisite; keep `senterej-001` blocked until that platform feature passes.
+- [ ] Implement `plat-023` one capability slice at a time; run its focused tests and full repository verification before marking it passing.
+- [ ] Build Senterej only after rules-core, local session, saved history, protocol snapshots and server-kit all preserve the acting seat through simultaneous Werera play and legal retractions.

@@ -27,6 +27,15 @@ describe('family (plat-006, plat-010)', () => {
     expect(Object.keys(SITES).sort()).toEqual(GAMES.map((game) => game.id).sort());
   });
 
+  it('publishes only products whose destinations are live', () => {
+    expect(GAMES.filter((game) => game.published).map((game) => game.id)).toEqual([
+      'makruk', 'sittuyin', 'xiangqi', 'shogi', 'chess', 'janggi', 'threechess',
+    ]);
+    for (const game of GAMES.filter((candidate) => !candidate.published)) {
+      expect(familyLinks('makruk').some((link) => link.id === game.id)).toBe(false);
+    }
+  });
+
   it('reads each site from its own product.config and site.config', () => {
     // One line per game: the only part of this file a new game adds to.
     expect(SITES.makruk).toEqual({ url: MAKRUK_URL, locales: MAKRUK.locales, defaultLocale: MAKRUK.defaultLocale });
@@ -35,11 +44,11 @@ describe('family (plat-006, plat-010)', () => {
     expect(SITES.janggi).toEqual({ url: JANGGI_URL, locales: JANGGI.locales, defaultLocale: JANGGI.defaultLocale });
   });
 
-  it('links each site to every sibling and never to itself, however many games there are', () => {
+  it('links to every released sibling and never to itself', () => {
     for (const game of GAMES) {
       const links = familyLinks(game.id);
       expect(links.map((link) => link.id).sort()).toEqual(
-        GAMES.filter((other) => other.id !== game.id)
+        GAMES.filter((other) => other.published && other.id !== game.id)
           .map((other) => other.id)
           .sort(),
       );

@@ -2745,13 +2745,16 @@
       "milestone": "M22",
       "title": "Janggi joins the family links",
       "user_visible_behavior": "Every sibling links to Janggi and back.",
-      "status": "in_progress",
+      "status": "passing",
       "verification": [
         "e2e-prod/family.spec.ts for every site"
       ],
       "evidence": [
-        "2026-11-23: Janggi links to its five siblings in production. The siblings show Janggi only after they redeploy (merge feat/janggi to main; chess by hand): 5 of 6 production family checks fail until then."
-      ]
+        "2026-11-23: Janggi links to its five siblings in production. The siblings show Janggi only after they redeploy (merge feat/janggi to main; chess by hand): 5 of 6 production family checks fail until then.",
+        "2026-11-26: Production family smoke passed 7/7 for Makruk, Sittuyin, Xiangqi, Shogi, Chess, Janggi and Three-player Chess. The live products expose the six currently published sibling destinations; the three staged products have no production DNS routes. Added an explicit `published` flag to the family registry, filtered sibling links and production smoke by it, and updated legacy staged Vite configs to use the same helper. Full workspace lint/typecheck/tests passed with loopback access.",
+        "2026-11-26: Production TypeScript/Vite builds passed for all nine staged apps whose family-injection configs changed: Acedrex, Courier, Hiashatar, Maharajah, Shatar, Shatra, Shatranj, Tamerlane and Chaturanga. Existing large-chunk and Vite native-config extension warnings were non-fatal."
+      ],
+      "notes": "Published family navigation now reflects only destinations that are actually live. Production family smoke passed all seven released sites. Current live output already matched the intended six-link set, so this source/test correction has no public behavior delta and needs no production redeploy. Staged products will pick up the shared filter on their next verified stage build."
     },
     {
       "id": "jg-010",
@@ -3839,6 +3842,127 @@
         "2026-11-26: Melon's resolver returned no address for chaturaji.beanroti.com. Public HTTPS/WSS checks and promotion cannot proceed; no Caddy route or directory entry was changed. Feature is blocked only at public promotion."
       ],
       "notes": "Implemented and privately staged from cf328621aab6bcdd2575c7abd0be147cc8f8546a. Exact-SHA CI, full workspace verification, product build, staged tutorial/bot/room/PWA smoke and restart/copied-state restore pass. This is the historically attested dice reconstruction and does not claim a popularity winner or perfect recovery of every historical procedure. Public promotion is blocked because Melon's resolver has no answer for chaturaji.beanroti.com; keep Caddy and the app directory unchanged. The next roadmap product is Djambi."
+    },
+    {
+      "id": "djambi-001",
+      "product": "djambi",
+      "priority": 200,
+      "area": "release",
+      "milestone": "M49",
+      "title": "Release Djambi",
+      "user_visible_behavior": "Four players learn the selected Djambi rules and play against bots, locally and in private online rooms.",
+      "status": "blocked",
+      "verification": [
+        "Pin the four-seat rules and source conflicts in packages/djambi/RULES.md.",
+        "Establish an applicable digital-adaptation license or written permission before engine work.",
+        "If rights clear, deliver the pure Variant, bots, interactive tutorial, independent PWA, private rooms, isolated Melon service and release verification."
+      ],
+      "evidence": [
+        "2026-11-26: Rules/adoption/rights review is saved in apps/djambi/docs/PLAN.md and apps/djambi/docs/reports/Djambi rules adoption and rights.md. The best-documented selection is the standard four-seat 9×9 game; reviewed sources do not establish a most-popular edition.",
+        "2026-11-26: Board Game Arena credits L’Impensé radical for enabling its adaptation; no general public digital-adaptation license was found. No contact was made."
+      ],
+      "notes": "Blocked before implementation until an applicable license or written permission is documented. Do not copy the existing adaptation’s text, art, diagrams or interface. Next roadmap candidates are recorded separately so this rights blocker does not stop all work."
+    },
+    {
+      "id": "martian-chess-001",
+      "product": "martian-chess",
+      "priority": 201,
+      "area": "release",
+      "milestone": "M50",
+      "title": "Release Martian Chess",
+      "user_visible_behavior": "Players learn the selected Martian Chess rules and play against a bot, locally and in private online rooms.",
+      "status": "blocked",
+      "verification": [
+        "Pin the selected rules and source-linked decisions in packages/martian-chess/RULES.md.",
+        "Obtain written permission from Looney Labs before publishing a digital adaptation.",
+        "If permission is granted, deliver rules, bots, interactive tutorial, independent PWA, private rooms and Melon verification."
+      ],
+      "evidence": [
+        "2026-11-26: Source/adoption/rights report and plan are saved under apps/martian-chess/docs/. No comparative popularity data were found; the roadmap selects the current two-player base form.",
+        "2026-11-26: Looney Labs’ electronic-games policy requires hobby developers to request permission before publishing. No contact was made."
+      ],
+      "notes": "Blocked before implementation pending written permission. Do not copy Looney Labs rules text, pyramid art, logo or product identity."
+    },
+    {
+      "id": "apocalypse-001",
+      "product": "apocalypse",
+      "priority": 202,
+      "area": "release",
+      "milestone": "M51",
+      "title": "Release Apocalypse",
+      "user_visible_behavior": "Players learn the selected simultaneous Apocalypse rules and play against bots, locally and in private online rooms.",
+      "status": "blocked",
+      "verification": [
+        "Verify the standard setup against an original rules diagram and resolve the listed source gaps.",
+        "Establish an applicable digital-adaptation license or written permission before engine work.",
+        "If cleared, implement sealed simultaneous choices, resolution, bots, tutorial, independent PWA, private rooms and Melon verification."
+      ],
+      "evidence": [
+        "2026-11-26: Rules/adoption/rights report and product plan are saved in apps/apocalypse/docs/. The selected candidate is C. S. Elliott’s 1976 two-player edition; setup and rights-holder details remain unverified.",
+        "2026-11-26: No digital-adaptation license or current rights holder was established in the reviewed sources. No contact was made."
+      ],
+      "notes": "Blocked before implementation pending rules-source verification and rights clearance. Do not reuse published rules prose or artwork."
+    },
+    {
+      "id": "game-of-the-generals-001",
+      "product": "game-of-the-generals",
+      "priority": 203,
+      "area": "release",
+      "milestone": "M52",
+      "title": "Release Game of the Generals",
+      "user_visible_behavior": "Two players learn the hidden-rank rules and play against an automated arbiter and bot, locally and in private online rooms.",
+      "status": "blocked",
+      "verification": [
+        "Verify the official rank inventory, precedence, special Spy/Private interaction and Flag endings.",
+        "Establish an applicable digital-adaptation license or written permission before engine work.",
+        "If cleared, provide private per-seat views, arbiter validation, bots, tutorial, independent PWA, private rooms and Melon verification."
+      ],
+      "evidence": [
+        "2026-11-26: Official source-linked rules, adoption chronology and rights review are saved under apps/game-of-the-generals/docs/. The source history says conceived in 1967 and publicly introduced in 1972; the selected target is the original hidden-rank game.",
+        "2026-11-26: No applicable public digital-adaptation license or verified current chain for all rights was found. No contact was made."
+      ],
+      "notes": "Blocked before implementation pending applicable permission/license; preserve hidden ranks in server-side private views. No contact was made."
+    },
+    {
+      "id": "plat-023",
+      "product": "platform",
+      "priority": 204,
+      "area": "platform",
+      "milestone": "M53",
+      "title": "Per-seat concurrent actions for simultaneous openings",
+      "user_visible_behavior": "A game can allow more than one seat to make validated actions in a simultaneous phase, then switch to ordinary turn-taking without breaking saves or online replay.",
+      "status": "in_progress",
+      "verification": [
+        "Extend Variant with optional per-seat active-player, legal-action and move-application capabilities while retaining turn-based defaults.",
+        "Persist actor identity for concurrent actions and replay it in local sessions, saved games, protocol snapshots and server-authoritative rooms.",
+        "Validate accepted/retracted opening actions against the selected Variant and ensure ordinary turn-based games retain existing history and room behavior.",
+        "Add focused tests and run full workspace verification; stage the first consumer on Melon before public promotion."
+      ],
+      "evidence": [
+        "2026-11-26: Senterej is the next rights-cleared product candidate. Its concurrent Werera phase and retraction need actor-aware replay; current Variant/game-shell/server-kit APIs are strict turn-based. The seam and required behavior are documented in apps/senterej/docs/PLAN.md."
+      ],
+      "notes": "Scope is the narrow generic capability required by Senterej. Existing turn-based games default to game.turn. The interface and stored room history must remain replayable after reconnect, restart and copied-state restore."
+    },
+    {
+      "id": "senterej-001",
+      "product": "senterej",
+      "priority": 205,
+      "area": "release",
+      "milestone": "M54",
+      "title": "Release Senterej",
+      "user_visible_behavior": "Players learn the documented historical Senterej rules and play against bots, locally and in private online rooms with concurrent Werera actions.",
+      "status": "blocked",
+      "verification": [
+        "Implement the source-linked historical profile in packages/senterej/RULES.md with explicit choices for Werera end, retractions, check, promotion, material and first turn.",
+        "Complete plat-023 actor-aware replay and server validation before engine integration.",
+        "Deliver seeded bots, an interactive rules tutorial, an independent offline PWA, concurrent private rooms and isolated Melon storage.",
+        "Run rules conformance, bot legality, tutorial, full verification, build, exact-SHA CI and stage browser/recovery verification."
+      ],
+      "evidence": [
+        "2026-11-26: Plowden’s 1868 account and corroborating historical research are source-linked in apps/senterej/docs/PLAN.md and packages/senterej/RULES.md. This historical profile does not claim a contemporary popularity ranking.",
+        "2026-11-26: Clean-room historical rules work is ready; implementation awaits the generic actor-aware Variant/session/server capability in plat-023."
+      ],
+      "notes": "Historical sources are used as provenance, not copied prose or art. First-capture Werera ending, first ordinary side, check/stalemate/repetition procedures and seven-move lone-capital ending follow the documented digital choices."
     }
   ]
 }

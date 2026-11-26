@@ -56,5 +56,5 @@ export const SITE_LANGUAGES: readonly string[] = [...new Set(Object.values(SITES
 
 /** The sibling games a site links to: every family game except itself. */
 export function familyLinks(current: string): FamilyLink[] {
-  return GAMES.filter((game) => game.id !== current).map((game) => ({ id: game.id, names: game.names, ...SITES[game.id] }));
+  return GAMES.filter((game) => game.published && game.id !== current).map(({ id, names }) => ({ id, names, ...SITES[id] }));
 }

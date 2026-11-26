@@ -7,7 +7,7 @@ import { familyLinks, SITES } from '../../../../packages/family/src/sites';
  * xq-009: after a deploy, every live family site links to every sibling at its configured address, in the
  * language the visiting site speaks. It loops over the family, so a new game joining never edits this file.
  */
-for (const game of GAMES) {
+for (const game of GAMES.filter((candidate) => candidate.published)) {
   const site = SITES[game.id];
   const siblings = familyLinks(game.id);
 

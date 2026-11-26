@@ -31,8 +31,11 @@ Available sources do not prove a popularity winner. The selection follows a curr
 - PWA and tutorial: implemented in `apps/fourchess/web`; pass-and-play, bot play, local saves, responsive offline PWA, and 11 interactive English lessons. The tutorial includes guided legal moves and quizzes for scoring, auto-promotion, elimination, and endings.
 - Online rooms: implemented in `apps/fourchess/worker`; four stable seats, server-side Variant validation, reconnect, resignation, and an isolated game archive. No chat protocol exists.
 - Shared support: board UI accepts generic seat colors; shared terminal results and the network result schema preserve multi-seat winners and scores.
-- Local verification: `NODE_OPTIONS=--no-experimental-webstorage npm run verify` passed with loopback access; `npm run build:fourchess` passed; the focused browser suite passed 4/4 scenarios. This shell ran Node 25.9 because the pinned Node 22.23.1 and nvm are unavailable; exact-SHA CI remains a release gate.
-- Release state: Melon staging, four-seat room/restart/recovery smoke, and public HTTPS/WSS checks are pending. Do not change Caddy or publish the app-directory entry before public DNS/TLS and endpoint smoke pass.
+- Local verification: `NODE_OPTIONS=--no-experimental-webstorage npm run verify` passed with loopback access; `npm run build:fourchess` passed; focused Playwright smoke passed 4/4. The shell used Node 25.9 because pinned Node 22.23.1 and nvm are unavailable.
+- CI: commit `1e067b9d00c766f7d12824b0a520e51dd12baf79` passed exact-SHA GitHub CI run `45780002660`, including full verification and the Four-handed Chess build.
+- Melon private stage: the pinned SHA is at `/home/melon/chaturanga-release.fourchess.UGrfdi`, loopback port `19921`. Active container `chaturanga-stage-fourchess-19921` is healthy and reads the recovered copy at `state-restore-test`; the exited original is preserved as `chaturanga-stage-fourchess-19921-pre-restore`.
+- Built-stage smoke: Playwright passed 4/4 scenarios, including all four seats, server-validated moves, reconnect, tutorial, bot, mobile layout and PWA metadata. A live room retained all four identities and four plies across restart. A stopped-state copy restored the same seats/history in a separate container and accepted/synchronized a fifth legal move.
+- Public promotion: `fourchess.beanroti.com` has no DNS answer. HTTPS/WSS cannot be tested yet. No Caddy route or directory entry was changed; keep this feature blocked only at public promotion until DNS/TLS and endpoint smoke pass.
 
 ## Dependencies and release gates
 

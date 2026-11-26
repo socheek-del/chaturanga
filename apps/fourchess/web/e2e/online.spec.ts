@@ -45,8 +45,11 @@ test('shares four stable seats, synchronizes server-validated moves, and reconne
   await blue.goto(invite);
   await expect(seat(blue, 'b')).toContainText('Blue · You');
   await expect(moves(blue)).toHaveText(['d2d4']);
+  await expect(turns(blue)).toContainText('Blue to move');
   await play(blue, 'b11', 'c11');
+  await expect(turns(yellow)).toContainText('Yellow to move');
   await play(yellow, 'k13', 'k12');
+  await expect(turns(green)).toContainText('Green to move');
   await play(green, 'm4', 'l4');
   await expect(moves(red)).toHaveText(['d2d4', 'b11c11', 'k13k12', 'm4l4']);
   await expect(turns(red)).toContainText('Red to move');
